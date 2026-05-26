@@ -1,0 +1,288 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+// ── USUARIO ADMIN ──────────────────────────────────────────
+model Usuario {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  nombre    String
+  rol       Rol      @default(ADMIN)
+  creadoEn  DateTime @default(now())
+
+  @@map("usuarios")
+}
+
+enum Rol {
+  ADMIN
+  SUPERADMIN
+}
+
+// ── OBRAS ──────────────────────────────────────────────────
+model Obra {
+  id           String          @id @default(cuid())
+  titulo       String
+  tecnica      TecnicaObra
+  serie        String?
+  concepto     String?
+  ancho        Float
+  alto         Float
+  anio         Int
+  precio       Float
+  moneda       Moneda          @default(USD)
+  disponible   DisponibilidadObra @default(DISPONIBLE)
+  imagenUrl    String
+  imagenPublicId String?       // Cloudinary public_id para poder eliminar
+  destacada    Boolean         @default(false)
+  creadoEn     DateTime        @default(now())
+  actualizadoEn DateTime       @updatedAt
+
+  pedidoItems  PedidoItem[]
+
+  @@map("obras")
+}
+
+enum TecnicaObra {
+  ACUARELA
+  ACRILICO
+  CARBONILLA
+  MIXTA
+  OTRO
+}
+
+enum DisponibilidadObra {
+  DISPONIBLE
+  VENDIDA
+  NO_DISPONIBLE
+}
+
+// ── PRODUCTOS ──────────────────────────────────────────────
+model Producto {
+  id            String       @id @default(cuid())
+  nombre        String
+  descripcion   String?
+  tipo          TipoProducto
+  precio        Float
+  moneda        Moneda       @default(USD)
+  stock         Int?         // null = ilimitado (productos digitales)
+  activo        Boolean      @default(true)
+  imagenUrl     String?
+  imagenPublicId String?
+  archivoUrl    String?      // Para ebooks — URL privada de Cloudinary
+  archivoPublicId String?
+  creadoEn      DateTime     @default(now())
+  actualizadoEn DateTime     @updatedAt
+
+  pedidoItems   PedidoItem[]
+
+  @@map("productos")
+}
+
+enum TipoProducto {
+  PRINT
+  EBOOK
+  STICKER
+  MATERIAL
+  CURSO
+}
+
+enum Moneda {
+  USD
+  ARS
+}
+
+// ── PEDIDOS ────────────────────────────────────────────────
+model Pedido {
+  id              String        @id @default(cuid())
+  numero          Int           @unique @default(autoincrement())
+  // Cliente
+  clienteNombre   String
+  clienteEmail    String
+  clienteTelefono String?
+  // Entrega
+  tipoEntrega     TipoEntrega
+  direccion       String?
+  ciudad          String?
+  provincia       String?
+  codigoPostal    String?
+  // Costos
+  subtotal        Float
+  costoEnvio      Float         @default(0)
+  total           Float
+  moneda          Moneda        @default(USD)
+  // Pago
+  metodoPago      MetodoPago?
+  pagoId          String?       // ID de MercadoPago o Stripe
+  pagoEstado      EstadoPago    @default(PENDIENTE)
+  // Estado
+  estado          EstadoPedido  @default(PENDIENTE)
+  trackingNumero  String?
+  notas           String?
+  creadoEn        DateTime      @default(now())
+  actualizadoEn   DateTime      @updatedAt
+
+  items           PedidoItem[]
+  historial       PedidoHistorial[]
+
+  @@map("pedidos")
+}
+
+model PedidoItem {
+  id          String   @id @default(cuid())
+  pedidoId    String
+  pedido      Pedido   @relation(fields: [pedidoId], references: [id])
+  // Puede ser obra o producto
+  obraId      String?
+  obra        Obra?    @relation(fields: [obraId], references: [id])
+  productoId  String?
+  producto    Producto? @relation(fields: [productoId], references: [id])
+  // Snapshot del precio al momento de compra
+  cantidad    Int      @default(1)
+  precioUnit  Float
+  moneda      Moneda   @default(USD)
+
+  @@map("pedido_items")
+}
+
+model PedidoHistorial {
+  id        String       @id @default(cuid())
+  pedidoId  String
+  pedido    Pedido       @relation(fields: [pedidoId], references: [id])
+  estado    EstadoPedido
+  nota      String?
+  creadoEn  DateTime     @default(now())
+
+  @@map("pedido_historial")
+}
+
+enum TipoEntrega {
+  ENVIO
+  RETIRO_PRESENCIAL
+  DIGITAL
+}
+
+enum MetodoPago {
+  MERCADOPAGO
+  STRIPE
+  TRANSFERENCIA
+}
+
+enum EstadoPago {
+  PENDIENTE
+  APROBADO
+  RECHAZADO
+  REEMBOLSADO
+}
+
+enum EstadoPedido {
+  PENDIENTE
+  CONFIRMADO
+  PREPARANDO
+  ENVIADO
+  ENTREGADO
+  CANCELADO
+}
+
+// ── ENCARGOS ───────────────────────────────────────────────
+model Encargo {
+  id          String         @id @default(cuid())
+  nombre      String
+  email       String
+  telefono    String?
+  tipo        TipoEncargo
+  mensaje     String
+  presupuesto String?
+  leido       Boolean        @default(false)
+  estado      EstadoEncargo  @default(NUEVO)
+  creadoEn    DateTime       @default(now())
+
+  @@map("encargos")
+}
+
+enum TipoEncargo {
+  OBRA_ORIGINAL
+  ENCARGO_PERSONALIZADO
+  ETIQUETA_BRANDING
+  MURAL
+  PINTADA_EN_VIVO
+  EBOOK_MATERIALES
+  OTRO
+}
+
+enum EstadoEncargo {
+  NUEVO
+  EN_CONTACTO
+  PRESUPUESTADO
+  CONFIRMADO
+  CANCELADO
+}
+
+// ── CONFIGURACION DE ENVIOS ────────────────────────────────
+model ZonaEnvio {
+  id        String   @id @default(cuid())
+  nombre    String
+  costo     Float
+  activa    Boolean  @default(true)
+
+  @@map("zonas_envio")
+}
+
+model ConfiguracionTienda {
+  id                    String  @id @default(cuid())
+  envioGratisDesde      Float?  // null = no hay envío gratis
+  retiroPresencial      Boolean @default(true)
+  monedaPrincipal       Moneda  @default(USD)
+  whatsappNumero        String?
+  emailContacto         String?
+
+  @@map("configuracion_tienda")
+}
+
+// ── CURSOS (Fase 2 — estructura lista) ─────────────────────
+model Curso {
+  id           String        @id @default(cuid())
+  titulo       String
+  descripcion  String?
+  precio       Float
+  moneda       Moneda        @default(USD)
+  activo       Boolean       @default(false)
+  imagenUrl    String?
+  creadoEn     DateTime      @default(now())
+
+  clases       ClaseCurso[]
+  inscriptos   Inscripcion[]
+
+  @@map("cursos")
+}
+
+model ClaseCurso {
+  id        String  @id @default(cuid())
+  cursoId   String
+  curso     Curso   @relation(fields: [cursoId], references: [id])
+  titulo    String
+  videoUrl  String?
+  orden     Int
+  libre     Boolean @default(false) // preview gratuita
+
+  @@map("clases_curso")
+}
+
+model Inscripcion {
+  id          String   @id @default(cuid())
+  cursoId     String
+  curso       Curso    @relation(fields: [cursoId], references: [id])
+  alumnoEmail String
+  alumnoNombre String
+  pagoId      String?
+  activaHasta DateTime?  // null = de por vida
+  creadoEn    DateTime @default(now())
+
+  @@map("inscripciones")
+}
