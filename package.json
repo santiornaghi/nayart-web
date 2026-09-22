@@ -6,7 +6,7 @@
     "main":  "src/server.js",
     "scripts":  {
                     "dev":  "node --watch src/server.js",
-                    "start":  "node src/seed.js \u0026\u0026 node src/server.js",
+                    "start":  "npx prisma db push \u0026\u0026 node src/seed.js \u0026\u0026 node src/server.js",
                     "db:push":  "prisma db push",
                     "db:seed":  "node src/seed.js",
                     "db:studio":  "prisma studio"
