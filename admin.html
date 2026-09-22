@@ -1048,7 +1048,79 @@ body{background:var(--paper);color:var(--ink);font-family:'Jost',sans-serif;font
 </div>
 
 <script>
-// Tab navigation
+// ── CONFIGURACIÓN ──────────────────────────────────────────────
+const API = 'https://nayart-web.onrender.com/api';
+let TOKEN = localStorage.getItem('nayart_token') || '';
+let currentPedidoId = null;
+
+// ── UTILIDADES ─────────────────────────────────────────────────
+function showNotif(msg, type=''){
+  const n = document.getElementById('notif');
+  n.textContent = msg; n.className = 'notif '+(type||'');
+  n.classList.add('show');
+  setTimeout(()=>n.classList.remove('show'), 3500);
+}
+
+async function api(path, opts={}){
+  const res = await fetch(API+path, {
+    ...opts,
+    headers: { 'Authorization': 'Bearer '+TOKEN, ...(opts.headers||{}) }
+  });
+  if(res.status === 401){ logout(); return null; }
+  const data = await res.json().catch(()=>({}));
+  if(!res.ok) throw new Error(data.error || 'Error '+res.status);
+  return data;
+}
+
+// ── AUTH ───────────────────────────────────────────────────────
+const loginScreen = document.getElementById('login-screen');
+const appMain     = document.getElementById('app-main') || document.querySelector('.main');
+
+async function checkAuth(){
+  if(!TOKEN){ showLogin(); return; }
+  try {
+    const me = await api('/auth/me');
+    if(!me){ showLogin(); return; }
+    document.querySelectorAll('.user-name').forEach(el => el.textContent = me.nombre || me.email);
+    hideLogin();
+    loadDashboard();
+  } catch(e){ showLogin(); }
+}
+
+function showLogin(){
+  if(loginScreen) loginScreen.style.display='flex';
+  if(appMain) appMain.style.display='none';
+  document.querySelector('.sidebar') && (document.querySelector('.sidebar').style.display='none');
+}
+function hideLogin(){
+  if(loginScreen) loginScreen.style.display='none';
+  if(appMain) appMain.style.display='flex';
+  document.querySelector('.sidebar') && (document.querySelector('.sidebar').style.display='');
+}
+
+async function login(){
+  const email = document.getElementById('login-email')?.value;
+  const pass  = document.getElementById('login-pass')?.value;
+  if(!email||!pass){ showNotif('Completá los campos','error'); return; }
+  try {
+    const data = await fetch(API+'/auth/login',{
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({email,password:pass})
+    }).then(r=>r.json());
+    if(!data.token){ showNotif(data.error||'Credenciales incorrectas','error'); return; }
+    TOKEN = data.token;
+    localStorage.setItem('nayart_token', TOKEN);
+    hideLogin();
+    loadDashboard();
+  } catch(e){ showNotif('No se pudo conectar al servidor','error'); }
+}
+
+function logout(){
+  TOKEN=''; localStorage.removeItem('nayart_token');
+  showLogin();
+}
+
+// ── NAVEGACIÓN ─────────────────────────────────────────────────
 function showTab(id, el){
   document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
   document.getElementById('tab-'+id).classList.add('active');
@@ -1056,9 +1128,11 @@ function showTab(id, el){
   if(el) el.classList.add('active');
   const titles={dashboard:'Dashboard',obras:'Obras',productos:'Productos',pedidos:'Pedidos',encargos:'Encargos',envios:'Envíos',cursos:'Cursos'};
   document.getElementById('topbarTitle').textContent=titles[id]||id;
+  const loaders={obras:loadObras,productos:loadProductos,pedidos:loadPedidos,encargos:loadEncargos,envios:loadEnvios};
+  if(loaders[id]) loaders[id]();
 }
 
-// Modals
+// ── MODALS ─────────────────────────────────────────────────────
 function openModal(id){
   document.getElementById('modal-'+id).classList.add('open');
   document.body.style.overflow='hidden';
@@ -1068,18 +1142,10 @@ function closeModal(id){
   document.body.style.overflow='';
 }
 document.querySelectorAll('.modal-overlay').forEach(m=>{
-  m.addEventListener('click',e=>{ if(e.target===m) m.classList.remove('open'),document.body.style.overflow=''; });
+  m.addEventListener('click',e=>{ if(e.target===m){ m.classList.remove('open'); document.body.style.overflow=''; }});
 });
 
-// Notifications
-function showNotif(msg,type=''){
-  const n=document.getElementById('notif');
-  n.textContent=msg;n.className='notif '+(type||'');
-  n.classList.add('show');
-  setTimeout(()=>n.classList.remove('show'),3000);
-}
-
-// Image preview
+// ── IMAGE PREVIEW ──────────────────────────────────────────────
 function previewImg(input){
   if(!input.files[0]) return;
   const r=new FileReader();
@@ -1090,41 +1156,259 @@ function previewImg(input){
   r.readAsDataURL(input.files[0]);
 }
 
-// Save obra (demo)
-function saveObra(){
-  showNotif('Obra guardada correctamente','success');
-  closeModal('nueva-obra');
+// ── DASHBOARD ──────────────────────────────────────────────────
+async function loadDashboard(){
+  try {
+    const [pedidos, obras, encargos] = await Promise.all([
+      api('/pedidos?limit=5'),
+      api('/obras?limit=100'),
+      api('/encargos?limit=100')
+    ]);
+    // Stats cards (update si existen)
+    const cards = document.querySelectorAll('.stat-value');
+    if(cards[0]) cards[0].textContent = pedidos?.total ?? '—';
+    if(cards[2]) cards[2].textContent = obras?.total ?? '—';
+    if(cards[3]) cards[3].textContent = (encargos?.data||[]).filter(e=>e.estado==='PENDIENTE').length || 0;
+  } catch(e){ console.error('Dashboard error:', e); }
 }
 
-// Save producto (demo)
-function saveProducto(){
-  showNotif('Producto creado correctamente','success');
-  closeModal('nuevo-producto');
+// ── OBRAS ──────────────────────────────────────────────────────
+async function loadObras(){
+  try {
+    const data = await api('/obras');
+    const tbody = document.querySelector('#tab-obras table tbody');
+    if(!tbody || !data?.data) return;
+    tbody.innerHTML = data.data.map(o=>`
+      <tr>
+        <td><div style="display:flex;align-items:center;gap:.75rem;">
+          ${o.imagenUrl?`<img src="${o.imagenUrl}" style="width:36px;height:36px;object-fit:cover;border-radius:4px;">`:'<div style="width:36px;height:36px;background:var(--paper-dark);border-radius:4px;"></div>'}
+          <span>${o.titulo}</span>
+        </div></td>
+        <td>${o.tecnica}</td>
+        <td>${o.dimensiones||'—'}</td>
+        <td>${o.precio ? 'USD '+o.precio : '—'}</td>
+        <td><span class="badge badge-${o.disponible?'success':'neutral'}">${o.disponible?'Disponible':'Vendida'}</span></td>
+        <td><button class="btn btn-ghost" style="font-size:.65rem;padding:.3rem .6rem;" onclick="deleteObra('${o.id}')">Eliminar</button></td>
+      </tr>`).join('');
+  } catch(e){ showNotif('Error cargando obras','error'); }
 }
 
-// Tipo producto toggle
+async function saveObra(){
+  const form = document.getElementById('modal-nueva-obra');
+  const inputs = form.querySelectorAll('input,select,textarea');
+  const titulo = inputs[0]?.value;
+  const tecnica = inputs[1]?.value;
+  const dimensiones = inputs[2]?.value;
+  const precio = inputs[3]?.value;
+  const disponible = inputs[4]?.value !== 'Vendida' && inputs[4]?.value !== 'No está en venta';
+  const descripcion = inputs[5]?.value;
+  const fileInput = form.querySelector('input[type="file"]');
+  if(!titulo){ showNotif('El título es obligatorio','error'); return; }
+  const fd = new FormData();
+  fd.append('titulo', titulo);
+  fd.append('tecnica', tecnica||'ACUARELA');
+  if(dimensiones) fd.append('dimensiones', dimensiones);
+  if(precio) fd.append('precio', precio);
+  fd.append('disponible', disponible);
+  if(descripcion) fd.append('descripcion', descripcion);
+  if(fileInput?.files[0]) fd.append('imagen', fileInput.files[0]);
+  try {
+    await fetch(API+'/obras', { method:'POST', headers:{'Authorization':'Bearer '+TOKEN}, body:fd });
+    showNotif('Obra guardada correctamente','success');
+    closeModal('nueva-obra');
+    loadObras();
+  } catch(e){ showNotif('Error guardando obra','error'); }
+}
+
+async function deleteObra(id){
+  if(!confirm('¿Eliminar esta obra?')) return;
+  try {
+    await api('/obras/'+id, {method:'DELETE'});
+    showNotif('Obra eliminada','success');
+    loadObras();
+  } catch(e){ showNotif('Error eliminando obra','error'); }
+}
+
+// ── PRODUCTOS ──────────────────────────────────────────────────
+async function loadProductos(){
+  try {
+    const data = await api('/productos');
+    const tbody = document.querySelector('#tab-productos table tbody');
+    if(!tbody || !data?.data) return;
+    tbody.innerHTML = data.data.map(p=>`
+      <tr>
+        <td>${p.nombre}</td>
+        <td>${p.tipo}</td>
+        <td>USD ${p.precio}</td>
+        <td>${p.stock ?? '∞'}</td>
+        <td><span class="badge badge-${p.activo?'success':'neutral'}">${p.activo?'Activo':'Inactivo'}</span></td>
+        <td><button class="btn btn-ghost" style="font-size:.65rem;padding:.3rem .6rem;" onclick="deleteProducto('${p.id}')">Eliminar</button></td>
+      </tr>`).join('');
+  } catch(e){ showNotif('Error cargando productos','error'); }
+}
+
+async function saveProducto(){
+  const form = document.getElementById('modal-nuevo-producto');
+  const nombre = form.querySelector('input[type="text"]')?.value;
+  const tipo = form.querySelector('select')?.value?.toUpperCase();
+  const precio = form.querySelectorAll('input[type="number"]')[0]?.value;
+  const stock = form.querySelectorAll('input[type="number"]')[1]?.value;
+  const descripcion = form.querySelector('textarea')?.value;
+  const imgInput = form.querySelectorAll('input[type="file"]')[0];
+  const fileInput = form.querySelectorAll('input[type="file"]')[1];
+  if(!nombre||!precio){ showNotif('Nombre y precio son obligatorios','error'); return; }
+  const fd = new FormData();
+  fd.append('nombre', nombre);
+  fd.append('tipo', tipo||'PRINT');
+  fd.append('precio', precio);
+  if(stock) fd.append('stock', stock);
+  if(descripcion) fd.append('descripcion', descripcion);
+  if(imgInput?.files[0]) fd.append('imagen', imgInput.files[0]);
+  if(fileInput?.files[0]) fd.append('archivo', fileInput.files[0]);
+  try {
+    await fetch(API+'/productos', { method:'POST', headers:{'Authorization':'Bearer '+TOKEN}, body:fd });
+    showNotif('Producto creado correctamente','success');
+    closeModal('nuevo-producto');
+    loadProductos();
+  } catch(e){ showNotif('Error creando producto','error'); }
+}
+
+async function deleteProducto(id){
+  if(!confirm('¿Eliminar este producto?')) return;
+  try {
+    await api('/productos/'+id, {method:'DELETE'});
+    showNotif('Producto eliminado','success');
+    loadProductos();
+  } catch(e){ showNotif('Error eliminando producto','error'); }
+}
+
 function toggleProductoTipo(){
-  const tipo=document.getElementById('tipo-producto').value;
-  const isDigital=tipo==='ebook';
-  document.getElementById('archivo-digital').style.display=isDigital?'block':'none';
+  const tipo = document.getElementById('tipo-producto').value;
+  document.getElementById('archivo-digital').style.display = tipo==='ebook'?'block':'none';
 }
 
-// Pedido estados
-function updateEstado(estado){
-  showNotif('Estado actualizado: '+estado,'success');
+// ── PEDIDOS ────────────────────────────────────────────────────
+async function loadPedidos(){
+  try {
+    const data = await api('/pedidos');
+    const tbody = document.querySelector('#tab-pedidos table tbody');
+    if(!tbody || !data?.data) return;
+    tbody.innerHTML = data.data.map(p=>`
+      <tr style="cursor:pointer;" onclick="openPedido('${p.id}')">
+        <td>#${p.id.slice(-6).toUpperCase()}</td>
+        <td>${p.clienteNombre||p.clienteEmail}</td>
+        <td>${(p.items||[]).map(i=>i.producto?.nombre||i.obra?.titulo||'—').join(', ')||'—'}</td>
+        <td>USD ${p.total}</td>
+        <td><span class="badge badge-${estadoBadge(p.estado)}">${p.estado}</span></td>
+        <td>${new Date(p.creadoEn).toLocaleDateString('es-AR')}</td>
+      </tr>`).join('');
+  } catch(e){ showNotif('Error cargando pedidos','error'); }
 }
-function openTracking(){
-  document.getElementById('tracking-field').style.display='block';
+
+function estadoBadge(e){
+  const m={PENDIENTE:'neutral',CONFIRMADO:'success',PREPARANDO:'blue',ENVIADO:'blue',ENTREGADO:'success',CANCELADO:'error'};
+  return m[e]||'neutral';
 }
-function saveTracking(){
-  const v=document.getElementById('tracking-input').value;
+
+async function openPedido(id){
+  currentPedidoId = id;
+  try {
+    const p = await api('/pedidos/'+id);
+    const m = document.getElementById('modal-pedido-detalle');
+    m.querySelector('.modal-title').textContent = '#'+id.slice(-6).toUpperCase();
+    // poblar campos
+    const cells = m.querySelectorAll('.modal-body > div > div');
+    if(cells[0]){ cells[0].querySelector('div:nth-child(2)').textContent = p.clienteNombre||'—'; cells[0].querySelector('div:nth-child(3)').textContent = p.clienteEmail||''; }
+    openModal('pedido-detalle');
+  } catch(e){ showNotif('Error cargando pedido','error'); }
+}
+
+async function updateEstado(estado){
+  if(!currentPedidoId){ showNotif('Sin pedido seleccionado','error'); return; }
+  try {
+    await api('/pedidos/'+currentPedidoId+'/estado', {
+      method:'PATCH', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({estado})
+    });
+    showNotif('Estado actualizado: '+estado,'success');
+    loadPedidos();
+  } catch(e){ showNotif('Error actualizando estado','error'); }
+}
+
+function openTracking(){ document.getElementById('tracking-field').style.display='block'; }
+
+async function saveTracking(){
+  const v = document.getElementById('tracking-input').value;
   if(!v){ showNotif('Ingresá el número de seguimiento','error'); return; }
-  showNotif('Enviado — cliente notificado por email','success');
-  document.getElementById('tracking-field').style.display='none';
-  closeModal('pedido-detalle');
+  try {
+    await api('/pedidos/'+currentPedidoId+'/estado', {
+      method:'PATCH', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({estado:'ENVIADO', tracking:v})
+    });
+    showNotif('Enviado — cliente notificado por email','success');
+    document.getElementById('tracking-field').style.display='none';
+    closeModal('pedido-detalle');
+    loadPedidos();
+  } catch(e){ showNotif('Error guardando tracking','error'); }
 }
 
-// Filter pills
+// ── ENCARGOS ───────────────────────────────────────────────────
+async function loadEncargos(){
+  try {
+    const data = await api('/encargos');
+    const tbody = document.querySelector('#tab-encargos table tbody');
+    if(!tbody || !data?.data) return;
+    tbody.innerHTML = data.data.map(e=>`
+      <tr>
+        <td>${e.nombre}</td>
+        <td>${e.email}</td>
+        <td>${e.descripcion?.slice(0,50)||'—'}…</td>
+        <td>${e.presupuesto ? 'USD '+e.presupuesto : '—'}</td>
+        <td><span class="badge badge-${estadoBadge(e.estado)}">${e.estado}</span></td>
+        <td>${new Date(e.creadoEn).toLocaleDateString('es-AR')}</td>
+        <td>
+          <button class="btn btn-ghost" style="font-size:.65rem;padding:.3rem .6rem;" onclick="updateEncargo('${e.id}','ACEPTADO')">Aceptar</button>
+          <button class="btn btn-ghost" style="font-size:.65rem;padding:.3rem .6rem;" onclick="updateEncargo('${e.id}','RECHAZADO')">Rechazar</button>
+        </td>
+      </tr>`).join('');
+  } catch(e){ showNotif('Error cargando encargos','error'); }
+}
+
+async function updateEncargo(id, estado){
+  try {
+    await api('/encargos/'+id, { method:'PATCH', headers:{'Content-Type':'application/json'}, body: JSON.stringify({estado}) });
+    showNotif('Encargo '+estado.toLowerCase(),'success');
+    loadEncargos();
+  } catch(e){ showNotif('Error actualizando encargo','error'); }
+}
+
+// ── ENVÍOS ─────────────────────────────────────────────────────
+async function loadEnvios(){
+  try {
+    const data = await api('/config/envios');
+    const tbody = document.querySelector('#tab-envios table tbody');
+    if(!tbody || !data) return;
+    tbody.innerHTML = (data||[]).map(z=>`
+      <tr>
+        <td>${z.nombre}</td>
+        <td>${z.provincias?.join(', ')||'—'}</td>
+        <td>ARS ${z.precio}</td>
+        <td>${z.diasEntrega||'—'} días</td>
+        <td><button class="btn btn-ghost" style="font-size:.65rem;padding:.3rem .6rem;" onclick="deleteZona('${z.id}')">Eliminar</button></td>
+      </tr>`).join('');
+  } catch(e){ showNotif('Error cargando zonas de envío','error'); }
+}
+
+async function deleteZona(id){
+  if(!confirm('¿Eliminar zona?')) return;
+  try {
+    await api('/config/envios/'+id, {method:'DELETE'});
+    showNotif('Zona eliminada','success');
+    loadEnvios();
+  } catch(e){ showNotif('Error eliminando zona','error'); }
+}
+
+// ── FILTER PILLS ───────────────────────────────────────────────
 document.querySelectorAll('.filter-pill').forEach(btn=>{
   btn.addEventListener('click',()=>{
     btn.closest('.filter-bar').querySelectorAll('.filter-pill').forEach(b=>b.classList.remove('active'));
@@ -1132,18 +1416,29 @@ document.querySelectorAll('.filter-pill').forEach(btn=>{
   });
 });
 
-// Mobile sidebar
-function toggleSidebar(){
-  document.getElementById('sidebar').classList.toggle('open');
-}
-
-// Show menu btn on mobile
-if(window.innerWidth<=900){
-  document.getElementById('menuBtn').style.display='flex';
-}
+// ── MOBILE SIDEBAR ─────────────────────────────────────────────
+function toggleSidebar(){ document.getElementById('sidebar').classList.toggle('open'); }
+if(window.innerWidth<=900) document.getElementById('menuBtn').style.display='flex';
 window.addEventListener('resize',()=>{
   document.getElementById('menuBtn').style.display=window.innerWidth<=900?'flex':'none';
 });
+
+// ── INIT ───────────────────────────────────────────────────────
+// Pantalla de login inline (si no existe en el HTML)
+if(!document.getElementById('login-screen')){
+  const ls = document.createElement('div');
+  ls.id = 'login-screen';
+  ls.style.cssText = 'display:none;position:fixed;inset:0;background:var(--paper);z-index:999;align-items:center;justify-content:center;flex-direction:column;gap:1rem;';
+  ls.innerHTML = `
+    <div style="font-family:Cormorant Garamond,serif;font-size:2rem;letter-spacing:.15em;margin-bottom:1rem;">NAYA</div>
+    <input id="login-email" type="email" placeholder="Email" style="padding:.7rem 1rem;border:1px solid var(--border);border-radius:4px;font-family:Jost,sans-serif;font-size:.85rem;width:280px;background:var(--white);">
+    <input id="login-pass" type="password" placeholder="Contraseña" style="padding:.7rem 1rem;border:1px solid var(--border);border-radius:4px;font-family:Jost,sans-serif;font-size:.85rem;width:280px;background:var(--white);">
+    <button onclick="login()" style="background:var(--ink);color:var(--white);border:none;padding:.7rem 2rem;border-radius:4px;font-family:Jost,sans-serif;font-size:.75rem;letter-spacing:.15em;text-transform:uppercase;cursor:pointer;width:280px;">Ingresar</button>
+  `;
+  document.body.appendChild(ls);
+}
+
+checkAuth();
 </script>
 </body>
 </html>
