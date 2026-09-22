@@ -1,0 +1,1149 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nayart — Panel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --paper: #f5f2ed;
+  --paper-dark: #ede9e2;
+  --white: #faf8f5;
+  --ink: #1a1814;
+  --ink-light: #6b6560;
+  --ink-faint: #b0aba3;
+  --rust: #b84a1e;
+  --rust-light: #d4622e;
+  --rust-bg: #f9ede8;
+  --gold: #a8853a;
+  --green: #2a6040;
+  --green-bg: #e8f2ec;
+  --blue: #2a4870;
+  --blue-bg: #e8eef5;
+  --border: rgba(26,24,20,.09);
+  --shadow: 0 2px 12px rgba(26,24,20,.06);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{font-size:15px;}
+body{background:var(--paper);color:var(--ink);font-family:'Jost',sans-serif;font-weight:300;display:flex;min-height:100vh;}
+
+/* ── SIDEBAR ── */
+.sidebar{
+  width:220px;flex-shrink:0;
+  background:var(--ink);
+  display:flex;flex-direction:column;
+  position:fixed;top:0;left:0;bottom:0;
+  z-index:50;
+  transition:transform .3s;
+}
+.sidebar-logo{
+  padding:2rem 1.5rem 1.5rem;
+  border-bottom:1px solid rgba(245,242,237,.08);
+}
+.sidebar-logo img{height:22px;width:auto;filter:invert(1);opacity:.8;}
+.sidebar-user{
+  padding:1.2rem 1.5rem;
+  border-bottom:1px solid rgba(245,242,237,.08);
+  display:flex;align-items:center;gap:.8rem;
+}
+.user-avatar{
+  width:32px;height:32px;border-radius:50%;
+  background:var(--rust);
+  display:flex;align-items:center;justify-content:center;
+  font-size:.75rem;font-weight:500;color:var(--white);
+  flex-shrink:0;
+}
+.user-name{font-size:.75rem;color:rgba(245,242,237,.7);letter-spacing:.05em;}
+.nav-menu{
+  flex:1;padding:1rem 0;overflow-y:auto;
+}
+.nav-section-label{
+  font-size:.58rem;letter-spacing:.25em;text-transform:uppercase;
+  color:rgba(245,242,237,.3);padding:.8rem 1.5rem .4rem;
+}
+.nav-item{
+  display:flex;align-items:center;gap:.75rem;
+  padding:.7rem 1.5rem;
+  font-size:.78rem;letter-spacing:.05em;
+  color:rgba(245,242,237,.55);
+  cursor:pointer;
+  transition:all .2s;
+  border-left:2px solid transparent;
+  position:relative;
+}
+.nav-item:hover{color:rgba(245,242,237,.9);background:rgba(245,242,237,.04);}
+.nav-item.active{color:var(--white);border-left-color:var(--rust);background:rgba(184,74,30,.12);}
+.nav-item .icon{font-size:1rem;width:18px;text-align:center;flex-shrink:0;}
+.nav-badge{
+  margin-left:auto;background:var(--rust);color:var(--white);
+  font-size:.58rem;padding:.15rem .45rem;border-radius:99px;
+}
+.sidebar-bottom{
+  padding:1rem 1.5rem;border-top:1px solid rgba(245,242,237,.08);
+}
+.logout-btn{
+  font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;
+  color:rgba(245,242,237,.4);background:none;border:none;
+  cursor:pointer;transition:color .2s;font-family:'Jost',sans-serif;
+}
+.logout-btn:hover{color:var(--rust-light);}
+
+/* ── MAIN ── */
+.main{
+  margin-left:220px;flex:1;
+  display:flex;flex-direction:column;
+  min-height:100vh;
+}
+.topbar{
+  background:var(--white);
+  border-bottom:1px solid var(--border);
+  padding:1rem 2rem;
+  display:flex;justify-content:space-between;align-items:center;
+  position:sticky;top:0;z-index:40;
+}
+.topbar-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.4rem;font-weight:300;
+}
+.topbar-actions{display:flex;gap:.75rem;align-items:center;}
+.btn{
+  font-family:'Jost',sans-serif;font-size:.68rem;
+  letter-spacing:.12em;text-transform:uppercase;
+  padding:.6rem 1.3rem;border:none;cursor:pointer;transition:all .25s;
+  display:inline-flex;align-items:center;gap:.5rem;
+}
+.btn-primary{background:var(--rust);color:var(--white);}
+.btn-primary:hover{background:var(--rust-light);}
+.btn-secondary{background:var(--paper-dark);color:var(--ink-light);border:1px solid var(--border);}
+.btn-secondary:hover{border-color:var(--rust);color:var(--rust);}
+.btn-ghost{background:none;color:var(--ink-light);border:1px solid var(--border);}
+.btn-ghost:hover{color:var(--ink);}
+.btn-danger{background:#c0392b;color:var(--white);}
+.btn-success{background:var(--green);color:var(--white);}
+
+.content{padding:2rem;flex:1;}
+
+/* ── TABS ── */
+.tab-panel{display:none;}
+.tab-panel.active{display:block;}
+
+/* ── DASHBOARD ── */
+.stats-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;
+  margin-bottom:2rem;
+}
+.stat-card{
+  background:var(--white);border:1px solid var(--border);
+  padding:1.5rem;position:relative;overflow:hidden;
+}
+.stat-card::before{
+  content:'';position:absolute;top:0;left:0;
+  width:3px;height:100%;
+}
+.stat-card.orange::before{background:var(--rust);}
+.stat-card.green::before{background:var(--green);}
+.stat-card.blue::before{background:var(--blue);}
+.stat-card.gold::before{background:var(--gold);}
+.stat-label{font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:.6rem;}
+.stat-value{
+  font-family:'Cormorant Garamond',serif;
+  font-size:2.2rem;font-weight:300;color:var(--ink);line-height:1;
+  margin-bottom:.3rem;
+}
+.stat-sub{font-size:.72rem;color:var(--ink-faint);}
+.stat-trend{
+  font-size:.68rem;color:var(--green);
+  display:inline-flex;align-items:center;gap:.2rem;
+}
+
+.dash-grid{display:grid;grid-template-columns:2fr 1fr;gap:1.5rem;}
+
+/* ── CARDS ── */
+.card{
+  background:var(--white);border:1px solid var(--border);
+  margin-bottom:1.5rem;
+}
+.card-header{
+  padding:1.2rem 1.5rem;border-bottom:1px solid var(--border);
+  display:flex;justify-content:space-between;align-items:center;
+}
+.card-title{font-size:.8rem;letter-spacing:.15em;text-transform:uppercase;color:var(--ink-light);}
+.card-body{padding:1.5rem;}
+
+/* ── TABLES ── */
+.table{width:100%;border-collapse:collapse;}
+.table th{
+  font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--ink-faint);padding:.7rem 1rem;
+  border-bottom:1px solid var(--border);text-align:left;
+  background:var(--paper);font-weight:400;
+}
+.table td{
+  padding:.9rem 1rem;border-bottom:1px solid var(--border);
+  font-size:.82rem;color:var(--ink-light);vertical-align:middle;
+}
+.table tr:last-child td{border-bottom:none;}
+.table tr:hover td{background:var(--paper);}
+.table .name{color:var(--ink);font-weight:400;}
+
+/* BADGES */
+.badge{
+  font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;
+  padding:.22rem .6rem;border-radius:2px;font-weight:400;
+  white-space:nowrap;
+}
+.badge-pending{background:#fef3e8;color:#c47820;}
+.badge-confirmed{background:var(--blue-bg);color:var(--blue);}
+.badge-shipped{background:#e8f0fe;color:#2a4898;}
+.badge-delivered{background:var(--green-bg);color:var(--green);}
+.badge-cancelled{background:#fde8e8;color:#c0392b;}
+.badge-digital{background:var(--rust-bg);color:var(--rust);}
+.badge-original{background:#f0ede8;color:var(--gold);}
+.badge-print{background:var(--blue-bg);color:var(--blue);}
+.badge-sticker{background:var(--green-bg);color:var(--green);}
+.badge-ebook{background:var(--rust-bg);color:var(--rust);}
+.badge-material{background:#f5f0e8;color:var(--gold);}
+
+/* ── PRODUCTOS / OBRAS ── */
+.productos-header{
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:1.5rem;gap:1rem;flex-wrap:wrap;
+}
+.search-bar{
+  display:flex;align-items:center;gap:.5rem;
+  background:var(--white);border:1px solid var(--border);
+  padding:.5rem 1rem;flex:1;max-width:320px;
+}
+.search-bar input{
+  border:none;background:none;outline:none;
+  font-family:'Jost',sans-serif;font-size:.82rem;
+  color:var(--ink);width:100%;
+}
+.search-bar span{color:var(--ink-faint);font-size:.9rem;}
+.filter-bar{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:1.5rem;}
+.filter-pill{
+  font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;
+  background:var(--white);border:1px solid var(--border);
+  color:var(--ink-light);padding:.35rem .8rem;
+  cursor:pointer;transition:all .2s;font-family:'Jost',sans-serif;
+}
+.filter-pill.active,.filter-pill:hover{
+  background:var(--ink);border-color:var(--ink);color:var(--white);
+}
+
+.obras-list{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;}
+.obra-card{
+  background:var(--white);border:1px solid var(--border);
+  overflow:hidden;position:relative;
+}
+.obra-card-img{
+  aspect-ratio:4/3;position:relative;overflow:hidden;
+}
+.obra-card-img-bg{
+  position:absolute;inset:0;
+  transition:transform .4s;
+}
+.obra-card:hover .obra-card-img-bg{transform:scale(1.04);}
+.obra-card-status{
+  position:absolute;top:.7rem;right:.7rem;
+}
+.obra-card-body{padding:1rem;}
+.obra-card-name{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1rem;font-weight:400;margin-bottom:.2rem;
+}
+.obra-card-meta{font-size:.65rem;color:var(--ink-faint);letter-spacing:.1em;margin-bottom:.7rem;}
+.obra-card-price{font-size:.9rem;color:var(--rust);margin-bottom:.8rem;}
+.obra-card-actions{display:flex;gap:.4rem;}
+
+/* ── MODAL ── */
+.modal-overlay{
+  position:fixed;inset:0;background:rgba(26,24,20,.5);
+  z-index:200;display:flex;align-items:center;justify-content:center;
+  opacity:0;pointer-events:none;transition:opacity .3s;
+  backdrop-filter:blur(4px);
+}
+.modal-overlay.open{opacity:1;pointer-events:all;}
+.modal{
+  background:var(--white);width:90%;max-width:560px;
+  max-height:90vh;overflow-y:auto;
+  transform:translateY(20px);transition:transform .3s;
+}
+.modal-overlay.open .modal{transform:translateY(0);}
+.modal-header{
+  padding:1.5rem;border-bottom:1px solid var(--border);
+  display:flex;justify-content:space-between;align-items:center;
+  position:sticky;top:0;background:var(--white);z-index:1;
+}
+.modal-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.3rem;font-weight:300;
+}
+.modal-close{
+  background:none;border:none;font-size:1.2rem;
+  color:var(--ink-faint);cursor:pointer;transition:color .2s;
+  line-height:1;padding:.2rem;
+}
+.modal-close:hover{color:var(--rust);}
+.modal-body{padding:1.5rem;}
+.modal-footer{
+  padding:1rem 1.5rem;border-top:1px solid var(--border);
+  display:flex;justify-content:flex-end;gap:.75rem;
+  position:sticky;bottom:0;background:var(--white);
+}
+
+/* FORM */
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+.fg{display:flex;flex-direction:column;gap:.4rem;margin-bottom:1rem;}
+.fg.full{grid-column:1/3;}
+.fg label{font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);}
+.fg input,.fg textarea,.fg select{
+  background:var(--paper);border:1px solid var(--border);
+  color:var(--ink);padding:.7rem .9rem;
+  font-family:'Jost',sans-serif;font-size:.82rem;font-weight:300;
+  outline:none;transition:border-color .25s;width:100%;
+}
+.fg input:focus,.fg textarea:focus,.fg select:focus{border-color:var(--rust);}
+.fg textarea{resize:vertical;min-height:90px;}
+.fg select option{background:var(--white);}
+
+.upload-zone{
+  border:2px dashed var(--border);padding:2rem;text-align:center;
+  cursor:pointer;transition:border-color .25s;background:var(--paper);
+}
+.upload-zone:hover{border-color:var(--rust);}
+.upload-zone p{font-size:.78rem;color:var(--ink-faint);}
+.upload-zone span{font-size:.65rem;color:var(--ink-faint);display:block;margin-top:.3rem;}
+
+/* ENCARGOS */
+.encargo-card{
+  background:var(--white);border:1px solid var(--border);
+  padding:1.5rem;margin-bottom:1rem;
+}
+.encargo-header{
+  display:flex;justify-content:space-between;align-items:flex-start;
+  margin-bottom:1rem;
+}
+.encargo-nombre{font-weight:400;font-size:.9rem;margin-bottom:.2rem;}
+.encargo-email{font-size:.75rem;color:var(--ink-faint);}
+.encargo-body{
+  font-size:.82rem;line-height:1.7;color:var(--ink-light);
+  background:var(--paper);padding:1rem;margin-bottom:1rem;
+}
+.encargo-meta{display:flex;gap:1rem;align-items:center;}
+.encargo-fecha{font-size:.65rem;color:var(--ink-faint);}
+
+/* ENVIOS CONFIG */
+.envio-zona{
+  background:var(--white);border:1px solid var(--border);
+  padding:1.2rem 1.5rem;margin-bottom:.75rem;
+  display:flex;align-items:center;gap:1.5rem;
+}
+.envio-zona-name{flex:1;font-size:.85rem;}
+.envio-zona-input{
+  display:flex;align-items:center;gap:.5rem;
+}
+.envio-zona-input span{font-size:.8rem;color:var(--ink-faint);}
+.envio-zona-input input{
+  width:100px;background:var(--paper);border:1px solid var(--border);
+  padding:.5rem .7rem;font-family:'Jost',sans-serif;
+  font-size:.82rem;outline:none;text-align:right;
+  transition:border-color .25s;
+}
+.envio-zona-input input:focus{border-color:var(--rust);}
+
+/* NOTIF */
+.notif{
+  position:fixed;top:1.5rem;right:1.5rem;z-index:500;
+  background:var(--ink);color:var(--white);
+  padding:1rem 1.5rem;font-size:.78rem;
+  transform:translateX(120%);transition:transform .35s;
+  display:flex;align-items:center;gap:.75rem;
+  max-width:300px;
+}
+.notif.show{transform:translateX(0);}
+.notif.success{background:var(--green);}
+.notif.error{background:#c0392b;}
+
+/* TOGGLE */
+.toggle{
+  position:relative;width:36px;height:20px;flex-shrink:0;
+}
+.toggle input{opacity:0;width:0;height:0;}
+.toggle-slider{
+  position:absolute;inset:0;background:var(--border);
+  border-radius:20px;cursor:pointer;transition:.3s;
+}
+.toggle-slider::before{
+  content:'';position:absolute;
+  height:14px;width:14px;left:3px;bottom:3px;
+  background:var(--white);border-radius:50%;transition:.3s;
+}
+.toggle input:checked+.toggle-slider{background:var(--rust);}
+.toggle input:checked+.toggle-slider::before{transform:translateX(16px);}
+
+/* PEDIDO DETALLE */
+.pedido-timeline{margin-top:1.5rem;}
+.timeline-item{
+  display:flex;gap:1rem;padding-bottom:1.5rem;position:relative;
+}
+.timeline-item::before{
+  content:'';position:absolute;left:10px;top:20px;bottom:0;
+  width:1px;background:var(--border);
+}
+.timeline-item:last-child::before{display:none;}
+.timeline-dot{
+  width:20px;height:20px;border-radius:50%;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-size:.6rem;
+}
+.timeline-dot.done{background:var(--green);color:var(--white);}
+.timeline-dot.current{background:var(--rust);color:var(--white);}
+.timeline-dot.pending{background:var(--paper-dark);border:1px solid var(--border);}
+.timeline-text{font-size:.8rem;padding-top:.15rem;}
+.timeline-date{font-size:.65rem;color:var(--ink-faint);margin-top:.1rem;}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .sidebar{transform:translateX(-220px);}
+  .sidebar.open{transform:translateX(0);}
+  .main{margin-left:0;}
+  .stats-grid{grid-template-columns:1fr 1fr;}
+  .dash-grid{grid-template-columns:1fr;}
+  .obras-list{grid-template-columns:1fr 1fr;}
+  .form-grid{grid-template-columns:1fr;}
+  .fg.full{grid-column:1;}
+}
+@media(max-width:600px){
+  .stats-grid{grid-template-columns:1fr 1fr;}
+  .obras-list{grid-template-columns:1fr;}
+  .content{padding:1rem;}
+  .topbar{padding:.8rem 1rem;}
+}
+</style>
+</head>
+<body>
+
+<!-- NOTIFICACION -->
+<div class="notif" id="notif"></div>
+
+<!-- SIDEBAR -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-logo">
+    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 30'%3E%3Ctext y='24' font-size='22' font-family='serif' fill='white' letter-spacing='6'%3ENAYA%3C/text%3E%3C/svg%3E" alt="NAYA">
+  </div>
+  <div class="sidebar-user">
+    <div class="user-avatar">S</div>
+    <span class="user-name">Santiago · Admin</span>
+  </div>
+  <nav class="nav-menu">
+    <div class="nav-section-label">General</div>
+    <div class="nav-item active" onclick="showTab('dashboard',this)">
+      <span class="icon">◈</span> Dashboard
+    </div>
+    <div class="nav-section-label">Catálogo</div>
+    <div class="nav-item" onclick="showTab('obras',this)">
+      <span class="icon">◻</span> Obras
+    </div>
+    <div class="nav-item" onclick="showTab('productos',this)">
+      <span class="icon">◫</span> Productos
+    </div>
+    <div class="nav-section-label">Ventas</div>
+    <div class="nav-item" onclick="showTab('pedidos',this)">
+      <span class="icon">◎</span> Pedidos
+      <span class="nav-badge">3</span>
+    </div>
+    <div class="nav-item" onclick="showTab('encargos',this)">
+      <span class="icon">◇</span> Encargos
+      <span class="nav-badge">2</span>
+    </div>
+    <div class="nav-section-label">Config</div>
+    <div class="nav-item" onclick="showTab('envios',this)">
+      <span class="icon">◉</span> Envíos
+    </div>
+    <div class="nav-item" onclick="showTab('cursos',this)">
+      <span class="icon">◈</span> Cursos
+      <span style="font-size:.55rem;color:rgba(245,242,237,.3);margin-left:auto">Pronto</span>
+    </div>
+  </nav>
+  <div class="sidebar-bottom">
+    <button class="logout-btn">→ Cerrar sesión</button>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<div class="main">
+  <header class="topbar">
+    <div style="display:flex;align-items:center;gap:1rem;">
+      <button class="btn btn-ghost" id="menuBtn" onclick="toggleSidebar()" style="display:none;padding:.5rem .8rem;">☰</button>
+      <h1 class="topbar-title" id="topbarTitle">Dashboard</h1>
+    </div>
+    <div class="topbar-actions">
+      <a href="index.html" target="_blank" class="btn btn-secondary">↗ Ver sitio</a>
+      <button class="btn btn-primary" onclick="openModal('nueva-obra')">+ Nueva obra</button>
+    </div>
+  </header>
+
+  <div class="content">
+
+    <!-- DASHBOARD -->
+    <div class="tab-panel active" id="tab-dashboard">
+      <div class="stats-grid">
+        <div class="stat-card orange">
+          <div class="stat-label">Ventas este mes</div>
+          <div class="stat-value">$0</div>
+          <div class="stat-sub">0 pedidos completados</div>
+        </div>
+        <div class="stat-card green">
+          <div class="stat-label">Pedidos pendientes</div>
+          <div class="stat-value">3</div>
+          <div class="stat-sub">Requieren atención</div>
+        </div>
+        <div class="stat-card blue">
+          <div class="stat-label">Obras disponibles</div>
+          <div class="stat-value">0</div>
+          <div class="stat-sub">Subí tu primera obra</div>
+        </div>
+        <div class="stat-card gold">
+          <div class="stat-label">Encargos nuevos</div>
+          <div class="stat-value">2</div>
+          <div class="stat-sub">Sin responder</div>
+        </div>
+      </div>
+
+      <div class="dash-grid">
+        <div>
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">Pedidos recientes</span>
+              <button class="btn btn-ghost" onclick="showTab('pedidos',null)" style="font-size:.62rem;padding:.4rem .8rem;">Ver todos</button>
+            </div>
+            <div class="card-body" style="padding:0;">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Cliente</th>
+                    <th>Producto</th>
+                    <th>Total</th>
+                    <th>Estado</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="name">María G.</td>
+                    <td>Print A3 — El Paseo</td>
+                    <td style="color:var(--rust)">USD 35</td>
+                    <td><span class="badge badge-pending">Pendiente</span></td>
+                  </tr>
+                  <tr>
+                    <td class="name">Lucas M.</td>
+                    <td>Ebook — La mirada</td>
+                    <td style="color:var(--rust)">USD 18</td>
+                    <td><span class="badge badge-confirmed">Confirmado</span></td>
+                  </tr>
+                  <tr>
+                    <td class="name">Ana P.</td>
+                    <td>Stickers Manchas v.1</td>
+                    <td style="color:var(--rust)">USD 8</td>
+                    <td><span class="badge badge-shipped">Enviado</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">Encargos recientes</span>
+            </div>
+            <div class="card-body">
+              <div style="margin-bottom:1.2rem;padding-bottom:1.2rem;border-bottom:1px solid var(--border);">
+                <div style="display:flex;justify-content:space-between;margin-bottom:.4rem;">
+                  <span style="font-size:.82rem;font-weight:400;">Bodega del Sur</span>
+                  <span class="badge badge-pending">Nuevo</span>
+                </div>
+                <p style="font-size:.75rem;color:var(--ink-faint);line-height:1.6;">Consulta sobre etiqueta de vino para línea premium.</p>
+              </div>
+              <div>
+                <div style="display:flex;justify-content:space-between;margin-bottom:.4rem;">
+                  <span style="font-size:.82rem;font-weight:400;">Rodrigo F.</span>
+                  <span class="badge badge-pending">Nuevo</span>
+                </div>
+                <p style="font-size:.75rem;color:var(--ink-faint);line-height:1.6;">Obra personalizada para regalar, paisaje urbano.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">Accesos rápidos</span>
+            </div>
+            <div class="card-body" style="display:flex;flex-direction:column;gap:.6rem;">
+              <button class="btn btn-primary" onclick="openModal('nueva-obra')" style="justify-content:center;">+ Subir obra</button>
+              <button class="btn btn-secondary" onclick="openModal('nuevo-producto')" style="justify-content:center;">+ Nuevo producto</button>
+              <button class="btn btn-secondary" onclick="showTab('envios',null)" style="justify-content:center;">⚙ Configurar envíos</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- OBRAS -->
+    <div class="tab-panel" id="tab-obras">
+      <div class="productos-header">
+        <div class="search-bar">
+          <span>🔍</span>
+          <input type="text" placeholder="Buscar obra...">
+        </div>
+        <button class="btn btn-primary" onclick="openModal('nueva-obra')">+ Nueva obra</button>
+      </div>
+      <div class="filter-bar">
+        <button class="filter-pill active">Todas</button>
+        <button class="filter-pill">Acuarela</button>
+        <button class="filter-pill">Acrílico</button>
+        <button class="filter-pill">Carbonilla</button>
+        <button class="filter-pill">Disponibles</button>
+        <button class="filter-pill">Vendidas</button>
+      </div>
+      <div class="obras-list" id="obras-list">
+        <!-- Obras se cargan dinámicamente -->
+        <div style="grid-column:1/-1;text-align:center;padding:4rem 2rem;color:var(--ink-faint);">
+          <div style="font-size:2rem;margin-bottom:1rem;">◻</div>
+          <p style="font-size:.85rem;margin-bottom:1.5rem;">Todavía no subiste ninguna obra.</p>
+          <button class="btn btn-primary" onclick="openModal('nueva-obra')">Subir primera obra</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- PRODUCTOS -->
+    <div class="tab-panel" id="tab-productos">
+      <div class="productos-header">
+        <div class="search-bar">
+          <span>🔍</span>
+          <input type="text" placeholder="Buscar producto...">
+        </div>
+        <button class="btn btn-primary" onclick="openModal('nuevo-producto')">+ Nuevo producto</button>
+      </div>
+      <div class="filter-bar">
+        <button class="filter-pill active">Todos</button>
+        <button class="filter-pill">Prints</button>
+        <button class="filter-pill">Ebooks</button>
+        <button class="filter-pill">Stickers</button>
+        <button class="filter-pill">Materiales</button>
+      </div>
+      <div class="card">
+        <div class="card-body" style="padding:0;">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Producto</th>
+                <th>Tipo</th>
+                <th>Precio</th>
+                <th>Stock</th>
+                <th>Activo</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="productos-table">
+              <tr>
+                <td colspan="6" style="text-align:center;padding:3rem;color:var(--ink-faint);font-size:.82rem;">
+                  No hay productos. <button onclick="openModal('nuevo-producto')" style="background:none;border:none;color:var(--rust);cursor:pointer;font-family:'Jost',sans-serif;font-size:.82rem;">Crear primero →</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- PEDIDOS -->
+    <div class="tab-panel" id="tab-pedidos">
+      <div class="filter-bar">
+        <button class="filter-pill active">Todos</button>
+        <button class="filter-pill">Pendientes</button>
+        <button class="filter-pill">Confirmados</button>
+        <button class="filter-pill">Enviados</button>
+        <button class="filter-pill">Entregados</button>
+      </div>
+      <div class="card">
+        <div class="card-body" style="padding:0;">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Cliente</th>
+                <th>Producto</th>
+                <th>Entrega</th>
+                <th>Total</th>
+                <th>Estado</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="color:var(--ink-faint);font-size:.72rem;">#001</td>
+                <td class="name">María González<br><span style="font-size:.7rem;color:var(--ink-faint);">maria@gmail.com</span></td>
+                <td>Print A3 — El Paseo de Flodeo</td>
+                <td><span class="badge badge-confirmed">Envío</span></td>
+                <td style="color:var(--rust);font-weight:400;">USD 35</td>
+                <td><span class="badge badge-pending">Pendiente</span></td>
+                <td><button class="btn btn-secondary" onclick="openModal('pedido-detalle')" style="font-size:.62rem;padding:.4rem .8rem;">Ver</button></td>
+              </tr>
+              <tr>
+                <td style="color:var(--ink-faint);font-size:.72rem;">#002</td>
+                <td class="name">Lucas Méndez<br><span style="font-size:.7rem;color:var(--ink-faint);">lucas@gmail.com</span></td>
+                <td>Ebook — La mirada del acuarelista</td>
+                <td><span class="badge badge-digital">Digital</span></td>
+                <td style="color:var(--rust);font-weight:400;">USD 18</td>
+                <td><span class="badge badge-confirmed">Confirmado</span></td>
+                <td><button class="btn btn-secondary" onclick="openModal('pedido-detalle')" style="font-size:.62rem;padding:.4rem .8rem;">Ver</button></td>
+              </tr>
+              <tr>
+                <td style="color:var(--ink-faint);font-size:.72rem;">#003</td>
+                <td class="name">Ana Pereyra<br><span style="font-size:.7rem;color:var(--ink-faint);">ana@gmail.com</span></td>
+                <td>Stickers Manchas vol. 1</td>
+                <td><span class="badge badge-confirmed">Envío</span></td>
+                <td style="color:var(--rust);font-weight:400;">USD 8</td>
+                <td><span class="badge badge-shipped">Enviado</span></td>
+                <td><button class="btn btn-secondary" onclick="openModal('pedido-detalle')" style="font-size:.62rem;padding:.4rem .8rem;">Ver</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ENCARGOS -->
+    <div class="tab-panel" id="tab-encargos">
+      <div class="encargo-card">
+        <div class="encargo-header">
+          <div>
+            <div class="encargo-nombre">Bodega del Sur</div>
+            <div class="encargo-email">contacto@bodegadelsur.com</div>
+          </div>
+          <div style="display:flex;gap:.5rem;align-items:center;">
+            <span class="badge badge-pending">Nuevo</span>
+            <span class="badge badge-original">Etiqueta / branding</span>
+          </div>
+        </div>
+        <div class="encargo-body">
+          Hola, estamos buscando un artista para diseñar la etiqueta de nuestra nueva línea de vinos premium. Nos interesa un estilo expresivo, con acuarela. ¿Podemos coordinar una llamada para hablar sobre el proyecto?
+        </div>
+        <div class="encargo-meta">
+          <span class="encargo-fecha">Hace 2 horas</span>
+          <button class="btn btn-primary" style="font-size:.62rem;padding:.45rem 1rem;">Responder por email</button>
+          <button class="btn btn-secondary" style="font-size:.62rem;padding:.45rem 1rem;">WhatsApp</button>
+          <button class="btn btn-ghost" style="font-size:.62rem;padding:.45rem 1rem;">Marcar leído</button>
+        </div>
+      </div>
+
+      <div class="encargo-card">
+        <div class="encargo-header">
+          <div>
+            <div class="encargo-nombre">Rodrigo Fernández</div>
+            <div class="encargo-email">rodrigo.f@gmail.com</div>
+          </div>
+          <div style="display:flex;gap:.5rem;align-items:center;">
+            <span class="badge badge-pending">Nuevo</span>
+            <span class="badge badge-print">Obra personalizada</span>
+          </div>
+        </div>
+        <div class="encargo-body">
+          Quiero regalarle una obra a mi pareja. Ella ama los paisajes urbanos, especialmente las escenas con gente en movimiento. ¿Hacés encargos de ese estilo? ¿Cuáles serían los tiempos y el precio?
+        </div>
+        <div class="encargo-meta">
+          <span class="encargo-fecha">Hace 5 horas</span>
+          <button class="btn btn-primary" style="font-size:.62rem;padding:.45rem 1rem;">Responder por email</button>
+          <button class="btn btn-secondary" style="font-size:.62rem;padding:.45rem 1rem;">WhatsApp</button>
+          <button class="btn btn-ghost" style="font-size:.62rem;padding:.45rem 1rem;">Marcar leído</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ENVIOS -->
+    <div class="tab-panel" id="tab-envios">
+      <div class="card" style="max-width:600px;">
+        <div class="card-header">
+          <span class="card-title">Zonas de envío — Argentina</span>
+        </div>
+        <div class="card-body">
+          <p style="font-size:.8rem;color:var(--ink-faint);margin-bottom:1.5rem;line-height:1.7;">
+            Configurá el costo de envío por zona. El cliente ve el costo al hacer el checkout según su provincia.
+          </p>
+          <div class="envio-zona">
+            <span class="envio-zona-name">📍 Río Cuarto / Córdoba capital</span>
+            <div class="envio-zona-input">
+              <span>ARS</span>
+              <input type="number" value="1500" placeholder="0">
+            </div>
+          </div>
+          <div class="envio-zona">
+            <span class="envio-zona-name">🗺 Resto de Córdoba</span>
+            <div class="envio-zona-input">
+              <span>ARS</span>
+              <input type="number" value="2500" placeholder="0">
+            </div>
+          </div>
+          <div class="envio-zona">
+            <span class="envio-zona-name">🇦🇷 Buenos Aires (CABA y GBA)</span>
+            <div class="envio-zona-input">
+              <span>ARS</span>
+              <input type="number" value="3500" placeholder="0">
+            </div>
+          </div>
+          <div class="envio-zona">
+            <span class="envio-zona-name">📦 Interior del país</span>
+            <div class="envio-zona-input">
+              <span>ARS</span>
+              <input type="number" value="4500" placeholder="0">
+            </div>
+          </div>
+          <div class="envio-zona">
+            <span class="envio-zona-name">🌍 Internacional</span>
+            <div class="envio-zona-input" style="flex-direction:column;align-items:flex-end;gap:.3rem;">
+              <span style="font-size:.72rem;color:var(--rust);">Consultar por DM</span>
+            </div>
+          </div>
+          <div style="margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--border);">
+            <label style="display:flex;align-items:center;gap:.8rem;cursor:pointer;font-size:.82rem;color:var(--ink-light);">
+              <label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label>
+              Envío gratis en compras mayores a USD 100
+            </label>
+          </div>
+          <div style="margin-top:1rem;">
+            <label style="display:flex;align-items:center;gap:.8rem;cursor:pointer;font-size:.82rem;color:var(--ink-light);">
+              <label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label>
+              Retiro en persona disponible (Río Cuarto)
+            </label>
+          </div>
+          <button class="btn btn-primary" style="margin-top:1.5rem;" onclick="showNotif('Configuración guardada','success')">Guardar cambios</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- CURSOS (placeholder) -->
+    <div class="tab-panel" id="tab-cursos">
+      <div style="text-align:center;padding:6rem 2rem;color:var(--ink-faint);">
+        <div style="font-size:3rem;margin-bottom:1rem;">◈</div>
+        <h2 style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:2rem;margin-bottom:1rem;color:var(--ink-light);">Módulo de cursos</h2>
+        <p style="font-size:.85rem;max-width:400px;margin:0 auto 2rem;line-height:1.8;">Pronto vas a poder crear y vender cursos con videos, materiales y seguimiento de alumnos.</p>
+        <span class="badge badge-pending" style="font-size:.7rem;padding:.4rem 1rem;">En desarrollo</span>
+      </div>
+    </div>
+
+  </div><!-- end content -->
+</div><!-- end main -->
+
+<!-- MODAL: NUEVA OBRA -->
+<div class="modal-overlay" id="modal-nueva-obra">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title">Nueva obra</span>
+      <button class="modal-close" onclick="closeModal('nueva-obra')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="upload-zone" onclick="document.getElementById('obra-file').click()">
+        <p>Arrastrá la imagen o hacé click para subir</p>
+        <span>JPG, PNG — máximo 10MB</span>
+        <input type="file" id="obra-file" style="display:none" accept="image/*" onchange="previewImg(this)">
+      </div>
+      <div id="img-preview" style="display:none;margin-top:1rem;">
+        <img id="preview-src" style="width:100%;max-height:220px;object-fit:cover;">
+      </div>
+      <div style="height:1.5rem;"></div>
+      <div class="form-grid">
+        <div class="fg">
+          <label>Título</label>
+          <input type="text" placeholder="Nombre de la obra">
+        </div>
+        <div class="fg">
+          <label>Técnica</label>
+          <select>
+            <option>Acuarela</option>
+            <option>Acrílico</option>
+            <option>Carbonilla</option>
+            <option>Técnica mixta</option>
+            <option>Otro</option>
+          </select>
+        </div>
+        <div class="fg">
+          <label>Ancho (cm)</label>
+          <input type="number" placeholder="ej. 40">
+        </div>
+        <div class="fg">
+          <label>Alto (cm)</label>
+          <input type="number" placeholder="ej. 50">
+        </div>
+        <div class="fg">
+          <label>Año</label>
+          <input type="number" placeholder="2025" value="2025">
+        </div>
+        <div class="fg">
+          <label>Serie</label>
+          <select>
+            <option value="">Sin serie</option>
+            <option>Caleidoscopio</option>
+            <option>Elementos en Movimiento</option>
+          </select>
+        </div>
+        <div class="fg">
+          <label>Precio (USD)</label>
+          <input type="number" placeholder="0">
+        </div>
+        <div class="fg">
+          <label>Disponibilidad</label>
+          <select>
+            <option>Disponible</option>
+            <option>Vendida</option>
+            <option>No está en venta</option>
+          </select>
+        </div>
+        <div class="fg full">
+          <label>Concepto / descripción</label>
+          <textarea placeholder="Descripción opcional de la obra..."></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('nueva-obra')">Cancelar</button>
+      <button class="btn btn-primary" onclick="saveObra()">Guardar obra</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: NUEVO PRODUCTO -->
+<div class="modal-overlay" id="modal-nuevo-producto">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title">Nuevo producto</span>
+      <button class="modal-close" onclick="closeModal('nuevo-producto')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="fg">
+          <label>Nombre</label>
+          <input type="text" placeholder="Nombre del producto">
+        </div>
+        <div class="fg">
+          <label>Tipo</label>
+          <select id="tipo-producto" onchange="toggleProductoTipo()">
+            <option value="print">Print</option>
+            <option value="ebook">Ebook</option>
+            <option value="sticker">Stickers</option>
+            <option value="material">Materiales</option>
+          </select>
+        </div>
+        <div class="fg">
+          <label>Precio (USD)</label>
+          <input type="number" placeholder="0">
+        </div>
+        <div class="fg" id="stock-field">
+          <label>Stock</label>
+          <input type="number" placeholder="0">
+        </div>
+        <div class="fg full" id="archivo-digital" style="display:none;">
+          <label>Archivo digital</label>
+          <div class="upload-zone">
+            <p>Subí el archivo (PDF, ZIP)</p>
+            <span>Se entrega automáticamente al comprador</span>
+          </div>
+        </div>
+        <div class="fg full">
+          <label>Descripción</label>
+          <textarea placeholder="Descripción del producto..."></textarea>
+        </div>
+        <div class="fg full">
+          <label>Imagen de portada</label>
+          <div class="upload-zone">
+            <p>Imagen del producto</p>
+            <span>JPG, PNG — máximo 5MB</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('nuevo-producto')">Cancelar</button>
+      <button class="btn btn-primary" onclick="saveProducto()">Guardar producto</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: PEDIDO DETALLE -->
+<div class="modal-overlay" id="modal-pedido-detalle">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title">Pedido #001</span>
+      <button class="modal-close" onclick="closeModal('pedido-detalle')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem;">
+        <div>
+          <div style="font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:.3rem;">Cliente</div>
+          <div style="font-size:.85rem;">María González</div>
+          <div style="font-size:.75rem;color:var(--ink-faint);">maria@gmail.com</div>
+        </div>
+        <div>
+          <div style="font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:.3rem;">Producto</div>
+          <div style="font-size:.85rem;">Print A3 — El Paseo de Flodeo</div>
+          <div style="font-size:.75rem;color:var(--rust);">USD 35</div>
+        </div>
+        <div>
+          <div style="font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:.3rem;">Entrega</div>
+          <div style="font-size:.85rem;">Envío — Córdoba capital</div>
+          <div style="font-size:.75rem;color:var(--ink-faint);">ARS 2.500</div>
+        </div>
+        <div>
+          <div style="font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:.3rem;">Dirección</div>
+          <div style="font-size:.85rem;">Av. Colón 1234</div>
+          <div style="font-size:.75rem;color:var(--ink-faint);">Córdoba, Argentina</div>
+        </div>
+      </div>
+
+      <div style="margin-bottom:1.5rem;">
+        <div style="font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:.8rem;">Actualizar estado</div>
+        <div style="display:flex;gap:.5rem;flex-wrap:wrap;">
+          <button class="btn btn-secondary" style="font-size:.62rem;" onclick="updateEstado('Confirmado')">Confirmar</button>
+          <button class="btn btn-secondary" style="font-size:.62rem;" onclick="updateEstado('Preparando')">Preparando</button>
+          <button class="btn btn-primary" style="font-size:.62rem;" onclick="openTracking()">Marcar enviado</button>
+          <button class="btn btn-success" style="font-size:.62rem;" onclick="updateEstado('Entregado')">Entregado</button>
+        </div>
+      </div>
+
+      <div id="tracking-field" style="display:none;margin-bottom:1.5rem;">
+        <div class="fg">
+          <label>Número de seguimiento</label>
+          <input type="text" placeholder="ej. OCA-123456789" id="tracking-input">
+        </div>
+        <button class="btn btn-primary" style="font-size:.62rem;" onclick="saveTracking()">Guardar y notificar cliente</button>
+      </div>
+
+      <div class="pedido-timeline">
+        <div style="font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:1rem;">Historial</div>
+        <div class="timeline-item">
+          <div class="timeline-dot done">✓</div>
+          <div><div class="timeline-text">Pago confirmado</div><div class="timeline-date">Hoy, 10:23</div></div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot current">●</div>
+          <div><div class="timeline-text">Pendiente de preparación</div><div class="timeline-date">Hoy, 10:23</div></div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot pending"></div>
+          <div><div class="timeline-text" style="color:var(--ink-faint);">Enviado</div></div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot pending"></div>
+          <div><div class="timeline-text" style="color:var(--ink-faint);">Entregado</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('pedido-detalle')">Cerrar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// Tab navigation
+function showTab(id, el){
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(i=>i.classList.remove('active'));
+  if(el) el.classList.add('active');
+  const titles={dashboard:'Dashboard',obras:'Obras',productos:'Productos',pedidos:'Pedidos',encargos:'Encargos',envios:'Envíos',cursos:'Cursos'};
+  document.getElementById('topbarTitle').textContent=titles[id]||id;
+}
+
+// Modals
+function openModal(id){
+  document.getElementById('modal-'+id).classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeModal(id){
+  document.getElementById('modal-'+id).classList.remove('open');
+  document.body.style.overflow='';
+}
+document.querySelectorAll('.modal-overlay').forEach(m=>{
+  m.addEventListener('click',e=>{ if(e.target===m) m.classList.remove('open'),document.body.style.overflow=''; });
+});
+
+// Notifications
+function showNotif(msg,type=''){
+  const n=document.getElementById('notif');
+  n.textContent=msg;n.className='notif '+(type||'');
+  n.classList.add('show');
+  setTimeout(()=>n.classList.remove('show'),3000);
+}
+
+// Image preview
+function previewImg(input){
+  if(!input.files[0]) return;
+  const r=new FileReader();
+  r.onload=e=>{
+    document.getElementById('preview-src').src=e.target.result;
+    document.getElementById('img-preview').style.display='block';
+  };
+  r.readAsDataURL(input.files[0]);
+}
+
+// Save obra (demo)
+function saveObra(){
+  showNotif('Obra guardada correctamente','success');
+  closeModal('nueva-obra');
+}
+
+// Save producto (demo)
+function saveProducto(){
+  showNotif('Producto creado correctamente','success');
+  closeModal('nuevo-producto');
+}
+
+// Tipo producto toggle
+function toggleProductoTipo(){
+  const tipo=document.getElementById('tipo-producto').value;
+  const isDigital=tipo==='ebook';
+  document.getElementById('archivo-digital').style.display=isDigital?'block':'none';
+}
+
+// Pedido estados
+function updateEstado(estado){
+  showNotif('Estado actualizado: '+estado,'success');
+}
+function openTracking(){
+  document.getElementById('tracking-field').style.display='block';
+}
+function saveTracking(){
+  const v=document.getElementById('tracking-input').value;
+  if(!v){ showNotif('Ingresá el número de seguimiento','error'); return; }
+  showNotif('Enviado — cliente notificado por email','success');
+  document.getElementById('tracking-field').style.display='none';
+  closeModal('pedido-detalle');
+}
+
+// Filter pills
+document.querySelectorAll('.filter-pill').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    btn.closest('.filter-bar').querySelectorAll('.filter-pill').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+  });
+});
+
+// Mobile sidebar
+function toggleSidebar(){
+  document.getElementById('sidebar').classList.toggle('open');
+}
+
+// Show menu btn on mobile
+if(window.innerWidth<=900){
+  document.getElementById('menuBtn').style.display='flex';
+}
+window.addEventListener('resize',()=>{
+  document.getElementById('menuBtn').style.display=window.innerWidth<=900?'flex':'none';
+});
+</script>
+</body>
+</html>
