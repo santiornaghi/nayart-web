@@ -43,7 +43,8 @@ app.use(rateLimit({
 const authLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 10,
-  message: { error: 'Demasiados intentos de login.' },
+  skipSuccessfulRequests: true, // solo cuentan los intentos fallidos
+  message: { error: 'Demasiados intentos fallidos. Esperá 15 minutos y volvé a probar.' },
 })
 
 // ── MIDDLEWARES ────────────────────────────────────────────
