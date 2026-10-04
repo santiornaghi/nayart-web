@@ -1093,7 +1093,8 @@ async function api(path, opts={}){
 }
 
 // ── AUTH ───────────────────────────────────────────────────────
-const loginScreen = document.getElementById('login-screen');
+// Se busca en el momento: la pantalla de login se crea más abajo, al iniciar
+const getLoginScreen = () => document.getElementById('login-screen');
 const appMain     = document.getElementById('app-main') || document.querySelector('.main');
 
 async function checkAuth(){
@@ -1108,13 +1109,13 @@ async function checkAuth(){
 }
 
 function showLogin(){
-  if(loginScreen) loginScreen.style.display='flex';
+  const ls = getLoginScreen(); if(ls) ls.style.display='flex';
   if(appMain) appMain.style.display='none';
   document.querySelector('.sidebar') && (document.querySelector('.sidebar').style.display='none');
 }
 function hideLogin(){
-  if(loginScreen) loginScreen.style.display='none';
-  if(appMain) appMain.style.display='flex';
+  const ls = getLoginScreen(); if(ls) ls.style.display='none';
+  if(appMain) appMain.style.display='';
   document.querySelector('.sidebar') && (document.querySelector('.sidebar').style.display='');
 }
 
@@ -1471,6 +1472,7 @@ if(!document.getElementById('login-screen')){
     <button onclick="login()" style="background:var(--ink);color:var(--white);border:none;padding:.7rem 2rem;border-radius:4px;font-family:Jost,sans-serif;font-size:.75rem;letter-spacing:.15em;text-transform:uppercase;cursor:pointer;width:280px;">Ingresar</button>
   `;
   document.body.appendChild(ls);
+  ls.addEventListener('keydown', e => { if(e.key === 'Enter') login(); });
 }
 
 checkAuth();
