@@ -17,11 +17,15 @@ import { errorHandler } from './middleware/errorHandler.js'
 const app  = express()
 const PORT = process.env.PORT || 3000
 
+// Render corre detrás de un proxy: necesario para el rate limit
+app.set('trust proxy', 1)
+
 // ── SEGURIDAD ──────────────────────────────────────────────
 app.use(helmet())
 app.use(cors({
   origin: [
     process.env.FRONTEND_URL,
+    'https://santiornaghi.github.io',
     'http://localhost:5500',  // live-server local
     'http://127.0.0.1:5500',
   ],

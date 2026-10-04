@@ -469,7 +469,8 @@ body{background:var(--paper);color:var(--ink);font-family:'Jost',sans-serif;font
     </div>
   </nav>
   <div class="sidebar-bottom">
-    <button class="logout-btn">→ Cerrar sesión</button>
+    <button class="logout-btn" onclick="openModal('cambiar-pass')">⚿ Cambiar contraseña</button>
+    <button class="logout-btn" onclick="logout()">→ Cerrar sesión</button>
   </div>
 </aside>
 
@@ -915,6 +916,25 @@ body{background:var(--paper);color:var(--ink);font-family:'Jost',sans-serif;font
   </div>
 </div>
 
+<!-- MODAL: CAMBIAR CONTRASEÑA -->
+<div class="modal-overlay" id="modal-cambiar-pass">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title">Cambiar contraseña</span>
+      <button class="modal-close" onclick="closeModal('cambiar-pass')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="fg"><label>Contraseña actual</label><input type="password" id="pass-actual" autocomplete="current-password"></div>
+      <div class="fg"><label>Nueva contraseña (mínimo 10 caracteres)</label><input type="password" id="pass-nueva" autocomplete="new-password"></div>
+      <div class="fg"><label>Repetir nueva contraseña</label><input type="password" id="pass-repetir" autocomplete="new-password"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('cambiar-pass')">Cancelar</button>
+      <button class="btn btn-primary" onclick="cambiarPassword()">Guardar</button>
+    </div>
+  </div>
+</div>
+
 <!-- MODAL: NUEVO PRODUCTO -->
 <div class="modal-overlay" id="modal-nuevo-producto">
   <div class="modal">
@@ -1113,6 +1133,21 @@ async function login(){
     hideLogin();
     loadDashboard();
   } catch(e){ showNotif('No se pudo conectar al servidor','error'); }
+}
+
+async function cambiarPassword(){
+  const actual = document.getElementById('pass-actual').value;
+  const nueva = document.getElementById('pass-nueva').value;
+  const rep = document.getElementById('pass-repetir').value;
+  if(!actual || !nueva){ showNotif('Completá todos los campos','error'); return; }
+  if(nueva.length < 10){ showNotif('La nueva contraseña debe tener al menos 10 caracteres','error'); return; }
+  if(nueva !== rep){ showNotif('Las contraseñas nuevas no coinciden','error'); return; }
+  try {
+    await api('/auth/password', { method:'PUT', headers:{'Content-Type':'application/json'}, body: JSON.stringify({actual, nueva}) });
+    ['pass-actual','pass-nueva','pass-repetir'].forEach(id=>document.getElementById(id).value='');
+    closeModal('cambiar-pass');
+    showNotif('Contraseña actualizada','success');
+  } catch(e){ showNotif(e.message,'error'); }
 }
 
 function logout(){

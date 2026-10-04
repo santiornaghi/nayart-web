@@ -35,4 +35,18 @@ router.get('/me', authMiddleware, async (req, res, next) => {
   } catch (e) { next(e) }
 })
 
+router.put('/password', authMiddleware, async (req, res, next) => {
+  try {
+    const { actual, nueva } = req.body
+    if (!actual || !nueva) throw new AppError('Completá la contraseña actual y la nueva')
+    if (nueva.length < 10) throw new AppError('La nueva contraseña debe tener al menos 10 caracteres')
+    const usuario = await prisma.usuario.findUniqueOrThrow({ where: { id: req.usuario.id } })
+    const ok = await bcrypt.compare(actual, usuario.password)
+    if (!ok) throw new AppError('La contraseña actual no es correcta', 400)
+    const hash = await bcrypt.hash(nueva, 12)
+    await prisma.usuario.update({ where: { id: usuario.id }, data: { password: hash } })
+    res.json({ ok: true })
+  } catch (e) { next(e) }
+})
+
 export default router
