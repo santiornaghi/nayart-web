@@ -8,9 +8,15 @@ async function main() {
 
   const hash = await bcrypt.hash('nayart2025', 12)
 
+  // Reseteo de contraseña: si existe la variable ADMIN_RESET_PASSWORD en Render,
+  // al arrancar se pone esa contraseña. Después de entrar, borrar la variable.
+  const reset = process.env.ADMIN_RESET_PASSWORD
+  const update = reset ? { password: await bcrypt.hash(reset, 12) } : {}
+  if (reset) console.log('⚠ Contraseña del admin reseteada desde ADMIN_RESET_PASSWORD. Borrá la variable después de entrar.')
+
   const usuario = await prisma.usuario.upsert({
     where:  { email: 'santiornaghi@gmail.com' },
-    update: {},
+    update,
     create: {
       email:    'santiornaghi@gmail.com',
       password: hash,
