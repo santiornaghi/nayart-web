@@ -9,6 +9,11 @@ export function errorHandler(err, req, res, next) {
     return res.status(404).json({ error: 'Registro no encontrado.' })
   }
 
+  // Archivo demasiado grande (multer)
+  if (err.code === 'LIMIT_FILE_SIZE') {
+    return res.status(413).json({ error: 'La imagen es demasiado grande (máximo 10 MB).' })
+  }
+
   // Errores de validación
   if (err.name === 'ValidationError') {
     return res.status(400).json({ error: err.message })

@@ -1243,6 +1243,19 @@ async function loadObras(){
   } catch(e){ showNotif('Error cargando obras: '+e.message,'error'); }
 }
 
+// Achica la foto en el navegador antes de subirla (lado mayor 2400px, JPEG)
+async function comprimirImagen(file, maxLado=2400, calidad=0.88){
+  if(!file.type.startsWith('image/')) return file;
+  const img = await createImageBitmap(file);
+  const escala = Math.min(1, maxLado / Math.max(img.width, img.height));
+  if(escala === 1 && file.size <= 3*1024*1024) return file;
+  const c = document.createElement('canvas');
+  c.width = Math.round(img.width*escala); c.height = Math.round(img.height*escala);
+  c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+  const blob = await new Promise(r => c.toBlob(r, 'image/jpeg', calidad));
+  return new File([blob], (file.name.replace(/\.[^.]+$/,'')||'obra')+'.jpg', {type:'image/jpeg'});
+}
+
 async function saveObra(){
   const v = id => (document.getElementById(id)?.value || '').trim();
   const file = document.getElementById('obra-file')?.files[0];
@@ -1252,8 +1265,15 @@ async function saveObra(){
   if(!ancho || !alto){ showNotif('Completá ancho y alto','error'); return; }
   if(!anio){ showNotif('Completá el año','error'); return; }
   if(precio === ''){ showNotif('Completá el precio (puede ser 0)','error'); return; }
+  const btn = document.getElementById('obra-guardar');
+  const txt = btn.textContent; btn.disabled = true; btn.textContent = 'Preparando imagen...';
+  let imagen;
+  try { imagen = await comprimirImagen(file); }
+  catch(e){ imagen = file; }
+  if(imagen.size > 10*1024*1024){ showNotif('La imagen sigue pesando más de 10 MB. Probá con otra versión de la foto.','error'); btn.disabled=false; btn.textContent=txt; return; }
+  btn.textContent = 'Guardando...';
   const fd = new FormData();
-  fd.append('imagen', file);
+  fd.append('imagen', imagen);
   fd.append('titulo', titulo);
   fd.append('tecnica', v('obra-tecnica') || 'ACUARELA');
   fd.append('ancho', ancho);
@@ -1264,8 +1284,6 @@ async function saveObra(){
   fd.append('disponible', v('obra-disponible') || 'DISPONIBLE');
   if(v('obra-serie')) fd.append('serie', v('obra-serie'));
   if(v('obra-concepto')) fd.append('concepto', v('obra-concepto'));
-  const btn = document.getElementById('obra-guardar');
-  const txt = btn.textContent; btn.disabled = true; btn.textContent = 'Guardando...';
   try {
     await api('/obras', { method:'POST', body: fd });
     showNotif('Obra guardada correctamente','success');
