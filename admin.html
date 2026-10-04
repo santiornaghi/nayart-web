@@ -859,33 +859,33 @@ body{background:var(--paper);color:var(--ink);font-family:'Jost',sans-serif;font
       <div class="form-grid">
         <div class="fg">
           <label>Título</label>
-          <input type="text" placeholder="Nombre de la obra">
+          <input type="text" id="obra-titulo" placeholder="Nombre de la obra">
         </div>
         <div class="fg">
           <label>Técnica</label>
-          <select>
-            <option>Acuarela</option>
-            <option>Acrílico</option>
-            <option>Carbonilla</option>
-            <option>Técnica mixta</option>
-            <option>Otro</option>
+          <select id="obra-tecnica">
+            <option value="ACUARELA">Acuarela</option>
+            <option value="ACRILICO">Acrílico</option>
+            <option value="CARBONILLA">Carbonilla</option>
+            <option value="MIXTA">Técnica mixta</option>
+            <option value="OTRO">Otro</option>
           </select>
         </div>
         <div class="fg">
           <label>Ancho (cm)</label>
-          <input type="number" placeholder="ej. 40">
+          <input type="number" id="obra-ancho" placeholder="ej. 40">
         </div>
         <div class="fg">
           <label>Alto (cm)</label>
-          <input type="number" placeholder="ej. 50">
+          <input type="number" id="obra-alto" placeholder="ej. 50">
         </div>
         <div class="fg">
           <label>Año</label>
-          <input type="number" placeholder="2025" value="2025">
+          <input type="number" id="obra-anio" placeholder="2025" value="2025">
         </div>
         <div class="fg">
           <label>Serie</label>
-          <select>
+          <select id="obra-serie">
             <option value="">Sin serie</option>
             <option>Caleidoscopio</option>
             <option>Elementos en Movimiento</option>
@@ -893,25 +893,25 @@ body{background:var(--paper);color:var(--ink);font-family:'Jost',sans-serif;font
         </div>
         <div class="fg">
           <label>Precio (USD)</label>
-          <input type="number" placeholder="0">
+          <input type="number" id="obra-precio" placeholder="0">
         </div>
         <div class="fg">
           <label>Disponibilidad</label>
-          <select>
-            <option>Disponible</option>
-            <option>Vendida</option>
-            <option>No está en venta</option>
+          <select id="obra-disponible">
+            <option value="DISPONIBLE">Disponible</option>
+            <option value="VENDIDA">Vendida</option>
+            <option value="NO_DISPONIBLE">No está en venta</option>
           </select>
         </div>
         <div class="fg full">
           <label>Concepto / descripción</label>
-          <textarea placeholder="Descripción opcional de la obra..."></textarea>
+          <textarea id="obra-concepto" placeholder="Descripción opcional de la obra..."></textarea>
         </div>
       </div>
     </div>
     <div class="modal-footer">
       <button class="btn btn-ghost" onclick="closeModal('nueva-obra')">Cancelar</button>
-      <button class="btn btn-primary" onclick="saveObra()">Guardar obra</button>
+      <button class="btn btn-primary" id="obra-guardar" onclick="saveObra()">Guardar obra</button>
     </div>
   </div>
 </div>
@@ -1210,50 +1210,72 @@ async function loadDashboard(){
 
 // ── OBRAS ──────────────────────────────────────────────────────
 async function loadObras(){
+  const list = document.getElementById('obras-list');
+  if(!list) return;
   try {
-    const data = await api('/obras');
-    const tbody = document.querySelector('#tab-obras table tbody');
-    if(!tbody || !data?.data) return;
-    tbody.innerHTML = data.data.map(o=>`
-      <tr>
-        <td><div style="display:flex;align-items:center;gap:.75rem;">
-          ${o.imagenUrl?`<img src="${o.imagenUrl}" style="width:36px;height:36px;object-fit:cover;border-radius:4px;">`:'<div style="width:36px;height:36px;background:var(--paper-dark);border-radius:4px;"></div>'}
-          <span>${o.titulo}</span>
-        </div></td>
-        <td>${o.tecnica}</td>
-        <td>${o.dimensiones||'—'}</td>
-        <td>${o.precio ? 'USD '+o.precio : '—'}</td>
-        <td><span class="badge badge-${o.disponible?'success':'neutral'}">${o.disponible?'Disponible':'Vendida'}</span></td>
-        <td><button class="btn btn-ghost" style="font-size:.65rem;padding:.3rem .6rem;" onclick="deleteObra('${o.id}')">Eliminar</button></td>
-      </tr>`).join('');
-  } catch(e){ showNotif('Error cargando obras','error'); }
+    const data = await api('/obras?limit=100');
+    const obras = data?.obras || [];
+    const disp = {DISPONIBLE:['delivered','Disponible'], VENDIDA:['cancelled','Vendida'], NO_DISPONIBLE:['original','No está en venta']};
+    const tec = {ACUARELA:'Acuarela', ACRILICO:'Acrílico', CARBONILLA:'Carbonilla', MIXTA:'Técnica mixta', OTRO:'Otro'};
+    if(!obras.length){
+      list.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:4rem 2rem;color:var(--ink-faint);">
+        <div style="font-size:2rem;margin-bottom:1rem;">◻</div>
+        <p style="font-size:.85rem;margin-bottom:1.5rem;">Todavía no subiste ninguna obra.</p>
+        <button class="btn btn-primary" onclick="openModal('nueva-obra')">Subir primera obra</button></div>`;
+      return;
+    }
+    list.innerHTML = obras.map(o=>{
+      const [cls, txt] = disp[o.disponible] || ['neutral', o.disponible];
+      return `<div class="obra-card">
+        <div class="obra-card-img">
+          <div class="obra-card-img-bg" style="background:url('${o.imagenUrl}') center/cover;"></div>
+          <div class="obra-card-status"><span class="badge badge-${cls}">${txt}</span></div>
+        </div>
+        <div class="obra-card-body">
+          <div class="obra-card-name">${o.titulo}</div>
+          <div class="obra-card-meta">${tec[o.tecnica]||o.tecnica} · ${o.ancho} × ${o.alto} cm · ${o.anio}${o.serie?' · '+o.serie:''}</div>
+          <div class="obra-card-price">${o.precio ? (o.moneda||'USD')+' '+o.precio : 'Sin precio'}</div>
+          <div class="obra-card-actions">
+            <button class="btn btn-ghost" style="font-size:.65rem;padding:.3rem .6rem;" onclick="deleteObra('${o.id}')">Eliminar</button>
+          </div>
+        </div>
+      </div>`;}).join('');
+  } catch(e){ showNotif('Error cargando obras: '+e.message,'error'); }
 }
 
 async function saveObra(){
-  const form = document.getElementById('modal-nueva-obra');
-  const inputs = form.querySelectorAll('input,select,textarea');
-  const titulo = inputs[0]?.value;
-  const tecnica = inputs[1]?.value;
-  const dimensiones = inputs[2]?.value;
-  const precio = inputs[3]?.value;
-  const disponible = inputs[4]?.value !== 'Vendida' && inputs[4]?.value !== 'No está en venta';
-  const descripcion = inputs[5]?.value;
-  const fileInput = form.querySelector('input[type="file"]');
+  const v = id => (document.getElementById(id)?.value || '').trim();
+  const file = document.getElementById('obra-file')?.files[0];
+  const titulo = v('obra-titulo'), ancho = v('obra-ancho'), alto = v('obra-alto'), anio = v('obra-anio'), precio = v('obra-precio');
+  if(!file){ showNotif('Subí la imagen de la obra','error'); return; }
   if(!titulo){ showNotif('El título es obligatorio','error'); return; }
+  if(!ancho || !alto){ showNotif('Completá ancho y alto','error'); return; }
+  if(!anio){ showNotif('Completá el año','error'); return; }
+  if(precio === ''){ showNotif('Completá el precio (puede ser 0)','error'); return; }
   const fd = new FormData();
+  fd.append('imagen', file);
   fd.append('titulo', titulo);
-  fd.append('tecnica', tecnica||'ACUARELA');
-  if(dimensiones) fd.append('dimensiones', dimensiones);
-  if(precio) fd.append('precio', precio);
-  fd.append('disponible', disponible);
-  if(descripcion) fd.append('descripcion', descripcion);
-  if(fileInput?.files[0]) fd.append('imagen', fileInput.files[0]);
+  fd.append('tecnica', v('obra-tecnica') || 'ACUARELA');
+  fd.append('ancho', ancho);
+  fd.append('alto', alto);
+  fd.append('anio', anio);
+  fd.append('precio', precio);
+  fd.append('moneda', 'USD');
+  fd.append('disponible', v('obra-disponible') || 'DISPONIBLE');
+  if(v('obra-serie')) fd.append('serie', v('obra-serie'));
+  if(v('obra-concepto')) fd.append('concepto', v('obra-concepto'));
+  const btn = document.getElementById('obra-guardar');
+  const txt = btn.textContent; btn.disabled = true; btn.textContent = 'Guardando...';
   try {
-    await fetch(API+'/obras', { method:'POST', headers:{'Authorization':'Bearer '+TOKEN}, body:fd });
+    await api('/obras', { method:'POST', body: fd });
     showNotif('Obra guardada correctamente','success');
     closeModal('nueva-obra');
+    ['obra-titulo','obra-ancho','obra-alto','obra-precio','obra-concepto'].forEach(id=>document.getElementById(id).value='');
+    document.getElementById('obra-file').value='';
+    document.getElementById('img-preview').style.display='none';
     loadObras();
-  } catch(e){ showNotif('Error guardando obra','error'); }
+  } catch(e){ showNotif(e.message || 'Error guardando obra','error'); }
+  finally { btn.disabled = false; btn.textContent = txt; }
 }
 
 async function deleteObra(id){
