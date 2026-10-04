@@ -17,7 +17,8 @@ export function errorHandler(err, req, res, next) {
   // Error genérico
   const status = err.status || err.statusCode || 500
   res.status(status).json({
-    error: process.env.NODE_ENV === 'production'
+    // Los errores 4xx son mensajes pensados para el usuario: se muestran siempre
+    error: process.env.NODE_ENV === 'production' && status >= 500
       ? 'Error interno del servidor'
       : err.message,
   })
