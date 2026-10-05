@@ -77,6 +77,32 @@ async function main() {
     console.log(`✓ ${originales.length} obras originales importadas`)
   }
 
+  // Descripción breve de cada obra (solo si todavía no tiene una cargada desde el panel)
+  const DESCRIPCIONES = {
+  'Bote en la orilla': 'Un bote rojo varado sobre la arena húmeda. El cielo se abre en azules lavados y la playa queda casi en blanco, hecha con pocas pinceladas.',
+  'La tranquera': 'Mediodía de campo entre alambrados y árboles. La luz quema el fondo y las sombras de la tranquera ordenan la escena.',
+  'Ciudad al atardecer': 'Una avenida a contraluz: bicicletas, peatones y sombras largas en violeta. El sol se disuelve entre los edificios.',
+  'El caballo': 'Un caballo oscuro y su cuidadora al sol de la tarde. La tierra está salpicada a pincel seco y las sombras caen en violeta.',
+  'Tormenta en el campo': 'Nubes cargadas sobre un campo abierto. El cielo está pintado húmedo sobre húmedo; abajo, vacas y un camino que se pierde.',
+  'El canal': 'Casas de ladrillo, un puente y el agua que lo refleja todo en verticales. Una ciudad vieja resuelta con pocos tonos tierra.',
+  'Niebla': 'Casi abstracta: una masa de grises que avanza y una línea de luz arriba. El granulado del pigmento hace el resto.',
+  'Laguna azul': 'Árboles y agua bajo un cielo índigo. Los bordes se funden y el horizonte apenas se sugiere.',
+  'Siesta': 'Una figura recostada en un rincón en penumbra, con una franja de sol que entra por la ventana.',
+  'Arboleda': 'Verdes superpuestos de una arboleda junto al agua. Las copas se arman con manchas y el reflejo se estira hacia abajo.',
+  'Tarde en el campo': 'Un casco de estancia con su bandera, árboles oscuros y gente en el pasto. Cielo celeste abierto y luz de tarde.',
+  'Camino de tierra': 'Un camino de campo hacia una casa, con animales pastando. Verdes intensos y un cielo blanco de llovizna.',
+  'Cielo de tormenta': 'El cielo ocupa casi todo: azules que se abren y dejan pasar la luz sobre una franja de campo verde.',
+  'Paisano': 'Un hombre de boina sentado a la sombra, frente a un caballo. El retrato de una siesta de campo.',
+  'Bajo el árbol': 'Animales echados a la sombra de un árbol grande, sobre tierra y pasto de mediodía.',
+  'Cordero en el corral': 'Un chico abraza a un cordero negro entre la paja del corral. La paja está hecha reservando el blanco del papel.',
+  'Chanchos': 'Dos chanchos colorados hozando junto a un muro de ladrillo. Pincelada rápida y mucha textura.',
+  'La aguada': 'Vacas que bajan a tomar agua a la sombra de los árboles. Los reflejos se arman con manchas de color puro.',
+  'Atardecer violeta': 'Un atardecer de pueblo: postes de luz, una casa y figuras a contraluz bajo un cielo violeta y naranja.',
+  }
+  for (const [titulo, concepto] of Object.entries(DESCRIPCIONES)) {
+    await prisma.obra.updateMany({ where: { titulo, concepto: null }, data: { concepto } })
+  }
+
   // Configuración inicial de la tienda
   await prisma.configuracionTienda.upsert({
     where:  { id: 'default' },

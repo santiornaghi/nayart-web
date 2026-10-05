@@ -868,6 +868,23 @@ nav.menu-open .menu-btn span:last-child { transform: translateY(-3.5px) rotate(-
 .co-opt strong { display: block; font-weight: 400; font-size: .85rem; color: var(--ink); }
 .co-opt small { display: block; font-size: .72rem; color: var(--ink-faint); line-height: 1.5; margin-top: .15rem; }
 .co-tag { display: inline-block; margin-left: .4rem; background: #2a6040; color: #fff; font-size: .55rem; letter-spacing: .12em; text-transform: uppercase; padding: .15rem .4rem; vertical-align: middle; }
+.ent-tabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: .5rem; }
+.ent-tab { position: relative; display: flex; flex-direction: column; gap: .4rem; padding: .9rem .8rem .8rem; min-height: 104px; border: 1px solid rgba(26,24,20,.14); background: var(--white); cursor: none; transition: border-color .2s, box-shadow .2s; }
+.ent-tab:hover { border-color: rgba(26,24,20,.35); }
+.ent-tab input { position: absolute; opacity: 0; pointer-events: none; }
+.ent-tab svg { width: 20px; height: 20px; color: var(--ink-light); }
+.ent-tab b { font-weight: 400; font-size: .8rem; line-height: 1.25; color: var(--ink); }
+.ent-tab small { margin-top: auto; font-size: .74rem; color: var(--rust); }
+.ent-tab small.gratis { color: #2a6040; }
+.ent-tab.sel { border-color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink); }
+.ent-tab.sel svg { color: var(--ink); }
+.ent-tab:has(input:focus-visible) { outline: 2px solid var(--rust); outline-offset: 2px; }
+.ent-detalle { margin-top: .8rem; padding: 1rem 1rem .4rem; background: var(--white); border: 1px solid rgba(26,24,20,.08); }
+.ent-nota { font-size: .8rem; color: var(--ink-light); line-height: 1.65; padding-bottom: .6rem; }
+.cp-prov { grid-template-columns: 1fr 1.6fr; }
+.cotiz { display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: .7rem .9rem; background: var(--paper); margin: .1rem 0 .9rem; font-size: .78rem; color: var(--ink-light); }
+.cotiz strong { font-weight: 400; font-size: .82rem; color: var(--ink-faint); text-align: right; }
+.cotiz.ok strong { font-family: 'Cormorant Garamond', serif; font-size: 1.35rem; color: var(--ink); }
 .co-back { background: none; border: none; font-size: .65rem; letter-spacing: .15em; text-transform: uppercase; color: var(--ink-faint); cursor: none; padding: 0; }
 .co-back:hover { color: var(--rust); }
 .co-error { color: #c0392b; font-size: .75rem; margin-top: .6rem; min-height: 1em; }
@@ -919,6 +936,82 @@ nav.menu-open .menu-btn span:last-child { transform: translateY(-3.5px) rotate(-
 @media (max-width: 768px) { .stickers { grid-template-columns: repeat(2, 1fr); gap: 1rem; } }
 @media (max-width: 1024px) { .laminas { grid-template-columns: repeat(3, 1fr); } }
 @media (max-width: 768px) { .laminas { grid-template-columns: repeat(2, 1fr); gap: 1.8rem 1rem; } .lamina-name { font-size: 1rem; } }
+
+/* ══ PORTADA: acuarela a pantalla completa ══ */
+@property --bloom { syntax: '<percentage>'; inherits: false; initial-value: 160%; }
+.hero.hero-full { display: block; position: relative; min-height: 100svh; padding: 0; overflow: hidden; background: #e9e6df; }
+.hero-capa { position: absolute; inset: 0; will-change: transform; }
+.hero-pintura {
+  position: absolute; inset: -4%;
+  background: #cfcabd url('img/detalles/hero-tormenta.jpg') center 42% / cover no-repeat;
+  -webkit-mask-image: radial-gradient(circle at 34% 46%, #000 calc(var(--bloom) - 22%), transparent var(--bloom));
+          mask-image: radial-gradient(circle at 34% 46%, #000 calc(var(--bloom) - 22%), transparent var(--bloom));
+  animation: bloom 2.8s cubic-bezier(.22,.61,.36,1) .15s both, respirar 26s ease-in-out 3s infinite alternate;
+  will-change: transform;
+}
+@keyframes bloom {
+  0%   { --bloom: 0%;   filter: blur(14px) saturate(1.5); transform: scale(1.08); }
+  60%  { filter: blur(2px) saturate(1.15); }
+  100% { --bloom: 160%; filter: blur(0) saturate(1); transform: scale(1); }
+}
+@keyframes respirar { from { transform: scale(1) translate(0,0); } to { transform: scale(1.07) translate(-1.2%, -1%); } }
+.hero-velo { position: absolute; inset: 0; background: linear-gradient(to top, rgba(20,22,18,.62) 0%, rgba(20,22,18,.18) 38%, transparent 62%); pointer-events: none; }
+.hero-texto { position: absolute; left: 4rem; bottom: 4.5rem; right: 4rem; max-width: 760px; color: #fbfaf7; animation: aparecer 1.4s ease 1.6s both; }
+.hero-autor { font-family: 'Jost', sans-serif; font-size: .95rem; font-weight: 300; letter-spacing: .02em; opacity: .9; margin-bottom: 1.2rem; }
+.hero-titulo { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(3.2rem, 8.5vw, 8rem); line-height: .92; letter-spacing: -.01em; text-shadow: 0 2px 30px rgba(0,0,0,.18); }
+.hero-texto .hero-ctas { margin-top: 2.4rem; display: flex; gap: .8rem; flex-wrap: wrap; }
+.btn-claro { background: #fbfaf7; color: var(--ink); }
+.btn-claro:hover { background: var(--rust); color: #fff; }
+.btn-linea-clara { background: transparent; color: #fbfaf7; border: 1px solid rgba(251,250,247,.6); }
+.btn-linea-clara:hover { border-color: #fff; background: rgba(255,255,255,.08); }
+.hero-ficha { position: absolute; right: 7.5rem; bottom: 4.6rem; text-align: right; color: rgba(251,250,247,.88); font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; line-height: 1.4; animation: aparecer 1.4s ease 2.2s both; }
+.hero-ficha span { display: block; font-family: 'Jost', sans-serif; font-size: .72rem; opacity: .8; }
+@keyframes aparecer { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+nav:not(.scrolled) .cart-btn, nav:not(.scrolled) .lang-btn { background: rgba(245,242,237,.82); border-color: transparent; color: var(--ink); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
+nav:not(.scrolled) .nav-links a { color: var(--ink); text-shadow: 0 0 14px rgba(245,242,237,.9); }
+
+/* ══ GALERÍA editorial: obra entera + ficha debajo ══ */
+.galeria { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: 3rem; row-gap: 6.5rem; align-items: start; }
+.pieza { margin: 0; }
+.pieza:nth-child(6n+1) { grid-column: 1 / 8; }
+.pieza:nth-child(6n+2) { grid-column: 9 / 13; margin-top: 9rem; }
+.pieza:nth-child(6n+3) { grid-column: 2 / 6; }
+.pieza:nth-child(6n+4) { grid-column: 7 / 13; margin-top: 5rem; }
+.pieza:nth-child(6n+5) { grid-column: 1 / 6; margin-top: 2rem; }
+.pieza:nth-child(6n)   { grid-column: 7 / 12; margin-top: 7rem; }
+.pieza-marco { position: relative; overflow: hidden; background: var(--paper-dark); }
+.pieza-marco img { display: block; width: 100%; height: auto; transition: transform 1.6s cubic-bezier(.2,.7,.2,1); }
+.pieza:hover .pieza-marco img { transform: scale(1.025); }
+.pieza figcaption { margin-top: 1.3rem; max-width: 46ch; }
+.pieza-titulo { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.65rem; line-height: 1.15; }
+.pieza-meta { font-size: .78rem; color: var(--ink-faint); margin-top: .35rem; }
+.pieza-desc { font-family: 'Cormorant Garamond', serif; font-size: 1.12rem; line-height: 1.55; color: var(--ink-light); margin-top: .8rem; }
+.pieza-compra { display: flex; align-items: baseline; gap: 1.2rem; margin-top: 1rem; }
+.pieza-precio { color: var(--rust); font-size: .95rem; }
+.pieza-precio.vendida { color: var(--ink-faint); }
+.pieza-btn { background: none; border: none; border-bottom: 1px solid var(--ink); padding: 0 0 .15rem; font-family: 'Jost', sans-serif; font-size: .82rem; color: var(--ink); cursor: none; }
+.pieza-btn:hover { color: var(--rust); border-color: var(--rust); }
+.galeria-mas { text-align: center; margin-top: 6rem; }
+
+/* Las obras aparecen "lavándose" desde abajo al llegar a ellas */
+.js-mov .pieza .pieza-marco { clip-path: inset(100% 0 0 0); transition: clip-path 1.5s cubic-bezier(.65,0,.25,1); }
+.js-mov .pieza .pieza-marco img { filter: blur(6px) saturate(1.4); transform: scale(1.08); transition: filter 1.8s ease, transform 2.2s cubic-bezier(.2,.7,.2,1); }
+.js-mov .pieza figcaption { opacity: 0; transform: translateY(10px); transition: opacity 1s ease .5s, transform 1s ease .5s; }
+.js-mov .pieza.vista .pieza-marco { clip-path: inset(0 0 0 0); }
+.js-mov .pieza.vista .pieza-marco img { filter: none; transform: none; }
+.js-mov .pieza.vista figcaption { opacity: 1; transform: none; }
+
+@media (max-width: 900px) {
+  .hero-texto { left: 1.6rem; right: 1.6rem; bottom: 6.5rem; }
+  .hero-ficha { left: 1.6rem; right: auto; bottom: 1.8rem; text-align: left; font-size: .95rem; }
+  .galeria { grid-template-columns: 1fr; row-gap: 4rem; }
+  .pieza:nth-child(n) { grid-column: 1 / -1; margin-top: 0; }
+  .pieza:nth-child(even) { margin-left: 18%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-pintura, .hero-texto, .hero-ficha { animation: none !important; -webkit-mask-image: none; mask-image: none; }
+  .js-mov .pieza .pieza-marco, .js-mov .pieza .pieza-marco img, .js-mov .pieza figcaption { clip-path: none !important; filter: none !important; transform: none !important; opacity: 1 !important; transition: none !important; }
+}
 </style>
 </head>
 <body>
@@ -945,26 +1038,18 @@ nav.menu-open .menu-btn span:last-child { transform: translateY(-3.5px) rotate(-
 </nav>
 
 <!-- HERO -->
-<section class="hero">
-  <div class="hero-left">
-    <p class="hero-tag" data-es="Artista Plástico — Córdoba, Argentina" data-en="Visual Artist — Córdoba, Argentina">Artista Plástico — Córdoba, Argentina</p>
-    <h1 class="hero-title" data-es="El arte<br>de <em>ver</em><br>lo vivo" data-en="The art<br>of <em>seeing</em><br>the living">El arte<br>de <em>ver</em><br>lo vivo</h1>
-    <p class="hero-body" data-es="Acuarelas, acrílicos y carbonillas que capturan la espontaneidad del movimiento, la luz y la vida." data-en="Watercolors, acrylics and charcoal capturing the spontaneity of movement, light and life.">Acuarelas, acrílicos y carbonillas que capturan la espontaneidad del movimiento, la luz y la vida.</p>
+<section class="hero hero-full">
+  <div class="hero-capa"><div class="hero-pintura" role="img" aria-label="Tormenta en el campo, acuarela de Santiago Ornaghi"></div></div>
+  <div class="hero-velo"></div>
+  <div class="hero-texto">
+    <p class="hero-autor" data-es="Santiago Ornaghi, acuarelista. Río Cuarto, Córdoba." data-en="Santiago Ornaghi, watercolorist. Río Cuarto, Argentina.">Santiago Ornaghi, acuarelista. Río Cuarto, Córdoba.</p>
+    <h1 class="hero-titulo" data-es="El arte de ver lo vivo" data-en="The art of seeing the living">El arte de ver lo vivo</h1>
     <div class="hero-ctas">
-      <a href="#obras" class="btn btn-dark" data-es="Ver obras" data-en="View works">Ver obras</a>
-      <a href="#encargos" class="btn btn-outline" data-es="Encargar obra" data-en="Commission a piece">Encargar obra</a>
+      <a href="#obras" class="btn btn-claro" data-es="Ver obras" data-en="View works">Ver obras</a>
+      <a href="#tienda" class="btn btn-linea-clara" data-es="Comprar láminas" data-en="Shop prints">Comprar láminas</a>
     </div>
   </div>
-  <div class="hero-right">
-    <div class="hero-artwork">
-      <div class="hero-art-top"></div>
-      <div class="hero-art-bottom"></div>
-    </div>
-  </div>
-  <div class="hero-scroll-hint">
-    <div class="scroll-bar"></div>
-    <span>Scroll</span>
-  </div>
+  <p class="hero-ficha">Tormenta en el campo<span data-es="Acuarela sobre papel, 25 × 18 cm, 2025" data-en="Watercolor on paper, 25 × 18 cm, 2025">Acuarela sobre papel, 25 × 18 cm, 2025</span></p>
 </section>
 
 <!-- STATEMENT -->
@@ -1000,64 +1085,8 @@ nav.menu-open .menu-btn span:last-child { transform: translateY(-3.5px) rotate(-
       <p data-es="Acuarelas de alta pigmentación, acrílicos y carbonillas. Obras disponibles para adquirir o encargar bajo pedido." data-en="High-pigmentation watercolors, acrylics and charcoal. Works available for purchase or custom order.">Acuarelas de alta pigmentación, acrílicos y carbonillas. Obras disponibles para adquirir o encargar bajo pedido.</p>
     </div>
   </div>
-  <div class="serie-filter reveal" id="obras-filtros" style="display:none">
-    <button class="filt active" data-es="Todo" data-en="All">Todo</button>
-    <button class="filt" data-es="Acuarela" data-en="Watercolor">Acuarela</button>
-    <button class="filt" data-es="Acrílico" data-en="Acrylic">Acrílico</button>
-    <button class="filt" data-es="Carbonilla" data-en="Charcoal">Carbonilla</button>
-    <button class="filt" data-es="Serie Caleidoscopio" data-en="Caleidoscope series">Serie Caleidoscopio</button>
-    <button class="filt" data-es="Serie Elementos" data-en="Elements series">Serie Elementos</button>
-  </div>
-  <div class="obras-grid reveal" id="obras-grid">
-    <div class="obra">
-      <div class="obra-bg w1"></div>
-      <span class="obra-tag" data-es="Acuarela" data-en="Watercolor">Acuarela</span>
-      <div class="obra-info">
-        <div class="obra-title">Tormenta en el campo</div>
-        <div class="obra-meta" data-es="Acuarela sobre papel" data-en="Watercolor on paper">Acuarela sobre papel</div>
-      </div>
-    </div>
-    <div class="obra">
-      <div class="obra-bg w2"></div>
-      <span class="obra-tag" data-es="Acuarela" data-en="Watercolor">Acuarela</span>
-      <div class="obra-info">
-        <div class="obra-title">Ciudad al atardecer</div>
-        <div class="obra-meta" data-es="Acuarela sobre papel" data-en="Watercolor on paper">Acuarela sobre papel</div>
-      </div>
-    </div>
-    <div class="obra">
-      <div class="obra-bg w3"></div>
-      <span class="obra-tag" data-es="Acuarela" data-en="Watercolor">Acuarela</span>
-      <div class="obra-info">
-        <div class="obra-title">El caballo</div>
-        <div class="obra-meta" data-es="Acuarela sobre papel" data-en="Watercolor on paper">Acuarela sobre papel</div>
-      </div>
-    </div>
-    <div class="obra">
-      <div class="obra-bg w4"></div>
-      <span class="obra-tag" data-es="Acuarela" data-en="Watercolor">Acuarela</span>
-      <div class="obra-info">
-        <div class="obra-title">Paisano</div>
-        <div class="obra-meta" data-es="Acuarela sobre papel" data-en="Watercolor on paper">Acuarela sobre papel</div>
-      </div>
-    </div>
-    <div class="obra">
-      <div class="obra-bg w5"></div>
-      <span class="obra-tag" data-es="Acuarela" data-en="Watercolor">Acuarela</span>
-      <div class="obra-info">
-        <div class="obra-title">Cordero en el corral</div>
-        <div class="obra-meta" data-es="Acuarela sobre papel" data-en="Watercolor on paper">Acuarela sobre papel</div>
-      </div>
-    </div>
-    <div class="obra">
-      <div class="obra-bg w6"></div>
-      <span class="obra-tag" data-es="Acuarela" data-en="Watercolor">Acuarela</span>
-      <div class="obra-info">
-        <div class="obra-title">La aguada</div>
-        <div class="obra-meta" data-es="Acuarela sobre papel" data-en="Watercolor on paper">Acuarela sobre papel</div>
-      </div>
-    </div>
-  </div>
+  <div class="galeria" id="galeria"></div>
+  <div class="galeria-mas"><a href="#tienda" class="btn btn-outline" data-es="Ver todas las obras en la tienda" data-en="See all works in the shop">Ver todas las obras en la tienda</a></div>
 </section>
 
 <!-- BANDA DE ACUARELA -->
@@ -1236,30 +1265,6 @@ window.addEventListener('scroll', ()=> nav.classList.toggle('scrolled', scrollY>
 const obs = new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('visible'); }), {threshold:.08});
 document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
 
-// Obras reales desde el backend (si hay cargadas en el panel)
-(async function cargarObras(){
-  try {
-    const r = await fetch('https://nayart-web.onrender.com/api/obras?limit=6');
-    if(!r.ok) return;
-    const { obras } = await r.json();
-    if(!obras || !obras.length) return;
-    const tec = {ACUARELA:'Acuarela', ACRILICO:'Acrílico', CARBONILLA:'Carbonilla', MIXTA:'Técnica mixta', OTRO:'Otro'};
-    const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-    const grid = document.getElementById('obras-grid');
-    grid.innerHTML = obras.map(o => `
-      <div class="obra" data-tec="${esc(o.tecnica)}" data-serie="${esc(o.serie||'')}">
-        <div class="obra-bg" style="background:#2a2420 url('${esc(o.imagenUrl)}') center / cover no-repeat"></div>
-        <span class="obra-tag">${esc(tec[o.tecnica]||o.tecnica)}</span>
-        ${o.disponible==='DISPONIBLE' && o.precio ? `<span class="obra-price">${esc(o.moneda||'USD')} ${esc(o.precio)}</span>` : (o.disponible==='VENDIDA' ? '<span class="obra-price">Vendida</span>' : '')}
-        <div class="obra-info">
-          <div class="obra-title">${esc(o.titulo)}</div>
-          <div class="obra-meta">${esc(o.ancho)} × ${esc(o.alto)} cm — ${esc(o.anio)}${o.serie ? ' — Serie '+esc(o.serie) : ''}</div>
-        </div>
-      </div>`).join('');
-    const f = document.getElementById('obras-filtros'); if(f) f.style.display='';
-  } catch(e) { /* si el servidor no responde, quedan las acuarelas de muestra */ }
-})();
-
 // Filters
 document.querySelectorAll('.filt').forEach(btn=>{
   btn.addEventListener('click', ()=>{
@@ -1368,9 +1373,9 @@ let carrito = [];
 let paso = 'carrito';
 let checkout = { entrega:'RIO_CUARTO', pago:'TRANSFERENCIA' };
 const ENTREGAS = {
-  RIO_CUARTO: { nombre:'Entrega en Río Cuarto', det:'Sin cargo. Coordinamos día y lugar por WhatsApp.', tipo:'RETIRO_PRESENCIAL' },
-  CORDOBA:    { nombre:'Entrega en Córdoba capital', det:'Sin cargo. Coordinamos día y lugar por WhatsApp.', tipo:'RETIRO_PRESENCIAL' },
-  ANDREANI:   { nombre:'Envío por Andreani', det:'A todo el país. Elegí tu provincia y te mostramos el costo.', tipo:'ENVIO' },
+  RIO_CUARTO: { nombre:'Retiro en sede Río Cuarto', corto:'Retiro en Río Cuarto', tipo:'RETIRO_PRESENCIAL' },
+  CORDOBA:    { nombre:'Retiro en sede Córdoba', corto:'Retiro en Córdoba', tipo:'RETIRO_PRESENCIAL' },
+  ANDREANI:   { nombre:'Envío a domicilio por Andreani', corto:'Envío a domicilio', tipo:'ENVIO' },
 };
 
 const escH = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -1519,19 +1524,21 @@ function render(){
       </div>
     </div>
     <div class="co-section">
-      <span class="co-label">Entrega</span>
-      <div class="co-opts">
-        ${Object.entries(ENTREGAS).map(([k,e])=>`<label class="co-opt ${checkout.entrega===k?'sel':''}"><input type="radio" name="co-ent" value="${k}" ${checkout.entrega===k?'checked':''}><span><strong>${e.nombre}${k!=='ANDREANI'?' <span class="co-tag">Gratis</span>':''}</strong><small>${e.det}</small></span></label>`).join('')}
+      <span class="co-label">¿Cómo lo recibís?</span>
+      <div class="ent-tabs" role="radiogroup">
+        ${Object.entries(ENTREGAS).map(([k,e])=>`<label class="ent-tab ${checkout.entrega===k?'sel':''}"><input type="radio" name="co-ent" value="${k}" ${checkout.entrega===k?'checked':''}>${k==='ANDREANI'?`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M3 7.5 12 3l9 4.5v9L12 21l-9-4.5z"/><path d="M3 7.5 12 12l9-4.5M12 12v9"/></svg>`:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>`}<b>${e.corto}</b><small class="${k==='ANDREANI'?'':'gratis'}">${k==='ANDREANI' ? (costoAndreani() ? fmt(costoAndreani()) : 'Andreani') : 'Gratis'}</small></label>`).join('')}
       </div>
-      ${checkout.entrega==='ANDREANI' ? `
-      <div style="margin-top:1rem">
-        <div class="co-field"><label>Dirección</label><input id="co-dir" value="${v('dir')}" autocomplete="street-address"></div>
-        <div class="co-2">
-          <div class="co-field"><label>Ciudad</label><input id="co-ciudad" value="${v('ciudad')}" autocomplete="address-level2"></div>
+      <div class="ent-detalle">
+      ${checkout.entrega!=='ANDREANI' ? `
+        <p class="ent-nota">Sin costo de envío. Cuando recibo tu pedido te escribo por WhatsApp para coordinar el día y el punto de retiro en ${checkout.entrega==='CORDOBA' ? 'Córdoba capital' : 'Río Cuarto'}.</p>` : `
+        <div class="co-2 cp-prov">
+          <div class="co-field"><label>Código postal</label><input id="co-cp" value="${v('cp')}" autocomplete="postal-code" inputmode="numeric" maxlength="4" placeholder="Ej: 2000"></div>
           <div class="co-field"><label>Provincia</label><select id="co-prov"><option value="">Elegí…</option>${PROVINCIAS.map(p=>`<option ${checkout.prov===p?'selected':''}>${p}</option>`).join('')}</select></div>
         </div>
-        <div class="co-field"><label>Código postal</label><input id="co-cp" value="${v('cp')}" autocomplete="postal-code" inputmode="numeric" maxlength="4" placeholder="Ej: 2000"></div>
-      </div>` : ''}
+        <div class="cotiz ${costoAndreani()?'ok':''}"><span>Andreani a domicilio</span><strong>${textoEnvioAndreani()}</strong></div>
+        <div class="co-field"><label>Dirección</label><input id="co-dir" value="${v('dir')}" autocomplete="street-address" placeholder="Calle, número, piso"></div>
+        <div class="co-field"><label>Ciudad</label><input id="co-ciudad" value="${v('ciudad')}" autocomplete="address-level2"></div>`}
+      </div>
     </div>
     <div class="co-section">
       <span class="co-label">Pago</span>
@@ -1627,6 +1634,91 @@ function renderStickers(){
 }
 cargar(); actualizarContador(); renderLaminas(); renderStickers(); cargarZonas(); cargarTiendaAPI();
 document.querySelectorAll('#laminas').forEach(el=>{ if(typeof obs!=='undefined') obs.observe(el); });
+
+// ════════════ GALERÍA Y MOVIMIENTO ════════════
+const DESCRIPCIONES = {
+  'Bote en la orilla': 'Un bote rojo varado sobre la arena húmeda. El cielo se abre en azules lavados y la playa queda casi en blanco, hecha con pocas pinceladas.',
+  'La tranquera': 'Mediodía de campo entre alambrados y árboles. La luz quema el fondo y las sombras de la tranquera ordenan la escena.',
+  'Ciudad al atardecer': 'Una avenida a contraluz: bicicletas, peatones y sombras largas en violeta. El sol se disuelve entre los edificios.',
+  'El caballo': 'Un caballo oscuro y su cuidadora al sol de la tarde. La tierra está salpicada a pincel seco y las sombras caen en violeta.',
+  'Tormenta en el campo': 'Nubes cargadas sobre un campo abierto. El cielo está pintado húmedo sobre húmedo; abajo, vacas y un camino que se pierde.',
+  'El canal': 'Casas de ladrillo, un puente y el agua que lo refleja todo en verticales. Una ciudad vieja resuelta con pocos tonos tierra.',
+  'Niebla': 'Casi abstracta: una masa de grises que avanza y una línea de luz arriba. El granulado del pigmento hace el resto.',
+  'Laguna azul': 'Árboles y agua bajo un cielo índigo. Los bordes se funden y el horizonte apenas se sugiere.',
+  'Siesta': 'Una figura recostada en un rincón en penumbra, con una franja de sol que entra por la ventana.',
+  'Arboleda': 'Verdes superpuestos de una arboleda junto al agua. Las copas se arman con manchas y el reflejo se estira hacia abajo.',
+  'Tarde en el campo': 'Un casco de estancia con su bandera, árboles oscuros y gente en el pasto. Cielo celeste abierto y luz de tarde.',
+  'Camino de tierra': 'Un camino de campo hacia una casa, con animales pastando. Verdes intensos y un cielo blanco de llovizna.',
+  'Cielo de tormenta': 'El cielo ocupa casi todo: azules que se abren y dejan pasar la luz sobre una franja de campo verde.',
+  'Paisano': 'Un hombre de boina sentado a la sombra, frente a un caballo. El retrato de una siesta de campo.',
+  'Bajo el árbol': 'Animales echados a la sombra de un árbol grande, sobre tierra y pasto de mediodía.',
+  'Cordero en el corral': 'Un chico abraza a un cordero negro entre la paja del corral. La paja está hecha reservando el blanco del papel.',
+  'Chanchos': 'Dos chanchos colorados hozando junto a un muro de ladrillo. Pincelada rápida y mucha textura.',
+  'La aguada': 'Vacas que bajan a tomar agua a la sombra de los árboles. Los reflejos se arman con manchas de color puro.',
+  'Atardecer violeta': 'Un atardecer de pueblo: postes de luz, una casa y figuras a contraluz bajo un cielo violeta y naranja.',
+};
+const OBRAS_MUESTRA = [
+  ['05','Tormenta en el campo',25,18],['03','Ciudad al atardecer',18,25],['04','El caballo',25,18],
+  ['17','Cordero en el corral',25,18],['20','Atardecer violeta',25,18],['06','El canal',18,25],
+  ['15','Paisano',25,18],['07','Niebla',18,25],
+].map(([n,titulo,ancho,alto])=>({ titulo, ancho, alto, anio:2025, tecnica:'ACUARELA', imagenUrl:`img/originales/${n}.jpg`, precio:100, moneda:'USD', disponible:'DISPONIBLE' }));
+const TECNICA = {ACUARELA:'Acuarela', ACRILICO:'Acrílico', CARBONILLA:'Carbonilla', MIXTA:'Técnica mixta', OTRO:'Técnica mixta'};
+
+function renderGaleria(obras){
+  const g = document.getElementById('galeria'); if(!g) return;
+  window._obrasGaleria = obras;
+  g.innerHTML = obras.map((o,i)=>{
+    const desc = o.concepto || DESCRIPCIONES[o.titulo] || '';
+    const tec = TECNICA[o.tecnica] || 'Acuarela';
+    const vendible = o.id && o.disponible==='DISPONIBLE' && o.precio > 0;
+    const compra = o.disponible==='VENDIDA'
+      ? `<div class="pieza-compra"><span class="pieza-precio vendida">Vendida</span></div>`
+      : (vendible ? `<div class="pieza-compra"><span class="pieza-precio">${fmt(o.precio, o.moneda||'USD')}</span><button class="pieza-btn" onclick="comprarObra(${i})">Comprar original</button></div>` : '');
+    return `<figure class="pieza">
+      <div class="pieza-marco"><img src="${escH(o.imagenUrl)}" alt="${escH(o.titulo)}, ${tec.toLowerCase()}" loading="lazy"></div>
+      <figcaption>
+        <div class="pieza-titulo">${escH(o.titulo)}</div>
+        <div class="pieza-meta">${tec} sobre papel, ${escH(o.ancho)} × ${escH(o.alto)} cm, ${escH(o.anio)}</div>
+        ${desc ? `<p class="pieza-desc">${escH(desc)}</p>` : ''}
+        ${compra}
+      </figcaption>
+    </figure>`;
+  }).join('');
+  observarPiezas();
+}
+function comprarObra(i){
+  const o = window._obrasGaleria[i];
+  agregar({ key:'obra-'+o.id, tipo:'obra', id:o.id, nombre:'Acuarela original '+o.ancho+'×'+o.alto+' cm', titulo:o.titulo, precio:o.precio, moneda:o.moneda||'USD', img:o.imagenUrl, unico:true });
+}
+async function cargarGaleria(){
+  renderGaleria(OBRAS_MUESTRA);
+  try {
+    const r = await fetch(NAYA_API+'/obras?limit=8');
+    if(!r.ok) return;
+    const { obras } = await r.json();
+    if(obras && obras.length) renderGaleria(obras);
+  } catch(e){}
+}
+
+// Aparición de cada obra al llegar a ella
+const verPiezas = 'IntersectionObserver' in window ? new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('vista'); verPiezas.unobserve(e.target); } }), { threshold: .18 }) : null;
+function observarPiezas(){ document.querySelectorAll('.pieza:not(.vista)').forEach(p => verPiezas ? verPiezas.observe(p) : p.classList.add('vista')); }
+
+// Profundidad al hacer scroll (portada y banda de tormenta)
+(function(){
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  document.documentElement.classList.add('js-mov');
+  const capa = document.querySelector('.hero-capa'), banda = document.querySelector('.banda-acuarela img');
+  let pend = false;
+  function mover(){
+    pend = false; const y = scrollY, vh = innerHeight;
+    if(capa && y < vh*1.2) capa.style.transform = `translate3d(0, ${y*0.28}px, 0)`;
+    if(banda){ const r = banda.parentElement.getBoundingClientRect(); if(r.bottom>0 && r.top<vh){ banda.style.transform = `translate3d(0, ${(r.top - vh/2)*-0.12}px, 0) scale(1.18)`; } }
+  }
+  addEventListener('scroll', ()=>{ if(!pend){ pend = true; requestAnimationFrame(mover); } }, { passive:true });
+  mover();
+})();
+cargarGaleria();
 </script>
 </body>
 </html>
