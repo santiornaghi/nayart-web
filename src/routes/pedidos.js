@@ -63,9 +63,10 @@ router.post('/', async (req, res, next) => {
     let costoEnvio = 0
     let zonaNombre = null
     if (tipoEntrega === 'ENVIO') {
+      // Sin zona elegida (ej: Andreani) el costo queda a cotizar y se informa aparte
       const zona = zonaId
         ? await prisma.zonaEnvio.findFirst({ where: { id: zonaId, activa: true } })
-        : (provincia ? await resolverZonaEnvio(provincia) : null)
+        : null
       costoEnvio = zona?.costo || 0
       zonaNombre = zona?.nombre || null
     }
@@ -73,7 +74,18 @@ router.post('/', async (req, res, next) => {
     // 10% de descuento pagando por transferencia (sobre los productos, no el envío)
     const pago = ['MERCADOPAGO', 'TRANSFERENCIA'].includes(metodoPago) ? metodoPago : null
     const descuento = pago === 'TRANSFERENCIA' ? Math.round(subtotal * 0.10 * 100) / 100 : 0
+    // Si el carrito mezcla pesos y dólares, se detalla cada moneda por separado
+    const porMoneda = {}
+    for (const i of itemsData) porMoneda[i.moneda] = (porMoneda[i.moneda] || 0) + i.precioUnit * i.cantidad
+    const mixto = Object.keys(porMoneda).length > 1
+    const detalleMonedas = mixto
+      ? 'Monedas mixtas — ' + Object.entries(porMoneda).map(([m, v]) => {
+          const d = pago === 'TRANSFERENCIA' ? v * 0.9 : v
+          return `${m} ${Math.round(d * 100) / 100}`
+        }).join(' + ') + (pago === 'TRANSFERENCIA' ? ' (con 10% off)' : '')
+      : null
     const notasPedido = [
+      detalleMonedas,
       zonaNombre && `Zona de envío: ${zonaNombre}`,
       descuento && `Descuento transferencia 10%: -${descuento}`,
       notas,

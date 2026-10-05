@@ -51,6 +51,28 @@ async function main() {
 
   console.log('✓ Zonas de envío creadas')
 
+  // Obras originales escaneadas (USD 100, disponibles). Se cargan una sola vez:
+  // si ya existe alguna con imagen en /img/originales/, no se vuelve a importar.
+  const BASE_IMG = 'https://santiornaghi.github.io/nayart-web/img/originales/'
+  const yaImportadas = await prisma.obra.count({ where: { imagenUrl: { contains: '/img/originales/' } } })
+  if (!yaImportadas) {
+    const originales = [
+      ['01','Bote en la orilla',17,24],['02','La tranquera',25,18],['03','Ciudad al atardecer',18,25],
+      ['04','El caballo',25,18],['05','Tormenta en el campo',25,18],['06','El canal',18,25],
+      ['07','Niebla',18,25],['08','Laguna azul',18,25],['09','Siesta',25,18],['10','Arboleda',29,21],
+      ['12','Tarde en el campo',25,18],['13','Camino de tierra',25,18],['14','Cielo de tormenta',25,18],
+      ['15','Paisano',25,18],['16','Bajo el árbol',25,18],['17','Cordero en el corral',25,18],
+      ['18','Chanchos',25,18],['19','La aguada',25,18],['20','Atardecer violeta',25,18],
+    ]
+    for (const [n, titulo, ancho, alto] of originales) {
+      await prisma.obra.create({ data: {
+        titulo, tecnica: 'ACUARELA', ancho, alto, anio: 2025, precio: 100, moneda: 'USD',
+        disponible: 'DISPONIBLE', imagenUrl: BASE_IMG + n + '.jpg',
+      } })
+    }
+    console.log(`✓ ${originales.length} obras originales importadas`)
+  }
+
   // Configuración inicial de la tienda
   await prisma.configuracionTienda.upsert({
     where:  { id: 'default' },
