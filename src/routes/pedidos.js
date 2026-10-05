@@ -33,7 +33,7 @@ router.post('/', async (req, res, next) => {
     for (const item of items) {
       if (item.tipo === 'lamina') {
         // Láminas: precio fijado en el servidor (ARS)
-        const PRECIO_SIN_MARCO = { A4: 10000, A5: 8000 }
+        const PRECIO_SIN_MARCO = { A4: 20000, A5: 15000 }
         const PRECIO_CON_KIRI  = { A4: 35000, A5: 25000 }
         const precio = (item.marco ? PRECIO_CON_KIRI : PRECIO_SIN_MARCO)[item.tamano]
         if (!precio) throw new AppError('Tamaño de lámina inválido')
