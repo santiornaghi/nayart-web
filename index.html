@@ -1540,6 +1540,13 @@ body.menu-abierto .lmenu { opacity: 1; pointer-events: auto; }
 .btn-dark { background: var(--ink) !important; color: #fff !important; }
 .btn-outline { background: transparent !important; color: var(--ink) !important; border: 1px solid var(--ink) !important; }
 @media (max-width: 720px) { .como { grid-template-columns: 1fr; gap: 1.4rem; } .stickers { grid-template-columns: 1fr 1fr !important; } }
+
+/* fotos */
+.fotos-nota { font-size: .74rem; color: var(--ink-faint); margin: -1.8rem 0 3rem; }
+.fotos { display: flex; flex-direction: column; align-items: center; gap: 5rem; }
+.fotos img { display: block; max-width: min(100%, 980px); max-height: 88vh; width: auto; height: auto; }
+.lmenu a.sub { font-style: italic; font-size: .8rem; margin-top: -.6rem; }
+@media (max-width: 720px) { .fotos { gap: 1.4rem; } .fotos img { max-height: none; width: 100%; max-width: 100%; } }
 /* contacto */
 .ct-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 4rem; }
 .form .fg label { font-family: 'JetBrains Mono', monospace; text-transform: uppercase; font-size: .7rem; letter-spacing: 0; color: var(--ink); }
@@ -1569,6 +1576,8 @@ body.menu-abierto .lmenu { opacity: 1; pointer-events: auto; }
 <div class="lmenu" role="navigation" aria-label="Menú">
   <a href="#/lista" data-es="Obra" data-en="Work">Obra</a>
   <a href="#/tienda" data-es="Tienda" data-en="Shop">Tienda</a>
+  <a href="#/fotos" data-es="Fotos" data-en="Photos">Fotos</a>
+  <a href="#/fotos" class="sub">I —</a>
   <a href="#/acerca" data-es="Acerca" data-en="About">Acerca</a>
   <a href="#/contacto" data-es="Contacto" data-en="Contact">Contacto</a>
   <a href="https://instagram.com/naya__artt" target="_blank" rel="noopener">Instagram</a>
@@ -1672,6 +1681,29 @@ body.menu-abierto .lmenu { opacity: 1; pointer-events: auto; }
   </div>
 </section>
 
+<!-- FOTOS -->
+<section class="vista" id="v-fotos">
+  <div class="envoltura pagina">
+    <h2 class="v-title" data-es="Fotos I" data-en="Photos I">Fotos I</h2>
+    <div class="fotos">
+      <img src="img/fotos/f01.jpg" alt="Fotografía de Santiago Ornaghi" loading="lazy">
+      <img src="img/fotos/f09.jpg" alt="Fotografía de Santiago Ornaghi" loading="lazy">
+      <img src="img/fotos/f10.jpg" alt="Fotografía de Santiago Ornaghi" loading="lazy">
+      <img src="img/fotos/f04.jpg" alt="Fotografía de Santiago Ornaghi" loading="lazy">
+      <img src="img/fotos/f12.jpg" alt="Fotografía de Santiago Ornaghi" loading="lazy">
+      <img src="img/fotos/f06.jpg" alt="Fotografía de Santiago Ornaghi" loading="lazy">
+      <img src="img/fotos/f11.jpg" alt="Fotografía de Santiago Ornaghi" loading="lazy">
+      <img src="img/fotos/f02.jpg" alt="Fotografía de Santiago Ornaghi" loading="lazy">
+      <img src="img/fotos/f14.jpg" alt="Fotografía de Santiago Ornaghi" loading="lazy">
+      <img src="img/fotos/f07.jpg" alt="Fotografía de Santiago Ornaghi" loading="lazy">
+      <img src="img/fotos/f13.jpg" alt="Fotografía de Santiago Ornaghi" loading="lazy">
+      <img src="img/fotos/f03.jpg" alt="Fotografía de Santiago Ornaghi" loading="lazy">
+      <img src="img/fotos/f08.jpg" alt="Fotografía de Santiago Ornaghi" loading="lazy">
+      <img src="img/fotos/f05.jpg" alt="Fotografía de Santiago Ornaghi" loading="lazy">
+    </div>
+  </div>
+</section>
+
 <!-- CONTACTO -->
 <section class="vista" id="v-contacto">
   <div class="envoltura pagina">
@@ -1710,7 +1742,7 @@ body.menu-abierto .lmenu { opacity: 1; pointer-events: auto; }
 </main>
 
 <div class="lf">
-  <div>© 2026 Santiago Ornaghi<br><a href="#/lista" data-es="Obra" data-en="Work">Obra</a><a href="#/tienda" data-es="Tienda" data-en="Shop">Tienda</a><a href="#/acerca" data-es="Acerca" data-en="About">Acerca</a></div>
+  <div>© 2026 Santiago Ornaghi<br><a href="#/lista" data-es="Obra" data-en="Work">Obra</a><a href="#/tienda" data-es="Tienda" data-en="Shop">Tienda</a><a href="#/fotos" data-es="Fotos" data-en="Photos">Fotos</a><a href="#/acerca" data-es="Acerca" data-en="About">Acerca</a></div>
   <div class="der"><a href="#/contacto" data-es="Contacto" data-en="Contact">Contacto</a><a href="mailto:santiornaghi@gmail.com">Email</a><a href="https://instagram.com/naya__artt" target="_blank" rel="noopener">Instagram</a></div>
 </div>
 <!-- CARRITO -->
@@ -2253,6 +2285,7 @@ function ruta(){
   if(h.startsWith('#/obra/')){ vista='obra'; renderObra(decodeURIComponent(h.slice(7))); }
   else if(h==='#/tienda') vista='tienda';
   else if(h==='#/acerca') vista='acerca';
+  else if(h==='#/fotos') vista='fotos';
   else if(h==='#/contacto') vista='contacto';
   document.querySelectorAll('.vista').forEach(x=>x.classList.toggle('on', x.id==='v-'+vista));
   document.body.classList.remove('menu-abierto');
