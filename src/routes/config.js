@@ -1,9 +1,20 @@
 import { Router } from 'express'
 import { PrismaClient } from '@prisma/client'
 import { authMiddleware, adminOnly } from '../middleware/auth.js'
+import { cotizarEnvio } from '../services/envios.js'
 
 const router = Router()
 const prisma = new PrismaClient()
+
+// GET /api/config/cotizar?provincia=Santa Fe&cp=2000&marcos=1&otros=2 — público (carrito)
+router.get('/cotizar', async (req, res, next) => {
+  try {
+    const { provincia, cp } = req.query
+    const marcos = Math.max(0, Math.min(20, parseInt(req.query.marcos) || 0))
+    const otros  = Math.max(0, Math.min(100, parseInt(req.query.otros) || 0))
+    res.json(await cotizarEnvio({ provincia, cp, marcos, otros }))
+  } catch (e) { next(e) }
+})
 
 // GET /api/config/envios — público (para el checkout)
 router.get('/envios', async (req, res, next) => {

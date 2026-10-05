@@ -4,6 +4,7 @@ import { authMiddleware, adminOnly } from '../middleware/auth.js'
 import { emailConfirmacionPedido, emailPedidoEnviado, emailEntregaDigital } from '../services/email.js'
 import { urlDescargaPrivada } from '../services/cloudinary.js'
 import { AppError } from '../middleware/errorHandler.js'
+import { cotizarEnvio } from '../services/envios.js'
 
 const router = Router()
 const prisma = new PrismaClient()
@@ -71,14 +72,12 @@ router.post('/', async (req, res, next) => {
     let costoEnvio = 0
     let zonaNombre = null
     if (tipoEntrega === 'ENVIO') {
-      // Sin zona elegida (ej: Andreani) el costo queda a cotizar y se informa aparte
-      const zona = zonaId
-        ? await prisma.zonaEnvio.findFirst({ where: { id: zonaId, activa: true } })
-        : null
-      // Si hay una lámina con marco kiri y la zona tiene tarifa especial, se usa esa
-      const conMarco = items.some(i => i.tipo === 'lamina' && i.marco)
-      costoEnvio = (conMarco && zona?.costoMarco) ? zona.costoMarco : (zona?.costo || 0)
-      zonaNombre = zona ? `${zona.nombre}${costoEnvio ? '' : ' (a cotizar)'}` : null
+      // Mismo cálculo que ve el cliente en el carrito (Envíopack/Andreani o tabla por región)
+      const marcos = items.filter(i => i.tipo === 'lamina' && i.marco).reduce((s, i) => s + (parseInt(i.cantidad) || 1), 0)
+      const otros  = items.filter(i => !(i.tipo === 'lamina' && i.marco)).reduce((s, i) => s + (parseInt(i.cantidad) || 1), 0)
+      const cot = await cotizarEnvio({ provincia, cp: codigoPostal, marcos, otros })
+      costoEnvio = cot.costo || 0
+      zonaNombre = `Andreani${cot.fuente === 'andreani' ? ' (cotización en línea)' : (cot.zona ? ' — ' + cot.zona.replace('Andreani — ', '') : '')}${costoEnvio ? '' : ' — a cotizar'}`
     }
 
     // 10% de descuento pagando por transferencia (sobre los productos, no el envío)

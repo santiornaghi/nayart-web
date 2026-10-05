@@ -1336,11 +1336,33 @@ const ZONAS_RESPALDO_VIEJAS = [
 ];
 let zonas = []; // regiones de Andreani con su tarifa (se cargan desde el servidor)
 function zonaDeProvincia(prov){ return zonas.find(z => (z.provincias||'').split(',').map(s=>s.trim()).includes(prov)); }
-function costoAndreani(){
-  const z = zonaDeProvincia(checkout.prov); if(!z) return null;
-  const conMarco = carrito.some(i => i.tipo==='lamina' && i.marco);
-  const c = (conMarco && z.costoMarco) ? z.costoMarco : z.costo;
-  return c > 0 ? c : null; // null = a cotizar
+// Cotización automática: la consulta el servidor (Andreani vía Envíopack o tabla por región)
+function costoAndreani(){ return (checkout.cot && !checkout.cot.cargando && checkout.cot.costo > 0) ? checkout.cot.costo : null; }
+function textoEnvioAndreani(){
+  if(!checkout.prov) return 'Elegí tu provincia';
+  if(checkout.cot?.cargando) return 'Calculando…';
+  if(costoAndreani()) return fmt(costoAndreani());
+  return /^\d{4}$/.test(checkout.cp||'') ? 'A cotizar' : 'Ingresá tu código postal';
+}
+async function cotizar(){
+  if(checkout.entrega!=='ANDREANI' || !checkout.prov){ checkout.cot=null; return; }
+  const marcos = carrito.filter(i=>i.tipo==='lamina'&&i.marco).reduce((s,i)=>s+i.cantidad,0);
+  const otros  = carrito.filter(i=>!(i.tipo==='lamina'&&i.marco)).reduce((s,i)=>s+i.cantidad,0);
+  const cp = /^\d{4}$/.test(checkout.cp||'') ? checkout.cp : '';
+  const key = [checkout.prov,cp,marcos,otros].join('|');
+  if(checkout.cot && checkout.cot.key===key) return;
+  checkout.cot = { key, cargando:true }; render();
+  try {
+    const r = await fetch(`${NAYA_API}/config/cotizar?provincia=${encodeURIComponent(checkout.prov)}&cp=${cp}&marcos=${marcos}&otros=${otros}`);
+    const d = r.ok ? await r.json() : {};
+    if(checkout.cot?.key!==key) return;
+    checkout.cot = { key, costo: d.costo || null, fuente: d.fuente };
+  } catch(e){
+    if(checkout.cot?.key!==key) return;
+    const z = zonaDeProvincia(checkout.prov);
+    checkout.cot = { key, costo: z ? ((marcos && z.costoMarco) ? z.costoMarco : z.costo) || null : null, fuente:'tabla' };
+  }
+  if(paso==='checkout') render();
 }
 let carrito = [];
 let paso = 'carrito';
@@ -1508,7 +1530,7 @@ function render(){
           <div class="co-field"><label>Ciudad</label><input id="co-ciudad" value="${v('ciudad')}" autocomplete="address-level2"></div>
           <div class="co-field"><label>Provincia</label><select id="co-prov"><option value="">Elegí…</option>${PROVINCIAS.map(p=>`<option ${checkout.prov===p?'selected':''}>${p}</option>`).join('')}</select></div>
         </div>
-        <div class="co-field"><label>Código postal</label><input id="co-cp" value="${v('cp')}" autocomplete="postal-code"></div>
+        <div class="co-field"><label>Código postal</label><input id="co-cp" value="${v('cp')}" autocomplete="postal-code" inputmode="numeric" maxlength="4" placeholder="Ej: 2000"></div>
       </div>` : ''}
     </div>
     <div class="co-section">
@@ -1524,14 +1546,16 @@ function render(){
   foot.innerHTML = `
     <div class="sum-row"><span>Subtotal</span><span>${montos(t.sub)}</span></div>
     ${checkout.pago==='TRANSFERENCIA' ? `<div class="sum-row discount"><span>Descuento transferencia 10%</span><span>−${montos(t.desc)}</span></div>` : ''}
-    <div class="sum-row"><span>Envío${checkout.entrega==='ANDREANI' ? ' Andreani' : ''}</span><span>${checkout.entrega!=='ANDREANI' ? 'Sin cargo' : (!checkout.prov ? 'Elegí tu provincia' : (costoAndreani() ? fmt(costoAndreani()) : 'A cotizar'))}</span></div>
+    <div class="sum-row"><span>Envío${checkout.entrega==='ANDREANI' ? ' Andreani' : ''}</span><span>${checkout.entrega!=='ANDREANI' ? 'Sin cargo' : textoEnvioAndreani()}</span></div>
     <div class="sum-row total"><span>Total${checkout.entrega==='ANDREANI' && !costoAndreani() ? ' + envío' : ''}</span><span>${montos(t.total)}</span></div>
     <div class="co-error" id="co-error"></div>
     <button class="btn btn-dark" id="co-enviar" onclick="enviarPedido()">Enviar pedido por WhatsApp</button>
     <div class="co-note">Se abre WhatsApp con el detalle de tu pedido listo para enviar.</div>`;
   body.querySelectorAll('input[name="co-ent"]').forEach(r=>r.onchange=()=>{ leerForm(); checkout.entrega=r.value; render(); });
   body.querySelectorAll('input[name="co-pago"]').forEach(r=>r.onchange=()=>{ leerForm(); checkout.pago=r.value; render(); });
-  const ps = document.getElementById('co-prov'); if(ps) ps.onchange=()=>{ leerForm(); render(); };
+  const ps = document.getElementById('co-prov'); if(ps) ps.onchange=()=>{ leerForm(); cotizar(); render(); };
+  const cpi = document.getElementById('co-cp'); if(cpi) cpi.oninput=()=>{ if(/^\d{4}$/.test(cpi.value.trim())){ leerForm(); cotizar(); } };
+  if(checkout.entrega==='ANDREANI' && checkout.prov) cotizar();
 }
 function leerForm(){
   const g = id => document.getElementById(id)?.value?.trim();
@@ -1548,6 +1572,7 @@ async function enviarPedido(){
   err.textContent='';
   // Se abre la pestaña ya (los navegadores bloquean ventanas abiertas después de esperar al servidor)
   const win = window.open('', '_blank');
+  if(c.entrega==='ANDREANI' && c.cot?.cargando){ err.textContent='Esperá un segundo, estamos calculando el envío.'; if(win) win.close(); return; }
   const btn = document.getElementById('co-enviar'); btn.disabled=true; btn.textContent='Preparando pedido...';
   const t = totales();
   let numero = null;
