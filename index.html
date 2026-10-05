@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NAYA — Artista Plástico</title>
+<title>Naya Lab® — Acuarelas de Santiago Ornaghi</title>
 <meta name="description" content="Acuarelas de Santiago Ornaghi (NAYA). Obras originales y láminas A4 y A5, con marco de madera kiri opcional. Entrega gratis en Río Cuarto y Córdoba, envíos a todo el país.">
 <meta name="theme-color" content="#f5f2ed">
 <link rel="icon" type="image/png" href="img/favicon.png">
 <link rel="apple-touch-icon" href="img/icono-180.png">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="NAYA">
-<meta property="og:title" content="NAYA — Acuarelas originales y láminas">
+<meta property="og:title" content="Naya Lab® — Acuarelas de Santiago Ornaghi">
 <meta property="og:description" content="Acuarelas de Santiago Ornaghi (NAYA). Obras originales y láminas A4 y A5, con marco de madera kiri opcional. Entrega gratis en Río Cuarto y Córdoba, envíos a todo el país.">
 <meta property="og:image" content="https://santiornaghi.github.io/nayart-web/img/og-nayart.jpg">
 <meta property="og:image:width" content="1200">
@@ -1586,6 +1586,7 @@ body.menu-abierto .lmenu { opacity: 1; pointer-events: auto; }
 </header>
 <div class="lmenu" role="navigation" aria-label="Menú">
   <a href="#/lista">Work</a>
+  <a href="#/portfolio">Portfolio</a>
   <a href="#/tienda">Shop</a>
   <a href="#/fotos">Photos</a>
   <a href="#/fotos" class="sub">I —</a>
@@ -1692,6 +1693,15 @@ body.menu-abierto .lmenu { opacity: 1; pointer-events: auto; }
   </div>
 </section>
 
+<!-- PORTFOLIO -->
+<section class="vista" id="v-portfolio">
+  <div class="envoltura pagina">
+    <h2 class="v-title">Portfolio</h2>
+    <p class="t-intro" data-es="Obras vendidas y en colecciones privadas." data-en="Sold works and works in private collections.">Obras vendidas y en colecciones privadas.</p>
+    <div class="ix2-head" style="margin-top:2rem"><span data-es="Año" data-en="Year">Año</span><span data-es="Título" data-en="Title">Título</span><span class="c-m" data-es="Medida" data-en="Size">Medida</span><span id="ix2-n-p" style="text-align:right"></span></div>
+    <div class="ix2-list" id="ix2-list-p"></div>
+  </div>
+</section>
 <!-- FOTOS -->
 <section class="vista" id="v-fotos">
   <div class="envoltura pagina">
@@ -1753,7 +1763,7 @@ body.menu-abierto .lmenu { opacity: 1; pointer-events: auto; }
 </main>
 
 <div class="lf">
-  <div>© 2026 Santiago Ornaghi<br><a href="#/lista">Work</a><a href="#/tienda">Shop</a><a href="#/fotos">Photos</a><a href="#/acerca">About</a></div>
+  <div>© 2026 Santiago Ornaghi<br><a href="#/lista">Work</a><a href="#/portfolio">Portfolio</a><a href="#/tienda">Shop</a><a href="#/fotos">Photos</a><a href="#/acerca">About</a></div>
   <div class="der"><a href="#/contacto">Contact</a><a href="mailto:santiornaghi@gmail.com">Email</a><a href="https://instagram.com/naya__artt" target="_blank" rel="noopener">Instagram</a></div>
 </div>
 <!-- CARRITO -->
@@ -2227,7 +2237,7 @@ function comprarObra(i){
 async function cargarGaleria(){
   renderGaleria(OBRAS_MUESTRA);
   try {
-    const r = await fetch(NAYA_API+'/obras?limit=8');
+    const r = await fetch(NAYA_API+'/obras?limit=60');
     if(!r.ok) return;
     const { obras } = await r.json();
     if(obras && obras.length) renderGaleria(obras);
@@ -2253,15 +2263,22 @@ function armarTodas(){
   const vistos = new Set(OBRA.map(o=>o.s));
   TODAS = [...orig.filter(o=>!vistos.has(o.s)), ...OBRA].sort((a,b)=>b.y-a.y);
 }
+function filaIx(o){
+  const der = o.venta ? `${o.venta.moneda} ${o.venta.precio}` : (o.vendida ? L('Vendida','Sold') : '');
+  return `<a class="ix2-row" href="#/obra/${o.s}" data-img="${escH(o.img[0])}"><span class="c-y">${o.y}</span><span class="c-t">${escH(o.t)}</span><span class="c-m">${escH(o.m)}</span><span class="c-e ${o.venta?'disp':''}">${der}</span></a>`;
+}
+let DISP=[], PORT=[];
 function renderIndice(){
   armarTodas();
-  const l=document.getElementById('ix2-list'); if(!l) return;
-  l.innerHTML = TODAS.map(o=>`<a class="ix2-row" href="#/obra/${o.s}" data-img="${escH(o.img[0])}"><span class="c-y">${o.y}</span><span class="c-t">${escH(o.t)}</span><span class="c-m">${escH(o.m)}</span><span class="c-e ${o.venta?'disp':''}">${o.venta?L('Disponible','Available'):(o.vendida?L('Vendida','Sold'):'')}</span></a>`).join('');
-  const n=document.getElementById('ix2-n'); if(n) n.textContent='('+TODAS.length+')';
+  DISP = TODAS.filter(o=>!o.vendida); PORT = TODAS.filter(o=>o.vendida);
+  const l=document.getElementById('ix2-list'); if(l) l.innerHTML = DISP.map(filaIx).join('');
+  const n=document.getElementById('ix2-n'); if(n) n.textContent='('+DISP.length+')';
+  const lp=document.getElementById('ix2-list-p'); if(lp) lp.innerHTML = PORT.map(filaIx).join('');
+  const np=document.getElementById('ix2-n-p'); if(np) np.textContent='('+PORT.length+')';
   previewIndice();
 }
 // la galería del panel alimenta el índice
-renderGaleria = function(obras){ window._obrasGaleria = obras; renderIndice(); if(location.hash.startsWith('#/obra/')) ruta(); };
+renderGaleria = function(obras){ window._obrasGaleria = obras; if(obras.some(o=>o.id)) window._apiLista = true; renderIndice(); if(location.hash.startsWith('#/obra/')) ruta(); };
 function previewIndice(){
   const prev=document.querySelector('.ix-preview'); if(!prev || !matchMedia('(hover: hover)').matches) return;
   const img=prev.querySelector('img');
@@ -2273,8 +2290,10 @@ function previewIndice(){
 }
 function renderObra(s){
   const i=TODAS.findIndex(o=>o.s===s); const o=TODAS[i]; const v=document.getElementById('v-obra');
-  if(!o){ v.innerHTML=`<div class="envoltura obra-v"><p>${L('No encontré esa obra.','Work not found.')}</p><p><a href="#/">${L('Volver a la lista','Back to list')}</a></p></div>`; return; }
-  const prev=TODAS[(i-1+TODAS.length)%TODAS.length], next=TODAS[(i+1)%TODAS.length];
+  if(!o){ v.innerHTML = window._apiLista ? `<div class="envoltura obra-v"><p>${L('No encontré esa obra.','Work not found.')}</p><p><a href="#/lista">${L('Volver a la lista','Back to list')}</a></p></div>` : `<div class="envoltura obra-v"><p class="mono">${L('Cargando…','Loading…')}</p></div>`; return; }
+  const G = o.vendida ? PORT : DISP, gi = G.indexOf(o);
+  const prev=G[(gi-1+G.length)%G.length], next=G[(gi+1)%G.length];
+  const volver = o.vendida ? '#/portfolio' : '#/lista';
   const tecEn = o.tec.replace('Acuarela sobre papel, díptico','Watercolor on paper, diptych').replace('Acuarela sobre papel','Watercolor on paper').replace('Carbonilla sobre papel','Charcoal on paper').replace('Acrílico sobre papel','Acrylic on paper');
   const compra = o.venta ? `<div class="ob-marco"><div class="seg ob-seg"><button class="on" data-k="0" type="button">${L('Sin marco','No frame')}</button><button data-k="1" type="button">${L('Con marco kiri','Kiri frame')} +${fmt(PRECIO_MARCO_OBRA)}</button></div><span class="mono ob-nota">${L('Madera kiri con paspartú','Kiri wood with mat')}</span></div>
     <div class="ob-compra"><span class="ob-precio">${fmt(o.venta.precio,o.venta.moneda)}<span class="ob-mas"></span></span><button class="btn-m" onclick="comprarObraMarco(${o.gi})">${L('Agregar al carrito','Add to cart')}</button><span class="mono" style="font-size:.7rem;color:var(--ink-faint)">${L('10% off por transferencia','10% off by bank transfer')}</span></div>`
@@ -2283,11 +2302,11 @@ function renderObra(s){
   v.innerHTML = `<div class="envoltura obra-v">
     <div class="ob-top"><h2>${escH(o.t)}</h2><span class="mono" style="font-size:.8rem">${o.y}</span></div>
     <div class="ob-meta">${escH(L(o.tec,tecEn))}<br>${escH(o.m)}<br>${o.y}</div>
-    <div class="ob-img ${o.img.length>1?'dos':''}" id="ob-img">${o.img.map(src=>`<img src="${escH(src)}" alt="${escH(o.t)}">`).join('')}</div>
+    <div class="ob-img ${o.img.length>1?'dos':''}" id="ob-img">${o.img.map(src=>{ const m=String(src).match(/img\/originales\/(\d+)\.jpg/); return m ? `<img src="${escH(src)}" srcset="${escH(src)} 1600w, img/hd/${m[1]}.jpg 2400w" sizes="(max-width: 760px) 100vw, 1180px" alt="${escH(o.t)}">` : `<img src="${escH(src)}" alt="${escH(o.t)}">`; }).join('')}</div>
     <div class="ob-cap">${escH(o.t)} · ${escH(L(o.tec,tecEn))} · ${escH(o.m)} · ${o.y}</div>
     ${o.desc ? `<div class="ob-about"><span class="v-lab">${L('Sobre la obra','About')}</span><p>${escH(o.desc)}</p></div>` : ''}
     ${compra}
-    <div class="ob-nav"><a href="#/obra/${prev.s}">← ${L('Anterior','Previous')}</a><a href="#/">${L('Volver a la lista','Back to list')}</a><a href="#/obra/${next.s}">${L('Siguiente','Next')} →</a></div>
+    <div class="ob-nav"><a href="#/obra/${prev.s}">← ${L('Anterior','Previous')}</a><a href="${volver}">${L('Volver a la lista','Back to list')}</a><a href="#/obra/${next.s}">${L('Siguiente','Next')} →</a></div>
   </div>`;
 }
 const PRECIO_MARCO_OBRA = 16500;
@@ -2316,6 +2335,7 @@ function ruta(){
   else if(h==='#/tienda') vista='tienda';
   else if(h==='#/acerca') vista='acerca';
   else if(h==='#/fotos') vista='fotos';
+  else if(h==='#/portfolio') vista='portfolio';
   else if(h==='#/contacto') vista='contacto';
   document.querySelectorAll('.vista').forEach(x=>x.classList.toggle('on', x.id==='v-'+vista));
   document.body.classList.remove('menu-abierto');
@@ -2339,6 +2359,7 @@ function menu(){ document.body.classList.toggle('menu-abierto'); }
     const l=lista(); if(!l.length) return;
     const d=document.createElement('div'); d.className='estela'; d.style.left=x+'px'; d.style.top=y+'px'; if(w) d.style.width=w+'px';
     d.innerHTML=`<img src="${l[k++ % l.length]}" alt="">`; port.appendChild(d);
+    const pre=new Image(); pre.src=l[k % l.length];
     requestAnimationFrame(()=>requestAnimationFrame(()=>d.classList.add('in')));
     setTimeout(()=>d.classList.add('out'), vida);
     setTimeout(()=>d.remove(), vida+1000);
@@ -2382,9 +2403,7 @@ document.querySelectorAll('.lam-f').forEach(b=>b.addEventListener('click',()=>{
 }));
 function verTodasLaminas(){ document.getElementById('laminas').classList.remove('recortada'); }
 (function(){ const b=document.getElementById('laminas-btn'); if(b){ const n=document.querySelectorAll('#laminas .lamina').length; b.dataset.es=`Ver las ${n} láminas`; b.dataset.en=`See all ${n} prints`; b.textContent=b.dataset.es; } })();
-// precarga de imágenes para la estela
-OBRA.forEach(o=>{ const i=new Image(); i.src=o.img[0]; });
-[1,9,4,11,13,3,6].forEach(n=>{ const i=new Image(); i.src='img/fotos/f'+String(n).padStart(2,'0')+'.jpg'; });
+
 renderIndice(); cargarGaleria(); ruta();
 
 </script>
