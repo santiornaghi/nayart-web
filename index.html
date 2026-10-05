@@ -1233,7 +1233,7 @@ footer { border-top: none; }
     <h2 data-es="Serie en color" data-en="Colour series">Serie en color</h2>
     <p data-es="Doce acuarelas pintadas para un calendario, una por mes. Animales y escenas de campo con color saturado y línea suelta encima." data-en="Twelve watercolors painted for a calendar, one per month. Animals and country scenes in saturated colour with loose line work on top.">Doce acuarelas pintadas para un calendario, una por mes. Animales y escenas de campo con color saturado y línea suelta encima.</p>
   </div>
-  <div class="serie-grid reveal"><figure><img src="img/serie/s01.jpg" alt="El enemigo" loading="lazy"><figcaption>El enemigo</figcaption></figure><figure><img src="img/serie/s02.jpg" alt="Retorno" loading="lazy"><figcaption>Retorno</figcaption></figure><figure><img src="img/serie/s03.jpg" alt="Acuarela de la serie en color" loading="lazy"></figure><figure><img src="img/serie/s04.jpg" alt="Acuarela de la serie en color" loading="lazy"></figure><figure><img src="img/serie/s05.jpg" alt="Curioseando" loading="lazy"><figcaption>Curioseando</figcaption></figure><figure><img src="img/serie/s06.jpg" alt="Siempre cerca" loading="lazy"><figcaption>Siempre cerca</figcaption></figure><figure><img src="img/serie/s07.jpg" alt="Haciendo sombra" loading="lazy"><figcaption>Haciendo sombra</figcaption></figure><figure><img src="img/serie/s08.jpg" alt="Acuarela de la serie en color" loading="lazy"></figure><figure><img src="img/serie/s09.jpg" alt="Acuarela de la serie en color" loading="lazy"></figure><figure><img src="img/serie/s10.jpg" alt="Acuarela de la serie en color" loading="lazy"></figure><figure><img src="img/serie/s11.jpg" alt="Careta" loading="lazy"><figcaption>Careta</figcaption></figure><figure><img src="img/serie/s12.jpg" alt="Acuarela de la serie en color" loading="lazy"></figure></div>
+  <div class="serie-grid reveal"><figure><img src="img/serie/s01.jpg" alt="El enemigo" loading="lazy"><figcaption>El enemigo</figcaption></figure><figure><img src="img/serie/s02.jpg" alt="Retorno" loading="lazy"><figcaption>Retorno</figcaption></figure><figure><img src="img/serie/s03.jpg" alt="Jinetes en magenta" loading="lazy"><figcaption>Jinetes en magenta</figcaption></figure><figure><img src="img/serie/s04.jpg" alt="Molino al atardecer" loading="lazy"><figcaption>Molino al atardecer</figcaption></figure><figure><img src="img/serie/s05.jpg" alt="Curioseando" loading="lazy"><figcaption>Curioseando</figcaption></figure><figure><img src="img/serie/s06.jpg" alt="Siempre cerca" loading="lazy"><figcaption>Siempre cerca</figcaption></figure><figure><img src="img/serie/s07.jpg" alt="Haciendo sombra" loading="lazy"><figcaption>Haciendo sombra</figcaption></figure><figure><img src="img/serie/s08.jpg" alt="El rodeo" loading="lazy"><figcaption>El rodeo</figcaption></figure><figure><img src="img/serie/s09.jpg" alt="Aguada turquesa" loading="lazy"><figcaption>Aguada turquesa</figcaption></figure><figure><img src="img/serie/s10.jpg" alt="Ovejas" loading="lazy"><figcaption>Ovejas</figcaption></figure><figure><img src="img/serie/s11.jpg" alt="Careta" loading="lazy"><figcaption>Careta</figcaption></figure><figure><img src="img/serie/s12.jpg" alt="Campo azul" loading="lazy"><figcaption>Campo azul</figcaption></figure></div>
 </section>
 <!-- BANDA DE ACUARELA -->
 <div class="banda-acuarela reveal">
@@ -1494,9 +1494,16 @@ const NAYA_WA  = '5493584390961';
 const PRECIO_LAMINA = { A4: 10000, A5: 8000 };
 const PRECIO_KIRI = { A4: 35000, A5: 25000 }; // precio total con marco kiri
 const DESC_TRANSFERENCIA = 0.10;
+// Serie en color (calendario): mismas láminas, imagen en img/serie/
+const LAMINAS_SERIE = [
+  ['s01','El enemigo'],['s02','Retorno'],['s03','Jinetes en magenta'],['s04','Molino al atardecer'],
+  ['s05','Curioseando'],['s06','Siempre cerca'],['s07','Haciendo sombra'],['s08','El rodeo'],
+  ['s09','Aguada turquesa'],['s10','Ovejas'],['s11','Careta'],['s12','Campo azul'],
+];
+const imgLamina = id => id.startsWith('s') ? `img/serie/${id}.jpg` : `img/laminas/${id}.jpg`;
 const LAMINAS = [
-  ['01','Bote en la orilla'],['02','La tranquera'],['03','Ciudad al atardecer'],['04','El caballo'],
-  ['05','Tormenta en el campo'],['06','El canal'],['07','Niebla'],['08','Laguna azul'],['09','Siesta'],
+  ['01','Bote en la orilla'],['02','La tranquera'],['03','Ciudad al atardecer'],
+  ['05','Tormenta en el campo'],['06','El canal'],['07','Niebla'],['08','Laguna azul'],
   ['10','Arboleda'],['12','Tarde en el campo'],['13','Camino de tierra'],['14','Cielo de tormenta'],
   ['15','Paisano'],['16','Bajo el árbol'],['17','Cordero en el corral'],['18','Chanchos'],
   ['19','La aguada'],['20','Atardecer violeta']
@@ -1557,9 +1564,9 @@ function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg
 // ── Láminas ──
 function renderLaminas(){
   const g = document.getElementById('laminas'); if(!g) return;
-  g.innerHTML = LAMINAS.map(([id, t]) => `
+  g.innerHTML = [...LAMINAS, ...LAMINAS_SERIE].map(([id, t]) => `
     <div class="lamina" data-id="${id}" data-tam="A4">
-      <div class="lamina-img"><img src="img/laminas/${id}.jpg" alt="${escH(t)}" loading="lazy"></div>
+      <div class="lamina-img"><img src="${imgLamina(id)}" alt="${escH(t)}" loading="lazy"></div>
       <div class="lamina-name">${escH(t)}</div>
       <div class="lamina-opts">
         <div class="seg"><button class="on" data-t="A4">A4</button><button data-t="A5">A5</button></div>
@@ -1580,9 +1587,9 @@ function renderLaminas(){
     card.querySelector('input').onchange = upd;
     card.querySelector('.lamina-add').onclick = () => {
       const id = card.dataset.id, tam = card.dataset.tam, marco = card.querySelector('input').checked;
-      const titulo = LAMINAS.find(l=>l[0]===id)[1];
+      const titulo = [...LAMINAS, ...LAMINAS_SERIE].find(l=>l[0]===id)[1];
       agregar({ key:`lam-${id}-${tam}-${marco?'k':'s'}`, tipo:'lamina', titulo, tamano:tam, marco,
-        nombre:`Lámina ${tam}${marco?' + marco kiri':''}`, precio: (marco ? PRECIO_KIRI : PRECIO_LAMINA)[tam], moneda:'ARS', img:`img/laminas/${id}.jpg` });
+        nombre:`Lámina ${tam}${marco?' + marco kiri':''}`, precio: (marco ? PRECIO_KIRI : PRECIO_LAMINA)[tam], moneda:'ARS', img:imgLamina(id) });
     };
   });
 }
@@ -1827,7 +1834,7 @@ const DESCRIPCIONES = {
   'Atardecer violeta': 'Un atardecer de pueblo: postes de luz, una casa y figuras a contraluz bajo un cielo violeta y naranja.',
 };
 const OBRAS_MUESTRA = [
-  ['05','Tormenta en el campo',25,18],['03','Ciudad al atardecer',18,25],['04','El caballo',25,18],
+  ['05','Tormenta en el campo',25,18],['03','Ciudad al atardecer',18,25],['19','La aguada',25,18],
   ['17','Cordero en el corral',25,18],['20','Atardecer violeta',25,18],['06','El canal',18,25],
   ['15','Paisano',25,18],['07','Niebla',18,25],
 ].map(([n,titulo,ancho,alto])=>({ titulo, ancho, alto, anio:2025, tecnica:'ACUARELA', imagenUrl:`img/originales/${n}.jpg`, precio:100, moneda:'USD', disponible:'DISPONIBLE' }));

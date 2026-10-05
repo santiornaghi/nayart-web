@@ -62,8 +62,8 @@ async function main() {
   if (!yaImportadas) {
     const originales = [
       ['01','Bote en la orilla',17,24],['02','La tranquera',25,18],['03','Ciudad al atardecer',18,25],
-      ['04','El caballo',25,18],['05','Tormenta en el campo',25,18],['06','El canal',18,25],
-      ['07','Niebla',18,25],['08','Laguna azul',18,25],['09','Siesta',25,18],['10','Arboleda',29,21],
+      ['05','Tormenta en el campo',25,18],['06','El canal',18,25],
+      ['07','Niebla',18,25],['08','Laguna azul',18,25],['10','Arboleda',29,21],
       ['12','Tarde en el campo',25,18],['13','Camino de tierra',25,18],['14','Cielo de tormenta',25,18],
       ['15','Paisano',25,18],['16','Bajo el árbol',25,18],['17','Cordero en el corral',25,18],
       ['18','Chanchos',25,18],['19','La aguada',25,18],['20','Atardecer violeta',25,18],
@@ -75,6 +75,15 @@ async function main() {
       } })
     }
     console.log(`✓ ${originales.length} obras originales importadas`)
+  }
+
+  // Obras retiradas del sitio: se borran si nunca tuvieron pedidos
+  for (const titulo of ['El caballo', 'Siesta']) {
+    const obras = await prisma.obra.findMany({ where: { titulo, imagenUrl: { contains: '/img/originales/' } }, include: { pedidoItems: true } })
+    for (const o of obras) {
+      if (o.pedidoItems.length) await prisma.obra.update({ where: { id: o.id }, data: { disponible: 'NO_DISPONIBLE' } })
+      else await prisma.obra.delete({ where: { id: o.id } })
+    }
   }
 
   // Descripción breve de cada obra (solo si todavía no tiene una cargada desde el panel)
