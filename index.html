@@ -1547,6 +1547,17 @@ body.menu-abierto .lmenu { opacity: 1; pointer-events: auto; }
 .fotos img { display: block; max-width: min(100%, 980px); max-height: 88vh; width: auto; height: auto; }
 .lmenu a.sub { font-style: italic; font-size: .8rem; margin-top: -.6rem; }
 @media (max-width: 720px) { .fotos { gap: 1.4rem; } .fotos img { max-height: none; width: 100%; max-width: 100%; } }
+
+/* marco en obras */
+.ob-marco { display: flex; align-items: center; gap: 1rem; margin-top: 2.4rem; flex-wrap: wrap; }
+.ob-seg button { font-family: 'JetBrains Mono', monospace !important; text-transform: uppercase; font-size: .68rem !important; padding: .55rem .8rem !important; }
+.ob-nota { font-size: .7rem; color: var(--ink-faint); }
+.ob-compra { margin-top: 1.2rem !important; }
+.ob-img img { transition: padding .5s, background .5s, box-shadow .5s; }
+.ob-img.kiri { justify-items: center; align-items: center; padding: 3vw; background: radial-gradient(120% 90% at 25% 10%, #FBF8F2 0%, #F1EBE1 60%, #E7DFD2 100%); }
+.ob-img.kiri img { padding: 4.5%; background: #FCFBF8; border: 12px solid #D9BF95; border-image: linear-gradient(135deg, #E6CFA8, #D4B588 30%, #E2C79C 55%, #CDAC7C 80%, #DDC29A) 1; box-shadow: inset 0 0 0 1px rgba(60,45,25,.1), 0 14px 30px -10px rgba(40,30,15,.35); max-height: 74vh; width: auto; max-width: 100%; object-fit: fill; }
+.ob-img.kiri.dos img { border-width: 8px; }
+.ob-vendida { font-size: .76rem; color: var(--ink-faint); }
 /* contacto */
 .ct-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 4rem; }
 .form .fg label { font-family: 'JetBrains Mono', monospace; text-transform: uppercase; font-size: .7rem; letter-spacing: 0; color: var(--ink); }
@@ -1606,7 +1617,7 @@ body.menu-abierto .lmenu { opacity: 1; pointer-events: auto; }
   <div class="envoltura pagina">
     <h2 class="v-title" data-es="Tienda" data-en="Shop">Tienda</h2>
     <p class="t-intro" data-es="Láminas de mis acuarelas, impresas en A4 y A5, con marco de madera kiri opcional. También originales y stickers." data-en="Prints of my watercolors in A4 and A5, with an optional kiri wood frame. Originals and stickers too.">Láminas de mis acuarelas, impresas en A4 y A5, con marco de madera kiri opcional. También originales y stickers.</p>
-    <div class="t-precios">A4 $20.000 · A5 $15.000<br><span data-es="Con marco kiri: A4 $35.000 · A5 $25.000" data-en="With kiri frame: A4 $35.000 · A5 $25.000">Con marco kiri: A4 $35.000 · A5 $25.000</span><br><span data-es="10% off por transferencia" data-en="10% off by bank transfer">10% off por transferencia</span></div>
+    <div class="t-precios">A4 $22.000 · A5 $16.500<br><span data-es="Con marco kiri: A4 $38.500 · A5 $27.500" data-en="With kiri frame: A4 $38.500 · A5 $27.500">Con marco kiri: A4 $38.500 · A5 $27.500</span><br><span data-es="10% off por transferencia" data-en="10% off by bank transfer">10% off por transferencia</span></div>
     <div class="lam-filtros" role="tablist">
       <button class="lam-f on" data-g="" type="button" data-es="Todas" data-en="All">Todas</button>
       <button class="lam-f" data-g="p" type="button" data-es="Paisajes y ciudad" data-en="Landscapes and city">Paisajes y ciudad</button>
@@ -1615,7 +1626,7 @@ body.menu-abierto .lmenu { opacity: 1; pointer-events: auto; }
     <div class="laminas recortada" id="laminas"></div>
     <div class="laminas-mas"><button class="btn-m linea" id="laminas-btn" type="button" onclick="verTodasLaminas()">Ver todas las láminas</button></div>
     <div class="t-sec">
-      <span class="v-lab">Stickers · $2.000</span>
+      <span class="v-lab">Stickers · $2.200</span>
       <div class="stickers" id="stickers"></div>
     </div>
     <div class="t-sec" id="tienda-extra" style="display:none">
@@ -1762,17 +1773,17 @@ body.menu-abierto .lmenu { opacity: 1; pointer-events: auto; }
 <script>
 
 const OBRA = [
-  {s:'che-vuole', t:'Che Vuole', tec:'Acuarela sobre papel', m:'40 × 50 cm', y:2023, img:['img/rincones/che-vuole.jpg']},
-  {s:'pasitos-siesteros', t:'Pasitos Siesteros', tec:'Acuarela sobre papel', m:'25 × 30 cm', y:2023, img:['img/rincones/pasitos-siesteros.jpg']},
-  {s:'necesidad-interrumpida', t:'Necesidad interrumpida', tec:'Acuarela sobre papel, díptico', m:'100 × 150 cm', y:2023, img:['img/movimiento/necesidad-1.jpg','img/movimiento/necesidad-2.jpg']},
-  {s:'ponte', t:'Ponte', tec:'Acuarela sobre papel', m:'25 × 30 cm', y:2023, img:['img/rincones/ponte.jpg']},
-  {s:'sombra-alizarin', t:'Sombra Alizarin', tec:'Acuarela sobre papel', m:'30 × 40 cm', y:2023, img:['img/rincones/sombra-alizarin.jpg']},
-  {s:'el-paseo-de-flodeo', t:'El Paseo de Flodeo', tec:'Acuarela sobre papel', m:'30 × 40 cm', y:2023, img:['img/rincones/paseo-de-flodeo.jpg']},
-  {s:'urbe-dorada', t:'Urbe dorada', tec:'Acuarela sobre papel', m:'40 × 140 cm', y:2023, img:['img/movimiento/urbe-dorada.jpg']},
-  {s:'lo-sensual-i', t:'Lo sensual I', tec:'Carbonilla sobre papel', m:'53 × 83 cm', y:2023, img:['img/movimiento/lo-sensual-1.jpg']},
-  {s:'lo-sensual-ii', t:'Lo sensual II', tec:'Carbonilla sobre papel', m:'53 × 83 cm', y:2023, img:['img/movimiento/lo-sensual-2.jpg']},
-  {s:'cadmios', t:'Cadmios', tec:'Acuarela sobre papel', m:'25 × 30 cm', y:2022, img:['img/rincones/cadmios.jpg']},
-  {s:'el-paso', t:'El Paso', tec:'Acuarela sobre papel', m:'25 × 30 cm', y:2022, img:['img/rincones/el-paso.jpg']},
+  {s:'che-vuole', t:'Che Vuole', tec:'Acuarela sobre papel', m:'40 × 50 cm', y:2023, img:['img/rincones/che-vuole.jpg'], vendida:true},
+  {s:'pasitos-siesteros', t:'Pasitos Siesteros', tec:'Acuarela sobre papel', m:'25 × 30 cm', y:2023, img:['img/rincones/pasitos-siesteros.jpg'], vendida:true},
+  {s:'necesidad-interrumpida', t:'Necesidad interrumpida', tec:'Acuarela sobre papel, díptico', m:'100 × 150 cm', y:2023, img:['img/movimiento/necesidad-1.jpg','img/movimiento/necesidad-2.jpg'], vendida:true},
+  {s:'ponte', t:'Ponte', tec:'Acuarela sobre papel', m:'25 × 30 cm', y:2023, img:['img/rincones/ponte.jpg'], vendida:true},
+  {s:'sombra-alizarin', t:'Sombra Alizarin', tec:'Acuarela sobre papel', m:'30 × 40 cm', y:2023, img:['img/rincones/sombra-alizarin.jpg'], vendida:true},
+  {s:'el-paseo-de-flodeo', t:'El Paseo de Flodeo', tec:'Acuarela sobre papel', m:'30 × 40 cm', y:2023, img:['img/rincones/paseo-de-flodeo.jpg'], vendida:true},
+  {s:'urbe-dorada', t:'Urbe dorada', tec:'Acuarela sobre papel', m:'40 × 140 cm', y:2023, img:['img/movimiento/urbe-dorada.jpg'], vendida:true},
+  {s:'lo-sensual-i', t:'Lo sensual I', tec:'Carbonilla sobre papel', m:'53 × 83 cm', y:2023, img:['img/movimiento/lo-sensual-1.jpg'], vendida:true},
+  {s:'lo-sensual-ii', t:'Lo sensual II', tec:'Carbonilla sobre papel', m:'53 × 83 cm', y:2023, img:['img/movimiento/lo-sensual-2.jpg'], vendida:true},
+  {s:'cadmios', t:'Cadmios', tec:'Acuarela sobre papel', m:'25 × 30 cm', y:2022, img:['img/rincones/cadmios.jpg'], vendida:true},
+  {s:'el-paso', t:'El Paso', tec:'Acuarela sobre papel', m:'25 × 30 cm', y:2022, img:['img/rincones/el-paso.jpg'], vendida:true},
 ];
 // Nav scroll
 const nav = document.getElementById('nav');
@@ -1840,8 +1851,8 @@ async function handleForm(e){
 // ════════════ TIENDA: LÁMINAS, CARRITO Y PEDIDO POR WHATSAPP ════════════
 const NAYA_API = 'https://nayart-web.onrender.com/api';
 const NAYA_WA  = '5493584390961';
-const PRECIO_LAMINA = { A4: 20000, A5: 15000 };
-const PRECIO_KIRI = { A4: 35000, A5: 25000 }; // precio total con marco kiri
+const PRECIO_LAMINA = { A4: 22000, A5: 16500 };
+const PRECIO_KIRI = { A4: 38500, A5: 27500 }; // precio total con marco kiri
 const DESC_TRANSFERENCIA = 0.10;
 // Serie en color (calendario): mismas láminas, imagen en img/serie/
 const LAMINAS_SERIE = [
@@ -1876,8 +1887,8 @@ function textoEnvioAndreani(){
 }
 async function cotizar(){
   if(checkout.entrega!=='ANDREANI' || !checkout.prov){ checkout.cot=null; return; }
-  const marcos = carrito.filter(i=>i.tipo==='lamina'&&i.marco).reduce((s,i)=>s+i.cantidad,0);
-  const otros  = carrito.filter(i=>!(i.tipo==='lamina'&&i.marco)).reduce((s,i)=>s+i.cantidad,0);
+  const marcos = carrito.filter(i=>(i.tipo==='lamina'&&i.marco)||i.tipo==='marco').reduce((s,i)=>s+i.cantidad,0);
+  const otros  = carrito.filter(i=>!((i.tipo==='lamina'&&i.marco)||i.tipo==='marco')).reduce((s,i)=>s+i.cantidad,0);
   const cp = /^\d{4}$/.test(checkout.cp||'') ? checkout.cp : '';
   const key = [checkout.prov,cp,marcos,otros].join('|');
   if(checkout.cot && checkout.cot.key===key) return;
@@ -1992,7 +2003,7 @@ function cambiarCant(key, d){
   it.cantidad += d; if(it.cantidad<1 || (it.unico && d>0)) { if(it.cantidad<1) carrito = carrito.filter(i=>i.key!==key); else it.cantidad=1; }
   guardar(); actualizarContador(); render();
 }
-function quitar(key){ carrito = carrito.filter(i=>i.key!==key); guardar(); actualizarContador(); render(); }
+function quitar(key){ carrito = carrito.filter(i=>i.key!==key && i.key!=='marco-'+String(key).replace('obra-','')); guardar(); actualizarContador(); render(); }
 function actualizarContador(){
   const n = carrito.reduce((s,i)=>s+i.cantidad,0);
   document.querySelectorAll('.cart-count').forEach(el=>{ el.textContent=n; el.dataset.n=n; });
@@ -2154,7 +2165,7 @@ function renderStickers(){
     <div class="sticker lamina">
       <div class="sticker-img"><img src="img/stickers/sticker-${id}.webp" alt="Sticker ${escH(t)}" loading="lazy"></div>
       <div class="lamina-name">${escH(t)}</div>
-      <div class="lamina-foot"><span class="lamina-price">${fmt(2000)}</span><button class="lamina-add" onclick="agregar({key:'st-${id}',tipo:'sticker',id:'${id}',titulo:'${t}',nombre:'Sticker',precio:2000,moneda:'ARS',img:'img/stickers/sticker-${id}.webp'})">Agregar</button></div>
+      <div class="lamina-foot"><span class="lamina-price">${fmt(2200)}</span><button class="lamina-add" onclick="agregar({key:'st-${id}',tipo:'sticker',id:'${id}',titulo:'${t}',nombre:'Sticker',precio:2200,moneda:'ARS',img:'img/stickers/sticker-${id}.webp'})">Agregar</button></div>
     </div>`).join('');
 }
 cargar(); actualizarContador(); renderLaminas(); renderStickers(); cargarZonas(); cargarTiendaAPI();
@@ -2184,7 +2195,7 @@ const OBRAS_MUESTRA = [
   ['05','Tormenta en el campo',25,18],['03','Ciudad al atardecer',18,25],['19','La aguada',25,18],
   ['17','Cordero en el corral',25,18],['20','Atardecer violeta',25,18],['06','El canal',18,25],
   ['15','Paisano',25,18],['07','Niebla',18,25],
-].map(([n,titulo,ancho,alto])=>({ titulo, ancho, alto, anio:2025, tecnica:'ACUARELA', imagenUrl:`img/originales/${n}.jpg`, precio:100, moneda:'USD', disponible:'DISPONIBLE' }));
+].map(([n,titulo,ancho,alto])=>({ titulo, ancho, alto, anio:2025, tecnica:'ACUARELA', imagenUrl:`img/originales/${n}.jpg`, precio:110, moneda:'USD', disponible:'DISPONIBLE' }));
 const TECNICA = {ACUARELA:'Acuarela', ACRILICO:'Acrílico', CARBONILLA:'Carbonilla', MIXTA:'Técnica mixta', OTRO:'Técnica mixta'};
 
 function renderGaleria(obras){
@@ -2265,24 +2276,43 @@ function renderObra(s){
   if(!o){ v.innerHTML=`<div class="envoltura obra-v"><p>${L('No encontré esa obra.','Work not found.')}</p><p><a href="#/">${L('Volver a la lista','Back to list')}</a></p></div>`; return; }
   const prev=TODAS[(i-1+TODAS.length)%TODAS.length], next=TODAS[(i+1)%TODAS.length];
   const tecEn = o.tec.replace('Acuarela sobre papel, díptico','Watercolor on paper, diptych').replace('Acuarela sobre papel','Watercolor on paper').replace('Carbonilla sobre papel','Charcoal on paper').replace('Acrílico sobre papel','Acrylic on paper');
-  const compra = o.venta ? `<div class="ob-compra"><span class="ob-precio">${fmt(o.venta.precio,o.venta.moneda)}</span><button class="btn-m" onclick="comprarObra(${o.gi})">${L('Agregar al carrito','Add to cart')}</button><span class="mono" style="font-size:.7rem;color:var(--ink-faint)">${L('10% off por transferencia','10% off by bank transfer')}</span></div>`
-    : `<div class="ob-compra"><a class="btn-m linea" target="_blank" rel="noopener" href="https://wa.me/${NAYA_WA}?text=${encodeURIComponent('Hola Naya! Quería consultar por la obra «'+o.t+'».')}">${o.vendida?L('Consultar por obras similares','Ask about similar works'):L('Consultar por esta obra','Ask about this work')}</a></div>`;
+  const compra = o.venta ? `<div class="ob-marco"><div class="seg ob-seg"><button class="on" data-k="0" type="button">${L('Sin marco','No frame')}</button><button data-k="1" type="button">${L('Con marco kiri','Kiri frame')} +${fmt(PRECIO_MARCO_OBRA)}</button></div><span class="mono ob-nota">${L('Madera kiri con paspartú','Kiri wood with mat')}</span></div>
+    <div class="ob-compra"><span class="ob-precio">${fmt(o.venta.precio,o.venta.moneda)}<span class="ob-mas"></span></span><button class="btn-m" onclick="comprarObraMarco(${o.gi})">${L('Agregar al carrito','Add to cart')}</button><span class="mono" style="font-size:.7rem;color:var(--ink-faint)">${L('10% off por transferencia','10% off by bank transfer')}</span></div>`
+    : (o.vendida ? `<div class="ob-compra"><span class="mono ob-vendida">${L('Vendida — colección privada','Sold — private collection')}</span></div>`
+    : `<div class="ob-compra"><a class="btn-m linea" target="_blank" rel="noopener" href="https://wa.me/${NAYA_WA}?text=${encodeURIComponent('Hola Naya! Quería consultar por la obra «'+o.t+'».')}">${L('Consultar por esta obra','Ask about this work')}</a></div>`);
   v.innerHTML = `<div class="envoltura obra-v">
     <div class="ob-top"><h2>${escH(o.t)}</h2><span class="mono" style="font-size:.8rem">${o.y}</span></div>
     <div class="ob-meta">${escH(L(o.tec,tecEn))}<br>${escH(o.m)}<br>${o.y}</div>
-    <div class="ob-img ${o.img.length>1?'dos':''}">${o.img.map(src=>`<img src="${escH(src)}" alt="${escH(o.t)}">`).join('')}</div>
+    <div class="ob-img ${o.img.length>1?'dos':''}" id="ob-img">${o.img.map(src=>`<img src="${escH(src)}" alt="${escH(o.t)}">`).join('')}</div>
     <div class="ob-cap">${escH(o.t)} · ${escH(L(o.tec,tecEn))} · ${escH(o.m)} · ${o.y}</div>
     ${o.desc ? `<div class="ob-about"><span class="v-lab">${L('Sobre la obra','About')}</span><p>${escH(o.desc)}</p></div>` : ''}
     ${compra}
     <div class="ob-nav"><a href="#/obra/${prev.s}">← ${L('Anterior','Previous')}</a><a href="#/">${L('Volver a la lista','Back to list')}</a><a href="#/obra/${next.s}">${L('Siguiente','Next')} →</a></div>
   </div>`;
 }
+const PRECIO_MARCO_OBRA = 16500;
+let obMarco = false;
+function activarMarco(){
+  obMarco=false; const seg=document.querySelector('.ob-seg'); if(!seg) return;
+  seg.querySelectorAll('button').forEach(b=>b.onclick=()=>{
+    seg.querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b)); obMarco = b.dataset.k==='1';
+    document.getElementById('ob-img').classList.toggle('kiri', obMarco);
+    document.querySelector('.ob-mas').textContent = obMarco ? ' + '+fmt(PRECIO_MARCO_OBRA) : '';
+  });
+}
+function comprarObraMarco(i){
+  const o=window._obrasGaleria[i]; comprarObra(i);
+  if(obMarco && !carrito.find(x=>x.key==='marco-'+o.id)){
+    carrito.push({ key:'marco-'+o.id, tipo:'marco', id:o.id, titulo:o.titulo, nombre:'Marco kiri con paspartú', precio:PRECIO_MARCO_OBRA, moneda:'ARS', img:o.imagenUrl, unico:true, cantidad:1 });
+    guardar(); actualizarContador();
+  }
+}
 const RUTAS_VIEJAS = { '#tienda':'#/tienda', '#laminas':'#/tienda', '#encargos':'#/acerca', '#contacto':'#/contacto', '#obras':'#/', '#series':'#/', '#about':'#/acerca' };
 function ruta(){
   let h = location.hash || '#/';
   if(RUTAS_VIEJAS[h]){ history.replaceState(null,'',RUTAS_VIEJAS[h]); h=RUTAS_VIEJAS[h]; }
   let vista='inicio';
-  if(h.startsWith('#/obra/')){ vista='obra'; renderObra(decodeURIComponent(h.slice(7))); }
+  if(h.startsWith('#/obra/')){ vista='obra'; renderObra(decodeURIComponent(h.slice(7))); activarMarco(); }
   else if(h==='#/tienda') vista='tienda';
   else if(h==='#/acerca') vista='acerca';
   else if(h==='#/fotos') vista='fotos';
@@ -2300,7 +2330,11 @@ function menu(){ document.body.classList.toggle('menu-abierto'); }
   const port=document.querySelector('.portada'); if(!port) return;
   const quieto=matchMedia('(prefers-reduced-motion: reduce)').matches;
   const mouse=matchMedia('(hover: hover) and (pointer: fine)').matches;
-  let k=0; const lista=()=>TODAS.map(o=>o.img[0]);
+  let k=0;
+  const FUERA=['lo-sensual-i','lo-sensual-ii','chanchos','los-puercos'];
+  const FOTOS=[1,9,4,11,13,3,6].map(n=>'img/fotos/f'+String(n).padStart(2,'0')+'.jpg');
+  const lista=()=>{ const obras=TODAS.filter(o=>!FUERA.includes(o.s)).map(o=>o.img[0]); const out=[];
+    obras.forEach((x,i)=>{ out.push(x); if(i%2===1 && FOTOS[(i-1)/2]) out.push(FOTOS[(i-1)/2]); }); return out; };
   function soltar(x,y,w,vida){
     const l=lista(); if(!l.length) return;
     const d=document.createElement('div'); d.className='estela'; d.style.left=x+'px'; d.style.top=y+'px'; if(w) d.style.width=w+'px';
@@ -2350,6 +2384,7 @@ function verTodasLaminas(){ document.getElementById('laminas').classList.remove(
 (function(){ const b=document.getElementById('laminas-btn'); if(b){ const n=document.querySelectorAll('#laminas .lamina').length; b.dataset.es=`Ver las ${n} láminas`; b.dataset.en=`See all ${n} prints`; b.textContent=b.dataset.es; } })();
 // precarga de imágenes para la estela
 OBRA.forEach(o=>{ const i=new Image(); i.src=o.img[0]; });
+[1,9,4,11,13,3,6].forEach(n=>{ const i=new Image(); i.src='img/fotos/f'+String(n).padStart(2,'0')+'.jpg'; });
 renderIndice(); cargarGaleria(); ruta();
 
 </script>

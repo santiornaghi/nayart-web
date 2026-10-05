@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Naya Lab® — Santiago Ornaghi</title>
+<meta name="description" content="Acuarelas de Santiago Ornaghi. Originales, láminas y encargos desde Río Cuarto, Argentina.">
+<meta name="theme-color" content="#0e0e0d">
+<link rel="icon" href="img/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@400;500&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<link rel="preload" as="image" href="img/hd/05.jpg">
+<style>
+:root{
+  --bg:#0e0e0d; --bg2:#151513; --ink:#ece7de; --dim:#8d8a83; --line:rgba(236,231,222,.14);
+  --acc:#e8452c; --beige:#e9e4da; --dark:#121211;
+  --disp:'Anton', 'Impact', sans-serif; --serif:'Instrument Serif', Georgia, serif;
+  --mono:'JetBrains Mono', ui-monospace, monospace; --sans:'Inter Tight', system-ui, sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+.mono{font-family:var(--mono);font-size:.72rem;letter-spacing:.02em;text-transform:uppercase}
+.lab{font-family:var(--mono);font-size:.72rem;letter-spacing:.02em;text-transform:uppercase;color:var(--dim)}
+.wrap{padding:0 clamp(1rem,3vw,2.4rem)}
+
+/* ── navegación en píldoras ── */
+.nav{position:fixed;top:clamp(.8rem,2vw,1.4rem);left:clamp(.8rem,2vw,1.4rem);right:clamp(.8rem,2vw,1.4rem);z-index:50;display:flex;gap:.5rem;align-items:center;pointer-events:none}
+.nav > *{pointer-events:auto}
+.pill-logo{background:var(--beige);color:#111;border-radius:999px;padding:.42rem 1.1rem .38rem;display:flex;align-items:baseline;gap:.35rem}
+.pill-logo b{font-family:var(--disp);font-weight:400;font-size:1.45rem;letter-spacing:.01em;line-height:1}
+.pill-logo i{font-family:var(--serif);font-size:1.15rem;line-height:1}
+.pill-logo sup{font-family:var(--sans);font-size:.55rem;margin-left:-.15rem}
+.pill-links{display:flex;gap:1.2rem;padding:.72rem 1.2rem;border-radius:999px;background:rgba(30,30,28,.55);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);font-size:.9rem;color:#f2eee7}
+.pill-links a{opacity:.9;transition:opacity .2s}
+.pill-links a:hover{opacity:1;text-decoration:underline;text-underline-offset:4px}
+@media (max-width:520px){.pill-links{gap:.9rem;padding:.7rem .95rem;font-size:.85rem}.pill-links .nm{display:none}}
+
+/* ── portada: diapositivas a pantalla completa ── */
+.hero{position:relative;height:100vh;height:100svh;overflow:hidden;background:#000}
+.slide{position:absolute;inset:0}
+.slide img{width:100%;height:100%;object-fit:cover;transform:scale(1.1)}
+.slide.next{z-index:2}
+.tiras{position:absolute;inset:0;z-index:3;display:flex}
+.tiras span{flex:1;height:100%;background-size:cover;background-position:center;clip-path:inset(0 0 100% 0);transition:clip-path .9s cubic-bezier(.7,0,.2,1)}
+.tiras.go span{clip-path:inset(0 0 0 0)}
+.hero-cap{position:absolute;left:clamp(1rem,3vw,2.4rem);bottom:clamp(1.2rem,4vh,2.4rem);z-index:5;display:flex;align-items:baseline;gap:1.1rem;color:#fff;text-shadow:0 1px 18px rgba(0,0,0,.35)}
+.hero-cap .mono{opacity:.85}
+.hero-cap em{font-family:var(--serif);font-size:clamp(1.6rem,3.2vw,2.6rem);line-height:1}
+.hero-meta{position:absolute;right:clamp(1rem,3vw,2.4rem);bottom:clamp(1.4rem,4vh,2.5rem);z-index:5;color:#fff;opacity:.85;text-align:right}
+@media (max-width:640px){.hero-meta{display:none}}
+.hero-bar{position:absolute;left:0;bottom:0;height:2px;background:var(--acc);z-index:6;width:0}
+.hero-bar.run{animation:barra 5.5s linear forwards}
+@keyframes barra{to{width:100%}}
+
+/* ── sección: rótulos ── */
+.sec{padding:clamp(5rem,12vh,9rem) 0 0}
+.sec-head{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--line);padding-bottom:.9rem;margin-bottom:clamp(2.4rem,6vh,4rem)}
+
+/* ── obras ── */
+.obra{margin-bottom:clamp(5rem,12vh,9rem)}
+.obra-t{display:flex;align-items:flex-end;flex-wrap:wrap;gap:0 .9rem;margin-bottom:1.2rem}
+.obra-t h2{font-family:var(--disp);font-weight:400;font-size:clamp(3.4rem,13vw,11.5rem);line-height:.86;letter-spacing:-.005em;text-transform:uppercase}
+.obra-t em{font-family:var(--serif);font-style:italic;color:var(--acc);font-size:clamp(1.8rem,5vw,4.4rem);line-height:1;padding-bottom:.3em}
+.obra-img{overflow:hidden;background:var(--bg2)}
+.obra-img img{width:100%;height:auto;max-height:92vh;object-fit:contain;transform:scale(1.06);transition:transform 1.8s cubic-bezier(.2,.7,.2,1)}
+.obra.vista .obra-img img{transform:scale(1)}
+.obra-img.vert{max-width:min(100%,720px)}
+.obra-meta{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-top:.9rem;padding-top:.9rem;border-top:1px solid var(--line)}
+.obra-meta a{color:var(--ink);border-bottom:1px solid var(--acc);padding-bottom:1px}
+.obra-meta .vend{color:var(--dim)}
+.par{display:grid;grid-template-columns:1fr 1fr;gap:clamp(.6rem,2vw,1.6rem);align-items:start}
+@media (max-width:720px){.par{grid-template-columns:1fr}}
+
+/* ── acerca ── */
+.ab{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:clamp(1.6rem,4vw,4rem);align-items:start}
+.ab-foto img{width:100%;height:auto;filter:grayscale(.15)}
+.ab-cap{margin-top:.8rem}
+.ab-txt p.big{font-family:var(--serif);font-size:clamp(1.7rem,3.4vw,2.9rem);line-height:1.12;letter-spacing:-.005em}
+.ab-txt .firma{font-family:var(--serif);font-style:italic;color:var(--acc);font-size:clamp(1.6rem,3vw,2.4rem);margin:1.2rem 0 1.8rem;display:block}
+.btn-pill{display:inline-flex;align-items:center;gap:.5rem;background:var(--acc);color:#fff;border-radius:999px;padding:.85rem 1.4rem;font-size:.95rem;transition:transform .25s}
+.btn-pill:hover{transform:translateY(-2px)}
+.ab-txt p.chico{color:var(--dim);font-size:.98rem;max-width:56ch;margin-top:2.2rem}
+@media (max-width:820px){.ab{grid-template-columns:1fr}}
+.nums{display:grid;grid-template-columns:repeat(4,1fr);gap:0 clamp(1rem,3vw,2rem);margin-top:clamp(4rem,10vh,7rem)}
+.num{border-top:1px solid var(--line);padding-top:1rem}
+.num b{display:block;font-family:var(--disp);font-weight:400;font-size:clamp(3.6rem,8vw,7rem);line-height:.9}
+.num span{display:block;margin-top:.6rem}
+@media (max-width:720px){.nums{grid-template-columns:1fr 1fr;row-gap:2rem}}
+
+/* ── servicios ── */
+.serv a, .serv div.it{display:block;border-bottom:1px solid var(--line);padding:1.1rem 0 1rem}
+.serv h3{font-family:var(--disp);font-weight:400;font-size:clamp(3rem,9vw,7.5rem);line-height:.9;text-transform:uppercase;color:#3a3936;transition:color .5s}
+.serv .on h3{color:var(--ink)}
+.serv .mono{color:var(--dim);margin-top:.6rem;display:block}
+
+/* ── reconocimientos ── */
+.rec li{list-style:none;display:grid;grid-template-columns:1fr auto;gap:1rem;align-items:baseline;border-bottom:1px solid var(--line);padding:1.05rem 0}
+.rec li b{font-weight:400;font-size:clamp(1.05rem,1.6vw,1.3rem)}
+
+/* ── contacto (claro) ── */
+.contacto{background:var(--beige);color:#141413;margin-top:clamp(6rem,14vh,10rem);padding:clamp(5rem,12vh,8rem) 0 clamp(4rem,10vh,6rem)}
+.contacto .lab{color:#6f6b64}
+.hola{display:flex;align-items:baseline;flex-wrap:wrap;gap:0 1rem;margin:1.4rem 0 1.4rem}
+.hola h2{font-family:var(--disp);font-weight:400;font-size:clamp(4rem,14vw,12rem);line-height:.86;text-transform:uppercase}
+.hola em{font-family:var(--serif);font-size:clamp(2.4rem,7vw,6rem);line-height:1}
+.mail{font-family:var(--serif);font-style:italic;font-size:clamp(1.6rem,4vw,3rem);border-bottom:1.5px solid #141413;display:inline-block;line-height:1.15}
+.ct-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;margin-top:clamp(3rem,8vh,5rem);border-top:1px solid rgba(20,20,19,.2);padding-top:1.4rem}
+.ct-grid p{margin-top:.5rem;font-size:.98rem;line-height:1.55}
+@media (max-width:720px){.ct-grid{grid-template-columns:1fr 1fr}}
+
+/* ── pie ── */
+.pie{background:var(--dark);padding:clamp(3.5rem,9vh,6rem) 0 0;overflow:hidden}
+.pie-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.6rem}
+.pie-grid a, .pie-grid p{display:block;margin-top:.45rem;font-size:.98rem}
+.pie-grid a:hover{color:var(--acc)}
+@media (max-width:720px){.pie-grid{grid-template-columns:1fr 1fr;row-gap:2.2rem}}
+.gigante{font-family:var(--disp);font-weight:400;font-size:33vw;line-height:.8;letter-spacing:-.01em;text-transform:uppercase;margin-top:clamp(2.4rem,6vh,4rem);transform:translateY(12%);white-space:nowrap}
+.legal{display:flex;justify-content:space-between;padding:1rem 0 1.4rem;color:var(--dim)}
+
+/* ── aparición al scrollear ── */
+.rv{opacity:0;transform:translateY(40px);transition:opacity 1s ease,transform 1.1s cubic-bezier(.2,.7,.2,1)}
+.rv.vista{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}.obra-img img{transform:none}.tiras span{transition:none}.hero-bar{display:none}}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <a class="pill-logo" href="#top" aria-label="Naya Lab, inicio"><b>NAYA</b><i>lab</i><sup>®</sup></a>
+  <nav class="pill-links" aria-label="Menú">
+    <a href="#work">Work</a><a href="#about">About</a><a href="index.html#/tienda" class="nm">Shop</a><a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<!-- PORTADA -->
+<section class="hero" id="top" aria-label="Obras destacadas">
+  <div class="slide" id="s-actual"><img id="s-img" src="img/hd/05.jpg" alt="Tormenta en el campo, acuarela de Santiago Ornaghi"></div>
+  <div class="tiras" id="tiras"></div>
+  <div class="hero-cap"><span class="mono" id="s-num">01 / 05</span><em id="s-tit">Tormenta en el campo</em></div>
+  <div class="hero-meta mono" id="s-meta">Acuarela sobre papel · 25 × 18 cm · 2025</div>
+  <div class="hero-bar" id="s-bar"></div>
+</section>
+
+<!-- OBRA -->
+<main class="wrap">
+  <section class="sec" id="work">
+    <div class="sec-head"><span class="lab">(Selected work)</span><span class="lab">2022 — 2025</span></div>
+    <div id="obras"></div>
+  </section>
+
+  <!-- ACERCA -->
+  <section class="sec" id="about">
+    <div class="sec-head"><span class="lab">(About) — Santiago Ornaghi, Río Cuarto</span><span class="lab">Naya Lab®</span></div>
+    <div class="ab">
+      <div class="ab-foto rv"><img src="img/vida/pintando-noche.jpg" alt="Santiago Ornaghi pintando frente al atril" loading="lazy"><p class="lab ab-cap">Pintura en vivo</p></div>
+      <div class="ab-txt rv">
+        <p class="big">De chico ya dibujaba con tizas, con lo que hubiera. Después llegó la acuarela: el agua y el pigmento hacen su parte, yo hago la mía.</p>
+        <span class="firma">— Santiago</span>
+        <a class="btn-pill" href="#contact">Encargos ↗</a>
+        <p class="chico">Aprendí dibujo con Gabriel Yabar y paisaje con Haroldo Cortez. Pasé por los talleres de Urban Sketchers Córdoba y sumé cursos con Pito Campos, Juan Linares, Alex Hillkurtz, Ale Casanova, Roberto Zangarelli, Xavier Denia, Gonzalo Ibañez y Diego Catalán.</p>
+      </div>
+    </div>
+    <div class="nums">
+      <div class="num rv"><b>+10</b><span class="lab">Ferias de arte</span></div>
+      <div class="num rv"><b>05</b><span class="lab">Murales</span></div>
+      <div class="num rv"><b>+26</b><span class="lab">Ilustraciones</span></div>
+      <div class="num rv"><b id="n-lam">28</b><span class="lab">Láminas en tienda</span></div>
+    </div>
+  </section>
+
+  <!-- SERVICIOS -->
+  <section class="sec" id="services">
+    <div class="sec-head"><span class="lab">(Services)</span><span class="lab">Encargos abiertos</span></div>
+    <div class="serv" id="serv">
+      <a href="index.html#/tienda"><h3>Acuarela</h3><span class="mono">Originales · Láminas · Encargos</span></a>
+      <div class="it"><h3>Murales</h3><span class="mono">Interior · Exterior</span></div>
+      <div class="it"><h3>Ilustración</h3><span class="mono">Calendarios · Etiquetas</span></div>
+      <div class="it"><h3>En vivo</h3><span class="mono">Eventos · Ferias</span></div>
+    </div>
+  </section>
+
+  <!-- RECONOCIMIENTOS -->
+  <section class="sec" id="recognition">
+    <div class="sec-head"><span class="lab">(Recognition)</span><span class="lab">Formación y muestras</span></div>
+    <ul class="rec">
+      <li class="rv"><b>ArteCba</b><span class="lab">Selección de artistas</span></li>
+      <li class="rv"><b>Centro Cultural España</b><span class="lab">Muestra</span></li>
+      <li class="rv"><b>Urban Sketchers Córdoba</b><span class="lab">Talleres</span></li>
+      <li class="rv"><b>Haroldo Cortez</b><span class="lab">Paisaje</span></li>
+      <li class="rv"><b>Gabriel Yabar</b><span class="lab">Dibujo</span></li>
+    </ul>
+  </section>
+</main>
+
+<!-- CONTACTO -->
+<section class="contacto" id="contact">
+  <div class="wrap">
+    <span class="lab">(Contact) — Río Cuarto, Córdoba, Argentina</span>
+    <div class="hola"><h2>Escribime</h2><em>hola.</em></div>
+    <a class="mail" href="mailto:santiornaghi@gmail.com">santiornaghi@gmail.com ↗</a>
+    <div class="ct-grid">
+      <div><span class="lab">Encargos</span><p>Originales, murales, ilustración y pintura en vivo</p></div>
+      <div><span class="lab">WhatsApp</span><p><a href="https://wa.me/5493584390961" target="_blank" rel="noopener">+54 358 439 0961 ↗</a></p></div>
+      <div><span class="lab">Taller</span><p>Río Cuarto, Córdoba</p></div>
+      <div><span class="lab">Social</span><p><a href="https://instagram.com/naya__artt" target="_blank" rel="noopener">Instagram ↗</a></p></div>
+    </div>
+  </div>
+</section>
+
+<!-- PIE -->
+<footer class="pie">
+  <div class="wrap">
+    <div class="pie-grid">
+      <div><span class="lab">Index</span><a href="#work">Work</a><a href="#about">About</a><a href="index.html#/tienda">Shop</a><a href="#contact">Contact</a></div>
+      <div><span class="lab">Social</span><a href="https://instagram.com/naya__artt" target="_blank" rel="noopener">Instagram</a><a href="https://wa.me/5493584390961" target="_blank" rel="noopener">WhatsApp</a></div>
+      <div><span class="lab">Contact</span><a href="mailto:santiornaghi@gmail.com">santiornaghi@gmail.com</a><p>+54 358 439 0961</p></div>
+      <div><span class="lab">Based in</span><p>Río Cuarto — AR</p></div>
+    </div>
+    <div class="gigante" aria-hidden="true">Naya</div>
+  </div>
+  <div class="wrap legal mono"><span>© 2026 Santiago Ornaghi</span><span>Naya Lab®</span></div>
+</footer>
+
+<script>
+const API='https://nayart-web.onrender.com/api';
+const reducido = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+// ── Portada: 5 obras en alta definición con transición en tiras ──
+const SLIDES=[
+  {img:'img/hd/05.jpg', t:'Tormenta en el campo', m:'Acuarela sobre papel · 25 × 18 cm · 2025'},
+  {img:'img/hd/19.jpg', t:'La aguada', m:'Acuarela sobre papel · 25 × 18 cm · 2025'},
+  {img:'img/hd/03.jpg', t:'Ciudad al atardecer', m:'Acuarela sobre papel · 18 × 25 cm · 2025'},
+  {img:'img/hd/17.jpg', t:'Cordero en el corral', m:'Acuarela sobre papel · 25 × 18 cm · 2025'},
+  {img:'img/hd/14.jpg', t:'Cielo de tormenta', m:'Acuarela sobre papel · 25 × 18 cm · 2025'},
+];
+SLIDES.forEach(s=>{ const i=new Image(); i.src=s.img; });
+let si=0; const tiras=document.getElementById('tiras'), bar=document.getElementById('s-bar');
+const N_TIRAS = innerWidth<700 ? 6 : 10;
+function pintarCap(){
+  const s=SLIDES[si];
+  document.getElementById('s-num').textContent=String(si+1).padStart(2,'0')+' / '+String(SLIDES.length).padStart(2,'0');
+  document.getElementById('s-tit').textContent=s.t; document.getElementById('s-meta').textContent=s.m;
+  bar.classList.remove('run'); void bar.offsetWidth; if(!reducido) bar.classList.add('run');
+}
+function siguiente(){
+  const prox=(si+1)%SLIDES.length, s=SLIDES[prox];
+  if(reducido){ si=prox; document.getElementById('s-img').src=s.img; pintarCap(); return; }
+  tiras.innerHTML=''; tiras.classList.remove('go');
+  const W=innerWidth;
+  for(let k=0;k<N_TIRAS;k++){
+    const sp=document.createElement('span');
+    sp.style.backgroundImage=`url(${s.img})`;
+    sp.style.backgroundSize='cover';
+    sp.style.backgroundSize=`${W}px auto`;
+    sp.style.backgroundPosition=`${-(k*W/N_TIRAS)}px center`;
+    sp.style.transitionDelay=(k*55)+'ms';
+    tiras.appendChild(sp);
+  }
+  // que cada tira muestre su porción de la imagen con "cover" real
+  const im=new Image(); im.src=s.img; im.onload=()=>{
+    const H=tiras.offsetHeight, r=im.naturalWidth/im.naturalHeight; let bw=W, bh=W/r; if(bh<H){ bh=H; bw=H*r; } bw*=1.1; bh*=1.1;
+    const ox=(W-bw)/2, oy=(H-bh)/2;
+    [...tiras.children].forEach((sp,k)=>{ sp.style.backgroundSize=`${bw}px ${bh}px`; sp.style.backgroundPosition=`${ox-(k*W/N_TIRAS)}px ${oy}px`; });
+    requestAnimationFrame(()=>requestAnimationFrame(()=>tiras.classList.add('go')));
+    setTimeout(()=>{ si=prox; const img=document.getElementById('s-img'); img.src=s.img; img.alt=s.t+', acuarela de Santiago Ornaghi'; pintarCap(); setTimeout(()=>{ tiras.innerHTML=''; tiras.classList.remove('go'); },60); }, 900 + N_TIRAS*55);
+  };
+}
+pintarCap(); setInterval(siguiente, 5500);
+
+// ── Obras seleccionadas ──
+const OBRAS=[
+  {a:'Tormenta', b:'en el campo', titulo:'Tormenta en el campo', img:'05', m:'25 × 18 cm', y:2025},
+  {a:'Ciudad', b:'al atardecer', titulo:'Ciudad al atardecer', img:'03', m:'18 × 25 cm', y:2025, vert:true},
+  {a:'La aguada', b:'', titulo:'La aguada', img:'19', m:'25 × 18 cm', y:2025},
+  {a:'Niebla', b:'', titulo:'Niebla', img:'07', m:'18 × 25 cm', y:2025, vert:true},
+  {a:'Cordero', b:'en el corral', titulo:'Cordero en el corral', img:'17', m:'25 × 18 cm', y:2025},
+  {a:'Atardecer', b:'violeta', titulo:'Atardecer violeta', img:'20', m:'25 × 18 cm', y:2025},
+  {a:'Paisano', b:'', titulo:'Paisano', img:'15', m:'25 × 18 cm', y:2025},
+  {a:'Laguna', b:'azul', titulo:'Laguna azul', img:'08', m:'18 × 25 cm', y:2025, vert:true},
+  {a:'Necesidad', b:'interrumpida', titulo:'Necesidad interrumpida', par:['img/movimiento/necesidad-1.jpg','img/movimiento/necesidad-2.jpg'], m:'100 × 150 cm, díptico', y:2023, vendida:true},
+  {a:'Che Vuole', b:'', titulo:'Che Vuole', src:'img/rincones/che-vuole.jpg', m:'40 × 50 cm', y:2023, vendida:true},
+];
+const slug=s=>s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+document.getElementById('obras').innerHTML=OBRAS.map(o=>{
+  const media = o.par ? `<div class="par">${o.par.map(p=>`<div class="obra-img"><img src="${p}" alt="${o.titulo}" loading="lazy"></div>`).join('')}</div>`
+    : o.src ? `<div class="obra-img"><img src="${o.src}" alt="${o.titulo}" loading="lazy"></div>`
+    : `<div class="obra-img ${o.vert?'vert':''}"><img src="img/hd/${o.img}.jpg" srcset="img/originales/${o.img}.jpg 1600w, img/hd/${o.img}.jpg 2400w" sizes="(max-width: 760px) 100vw, 92vw" alt="${o.titulo}, acuarela de Santiago Ornaghi" loading="lazy"></div>`;
+  const estado = o.vendida ? `<span class="mono vend">Colección privada</span>` : `<a class="mono" data-t="${o.titulo}" href="index.html#/obra/${slug(o.titulo)}">Original disponible ↗</a>`;
+  return `<article class="obra rv">
+    <div class="obra-t"><h2>${o.a}</h2>${o.b?`<em>${o.b}</em>`:''}</div>
+    ${media}
+    <div class="obra-meta"><span class="mono">${o.vendida && o.par ? 'Acuarela sobre papel' : 'Acuarela sobre papel'} · ${o.m} · ${o.y}</span>${estado}</div>
+  </article>`;
+}).join('');
+
+// precios y disponibilidad reales desde el panel
+fetch(API+'/obras?limit=50').then(r=>r.ok?r.json():null).then(d=>{
+  if(!d||!d.obras) return;
+  document.querySelectorAll('a[data-t]').forEach(a=>{
+    const o=d.obras.find(x=>x.titulo===a.dataset.t); if(!o) return;
+    if(o.disponible==='DISPONIBLE' && o.precio>0) a.textContent=`Original · ${o.moneda||'USD'} ${o.precio} ↗`;
+    else { const s=document.createElement('span'); s.className='mono vend'; s.textContent='Colección privada'; a.replaceWith(s); }
+  });
+}).catch(()=>{});
+
+// ── Aparición al scrollear ──
+const io=new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('vista'); io.unobserve(e.target); } }),{threshold:.12});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+
+// ── Servicios: se enciende el que está en el centro de la pantalla ──
+const servs=[...document.querySelectorAll('#serv > *')];
+function servicio(){
+  const c=innerHeight*0.55; let best=null, d=1e9;
+  servs.forEach(s=>{ const r=s.getBoundingClientRect(); const m=Math.abs((r.top+r.bottom)/2-c); if(m<d){ d=m; best=s; } });
+  servs.forEach(s=>s.classList.toggle('on', s===best));
+}
+addEventListener('scroll',servicio,{passive:true}); servicio();
+</script>
+</body>
+</html>
