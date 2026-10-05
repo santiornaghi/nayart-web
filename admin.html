@@ -771,61 +771,22 @@ body{background:var(--paper);color:var(--ink);font-family:'Jost',sans-serif;font
 
     <!-- ENVIOS -->
     <div class="tab-panel" id="tab-envios">
-      <div class="card" style="max-width:600px;">
+      <div class="card" style="max-width:760px;">
         <div class="card-header">
-          <span class="card-title">Zonas de envío — Argentina</span>
+          <span class="card-title">Envíos</span>
         </div>
         <div class="card-body">
-          <p style="font-size:.8rem;color:var(--ink-faint);margin-bottom:1.5rem;line-height:1.7;">
-            Configurá el costo de envío por zona. El cliente ve el costo al hacer el checkout según su provincia.
+          <p style="font-size:.8rem;color:var(--ink-faint);margin-bottom:1.2rem;line-height:1.7;">
+            <b style="color:var(--ink)">Río Cuarto y Córdoba capital: entrega gratis.</b><br>
+            Al resto del país se envía por Andreani. Cargá la tarifa de cada región (podés sacarla del cotizador de andreani.com desde Río Cuarto). El cliente ve el costo en el carrito según su provincia. Si dejás una región en 0, en el carrito figura “a cotizar”.
           </p>
-          <div class="envio-zona">
-            <span class="envio-zona-name">📍 Río Cuarto / Córdoba capital</span>
-            <div class="envio-zona-input">
-              <span>ARS</span>
-              <input type="number" value="1500" placeholder="0">
-            </div>
+          <div class="envio-zona" style="background:none;border:none;padding:0 1.5rem .3rem;font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;color:var(--ink-faint);">
+            <span class="envio-zona-name">Región</span>
+            <span style="width:130px;text-align:right">Sin marco</span>
+            <span style="width:130px;text-align:right">Con marco kiri</span>
           </div>
-          <div class="envio-zona">
-            <span class="envio-zona-name">🗺 Resto de Córdoba</span>
-            <div class="envio-zona-input">
-              <span>ARS</span>
-              <input type="number" value="2500" placeholder="0">
-            </div>
-          </div>
-          <div class="envio-zona">
-            <span class="envio-zona-name">🇦🇷 Buenos Aires (CABA y GBA)</span>
-            <div class="envio-zona-input">
-              <span>ARS</span>
-              <input type="number" value="3500" placeholder="0">
-            </div>
-          </div>
-          <div class="envio-zona">
-            <span class="envio-zona-name">📦 Interior del país</span>
-            <div class="envio-zona-input">
-              <span>ARS</span>
-              <input type="number" value="4500" placeholder="0">
-            </div>
-          </div>
-          <div class="envio-zona">
-            <span class="envio-zona-name">🌍 Internacional</span>
-            <div class="envio-zona-input" style="flex-direction:column;align-items:flex-end;gap:.3rem;">
-              <span style="font-size:.72rem;color:var(--rust);">Consultar por DM</span>
-            </div>
-          </div>
-          <div style="margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--border);">
-            <label style="display:flex;align-items:center;gap:.8rem;cursor:pointer;font-size:.82rem;color:var(--ink-light);">
-              <label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label>
-              Envío gratis en compras mayores a USD 100
-            </label>
-          </div>
-          <div style="margin-top:1rem;">
-            <label style="display:flex;align-items:center;gap:.8rem;cursor:pointer;font-size:.82rem;color:var(--ink-light);">
-              <label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label>
-              Retiro en persona disponible (Río Cuarto)
-            </label>
-          </div>
-          <button class="btn btn-primary" style="margin-top:1.5rem;" onclick="showNotif('Configuración guardada','success')">Guardar cambios</button>
+          <div id="zonas-envio"><p style="font-size:.8rem;color:var(--ink-faint)">Cargando…</p></div>
+          <button class="btn btn-primary" style="margin-top:1.5rem;" onclick="saveZonas()">Guardar tarifas</button>
         </div>
       </div>
     </div>
@@ -1485,29 +1446,29 @@ async function updateEncargo(id, estado){
 }
 
 // ── ENVÍOS ─────────────────────────────────────────────────────
+let ZONAS_ENVIO = [];
 async function loadEnvios(){
+  const cont = document.getElementById('zonas-envio'); if(!cont) return;
   try {
     const data = await api('/config/envios');
-    const tbody = document.querySelector('#tab-envios table tbody');
-    if(!tbody || !data) return;
-    tbody.innerHTML = (data||[]).map(z=>`
-      <tr>
-        <td>${z.nombre}</td>
-        <td>${z.provincias?.join(', ')||'—'}</td>
-        <td>ARS ${z.precio}</td>
-        <td>${z.diasEntrega||'—'} días</td>
-        <td><button class="btn btn-ghost" style="font-size:.65rem;padding:.3rem .6rem;" onclick="deleteZona('${z.id}')">Eliminar</button></td>
-      </tr>`).join('');
-  } catch(e){ showNotif('Error cargando zonas de envío','error'); }
+    ZONAS_ENVIO = (data||[]).filter(z => z.provincias);
+    if(!ZONAS_ENVIO.length){ cont.innerHTML = '<p style="font-size:.8rem;color:var(--ink-faint)">Todavía no hay regiones. Aparecen solas cuando el servidor termina de actualizarse.</p>'; return; }
+    cont.innerHTML = ZONAS_ENVIO.map((z,i)=>`
+      <div class="envio-zona">
+        <span class="envio-zona-name">${z.nombre.replace('Andreani — ','')}<br><small style="color:var(--ink-faint);font-size:.7rem">${z.provincias.split(',').join(', ')}</small></span>
+        <div class="envio-zona-input"><span>$</span><input type="number" min="0" step="100" id="zc-${i}" value="${z.costo||''}" placeholder="a cotizar"></div>
+        <div class="envio-zona-input"><span>$</span><input type="number" min="0" step="100" id="zm-${i}" value="${z.costoMarco||''}" placeholder="igual"></div>
+      </div>`).join('');
+  } catch(e){ cont.innerHTML = '<p style="color:#c0392b;font-size:.8rem">Error cargando envíos: '+e.message+'</p>'; }
 }
 
-async function deleteZona(id){
-  if(!confirm('¿Eliminar zona?')) return;
+async function saveZonas(){
+  const zonas = ZONAS_ENVIO.map((z,i)=>({ id:z.id, nombre:z.nombre, provincias:z.provincias, activa:true,
+    costo: document.getElementById('zc-'+i).value || 0, costoMarco: document.getElementById('zm-'+i).value || null }));
   try {
-    await api('/config/envios/'+id, {method:'DELETE'});
-    showNotif('Zona eliminada','success');
-    loadEnvios();
-  } catch(e){ showNotif('Error eliminando zona','error'); }
+    await api('/config/envios', { method:'PUT', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ zonas }) });
+    showNotif('Tarifas guardadas','success'); loadEnvios();
+  } catch(e){ showNotif(e.message || 'Error guardando tarifas','error'); }
 }
 
 // ── FILTER PILLS ───────────────────────────────────────────────

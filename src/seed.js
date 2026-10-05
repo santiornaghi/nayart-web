@@ -35,21 +35,25 @@ async function main() {
     { nombre: 'Interior del país',            costo: 4500 },
   ]
 
-  // Crea cada zona solo si no existe (por nombre). Si quedaron repetidas
-  // por versiones anteriores, deja activa una y desactiva las copias.
-  for (const zona of zonas) {
-    const existentes = await prisma.zonaEnvio.findMany({ where: { nombre: zona.nombre }, orderBy: { id: 'asc' } })
-    if (!existentes.length) {
-      await prisma.zonaEnvio.create({ data: zona })
-    } else if (existentes.length > 1) {
-      await prisma.zonaEnvio.updateMany({
-        where: { id: { in: existentes.slice(1).map(z => z.id) } },
-        data:  { activa: false },
-      })
-    }
+  // Zonas genéricas viejas: quedan desactivadas (ahora Río Cuarto y Córdoba son gratis
+  // y el resto del país va por Andreani con tarifa por región)
+  await prisma.zonaEnvio.updateMany({ where: { nombre: { in: zonas.map(z => z.nombre) } }, data: { activa: false } })
+
+  // Regiones de Andreani: el costo se carga desde el panel (0 = a cotizar)
+  const regiones = [
+    { nombre: 'Andreani — Córdoba (resto de la provincia)', provincias: 'Córdoba' },
+    { nombre: 'Andreani — Región Centro', provincias: 'Santa Fe,San Luis,La Pampa,Entre Ríos,Santiago del Estero' },
+    { nombre: 'Andreani — Buenos Aires y CABA', provincias: 'Buenos Aires,CABA' },
+    { nombre: 'Andreani — Cuyo y NOA', provincias: 'Mendoza,San Juan,La Rioja,Catamarca,Tucumán,Salta,Jujuy' },
+    { nombre: 'Andreani — NEA', provincias: 'Corrientes,Misiones,Chaco,Formosa' },
+    { nombre: 'Andreani — Patagonia', provincias: 'Neuquén,Río Negro,Chubut,Santa Cruz,Tierra del Fuego' },
+  ]
+  for (const r of regiones) {
+    const existe = await prisma.zonaEnvio.findFirst({ where: { nombre: r.nombre } })
+    if (!existe) await prisma.zonaEnvio.create({ data: { ...r, costo: 0, activa: true } })
   }
 
-  console.log('✓ Zonas de envío creadas')
+  console.log('✓ Regiones de envío Andreani listas')
 
   // Obras originales escaneadas (USD 100, disponibles). Se cargan una sola vez:
   // si ya existe alguna con imagen en /img/originales/, no se vuelve a importar.

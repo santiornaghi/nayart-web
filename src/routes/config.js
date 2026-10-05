@@ -17,11 +17,12 @@ router.get('/envios', async (req, res, next) => {
 router.put('/envios', authMiddleware, adminOnly, async (req, res, next) => {
   try {
     const { zonas } = req.body
+    const num = v => (v === '' || v === null || v === undefined) ? null : Math.max(0, parseFloat(v) || 0)
     for (const zona of zonas) {
       await prisma.zonaEnvio.upsert({
         where: { id: zona.id || '' },
-        update: { costo: zona.costo, activa: zona.activa },
-        create: { nombre: zona.nombre, costo: zona.costo, activa: zona.activa ?? true },
+        update: { costo: num(zona.costo) ?? 0, costoMarco: num(zona.costoMarco), activa: zona.activa ?? true },
+        create: { nombre: zona.nombre, provincias: zona.provincias || null, costo: num(zona.costo) ?? 0, costoMarco: num(zona.costoMarco), activa: zona.activa ?? true },
       })
     }
     res.json({ ok: true })

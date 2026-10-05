@@ -75,8 +75,10 @@ router.post('/', async (req, res, next) => {
       const zona = zonaId
         ? await prisma.zonaEnvio.findFirst({ where: { id: zonaId, activa: true } })
         : null
-      costoEnvio = zona?.costo || 0
-      zonaNombre = zona?.nombre || null
+      // Si hay una lámina con marco kiri y la zona tiene tarifa especial, se usa esa
+      const conMarco = items.some(i => i.tipo === 'lamina' && i.marco)
+      costoEnvio = (conMarco && zona?.costoMarco) ? zona.costoMarco : (zona?.costo || 0)
+      zonaNombre = zona ? `${zona.nombre}${costoEnvio ? '' : ' (a cotizar)'}` : null
     }
 
     // 10% de descuento pagando por transferencia (sobre los productos, no el envío)

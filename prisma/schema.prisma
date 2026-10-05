@@ -227,9 +227,11 @@ enum EstadoEncargo {
 
 // ── CONFIGURACION DE ENVIOS ────────────────────────────────
 model ZonaEnvio {
-  id        String   @id @default(cuid())
-  nombre    String
-  costo     Float
+  id         String   @id @default(cuid())
+  nombre     String
+  provincias String?  // provincias que cubre la zona, separadas por coma
+  costo      Float    // láminas sin marco, stickers, originales (0 = a cotizar)
+  costoMarco Float?   // si el pedido incluye una lámina con marco kiri
   activa    Boolean  @default(true)
 
   @@map("zonas_envio")

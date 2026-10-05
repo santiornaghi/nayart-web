@@ -1111,7 +1111,7 @@ nav.menu-open .menu-btn span:last-child { transform: translateY(-3.5px) rotate(-
   <div class="como-comprar reveal">
     <div class="cc-item"><div class="cc-n">01</div><div class="cc-t" data-es="Armá tu pedido" data-en="Build your order">Armá tu pedido</div><div class="cc-d" data-es="Elegí la obra, el tamaño y si la querés con marco de madera kiri. Sumala al carrito." data-en="Pick the work, the size and whether you want it in a kiri wood frame. Add it to the cart.">Elegí la obra, el tamaño y si la querés con marco de madera kiri. Sumala al carrito.</div></div>
     <div class="cc-item"><div class="cc-n">02</div><div class="cc-t" data-es="Pagá como prefieras" data-en="Pay your way">Pagá como prefieras</div><div class="cc-d" data-es="Mercado Pago, o <b>transferencia con 10% de descuento</b>." data-en="Mercado Pago, or <b>bank transfer with 10% off</b>.">Mercado Pago, o <b>transferencia con 10% de descuento</b>.</div></div>
-    <div class="cc-item"><div class="cc-n">03</div><div class="cc-t" data-es="Recibilo en tu casa" data-en="Get it at home">Recibilo en tu casa</div><div class="cc-d" data-es="<b>Entrega gratis en Río Cuarto y Córdoba capital.</b> Al resto del país envío por Andreani, al precio que cotice Andreani. El pedido me llega por WhatsApp y coordinamos." data-en="<b>Free delivery in Río Cuarto and Córdoba city.</b> Elsewhere in Argentina we ship with Andreani at their quoted price. Your order reaches me on WhatsApp and we coordinate."><b>Entrega gratis en Río Cuarto y Córdoba capital.</b> Al resto del país envío por Andreani, al precio que cotice Andreani. El pedido me llega por WhatsApp y coordinamos.</div></div>
+    <div class="cc-item"><div class="cc-n">03</div><div class="cc-t" data-es="Recibilo en tu casa" data-en="Get it at home">Recibilo en tu casa</div><div class="cc-d" data-es="<b>Entrega gratis en Río Cuarto y Córdoba capital.</b> Al resto del país envío por Andreani: elegís tu provincia y ves el costo en el carrito. El pedido me llega por WhatsApp y coordinamos." data-en="<b>Free delivery in Río Cuarto and Córdoba city.</b> Elsewhere in Argentina we ship with Andreani: pick your province and see the cost in the cart. Your order reaches me on WhatsApp and we coordinate."><b>Entrega gratis en Río Cuarto y Córdoba capital.</b> Al resto del país envío por Andreani: elegís tu provincia y ves el costo en el carrito. El pedido me llega por WhatsApp y coordinamos.</div></div>
   </div>
 </section>
 
@@ -1327,20 +1327,28 @@ const LAMINAS = [
   ['15','Paisano'],['16','Bajo el árbol'],['17','Cordero en el corral'],['18','Chanchos'],
   ['19','La aguada'],['20','Atardecer violeta']
 ];
-const ZONAS_RESPALDO = [
+const PROVINCIAS = ['Buenos Aires','CABA','Catamarca','Chaco','Chubut','Córdoba','Corrientes','Entre Ríos','Formosa','Jujuy','La Pampa','La Rioja','Mendoza','Misiones','Neuquén','Río Negro','Salta','San Juan','San Luis','Santa Cruz','Santa Fe','Santiago del Estero','Tierra del Fuego','Tucumán'];
+const ZONAS_RESPALDO_VIEJAS = [
   { id:'', nombre:'Río Cuarto / Córdoba capital', costo:1500 },
   { id:'', nombre:'Resto de Córdoba', costo:2500 },
   { id:'', nombre:'Buenos Aires (CABA y GBA)', costo:3500 },
   { id:'', nombre:'Interior del país', costo:4500 },
 ];
-let zonas = ZONAS_RESPALDO;
+let zonas = []; // regiones de Andreani con su tarifa (se cargan desde el servidor)
+function zonaDeProvincia(prov){ return zonas.find(z => (z.provincias||'').split(',').map(s=>s.trim()).includes(prov)); }
+function costoAndreani(){
+  const z = zonaDeProvincia(checkout.prov); if(!z) return null;
+  const conMarco = carrito.some(i => i.tipo==='lamina' && i.marco);
+  const c = (conMarco && z.costoMarco) ? z.costoMarco : z.costo;
+  return c > 0 ? c : null; // null = a cotizar
+}
 let carrito = [];
 let paso = 'carrito';
 let checkout = { entrega:'RIO_CUARTO', pago:'TRANSFERENCIA' };
 const ENTREGAS = {
   RIO_CUARTO: { nombre:'Entrega en Río Cuarto', det:'Sin cargo. Coordinamos día y lugar por WhatsApp.', tipo:'RETIRO_PRESENCIAL' },
   CORDOBA:    { nombre:'Entrega en Córdoba capital', det:'Sin cargo. Coordinamos día y lugar por WhatsApp.', tipo:'RETIRO_PRESENCIAL' },
-  ANDREANI:   { nombre:'Envío por Andreani', det:'A todo el país. El costo es el que cotice Andreani para tu dirección y te lo paso por WhatsApp.', tipo:'ENVIO' },
+  ANDREANI:   { nombre:'Envío por Andreani', det:'A todo el país. Elegí tu provincia y te mostramos el costo.', tipo:'ENVIO' },
 };
 
 const escH = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -1416,7 +1424,7 @@ async function cargarZonas(){
     const r = await fetch(NAYA_API+'/config/envios');
     if(!r.ok) return;
     const z = await r.json();
-    if(Array.isArray(z) && z.length){ const vistos=new Set(); zonas = z.filter(x=>!vistos.has(x.nombre) && vistos.add(x.nombre)).sort((a,b)=>a.costo-b.costo); }
+    if(Array.isArray(z)) zonas = z.filter(x => x.provincias);
   } catch(e){}
 }
 
@@ -1444,7 +1452,7 @@ function totales(){
   const sub = { ARS:0, USD:0 };
   carrito.forEach(i=> sub[i.moneda] += i.precio*i.cantidad);
   const desc = checkout.pago==='TRANSFERENCIA' ? { ARS: Math.round(sub.ARS*DESC_TRANSFERENCIA), USD: Math.round(sub.USD*DESC_TRANSFERENCIA*100)/100 } : { ARS:0, USD:0 };
-  const envio = 0; // Río Cuarto y Córdoba sin cargo; Andreani se cotiza aparte
+  const envio = checkout.entrega==='ANDREANI' ? (costoAndreani() || 0) : 0;
   const total = { ARS: sub.ARS - desc.ARS + envio, USD: sub.USD - desc.USD };
   return { sub, desc, envio, total };
 }
@@ -1498,7 +1506,7 @@ function render(){
         <div class="co-field"><label>Dirección</label><input id="co-dir" value="${v('dir')}" autocomplete="street-address"></div>
         <div class="co-2">
           <div class="co-field"><label>Ciudad</label><input id="co-ciudad" value="${v('ciudad')}" autocomplete="address-level2"></div>
-          <div class="co-field"><label>Provincia</label><input id="co-prov" value="${v('prov')}" autocomplete="address-level1"></div>
+          <div class="co-field"><label>Provincia</label><select id="co-prov"><option value="">Elegí…</option>${PROVINCIAS.map(p=>`<option ${checkout.prov===p?'selected':''}>${p}</option>`).join('')}</select></div>
         </div>
         <div class="co-field"><label>Código postal</label><input id="co-cp" value="${v('cp')}" autocomplete="postal-code"></div>
       </div>` : ''}
@@ -1516,13 +1524,14 @@ function render(){
   foot.innerHTML = `
     <div class="sum-row"><span>Subtotal</span><span>${montos(t.sub)}</span></div>
     ${checkout.pago==='TRANSFERENCIA' ? `<div class="sum-row discount"><span>Descuento transferencia 10%</span><span>−${montos(t.desc)}</span></div>` : ''}
-    <div class="sum-row"><span>Envío</span><span>${checkout.entrega==='ANDREANI' ? 'A cotizar (Andreani)' : 'Sin cargo'}</span></div>
-    <div class="sum-row total"><span>Total${checkout.entrega==='ANDREANI' ? ' + envío' : ''}</span><span>${montos(t.total)}</span></div>
+    <div class="sum-row"><span>Envío${checkout.entrega==='ANDREANI' ? ' Andreani' : ''}</span><span>${checkout.entrega!=='ANDREANI' ? 'Sin cargo' : (!checkout.prov ? 'Elegí tu provincia' : (costoAndreani() ? fmt(costoAndreani()) : 'A cotizar'))}</span></div>
+    <div class="sum-row total"><span>Total${checkout.entrega==='ANDREANI' && !costoAndreani() ? ' + envío' : ''}</span><span>${montos(t.total)}</span></div>
     <div class="co-error" id="co-error"></div>
     <button class="btn btn-dark" id="co-enviar" onclick="enviarPedido()">Enviar pedido por WhatsApp</button>
     <div class="co-note">Se abre WhatsApp con el detalle de tu pedido listo para enviar.</div>`;
   body.querySelectorAll('input[name="co-ent"]').forEach(r=>r.onchange=()=>{ leerForm(); checkout.entrega=r.value; render(); });
   body.querySelectorAll('input[name="co-pago"]').forEach(r=>r.onchange=()=>{ leerForm(); checkout.pago=r.value; render(); });
+  const ps = document.getElementById('co-prov'); if(ps) ps.onchange=()=>{ leerForm(); render(); };
 }
 function leerForm(){
   const g = id => document.getElementById(id)?.value?.trim();
@@ -1549,8 +1558,8 @@ async function enviarPedido(){
       body: JSON.stringify({
         clienteNombre:c.nombre, clienteTelefono:c.tel, clienteEmail:c.email||'',
         tipoEntrega:ENTREGAS[c.entrega].tipo,
-        ...(c.entrega==='ANDREANI' ? { direccion:c.dir, ciudad:c.ciudad, provincia:c.prov, codigoPostal:c.cp } : {}),
-        metodoPago:c.pago, notas:[ENTREGAS[c.entrega].nombre + (c.entrega==='ANDREANI' ? ' — costo a cotizar' : ' — sin cargo'), c.nota].filter(Boolean).join('\n'),
+        ...(c.entrega==='ANDREANI' ? { direccion:c.dir, ciudad:c.ciudad, provincia:c.prov, codigoPostal:c.cp, zonaId: zonaDeProvincia(c.prov)?.id } : {}),
+        metodoPago:c.pago, notas:[ENTREGAS[c.entrega].nombre + (c.entrega==='ANDREANI' ? (costoAndreani() ? '' : ' — costo a cotizar') : ' — sin cargo'), c.nota].filter(Boolean).join('\n'),
         items: carrito.map(i=> i.tipo==='lamina' ? { tipo:'lamina', titulo:i.titulo, tamano:i.tamano, marco:i.marco, cantidad:i.cantidad } : { tipo:i.tipo, id:i.id, cantidad:i.cantidad })
       })});
     clearTimeout(to);
@@ -1563,8 +1572,9 @@ async function enviarPedido(){
   L.push('');
   L.push(`Subtotal: ${montos(t.sub)}`);
   if(c.pago==='TRANSFERENCIA') L.push(`Descuento transferencia 10%: −${montos(t.desc)}`);
-  L.push(c.entrega==='ANDREANI' ? 'Envío por Andreani: a cotizar' : `${ENTREGAS[c.entrega].nombre}: sin cargo`);
-  L.push(`*Total: ${montos(t.total)}${c.entrega==='ANDREANI' ? ' + envío' : ''}*`);
+  const ca = c.entrega==='ANDREANI' ? costoAndreani() : null;
+  L.push(c.entrega==='ANDREANI' ? `Envío por Andreani a ${c.prov}: ${ca ? fmt(ca) : 'a cotizar'}` : `${ENTREGAS[c.entrega].nombre}: sin cargo`);
+  L.push(`*Total: ${montos(t.total)}${c.entrega==='ANDREANI' && !ca ? ' + envío' : ''}*`);
   L.push('');
   L.push(`Pago: ${c.pago==='TRANSFERENCIA' ? 'Transferencia (10% off)' : 'Mercado Pago'}`);
   if(c.entrega==='ANDREANI') L.push(`Enviar a: ${c.dir}, ${c.ciudad}, ${c.prov} (CP ${c.cp})`);
@@ -1590,7 +1600,7 @@ function renderStickers(){
       <div class="lamina-foot"><span class="lamina-price">${fmt(2000)}</span><button class="lamina-add" onclick="agregar({key:'st-${id}',tipo:'sticker',id:'${id}',titulo:'${t}',nombre:'Sticker',precio:2000,moneda:'ARS',img:'img/stickers/sticker-${id}.webp'})">Agregar</button></div>
     </div>`).join('');
 }
-cargar(); actualizarContador(); renderLaminas(); renderStickers(); cargarTiendaAPI();
+cargar(); actualizarContador(); renderLaminas(); renderStickers(); cargarZonas(); cargarTiendaAPI();
 document.querySelectorAll('#laminas').forEach(el=>{ if(typeof obs!=='undefined') obs.observe(el); });
 </script>
 </body>
