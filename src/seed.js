@@ -55,7 +55,7 @@ async function main() {
 
   console.log('✓ Regiones de envío Andreani listas')
 
-  // Obras originales escaneadas (USD 100, disponibles). Se cargan una sola vez:
+  // Obras originales escaneadas (USD 110, disponibles). Se cargan una sola vez:
   // si ya existe alguna con imagen en /img/originales/, no se vuelve a importar.
   const BASE_IMG = 'https://santiornaghi.github.io/nayart-web/img/originales/'
   const yaImportadas = await prisma.obra.count({ where: { imagenUrl: { contains: '/img/originales/' } } })
@@ -70,12 +70,16 @@ async function main() {
     ]
     for (const [n, titulo, ancho, alto] of originales) {
       await prisma.obra.create({ data: {
-        titulo, tecnica: 'ACUARELA', ancho, alto, anio: 2025, precio: 100, moneda: 'USD',
+        titulo, tecnica: 'ACUARELA', ancho, alto, anio: 2025, precio: 110, moneda: 'USD',
         disponible: 'DISPONIBLE', imagenUrl: BASE_IMG + n + '.jpg',
       } })
     }
     console.log(`✓ ${originales.length} obras originales importadas`)
   }
+
+  // Aumento del 10% (oct 2026): originales que seguían en USD 100 pasan a USD 110
+  const subidas = await prisma.obra.updateMany({ where: { imagenUrl: { contains: '/img/originales/' }, precio: 100, moneda: 'USD' }, data: { precio: 110 } })
+  if (subidas.count) console.log(`✓ ${subidas.count} originales actualizados a USD 110`)
 
   // Obras retiradas del sitio: se borran si nunca tuvieron pedidos
   for (const titulo of ['El caballo', 'Siesta']) {

@@ -33,8 +33,8 @@ router.post('/', async (req, res, next) => {
     for (const item of items) {
       if (item.tipo === 'lamina') {
         // Láminas: precio fijado en el servidor (ARS)
-        const PRECIO_SIN_MARCO = { A4: 20000, A5: 15000 }
-        const PRECIO_CON_KIRI  = { A4: 35000, A5: 25000 }
+        const PRECIO_SIN_MARCO = { A4: 22000, A5: 16500 }
+        const PRECIO_CON_KIRI  = { A4: 38500, A5: 27500 }
         const precio = (item.marco ? PRECIO_CON_KIRI : PRECIO_SIN_MARCO)[item.tamano]
         if (!precio) throw new AppError('Tamaño de lámina inválido')
         const cant = Math.max(1, Math.min(20, parseInt(item.cantidad) || 1))
@@ -48,8 +48,17 @@ router.post('/', async (req, res, next) => {
         const nombre = STICKERS[item.id]
         if (!nombre) throw new AppError('Sticker inválido')
         const cant = Math.max(1, Math.min(50, parseInt(item.cantidad) || 1))
-        itemsData.push({ descripcion: `Sticker — ${nombre}`, cantidad: cant, precioUnit: 2000, moneda: 'ARS' })
-        subtotal += 2000 * cant
+        itemsData.push({ descripcion: `Sticker — ${nombre}`, cantidad: cant, precioUnit: 2200, moneda: 'ARS' })
+        subtotal += 2200 * cant
+        continue
+      }
+      if (item.tipo === 'marco') {
+        // Marco de madera kiri con paspartú para una obra original (ARS, precio fijado en el servidor)
+        const PRECIO_MARCO_OBRA = 16500
+        const obra = await prisma.obra.findUnique({ where: { id: item.id } })
+        if (!obra) throw new AppError('Obra inválida para el marco')
+        itemsData.push({ descripcion: `Marco kiri con paspartú — ${obra.titulo}`, cantidad: 1, precioUnit: PRECIO_MARCO_OBRA, moneda: 'ARS' })
+        subtotal += PRECIO_MARCO_OBRA
         continue
       }
       if (item.tipo === 'obra') {
@@ -73,8 +82,8 @@ router.post('/', async (req, res, next) => {
     let zonaNombre = null
     if (tipoEntrega === 'ENVIO') {
       // Mismo cálculo que ve el cliente en el carrito (Envíopack/Andreani o tabla por región)
-      const marcos = items.filter(i => i.tipo === 'lamina' && i.marco).reduce((s, i) => s + (parseInt(i.cantidad) || 1), 0)
-      const otros  = items.filter(i => !(i.tipo === 'lamina' && i.marco)).reduce((s, i) => s + (parseInt(i.cantidad) || 1), 0)
+      const marcos = items.filter(i => (i.tipo === 'lamina' && i.marco) || i.tipo === 'marco').reduce((s, i) => s + (parseInt(i.cantidad) || 1), 0)
+      const otros  = items.filter(i => !((i.tipo === 'lamina' && i.marco) || i.tipo === 'marco')).reduce((s, i) => s + (parseInt(i.cantidad) || 1), 0)
       const cot = await cotizarEnvio({ provincia, cp: codigoPostal, marcos, otros })
       costoEnvio = cot.costo || 0
       zonaNombre = `Andreani${cot.fuente === 'andreani' ? ' (cotización en línea)' : (cot.zona ? ' — ' + cot.zona.replace('Andreani — ', '') : '')}${costoEnvio ? '' : ' — a cotizar'}`
