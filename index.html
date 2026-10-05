@@ -1357,7 +1357,7 @@ async function cargarZonas(){
     const r = await fetch(NAYA_API+'/config/envios');
     if(!r.ok) return;
     const z = await r.json();
-    if(Array.isArray(z) && z.length) zonas = z.sort((a,b)=>a.costo-b.costo);
+    if(Array.isArray(z) && z.length){ const vistos=new Set(); zonas = z.filter(x=>!vistos.has(x.nombre) && vistos.add(x.nombre)).sort((a,b)=>a.costo-b.costo); }
   } catch(e){}
 }
 

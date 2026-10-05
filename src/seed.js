@@ -35,12 +35,18 @@ async function main() {
     { nombre: 'Interior del país',            costo: 4500 },
   ]
 
+  // Crea cada zona solo si no existe (por nombre). Si quedaron repetidas
+  // por versiones anteriores, deja activa una y desactiva las copias.
   for (const zona of zonas) {
-    await prisma.zonaEnvio.upsert({
-      where:  { id: zona.nombre },
-      update: {},
-      create: zona,
-    })
+    const existentes = await prisma.zonaEnvio.findMany({ where: { nombre: zona.nombre }, orderBy: { id: 'asc' } })
+    if (!existentes.length) {
+      await prisma.zonaEnvio.create({ data: zona })
+    } else if (existentes.length > 1) {
+      await prisma.zonaEnvio.updateMany({
+        where: { id: { in: existentes.slice(1).map(z => z.id) } },
+        data:  { activa: false },
+      })
+    }
   }
 
   console.log('✓ Zonas de envío creadas')
