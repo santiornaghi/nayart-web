@@ -646,9 +646,9 @@ nav.scrolled {
   overflow: hidden;
 }
 .enc-img:first-child { grid-column: 1/3; aspect-ratio: 16/7; }
-.e1 { background: #2a2420 url('img/obras/tranquera.jpg') center 55% / cover no-repeat; }
-.e2 { background: #2a2420 url('img/obras/arboleda.jpg') center / cover no-repeat; }
-.e3 { background: #2a2420 url('img/obras/canal.jpg') center 60% / cover no-repeat; }
+.e1 { background: #2a2420 url('img/serie/s08.jpg') center / cover no-repeat; }
+.e2 { background: #2a2420 url('img/serie/s04.jpg') center / cover no-repeat; }
+.e3 { background: #2a2420 url('img/serie/s01.jpg') 40% center / cover no-repeat; }
 
 /* ── CONTACTO ── */
 .contacto {
@@ -1104,6 +1104,38 @@ h2 em, h3 em { font-style: normal; color: inherit; }
   .statement-body h2, .serie-header-left h2, .de-cerca-head h2, .tienda-header h2, .encargos-text h2, .contacto-left h2 { font-size: 2.6rem; }
   .como-comprar { gap: 2rem; }
 }
+
+/* ══ SERIE EN COLOR ══ */
+.serie-color { padding: 8rem 4rem; border-top: 1px solid rgba(30,28,25,.1); }
+.serie-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.4rem 1.2rem; align-items: start; }
+.serie-grid figure { margin: 0; }
+.serie-grid img { width: 100%; height: auto; display: block; }
+.serie-grid figcaption { font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; margin-top: .5rem; color: var(--ink); }
+/* ══ FUERA DEL TALLER ══ */
+.taller { padding: 8rem 4rem; border-top: 1px solid rgba(30,28,25,.1); }
+.taller-head { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: end; margin-bottom: 3.5rem; }
+.taller-head h2 { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: clamp(2.6rem, 4.6vw, 4.2rem); line-height: 1; letter-spacing: -.012em; }
+.taller-head p { font-size: 1.06rem; line-height: 1.7; color: var(--ink-light); max-width: 52ch; }
+.taller-grid { column-count: 3; column-gap: 1.2rem; }
+.taller-grid figure { break-inside: avoid; margin: 0 0 1.2rem; }
+.taller-grid figure { margin: 0; }
+.taller-grid img { width: 100%; height: auto; display: block; }
+.taller-grid figcaption { font-size: .86rem; color: var(--ink-faint); margin-top: .6rem; }
+.t-a { grid-column: 1 / 5; }
+.t-b { grid-column: 5 / 9; margin-top: 4rem; }
+.t-c { grid-column: 9 / 13; }
+.t-d { grid-column: 1 / 8; }
+.t-e { grid-column: 8 / 10; margin-top: 2rem; }
+.t-f { grid-column: 10 / 13; margin-top: 6rem; }
+@media (max-width: 768px) {
+  .taller { padding: 5rem 1.6rem; }
+  .taller-head { grid-template-columns: 1fr; gap: 1.2rem; }
+  .taller-head h2 { font-size: 2.6rem; }
+  .taller-grid { column-count: 2; column-gap: .8rem; }
+  .taller-grid figure { margin-bottom: .8rem; }
+  .serie-color { padding: 5rem 1.6rem; }
+  .serie-grid { grid-template-columns: 1fr 1fr; gap: .8rem; }
+}
 </style>
 </head>
 <body>
@@ -1149,8 +1181,8 @@ h2 em, h3 em { font-style: normal; color: inherit; }
   <div>
     <span class="statement-label" data-es="El artista" data-en="The artist">El artista</span>
     <figure class="statement-fig">
-      <img src="img/detalles/pruebas-pincel.jpg" alt="Pruebas de pincel y caligrafía de los meses del año" loading="lazy">
-      <span class="fig-cap" data-es="Pruebas de pincel para un calendario" data-en="Brush studies for a calendar">Pruebas de pincel para un calendario</span>
+      <img src="img/vida/pintando-noche.jpg" alt="Santiago Ornaghi pintando de noche frente al atril" loading="lazy">
+      <span class="fig-cap" data-es="Pintando de noche, frente al atril" data-en="Painting at night, at the easel">Pintando de noche, frente al atril</span>
     </figure>
   </div>
   <div class="statement-body">
@@ -1181,6 +1213,14 @@ h2 em, h3 em { font-style: normal; color: inherit; }
   <div class="galeria-mas"><a href="#tienda" class="btn btn-outline" data-es="Ver láminas de todas las obras" data-en="See prints of every work">Ver láminas de todas las obras</a></div>
 </section>
 
+<!-- SERIE EN COLOR -->
+<section class="serie-color" id="serie-color">
+  <div class="taller-head reveal">
+    <h2 data-es="Serie en color" data-en="Colour series">Serie en color</h2>
+    <p data-es="Doce acuarelas pintadas para un calendario, una por mes. Animales y escenas de campo con color saturado y línea suelta encima." data-en="Twelve watercolors painted for a calendar, one per month. Animals and country scenes in saturated colour with loose line work on top.">Doce acuarelas pintadas para un calendario, una por mes. Animales y escenas de campo con color saturado y línea suelta encima.</p>
+  </div>
+  <div class="serie-grid reveal"><figure><img src="img/serie/s01.jpg" alt="El enemigo" loading="lazy"><figcaption>El enemigo</figcaption></figure><figure><img src="img/serie/s02.jpg" alt="Retorno" loading="lazy"><figcaption>Retorno</figcaption></figure><figure><img src="img/serie/s03.jpg" alt="Acuarela de la serie en color" loading="lazy"></figure><figure><img src="img/serie/s04.jpg" alt="Acuarela de la serie en color" loading="lazy"></figure><figure><img src="img/serie/s05.jpg" alt="Curioseando" loading="lazy"><figcaption>Curioseando</figcaption></figure><figure><img src="img/serie/s06.jpg" alt="Siempre cerca" loading="lazy"><figcaption>Siempre cerca</figcaption></figure><figure><img src="img/serie/s07.jpg" alt="Haciendo sombra" loading="lazy"><figcaption>Haciendo sombra</figcaption></figure><figure><img src="img/serie/s08.jpg" alt="Acuarela de la serie en color" loading="lazy"></figure><figure><img src="img/serie/s09.jpg" alt="Acuarela de la serie en color" loading="lazy"></figure><figure><img src="img/serie/s10.jpg" alt="Acuarela de la serie en color" loading="lazy"></figure><figure><img src="img/serie/s11.jpg" alt="Careta" loading="lazy"><figcaption>Careta</figcaption></figure><figure><img src="img/serie/s12.jpg" alt="Acuarela de la serie en color" loading="lazy"></figure></div>
+</section>
 <!-- BANDA DE ACUARELA -->
 <div class="banda-acuarela reveal">
   <img src="img/detalles/banda-tormenta.jpg" alt="Cielo de tormenta en acuarela" loading="lazy">
@@ -1200,6 +1240,25 @@ h2 em, h3 em { font-style: normal; color: inherit; }
     <figure><img src="img/detalles/detalle-paja.jpg" alt="Detalle de acuarela: trazos de paja" loading="lazy"></figure>
     <figure><img src="img/detalles/detalle-niebla.jpg" alt="Detalle de acuarela: niebla y granulación" loading="lazy"></figure>
     <figure><img src="img/detalles/detalle-tierra.jpg" alt="Detalle de acuarela: tierra y raíces" loading="lazy"></figure>
+  </div>
+</section>
+<!-- TALLER -->
+<section class="taller" id="taller">
+  <div class="taller-head reveal">
+    <h2 data-es="Fuera del taller" data-en="Outside the studio">Fuera del taller</h2>
+    <p data-es="Pinto al aire libre siempre que puedo, frente a lo que estoy mirando. También en ferias y eventos, y saco fotos en rollo de lo que después quiero pintar." data-en="I paint outdoors whenever I can, in front of what I’m looking at. Also at fairs and events, and I shoot film of what I later want to paint.">Pinto al aire libre siempre que puedo, frente a lo que estoy mirando. También en ferias y eventos, y saco fotos en rollo de lo que después quiero pintar.</p>
+  </div>
+  <div class="taller-grid">
+    <figure><img src="img/vida/aire-libre.jpg" alt="Acuarela pintada frente a las sierras" loading="lazy"><figcaption>Frente al motivo, en las sierras</figcaption></figure>
+    <figure><img src="img/vida/gato-balde.jpg" alt="Fotografía en blanco y negro de un gato detrás de un balde" loading="lazy"></figure>
+    <figure><img src="img/vida/pintura-en-vivo.jpg" alt="Pintando en vivo al aire libre" loading="lazy"><figcaption>Pintura en vivo</figcaption></figure>
+    <figure><img src="img/vida/analogica-avenida.jpg" alt="Fotografía analógica de una avenida" loading="lazy"><figcaption>Fotografía en rollo</figcaption></figure>
+    <figure><img src="img/vida/camara.jpg" alt="Cámara analógica de doble objetivo" loading="lazy"></figure>
+    <figure><img src="img/vida/atril-feria.jpg" alt="Acuarelas enmarcadas en un atril durante una feria" loading="lazy"><figcaption>En feria</figcaption></figure>
+    <figure><img src="img/vida/gato-fuego.jpg" alt="Fotografía en blanco y negro de un gato frente a un fuego" loading="lazy"></figure>
+    <figure><img src="img/vida/edificio.jpg" alt="Fotografía analógica de un edificio con un árbol" loading="lazy"></figure>
+    <figure><img src="img/vida/analogica-farol.jpg" alt="Fotografía analógica de un farol y un vitral" loading="lazy"></figure>
+    <figure><img src="img/vida/analogica-arbol.jpg" alt="Fotografía analógica de un árbol rosado" loading="lazy"></figure>
   </div>
 </section>
 <!-- TIENDA -->
@@ -1241,7 +1300,7 @@ h2 em, h3 em { font-style: normal; color: inherit; }
   <div class="encargos-text reveal">
     <span class="section-tag" data-es="Encargos" data-en="Commissions">Encargos</span>
     <h2 data-es="Encargos" data-en="Commissions">Encargos</h2>
-    <p data-es="Pinto por encargo para particulares y empresas. Hice etiquetas de vino, ilustraciones para calendarios, murales y pintura en vivo en eventos." data-en="I paint on commission for individuals and companies, including wine labels, calendar illustrations, murals and live painting at events.">Pinto por encargo para particulares y empresas. Hice etiquetas de vino, ilustraciones para calendarios, murales y pintura en vivo en eventos.</p>
+    <p data-es="Pinto por encargo para particulares y empresas. Ilustré dos calendarios completos, con una acuarela para cada mes, y también hago etiquetas, murales y pintura en vivo en eventos." data-en="I paint on commission for individuals and companies. I’ve illustrated two full calendars, one watercolor per month, and I also do labels, murals and live painting at events.">Pinto por encargo para particulares y empresas. Ilustré dos calendarios completos, con una acuarela para cada mes, y también hago etiquetas, murales y pintura en vivo en eventos.</p>
     <ul class="servicios">
       <li data-es="Obras originales personalizadas" data-en="Custom original works">Obras originales personalizadas</li>
       <li data-es="Etiquetas para bodegas y bebidas" data-en="Wine and beverage labels">Etiquetas para bodegas y bebidas</li>
