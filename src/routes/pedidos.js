@@ -32,15 +32,23 @@ router.post('/', async (req, res, next) => {
     for (const item of items) {
       if (item.tipo === 'lamina') {
         // Láminas: precio fijado en el servidor (ARS)
-        const PRECIO_TAMANO = { A4: 10000, A5: 8000 }
-        const MARCO_KIRI = 20000
-        const base = PRECIO_TAMANO[item.tamano]
-        if (!base) throw new AppError('Tamaño de lámina inválido')
+        const PRECIO_SIN_MARCO = { A4: 10000, A5: 8000 }
+        const PRECIO_CON_KIRI  = { A4: 35000, A5: 25000 }
+        const precio = (item.marco ? PRECIO_CON_KIRI : PRECIO_SIN_MARCO)[item.tamano]
+        if (!precio) throw new AppError('Tamaño de lámina inválido')
         const cant = Math.max(1, Math.min(20, parseInt(item.cantidad) || 1))
-        const precio = base + (item.marco ? MARCO_KIRI : 0)
         const titulo = String(item.titulo || 'Obra').slice(0, 80)
         itemsData.push({ descripcion: `Lámina ${item.tamano} — ${titulo}${item.marco ? ' — con marco kiri' : ''}`, cantidad: cant, precioUnit: precio, moneda: 'ARS' })
         subtotal += precio * cant
+        continue
+      }
+      if (item.tipo === 'sticker') {
+        const STICKERS = { 1: 'Calle soleada', 2: 'Callejón' }
+        const nombre = STICKERS[item.id]
+        if (!nombre) throw new AppError('Sticker inválido')
+        const cant = Math.max(1, Math.min(50, parseInt(item.cantidad) || 1))
+        itemsData.push({ descripcion: `Sticker — ${nombre}`, cantidad: cant, precioUnit: 2000, moneda: 'ARS' })
+        subtotal += 2000 * cant
         continue
       }
       if (item.tipo === 'obra') {

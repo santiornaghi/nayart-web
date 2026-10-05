@@ -11,11 +11,14 @@ const prisma = new PrismaClient()
 router.post('/', async (req, res, next) => {
   try {
     const { nombre, email, telefono, tipo, mensaje, presupuesto } = req.body
-    if (!nombre || !email || !mensaje) throw new AppError('Nombre, email y mensaje son requeridos')
+    if (!nombre || !mensaje || (!email && !telefono)) throw new AppError('Nombre, mensaje y un medio de contacto son requeridos')
+    const TIPOS = ['OBRA_ORIGINAL','ENCARGO_PERSONALIZADO','ETIQUETA_BRANDING','MURAL','PINTADA_EN_VIVO','EBOOK_MATERIALES','OTRO']
+    const t = String(tipo || '').toUpperCase()
     const encargo = await prisma.encargo.create({
-      data: { nombre, email, telefono, tipo: tipo?.toUpperCase() || 'OTRO', mensaje, presupuesto },
+      data: { nombre, email: email || '', telefono, tipo: TIPOS.includes(t) ? t : 'OTRO', mensaje, presupuesto },
     })
-    await emailNuevoEncargo(encargo)
+    // El aviso por email es opcional: si falla, el encargo ya quedó guardado
+    try { await emailNuevoEncargo(encargo) } catch (e) { console.error('[email encargo]', e.message) }
     res.status(201).json({ ok: true, id: encargo.id })
   } catch (e) { next(e) }
 })
