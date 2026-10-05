@@ -1434,6 +1434,9 @@ a { color: inherit; }
 .lh a { text-decoration: none; }
 .lh .cart-count { background: none !important; color: inherit !important; width: auto !important; height: auto !important; min-width: 0 !important; padding: 0 !important; margin: 0 !important; font: inherit !important; display: inline !important; border-radius: 0 !important; }
 #lista { scroll-margin-top: 4rem; }
+.lh-logo img { height: 18px; width: auto; display: block; }
+.portada h1.marca { font-family: 'Inter Tight', sans-serif !important; font-size: clamp(2.6rem, 7vw, 5.5rem) !important; letter-spacing: -0.05em !important; line-height: 1 !important; font-weight: 400 !important; }
+.portada h1.marca sup { font-size: .28em; vertical-align: super; margin-left: .06em; letter-spacing: 0; position: relative; top: -.15em; }
 .lh-r { display: flex; align-items: center; gap: 1.4rem; }
 .lh button { background: none; border: none; padding: 0; font: inherit; color: inherit; cursor: pointer; text-transform: uppercase; }
 .lh-burger { width: 22px; height: 12px; position: relative; }
@@ -1555,7 +1558,7 @@ body.menu-abierto .lmenu { opacity: 1; pointer-events: auto; }
 </head>
 <body>
 <header class="lh" id="nav">
-  <a href="#/" class="lh-name">Santiago Ornaghi</a>
+  <a href="#/" class="lh-logo" aria-label="Naya, inicio"><img src="img/logo-naya.png" alt="NAYA"></a>
   <div class="lh-r">
     <button onclick="abrirCarrito()" aria-label="Carrito"><span data-es="Carrito" data-en="Cart">Carrito</span> (<span class="cart-count">0</span>)</button>
     <button class="lh-burger" onclick="menu()" aria-label="Menú"><span></span><span></span></button>
@@ -1574,7 +1577,7 @@ body.menu-abierto .lmenu { opacity: 1; pointer-events: auto; }
 <!-- INICIO -->
 <section class="vista" id="v-inicio">
   <div class="portada">
-    <h1>Santiago Ornaghi<span data-es="Acuarelista en Río Cuarto" data-en="Watercolorist based in Río Cuarto">Acuarelista en Río Cuarto</span></h1>
+    <h1 class="marca">Naya Lab<sup>®</sup></h1>
     <a class="flecha" href="#/lista" aria-label="Ver obras">↓</a>
   </div>
   <div class="envoltura ix2" id="lista">
