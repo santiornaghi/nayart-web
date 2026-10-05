@@ -647,7 +647,7 @@ nav.scrolled {
 }
 .enc-img:first-child { grid-column: 1/3; aspect-ratio: 16/7; }
 .e1 { background: #2a2420 url('img/serie/s08.jpg') center / cover no-repeat; }
-.e2 { background: #2a2420 url('img/serie/s04.jpg') center / cover no-repeat; }
+.e2 { background: #2a2420 url('img/vida/mural.jpg') center 30% / cover no-repeat; }
 .e3 { background: #2a2420 url('img/serie/s01.jpg') 40% center / cover no-repeat; }
 
 /* ── CONTACTO ── */
@@ -1150,6 +1150,148 @@ footer { border-top: none; }
   .franja-pincel { height: 22vh; }
   .contacto-left { grid-template-columns: 1fr 96px; column-gap: 1.2rem; }
 }
+
+/* ══════════ PORTFOLIO, CINTAS Y MOVIMIENTO ══════════ */
+.statement-collage { position: relative; margin-top: 2.5rem; max-width: 380px; padding-bottom: 5rem; }
+.statement-collage figure { margin: 0; }
+.statement-collage img { width: 100%; height: auto; display: block; }
+.sc-a { width: 78%; }
+.sc-b { position: absolute; right: 0; bottom: 0; width: 48%; box-shadow: 0 18px 40px rgba(30,28,25,.22); border: 6px solid var(--white); background: var(--white); }
+.sc-b .fig-cap { display: block; font-size: .78rem; color: var(--ink-faint); padding-top: .4rem; }
+.statement-lead { font-family: 'Cormorant Garamond', serif; font-size: 1.55rem !important; line-height: 1.4 !important; color: var(--ink) !important; }
+
+.series { padding: 8rem 0 6rem; border-top: 1px solid rgba(30,28,25,.1); background: var(--white); }
+.series-intro { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: end; padding: 0 4rem; margin-bottom: 4rem; }
+.series-intro h2 { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: clamp(2.6rem, 4.6vw, 4.2rem); line-height: 1; }
+.series-intro p { font-size: 1.06rem; line-height: 1.7; color: var(--ink-light); max-width: 52ch; }
+.serie-num { display: block; font-family: 'Cormorant Garamond', serif; font-size: 1rem; color: var(--rust); margin-bottom: .6rem; }
+.rincones-head h3, .mov-head h3 { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: clamp(2.2rem, 3.4vw, 3.2rem); line-height: 1.05; margin-bottom: 1rem; }
+.rincones-head p, .mov-head p { color: var(--ink-light); line-height: 1.7; max-width: 40ch; }
+.rincones-hint { display: inline-block; margin-top: 1.6rem; font-size: .85rem; color: var(--ink-faint); animation: empuja 2.4s ease-in-out infinite; }
+@keyframes empuja { 50% { transform: translateX(8px); } }
+.rincones-pin { display: flex; align-items: center; gap: 4rem; overflow: hidden; }
+.rincones-head { flex: 0 0 calc(340px + 4rem); padding-left: 4rem; align-self: stretch; display: flex; flex-direction: column; justify-content: center; position: relative; z-index: 2; background: var(--white); padding-right: 2.5rem; margin-right: -2.5rem; }
+.rincones-head::after { content: ""; position: absolute; top: 0; bottom: 0; right: -60px; width: 60px; background: linear-gradient(90deg, var(--white), rgba(250,248,244,0)); pointer-events: none; }
+.rincones-track { display: flex; gap: 2.4rem; align-items: center; padding-right: 4rem; will-change: transform; }
+.rin-card { margin: 0; flex: 0 0 auto; width: clamp(320px, 34vw, 520px); }
+.rin-card.rin-alta { width: clamp(220px, 21vw, 330px); }
+.rin-card:nth-child(even) { margin-top: 5rem; }
+.rin-marco { overflow: hidden; background: var(--paper-dark); box-shadow: 0 14px 34px rgba(30,28,25,.12); }
+.rin-marco img { display: block; width: 100%; height: auto; transition: transform 1.4s cubic-bezier(.2,.7,.2,1); }
+.rin-card:hover .rin-marco img, .mov-marco:hover img { transform: scale(1.05); }
+.rin-card figcaption, .movimiento figcaption { margin-top: .9rem; display: flex; flex-direction: column; gap: .15rem; }
+.rin-t { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; color: var(--ink); }
+.rin-d { font-size: .85rem; color: var(--ink-faint); }
+/* desplazamiento horizontal ligado al scroll (escritorio) */
+.js-mov .rincones.anclado { position: relative; }
+.js-mov .rincones.anclado .rincones-pin { position: sticky; top: 0; height: 100vh; }
+
+.movimiento { display: grid; grid-template-columns: repeat(12, 1fr); gap: 2rem; padding: 7rem 4rem 0; align-items: start; }
+.mov-head { grid-column: 1 / 5; }
+.mov-a { grid-column: 5 / 13; margin: 0; }
+.mov-diptico { display: grid; grid-template-columns: 1fr 1fr; gap: .6rem; }
+.mov-diptico img, .mov-marco img { display: block; width: 100%; height: auto; }
+.mov-marco { overflow: hidden; }
+.mov-b { grid-column: 2 / 9; margin: 4rem 0 0; }
+.mov-b .mov-marco img { transform: scale(1.12); }
+.mov-par { grid-column: 1 / 13; display: grid; grid-template-columns: repeat(12, 1fr); gap: 2rem; align-items: end; margin-top: 3rem; }
+.mov-c { grid-column: 6 / 9; margin: 0; }
+.mov-d { grid-column: 9 / 12; margin: 0 0 6rem; }
+.mov-nota { grid-column: 2 / 6; grid-row: 1; align-self: center; font-family: 'Cormorant Garamond', serif; font-size: 1.7rem; line-height: 1.35; color: var(--ink-light); }
+.mov-cta { grid-column: 1 / 13; text-align: center; margin-top: 4rem; }
+/* destape tipo cortina */
+.js-mov .destapa > div { clip-path: inset(0 0 100% 0); transition: clip-path 1.5s cubic-bezier(.7,0,.2,1); }
+.js-mov .destapa figcaption { opacity: 0; transform: translateY(14px); transition: opacity .8s ease .7s, transform .8s ease .7s; }
+.js-mov .destapa.vista > div { clip-path: inset(0 0 0 0); }
+.js-mov .destapa.vista figcaption { opacity: 1; transform: none; }
+
+/* Fuera del taller: dos cintas */
+.taller { padding-left: 0; padding-right: 0; overflow: hidden; }
+.taller .taller-head { padding: 0 4rem; }
+.cintas { display: flex; flex-direction: column; gap: 1.2rem; transform: rotate(-1.5deg); margin: 2rem -2rem 1rem; }
+.cinta { overflow: hidden; }
+.cinta-pista { display: flex; gap: 1.2rem; width: max-content; animation: cinta 70s linear infinite; }
+.cinta-2 .cinta-pista { animation-duration: 85s; animation-direction: reverse; }
+.cinta:hover .cinta-pista { animation-play-state: paused; }
+@keyframes cinta { to { transform: translateX(calc(-50% - .6rem)); } }
+.cinta figure { margin: 0; position: relative; flex: 0 0 auto; overflow: hidden; }
+.cinta img { height: 330px; width: auto; display: block; transition: transform 1s cubic-bezier(.2,.7,.2,1), filter .6s; }
+.cinta-2 img { height: 250px; filter: grayscale(.15); }
+.cinta figure:hover img { transform: scale(1.06); filter: none; }
+.cinta figcaption { position: absolute; left: .8rem; bottom: .7rem; background: rgba(250,248,244,.92); color: var(--ink); font-size: .78rem; padding: .3rem .6rem; }
+
+/* Frase */
+.frase-banda { position: relative; overflow: hidden; height: 62vh; min-height: 380px; display: flex; align-items: center; }
+.frase-fondo { position: absolute; inset: -18% 0; background: #c7882f url('img/movimiento/ocre.jpg') center / cover no-repeat; }
+.frase-banda::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(242,239,233,.92) 0%, rgba(242,239,233,.55) 45%, rgba(242,239,233,0) 75%); }
+.frase { position: relative; z-index: 1; margin: 0; padding: 0 4rem; max-width: 820px; }
+.frase p { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 4.4vw, 3.8rem); line-height: 1.12; color: var(--ink); }
+
+/* Encargos con movimiento */
+.enc-img { will-change: transform; }
+
+/* Contacto sin imagen suelta */
+.contacto-left { display: block; }
+.contacto-left a.dato-value { color: inherit; text-decoration: none; border-bottom: 1px solid rgba(30,28,25,.25); }
+
+/* Stickers en bloque */
+.stickers-bloque { display: grid; grid-template-columns: 1fr 2fr; gap: 4rem; align-items: center; margin: 6rem 0 2rem; padding: 3rem; background: var(--white); }
+.stickers-texto h3 { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 2.4rem; margin-bottom: .8rem; }
+.stickers-texto p { color: var(--ink-light); line-height: 1.7; margin-bottom: 1.2rem; max-width: 34ch; }
+.stickers-bloque .stickers { grid-template-columns: 1fr 1fr; }
+.stickers-bloque .lamina-foot { gap: .6rem; flex-wrap: wrap; }
+.stickers-bloque .sticker-img { background: var(--paper); }
+.sticker:nth-child(1) .sticker-img img { transform: rotate(-4deg); }
+.sticker:nth-child(2) .sticker-img img { transform: rotate(5deg); }
+.sticker:hover .sticker-img img { transform: rotate(0) scale(1.06) !important; }
+
+/* Láminas recortadas */
+.laminas.recortada .lamina:nth-child(n+13) { display: none; }
+.laminas-mas { text-align: center; margin-top: 3rem; }
+.laminas:not(.recortada) + .laminas-mas { display: none; }
+
+/* Aparición escalonada de grillas */
+.js-mov .escalon { opacity: 0; transform: translateY(34px); transition: opacity .9s ease, transform .9s cubic-bezier(.2,.7,.2,1); transition-delay: calc(var(--i, 0) * 90ms); }
+.js-mov .escalon.en { opacity: 1; transform: none; }
+.serie-grid figure img { transition: transform 1s cubic-bezier(.2,.7,.2,1); }
+.serie-grid figure { overflow: hidden; }
+.serie-grid figure:hover img { transform: scale(1.04) rotate(-.4deg); }
+
+@media (max-width: 900px) {
+  .series { padding: 5rem 0 4rem; }
+  .series-intro { grid-template-columns: 1fr; gap: 1.2rem; padding: 0 1.6rem; margin-bottom: 2.5rem; }
+  .rincones-pin { flex-direction: column; align-items: stretch; gap: 2rem; padding-left: 0; }
+  .rincones-head { flex: none; padding: 0 1.6rem; margin: 0; }
+  .rincones-head::after { display: none; }
+  .rincones-hint { display: none; }
+  .rincones-track { overflow-x: auto; scroll-snap-type: x mandatory; padding: 0 1.6rem 1rem; gap: 1rem; -webkit-overflow-scrolling: touch; }
+  .rin-card { width: 78vw; scroll-snap-align: start; }
+  .rin-card.rin-alta { width: 52vw; }
+  .rin-card:nth-child(even) { margin-top: 0; }
+  .movimiento { grid-template-columns: 1fr; padding: 4rem 1.6rem 0; gap: 2.4rem; }
+  .mov-head { position: static; grid-column: 1; }
+  .mov-a, .mov-b { grid-column: 1; margin: 0; }
+  .mov-par { grid-column: 1; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 0; }
+  .mov-c { grid-column: 1; } .mov-d { grid-column: 2; margin: 0 0 3rem; }
+  .mov-nota { grid-column: 1 / 3; grid-row: auto; font-size: 1.35rem; }
+  .mov-cta { grid-column: 1; margin-top: 1rem; }
+  .taller .taller-head { padding: 0 1.6rem; }
+  .cinta img { height: 210px; } .cinta-2 img { height: 160px; }
+  .cintas { gap: .8rem; margin: 1rem -1rem 0; }
+  .statement-collage { max-width: 300px; }
+  .frase-banda { height: 46vh; min-height: 300px; }
+  .frase { padding: 0 1.6rem; }
+  .frase-banda::after { background: linear-gradient(180deg, rgba(242,239,233,.15) 0%, rgba(242,239,233,.85) 100%); }
+  .frase-banda { align-items: flex-end; padding-bottom: 3rem; }
+  .stickers-bloque { grid-template-columns: 1fr; gap: 2rem; padding: 1.6rem; margin-top: 4rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cinta { overflow-x: auto; }
+  .cinta-pista { animation: none; }
+  .cinta-pista figure[aria-hidden] { display: none; }
+  .rincones-track { overflow-x: auto; }
+  .rincones-hint { animation: none; }
+}
 </style>
 </head>
 <body>
@@ -1164,6 +1306,7 @@ footer { border-top: none; }
   </a>
   <ul class="nav-links">
     <li><a href="#obras">Obras</a></li>
+    <li><a href="#series">Series</a></li>
     <li><a href="#tienda">Tienda</a></li>
     <li><a href="#encargos">Encargos</a></li>
     <li><a href="#contacto">Contacto</a></li>
@@ -1194,15 +1337,16 @@ footer { border-top: none; }
 <section class="statement reveal" id="about">
   <div>
     <span class="statement-label" data-es="El artista" data-en="The artist">El artista</span>
-    <figure class="statement-fig">
-      <img src="img/vida/pintando-noche.jpg" alt="Santiago Ornaghi pintando de noche frente al atril" loading="lazy">
-      <span class="fig-cap" data-es="Pintando de noche, frente al atril" data-en="Painting at night, at the easel">Pintando de noche, frente al atril</span>
-    </figure>
+    <div class="statement-collage">
+      <figure class="sc-a"><img src="img/vida/pintando-noche.jpg" alt="Santiago Ornaghi pintando de noche frente al atril" loading="lazy"></figure>
+      <figure class="sc-b" data-vel="-0.08"><img src="img/vida/mural.jpg" alt="Santiago Ornaghi pintando un mural" loading="lazy"><span class="fig-cap" data-es="Mural en proceso" data-en="Mural in progress">Mural en proceso</span></figure>
+    </div>
   </div>
   <div class="statement-body">
     <h2 data-es="Santiago Ornaghi" data-en="Santiago Ornaghi">Santiago Ornaghi</h2>
-    <p data-es="No sabría decir cuándo empezó mi encuentro con el arte. Fue, naturalmente, una forma de expresarme desde muy chico: tizas, lápices y papeles fueron el escenario de lo que vivía." data-en="I couldn’t say when my encounter with art began. It was a natural way of expressing myself from an early age: chalk, pencils and paper were the stage for what I lived.">No sabría decir cuándo empezó mi encuentro con el arte. Fue, naturalmente, una forma de expresarme desde muy chico: tizas, lápices y papeles fueron el escenario de lo que vivía.</p>
-    <p data-es="Hoy pinto con acuarela. Me interesan el campo, la ciudad y los animales, y sobre todo la luz y el movimiento de lo que tengo enfrente." data-en="Today I paint in watercolor. I’m drawn to the countryside, the city and animals, and above all to the light and movement of what is in front of me.">Hoy pinto con acuarela. Me interesan el campo, la ciudad y los animales, y sobre todo la luz y el movimiento de lo que tengo enfrente.</p>
+    <p class="statement-lead" data-es="No sé bien cuándo empezó. De chico ya dibujaba con tizas, con lo que hubiera. Después llegó la acuarela: el agua y el pigmento hacen su parte, yo hago la mía. Ahí aparece lo que quiero contar." data-en="I’m not sure when it began. As a kid I was already drawing with chalk, with whatever was around. Then came watercolor: water and pigment do their part, I do mine. That’s where what I want to say shows up.">No sé bien cuándo empezó. De chico ya dibujaba con tizas, con lo que hubiera. Después llegó la acuarela: el agua y el pigmento hacen su parte, yo hago la mía. Ahí aparece lo que quiero contar.</p>
+    <p data-es="Aprendí dibujo con Gabriel Yabar y perfeccioné la técnica con el paisajista Haroldo Cortez. Pasé por los talleres de Urban Sketchers Córdoba, donde compartí encuadres con Gabriel Canteros, y sumé cursos con Pito Campos, Juan Linares, Alex Hillkurtz, Ale Casanova, Roberto Zangarelli, Xavier Denia, Gonzalo Ibañez y Diego Catalán. Cada uno me dejó algo distinto." data-en="I learned drawing with Gabriel Yabar and refined my technique with landscape painter Haroldo Cortez. I went through the Urban Sketchers Córdoba workshops, sharing views with Gabriel Canteros, and took courses with Pito Campos, Juan Linares, Alex Hillkurtz, Ale Casanova, Roberto Zangarelli, Xavier Denia, Gonzalo Ibañez and Diego Catalán. Each of them left me something different.">Aprendí dibujo con Gabriel Yabar y perfeccioné la técnica con el paisajista Haroldo Cortez. Pasé por los talleres de Urban Sketchers Córdoba, donde compartí encuadres con Gabriel Canteros, y sumé cursos con Pito Campos, Juan Linares, Alex Hillkurtz, Ale Casanova, Roberto Zangarelli, Xavier Denia, Gonzalo Ibañez y Diego Catalán. Cada uno me dejó algo distinto.</p>
+    <p data-es="Formo parte de la selección de artistas de ArteCba y expuse en el Centro Cultural España. Trabajo la acuarela de alta pigmentación: capas que se leen, color que no se apaga." data-en="I’m part of the ArteCba artist selection and have exhibited at the Centro Cultural España. I work with high-pigment watercolor: layers you can read, colour that doesn’t fade.">Formo parte de la selección de artistas de ArteCba y expuse en el Centro Cultural España. Trabajo la acuarela de alta pigmentación: capas que se leen, color que no se apaga.</p>
     <div class="statement-stats">
       <div class="stat"><span class="stat-n">5</span><span class="stat-l" data-es="ferias de arte" data-en="art fairs">ferias de arte</span></div>
       <div class="stat"><span class="stat-n">2</span><span class="stat-l" data-es="murales" data-en="murals">murales</span></div>
@@ -1225,6 +1369,61 @@ footer { border-top: none; }
   </div>
   <div class="galeria" id="galeria"></div>
   <div class="galeria-mas"><a href="#tienda" class="btn btn-outline" data-es="Ver láminas de todas las obras" data-en="See prints of every work">Ver láminas de todas las obras</a></div>
+</section>
+
+
+<!-- SERIES (portfolio) -->
+<section class="series" id="series">
+  <div class="series-intro reveal">
+    <h2 data-es="Series" data-en="Series">Series</h2>
+    <p data-es="Dos búsquedas que vuelven siempre: la calle vista de cerca y el movimiento convertido en mancha." data-en="Two pursuits I keep coming back to: the street seen up close, and movement turned into a wash of colour.">Dos búsquedas que vuelven siempre: la calle vista de cerca y el movimiento convertido en mancha.</p>
+  </div>
+  <div class="rincones" id="rincones">
+    <div class="rincones-pin">
+      <div class="rincones-head">
+        <span class="serie-num">01</span>
+        <h3>Rincones</h3>
+        <p data-es="Calles angostas, ropa colgada, gente que camina de vuelta a su casa. Cosas chicas, vistas de cerca." data-en="Narrow streets, laundry hanging, people walking back home. Small things, seen up close.">Calles angostas, ropa colgada, gente que camina de vuelta a su casa. Cosas chicas, vistas de cerca.</p>
+        <span class="rincones-hint" aria-hidden="true" data-es="Seguí bajando →" data-en="Keep scrolling →">Seguí bajando →</span>
+      </div>
+      <div class="rincones-track">
+        <figure class="rin-card"><div class="rin-marco"><img src="img/rincones/che-vuole.jpg" alt="Che Vuole, acuarela de la serie Rincones" loading="lazy"></div><figcaption><span class="rin-t">Che Vuole</span><span class="rin-d" data-es="Acuarela, 40 × 50 cm, 2023" data-en="Watercolor, 40 × 50 cm, 2023">Acuarela, 40 × 50 cm, 2023</span></figcaption></figure>
+        <figure class="rin-card rin-alta"><div class="rin-marco"><img src="img/rincones/pasitos-siesteros.jpg" alt="Pasitos Siesteros, acuarela de la serie Rincones" loading="lazy"></div><figcaption><span class="rin-t">Pasitos Siesteros</span><span class="rin-d" data-es="Acuarela, 25 × 30 cm, 2023" data-en="Watercolor, 25 × 30 cm, 2023">Acuarela, 25 × 30 cm, 2023</span></figcaption></figure>
+        <figure class="rin-card"><div class="rin-marco"><img src="img/rincones/cadmios.jpg" alt="Cadmios, acuarela de la serie Rincones" loading="lazy"></div><figcaption><span class="rin-t">Cadmios</span><span class="rin-d" data-es="Acuarela, 25 × 30 cm, 2022" data-en="Watercolor, 25 × 30 cm, 2022">Acuarela, 25 × 30 cm, 2022</span></figcaption></figure>
+        <figure class="rin-card"><div class="rin-marco"><img src="img/rincones/el-paso.jpg" alt="El Paso, acuarela de la serie Rincones" loading="lazy"></div><figcaption><span class="rin-t">El Paso</span><span class="rin-d" data-es="Acuarela, 25 × 30 cm, 2022" data-en="Watercolor, 25 × 30 cm, 2022">Acuarela, 25 × 30 cm, 2022</span></figcaption></figure>
+        <figure class="rin-card"><div class="rin-marco"><img src="img/rincones/ponte.jpg" alt="Ponte, acuarela de la serie Rincones" loading="lazy"></div><figcaption><span class="rin-t">Ponte</span><span class="rin-d" data-es="Acuarela, 25 × 30 cm, 2023" data-en="Watercolor, 25 × 30 cm, 2023">Acuarela, 25 × 30 cm, 2023</span></figcaption></figure>
+        <figure class="rin-card"><div class="rin-marco"><img src="img/rincones/sombra-alizarin.jpg" alt="Sombra Alizarin, acuarela de la serie Rincones" loading="lazy"></div><figcaption><span class="rin-t">Sombra Alizarin</span><span class="rin-d" data-es="Acuarela, 30 × 40 cm, 2023" data-en="Watercolor, 30 × 40 cm, 2023">Acuarela, 30 × 40 cm, 2023</span></figcaption></figure>
+        <figure class="rin-card"><div class="rin-marco"><img src="img/rincones/paseo-de-flodeo.jpg" alt="El Paseo de Flodeo, acuarela de la serie Rincones" loading="lazy"></div><figcaption><span class="rin-t">El Paseo de Flodeo</span><span class="rin-d" data-es="Acuarela, 30 × 40 cm, 2023" data-en="Watercolor, 30 × 40 cm, 2023">Acuarela, 30 × 40 cm, 2023</span></figcaption></figure>
+      </div>
+    </div>
+  </div>
+  <div class="movimiento">
+    <div class="mov-head reveal">
+      <span class="serie-num">02</span>
+      <h3 data-es="Elementos en movimiento" data-en="Elements in motion">Elementos en movimiento</h3>
+      <p data-es="Esta serie nace del viento, de la ciudad de noche, del cuerpo que se mueve. El amarillo y el naranja se granulan sobre el papel, como si el aire tuviera textura." data-en="This series is born from the wind, from the city at night, from the moving body. Yellow and orange granulate on the paper, as if the air had texture.">Esta serie nace del viento, de la ciudad de noche, del cuerpo que se mueve. El amarillo y el naranja se granulan sobre el papel, como si el aire tuviera textura.</p>
+    </div>
+    <figure class="mov-a destapa">
+      <div class="mov-diptico"><img src="img/movimiento/necesidad-1.jpg" alt="Necesidad interrumpida, primera parte" loading="lazy"><img src="img/movimiento/necesidad-2.jpg" alt="Necesidad interrumpida, segunda parte" loading="lazy"></div>
+      <figcaption><span class="rin-t">Necesidad interrumpida</span><span class="rin-d" data-es="Acuarela, 100 × 150 cm, 2023" data-en="Watercolor, 100 × 150 cm, 2023">Acuarela, 100 × 150 cm, 2023</span></figcaption>
+    </figure>
+    <figure class="mov-b destapa">
+      <div class="mov-marco"><img src="img/movimiento/urbe-dorada.jpg" alt="Urbe dorada, acuarela colgada en la pared" loading="lazy" data-vel="0.06"></div>
+      <figcaption><span class="rin-t">Urbe dorada</span><span class="rin-d" data-es="Rojo óxido y luces de una noche urbana. 40 × 140 cm, 2023" data-en="Oxide red and the lights of an urban night. 40 × 140 cm, 2023">Rojo óxido y luces de una noche urbana. 40 × 140 cm, 2023</span></figcaption>
+    </figure>
+    <div class="mov-par">
+      <figure class="mov-c destapa">
+        <div class="mov-marco"><img src="img/movimiento/lo-sensual-1.jpg" alt="Lo sensual I, carbonilla enmarcada" loading="lazy"></div>
+        <figcaption><span class="rin-t">Lo sensual I</span><span class="rin-d" data-es="Carbonilla, 53 × 83 cm, 2023" data-en="Charcoal, 53 × 83 cm, 2023">Carbonilla, 53 × 83 cm, 2023</span></figcaption>
+      </figure>
+      <figure class="mov-d destapa">
+        <div class="mov-marco"><img src="img/movimiento/lo-sensual-2.jpg" alt="Lo sensual II, carbonilla enmarcada" loading="lazy"></div>
+        <figcaption><span class="rin-t">Lo sensual II</span><span class="rin-d" data-es="Carbonilla, 53 × 83 cm, 2023" data-en="Charcoal, 53 × 83 cm, 2023">Carbonilla, 53 × 83 cm, 2023</span></figcaption>
+      </figure>
+      <p class="mov-nota" data-es="Dos carbonillas gemelas: una línea que insinúa más de lo que muestra." data-en="Twin charcoals: a line that suggests more than it shows.">Dos carbonillas gemelas: una línea que insinúa más de lo que muestra.</p>
+    </div>
+    <div class="mov-cta reveal"><a class="btn btn-outline" href="https://wa.me/5493584390961?text=Hola%20Naya!%20Quer%C3%ADa%20consultar%20por%20una%20obra%20de%20tus%20series." target="_blank" rel="noopener" data-es="Consultar por una obra de las series" data-en="Ask about a work from the series">Consultar por una obra de las series</a></div>
+  </div>
 </section>
 
 <!-- SERIE EN COLOR -->
@@ -1262,19 +1461,9 @@ footer { border-top: none; }
     <h2 data-es="Fuera del taller" data-en="Outside the studio">Fuera del taller</h2>
     <p data-es="Pinto al aire libre siempre que puedo, frente a lo que estoy mirando. También en ferias y eventos, y saco fotos en rollo de lo que después quiero pintar." data-en="I paint outdoors whenever I can, in front of what I’m looking at. Also at fairs and events, and I shoot film of what I later want to paint.">Pinto al aire libre siempre que puedo, frente a lo que estoy mirando. También en ferias y eventos, y saco fotos en rollo de lo que después quiero pintar.</p>
   </div>
-  <div class="taller-grid">
-    <figure><img src="img/vida/aire-libre.jpg" alt="Acuarela pintada frente a las sierras" loading="lazy"><figcaption>Frente al motivo, en las sierras</figcaption></figure>
-    <figure><img src="img/vida/gato-balde.jpg" alt="Fotografía en blanco y negro de un gato detrás de un balde" loading="lazy"></figure>
-    <figure><img src="img/vida/pintura-en-vivo.jpg" alt="Pintando en vivo al aire libre" loading="lazy"><figcaption>Pintura en vivo</figcaption></figure>
-    <figure><img src="img/vida/analogica-avenida.jpg" alt="Fotografía analógica de una avenida" loading="lazy"><figcaption>Fotografía en rollo</figcaption></figure>
-    <figure><img src="img/vida/camara.jpg" alt="Cámara analógica de doble objetivo" loading="lazy"></figure>
-    <figure><img src="img/vida/atril-feria.jpg" alt="Acuarelas enmarcadas en un atril durante una feria" loading="lazy"><figcaption>En feria</figcaption></figure>
-    <figure><img src="img/vida/gato-fuego.jpg" alt="Fotografía en blanco y negro de un gato frente a un fuego" loading="lazy"></figure>
-    <figure><img src="img/vida/edificio.jpg" alt="Fotografía analógica de un edificio con un árbol" loading="lazy"></figure>
-    <figure><img src="img/vida/analogica-farol.jpg" alt="Fotografía analógica de un farol y un vitral" loading="lazy"></figure>
-    <figure><img src="img/vida/analogica-arbol.jpg" alt="Fotografía analógica de un árbol rosado" loading="lazy"></figure>
-    <figure><img src="img/vida/piano.jpg" alt="Fotografía en blanco y negro del interior de un piano" loading="lazy"></figure>
-    <figure><img src="img/vida/textura-naranja.jpg" alt="Detalle de una acuarela en naranja" loading="lazy"><figcaption data-es="Detalle de acuarela" data-en="Watercolor detail">Detalle de acuarela</figcaption></figure>
+  <div class="cintas">
+    <div class="cinta cinta-1"><div class="cinta-pista"><figure><img src="img/vida/aire-libre.jpg" alt="Acuarela pintada frente a las sierras" loading="lazy"><figcaption>Frente al motivo, en las sierras</figcaption></figure><figure><img src="img/vida/pintura-en-vivo.jpg" alt="Pintando en vivo al aire libre" loading="lazy"><figcaption>Pintura en vivo</figcaption></figure><figure><img src="img/vida/mural.jpg" alt="Pintando un mural" loading="lazy"><figcaption>Mural</figcaption></figure><figure><img src="img/vida/atril-feria.jpg" alt="Acuarelas enmarcadas en un atril durante una feria" loading="lazy"><figcaption>En feria</figcaption></figure><figure><img src="img/vida/feria-pintando.jpg" alt="Pintando en una feria" loading="lazy"><figcaption>Pintando en feria</figcaption></figure><figure><img src="img/vida/textura-naranja.jpg" alt="Detalle de una acuarela en naranja" loading="lazy"><figcaption>Detalle de acuarela</figcaption></figure><figure aria-hidden="true"><img src="img/vida/aire-libre.jpg" alt="" data-alt="Acuarela pintada frente a las sierras" loading="lazy"><figcaption>Frente al motivo, en las sierras</figcaption></figure><figure aria-hidden="true"><img src="img/vida/pintura-en-vivo.jpg" alt="" data-alt="Pintando en vivo al aire libre" loading="lazy"><figcaption>Pintura en vivo</figcaption></figure><figure aria-hidden="true"><img src="img/vida/mural.jpg" alt="" data-alt="Pintando un mural" loading="lazy"><figcaption>Mural</figcaption></figure><figure aria-hidden="true"><img src="img/vida/atril-feria.jpg" alt="" data-alt="Acuarelas enmarcadas en un atril durante una feria" loading="lazy"><figcaption>En feria</figcaption></figure><figure aria-hidden="true"><img src="img/vida/feria-pintando.jpg" alt="" data-alt="Pintando en una feria" loading="lazy"><figcaption>Pintando en feria</figcaption></figure><figure aria-hidden="true"><img src="img/vida/textura-naranja.jpg" alt="" data-alt="Detalle de una acuarela en naranja" loading="lazy"><figcaption>Detalle de acuarela</figcaption></figure></div></div>
+    <div class="cinta cinta-2"><div class="cinta-pista"><figure><img src="img/vida/gato-balde.jpg" alt="Fotografía en blanco y negro de un gato detrás de un balde" loading="lazy"></figure><figure><img src="img/vida/analogica-avenida.jpg" alt="Fotografía analógica de una avenida" loading="lazy"><figcaption>Fotografía en rollo</figcaption></figure><figure><img src="img/vida/camara.jpg" alt="Cámara analógica de doble objetivo" loading="lazy"></figure><figure><img src="img/vida/gato-fuego.jpg" alt="Fotografía en blanco y negro de un gato frente a un fuego" loading="lazy"></figure><figure><img src="img/vida/edificio.jpg" alt="Fotografía analógica de un edificio con un árbol" loading="lazy"></figure><figure><img src="img/vida/analogica-farol.jpg" alt="Fotografía analógica de un farol y un vitral" loading="lazy"></figure><figure><img src="img/vida/analogica-arbol.jpg" alt="Fotografía analógica de un árbol rosado" loading="lazy"></figure><figure><img src="img/vida/piano.jpg" alt="Fotografía en blanco y negro del interior de un piano" loading="lazy"></figure><figure aria-hidden="true"><img src="img/vida/gato-balde.jpg" alt="" data-alt="Fotografía en blanco y negro de un gato detrás de un balde" loading="lazy"></figure><figure aria-hidden="true"><img src="img/vida/analogica-avenida.jpg" alt="" data-alt="Fotografía analógica de una avenida" loading="lazy"><figcaption>Fotografía en rollo</figcaption></figure><figure aria-hidden="true"><img src="img/vida/camara.jpg" alt="" data-alt="Cámara analógica de doble objetivo" loading="lazy"></figure><figure aria-hidden="true"><img src="img/vida/gato-fuego.jpg" alt="" data-alt="Fotografía en blanco y negro de un gato frente a un fuego" loading="lazy"></figure><figure aria-hidden="true"><img src="img/vida/edificio.jpg" alt="" data-alt="Fotografía analógica de un edificio con un árbol" loading="lazy"></figure><figure aria-hidden="true"><img src="img/vida/analogica-farol.jpg" alt="" data-alt="Fotografía analógica de un farol y un vitral" loading="lazy"></figure><figure aria-hidden="true"><img src="img/vida/analogica-arbol.jpg" alt="" data-alt="Fotografía analógica de un árbol rosado" loading="lazy"></figure><figure aria-hidden="true"><img src="img/vida/piano.jpg" alt="" data-alt="Fotografía en blanco y negro del interior de un piano" loading="lazy"></figure></div></div>
   </div>
 </section>
 <!-- TIENDA -->
@@ -1294,12 +1483,16 @@ footer { border-top: none; }
       <span class="chip" data-es="Con marco kiri: A4 <b>$35.000</b>, A5 <b>$25.000</b>" data-en="With kiri frame: A4 <b>$35.000</b>, A5 <b>$25.000</b>">Con marco kiri: A4 <b>$35.000</b>, A5 <b>$25.000</b></span>
     </div>
   </div>
-  <div class="laminas reveal" id="laminas"></div>
-  <div class="laminas-head tienda-extra-head reveal">
-    <h3 data-es="Stickers" data-en="Stickers">Stickers</h3>
-    <div class="precios-chips"><span class="chip" data-es="<b>$2.000</b> cada uno" data-en="<b>$2.000</b> each"><b>$2.000</b> cada uno</span></div>
+  <div class="laminas recortada" id="laminas"></div>
+  <div class="laminas-mas"><button class="btn btn-outline" id="laminas-btn" type="button" onclick="verTodasLaminas()">Ver todas las láminas</button></div>
+  <div class="stickers-bloque">
+    <div class="stickers-texto reveal">
+      <h3 data-es="Stickers" data-en="Stickers">Stickers</h3>
+      <p data-es="Dos rincones de la serie, en sticker. Para la compu, el termo o el cuaderno de bocetos." data-en="Two corners from the series, as stickers. For your laptop, thermos or sketchbook.">Dos rincones de la serie, en sticker. Para la compu, el termo o el cuaderno de bocetos.</p>
+      <span class="chip" data-es="<b>$2.000</b> cada uno" data-en="<b>$2.000</b> each"><b>$2.000</b> cada uno</span>
+    </div>
+    <div class="stickers" id="stickers"></div>
   </div>
-  <div class="stickers reveal" id="stickers"></div>
   <div id="tienda-extra" style="display:none">
     <div class="laminas-head tienda-extra-head"><h3 data-es="Originales" data-en="Originals">Originales</h3></div>
     <div class="productos" id="productos-api"></div>
@@ -1311,12 +1504,20 @@ footer { border-top: none; }
   </div>
 </section>
 
+<!-- FRASE -->
+<div class="frase-banda">
+  <div class="frase-fondo" data-vel="0.18"></div>
+  <blockquote class="frase reveal">
+    <p data-es="«El agua y el pigmento hacen su parte, yo hago la mía.»" data-en="“Water and pigment do their part, I do mine.”">«El agua y el pigmento hacen su parte, yo hago la mía.»</p>
+  </blockquote>
+</div>
+
 <!-- ENCARGOS -->
 <section class="encargos" id="encargos">
   <div class="encargos-text reveal">
     <span class="section-tag" data-es="Encargos" data-en="Commissions">Encargos</span>
     <h2 data-es="Encargos" data-en="Commissions">Encargos</h2>
-    <p data-es="Pinto por encargo para particulares y empresas. Ilustré dos calendarios completos, con una acuarela para cada mes, y también hago etiquetas, murales y pintura en vivo en eventos." data-en="I paint on commission for individuals and companies. I’ve illustrated two full calendars, one watercolor per month, and I also do labels, murals and live painting at events.">Pinto por encargo para particulares y empresas. Ilustré dos calendarios completos, con una acuarela para cada mes, y también hago etiquetas, murales y pintura en vivo en eventos.</p>
+    <p data-es="Tengo lugar para nuevas comisiones, para particulares y empresas. Ilustré dos calendarios completos, una acuarela por mes, y también hago etiquetas, murales y pintura en vivo. El precio y los plazos dependen de la obra; trabajo con materiales profesionales para que la pieza dure y mantenga su brillo." data-en="I have room for new commissions, for individuals and companies. I’ve illustrated two full calendars, one watercolor per month, and I also do labels, murals and live painting. Price and timing depend on the piece; I use professional materials so the work lasts and keeps its brilliance.">Tengo lugar para nuevas comisiones, para particulares y empresas. Ilustré dos calendarios completos, una acuarela por mes, y también hago etiquetas, murales y pintura en vivo. El precio y los plazos dependen de la obra; trabajo con materiales profesionales para que la pieza dure y mantenga su brillo.</p>
     <ul class="servicios">
       <li data-es="Obras originales personalizadas" data-en="Custom original works">Obras originales personalizadas</li>
       <li data-es="Etiquetas para bodegas y bebidas" data-en="Wine and beverage labels">Etiquetas para bodegas y bebidas</li>
@@ -1326,7 +1527,7 @@ footer { border-top: none; }
     </ul>
     <a href="#contacto" class="btn btn-dark" data-es="Consultar un encargo" data-en="Ask about a commission">Consultar un encargo</a>
   </div>
-  <div class="encargos-visual reveal">
+  <div class="encargos-visual reveal" data-vel="-0.06">
     <div class="enc-img e1"></div>
     <div class="enc-img e2"></div>
     <div class="enc-img e3"></div>
@@ -1339,12 +1540,12 @@ footer { border-top: none; }
     <span class="section-tag" data-es="Contacto" data-en="Contact">Contacto</span>
     <h2 data-es="Contacto" data-en="Contact">Contacto</h2>
     <p data-es="Escribime por una obra, un encargo o cualquier consulta. Te respondo por WhatsApp." data-en="Write to me about a work, a commission or anything else. I reply on WhatsApp.">Escribime por una obra, un encargo o cualquier consulta. Te respondo por WhatsApp.</p>
-    <figure class="contacto-fig"><img src="img/vida/pincelada.jpg" alt="Detalle de una pincelada en acuarela" loading="lazy"></figure>
+    
     <div class="contacto-datos">
       <div><span class="dato-label">Email</span><span class="dato-value">santiornaghi@gmail.com</span></div>
       <div><span class="dato-label" data-es="Teléfono" data-en="Phone">Teléfono</span><span class="dato-value">+54 358 439 0961</span></div>
       <div><span class="dato-label" data-es="Ubicación" data-en="Location">Ubicación</span><span class="dato-value">Río Cuarto, Córdoba, Argentina</span></div>
-      <div><span class="dato-label">Instagram</span><span class="dato-value">@naya__artt</span></div>
+      <div><span class="dato-label">Instagram</span><a class="dato-value" href="https://instagram.com/naya__artt" target="_blank" rel="noopener">@naya__artt</a></div>
     </div>
   </div>
   <div class="reveal">
@@ -1893,6 +2094,52 @@ function observarPiezas(){ document.querySelectorAll('.pieza:not(.vista)').forEa
   mover();
 })();
 cargarGaleria();
+
+// ════════════ MOVIMIENTO GENERAL ════════════
+function verTodasLaminas(){ const g=document.getElementById('laminas'); g.classList.remove('recortada'); escalonar(g); }
+(function(){
+  const nM = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // textos del botón de láminas
+  const btn = document.getElementById('laminas-btn');
+  if(btn){ const n = document.querySelectorAll('#laminas .lamina').length; btn.dataset.es = `Ver las ${n} láminas`; btn.dataset.en = `See all ${n} prints`; btn.textContent = (typeof lang!=="undefined" && lang==="en") ? btn.dataset.en : btn.dataset.es; }
+  if(nM) return;
+  document.documentElement.classList.add('js-mov');
+  // aparición escalonada
+  const io = new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('en'); io.unobserve(e.target); } }), { threshold: .12, rootMargin: '0px 0px -6% 0px' });
+  window.escalonar = function(cont){
+    const hijos = [...cont.children].filter(h=>h.offsetParent!==null && !h.classList.contains('en'));
+    let fila = 0, top = null;
+    hijos.forEach(h=>{ const t=h.offsetTop; if(top!==t){ top=t; fila=0; } h.style.setProperty('--i', fila++); h.classList.add('escalon'); io.observe(h); });
+  };
+  ['.serie-grid','.de-cerca-grid','#laminas','#stickers','.como-comprar','.statement-stats','.servicios','.contacto-datos'].forEach(sel=>{ const c=document.querySelector(sel); if(c){ c.classList.remove('reveal'); c.classList.add('visible'); escalonar(c); } });
+  // destapes
+  const io2 = new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('vista'); io2.unobserve(e.target); } }), { threshold: .2 });
+  document.querySelectorAll('.destapa').forEach(d=>io2.observe(d));
+  // parallax con data-vel
+  const vel = [...document.querySelectorAll('[data-vel]')];
+  // Rincones: scroll horizontal anclado (solo escritorio)
+  const rin = document.getElementById('rincones'), pista = rin && rin.querySelector('.rincones-track'), pin = rin && rin.querySelector('.rincones-pin');
+  let recorrido = 0;
+  function medir(){
+    if(!rin) return;
+    if(innerWidth > 900){
+      rin.classList.add('anclado');
+      pista.style.transform = '';
+      recorrido = Math.max(0, pista.scrollWidth + pista.getBoundingClientRect().left - innerWidth + 40);
+      rin.style.height = (innerHeight + recorrido) + 'px';
+    } else { rin.classList.remove('anclado'); rin.style.height=''; pista.style.transform=''; recorrido = 0; }
+  }
+  let pend=false;
+  function mover(){
+    pend=false; const vh=innerHeight;
+    vel.forEach(el=>{ const r=el.getBoundingClientRect(); if(r.bottom>-200 && r.top<vh+200){ const c=(r.top+r.height/2-vh/2); el.style.transform=`translate3d(0,${(c*-(+el.dataset.vel)).toFixed(1)}px,0)` + (el.tagName==='IMG'?' scale(1.12)':''); } });
+    if(rin && recorrido>0){ const r=rin.getBoundingClientRect(); const p=Math.min(1,Math.max(0,-r.top/(rin.offsetHeight-vh))); pista.style.transform=`translate3d(${(-p*recorrido).toFixed(1)}px,0,0)`; }
+  }
+  addEventListener('scroll', ()=>{ if(!pend){ pend=true; requestAnimationFrame(mover); } }, { passive:true });
+  addEventListener('resize', ()=>{ medir(); mover(); });
+  addEventListener('load', ()=>{ medir(); mover(); });
+  medir(); mover();
+})();
 </script>
 </body>
 </html>
