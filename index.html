@@ -79,7 +79,7 @@ nav.scrolled {
 .nav-logo img {
   height: 28px;
   width: auto;
-  filter: invert(0);
+  mix-blend-mode: multiply;
   opacity: .85;
   transition: opacity .3s;
 }
@@ -405,12 +405,12 @@ nav.scrolled {
 .obra:hover .obra-bg { transform: scale(1.04); }
 
 /* Backgrounds simulando acuarelas */
-.w1 { background: linear-gradient(145deg,#c4521a 0%,#e8693a 25%,#8a3010 55%,#1a1210 100%); }
-.w2 { background: linear-gradient(170deg,#1a3050 0%,#2a6090 40%,#c4521a 75%,#8a3010 100%); }
-.w3 { background: linear-gradient(130deg,#c9a84c 0%,#8a6020 45%,#3a2008 100%); }
-.w4 { background: linear-gradient(210deg,#0a1828 0%,#1a4070 50%,#8a4a20 100%); }
-.w5 { background: linear-gradient(150deg,#3a1808 0%,#c4521a 45%,#e8c06a 100%); }
-.w6 { background: linear-gradient(100deg,#c4521a 0%,#8a3010 20%,#1a1828 45%,#2a5080 65%,#c9a84c 85%,#8a6020 100%); }
+.w1 { background: #2a2420 url('img/obras/tormenta-campo.jpg') center 60% / cover no-repeat; }
+.w2 { background: #2a2420 url('img/obras/ciudad-ocaso.jpg') center / cover no-repeat; }
+.w3 { background: #2a2420 url('img/obras/caballo.jpg') 40% center / cover no-repeat; }
+.w4 { background: #2a2420 url('img/obras/paisano.jpg') 65% center / cover no-repeat; }
+.w5 { background: #2a2420 url('img/obras/cordero.jpg') 40% 60% / cover no-repeat; }
+.w6 { background: #2a2420 url('img/obras/aguada.jpg') center 62% / cover no-repeat; }
 
 .obra-info {
   position: absolute;
@@ -513,12 +513,12 @@ nav.scrolled {
   transition: transform .5s ease;
 }
 .producto:hover .producto-img-bg { transform: scale(1.06); }
-.p1 { background: linear-gradient(145deg,#c4521a,#8a3010 50%,#2a1808); }
-.p2 { background: linear-gradient(160deg,#1a3050,#c9a84c 60%,#8a6020); }
-.p3 { background: linear-gradient(120deg,#0a1828,#2a5080 50%,#c4521a); }
-.p4 { background: linear-gradient(200deg,#3a2010,#c4521a 50%,#e8c06a); }
-.p5 { background: linear-gradient(140deg,#2a1808,#8a6020 40%,#c9a84c); }
-.p6 { background: linear-gradient(180deg,#1a1828,#2a4060 50%,#c4521a 85%); }
+.p1 { background: #2a2420 url('img/detalles/detalle-agua.jpg') center / cover no-repeat; }
+.p2 { background: #2a2420 url('img/detalles/detalle-paja.jpg') center / cover no-repeat; }
+.p3 { background: #2a2420 url('img/detalles/detalle-niebla.jpg') center / cover no-repeat; }
+.p4 { background: #2a2420 url('img/detalles/detalle-tierra.jpg') center / cover no-repeat; }
+.p5 { background: #2a2420 url('img/obras/arboleda.jpg') center / cover no-repeat; }
+.p6 { background: #2a2420 url('img/obras/chanchos.jpg') center / cover no-repeat; }
 
 .producto-badge {
   position: absolute;
@@ -632,9 +632,9 @@ nav.scrolled {
   overflow: hidden;
 }
 .enc-img:first-child { grid-column: 1/3; aspect-ratio: 16/7; }
-.e1 { background: linear-gradient(135deg,#c4521a,#1a3050 60%,#2a1808); }
-.e2 { background: linear-gradient(160deg,#8a4a20,#c9a84c); }
-.e3 { background: linear-gradient(120deg,#0a1828,#2a5080); }
+.e1 { background: #2a2420 url('img/obras/tranquera.jpg') center 55% / cover no-repeat; }
+.e2 { background: #2a2420 url('img/obras/calendario.jpg') 25% center / cover no-repeat; }
+.e3 { background: #2a2420 url('img/obras/canal.jpg') center 60% / cover no-repeat; }
 
 /* ── CONTACTO ── */
 .contacto {
@@ -724,7 +724,7 @@ footer {
   align-items: center;
   background: var(--paper);
 }
-.footer-logo img { height: 22px; width: auto; opacity: .5; }
+.footer-logo img { height: 22px; width: auto; opacity: .5; mix-blend-mode: multiply; }
 .footer-links { display: flex; gap: 2rem; list-style: none; }
 .footer-links a {
   font-size: .65rem;
@@ -785,7 +785,8 @@ body::before {
   .obras-grid { grid-template-columns: 1fr 1fr; }
   .obra:nth-child(1) { grid-column: 1/3; }
   .obra:nth-child(2) { grid-column: 1/3; }
-  .obra:nth-child(3), .obra:nth-child(4), .obra:nth-child(5) { grid-column: span 1; }
+  .obra:nth-child(3), .obra:nth-child(4) { grid-column: span 1; }
+  .obra:nth-child(5) { grid-column: 1/3; aspect-ratio: 16/10; }
   .obra:nth-child(6) { grid-column: 1/3; aspect-ratio: 16/7; }
   .tienda { padding: 5rem 2rem; }
   .tienda-header { grid-template-columns: 1fr; gap: 2rem; }
@@ -795,6 +796,101 @@ body::before {
   footer { flex-direction: column; gap: 2rem; padding: 2.5rem 2rem; text-align: center; }
   .footer-links { flex-wrap: wrap; justify-content: center; }
 }
+
+/* ── CARRITO / CHECKOUT ── */
+.cart-btn { position: relative; background: none; border: 1px solid rgba(26,24,20,.2); color: var(--ink-light); padding: .35rem .7rem; font-family: 'Jost', sans-serif; font-size: .65rem; letter-spacing: .18em; text-transform: uppercase; cursor: none; margin-right: .75rem; transition: all .3s; display: inline-flex; align-items: center; gap: .45rem; }
+.cart-btn:hover { border-color: var(--rust); color: var(--rust); }
+.cart-count { background: var(--rust); color: var(--white); border-radius: 999px; min-width: 1.15rem; height: 1.15rem; font-size: .6rem; letter-spacing: 0; display: inline-flex; align-items: center; justify-content: center; padding: 0 .3rem; }
+.cart-count[data-n="0"] { background: rgba(26,24,20,.15); color: var(--ink-light); }
+.nav-right { display: flex; align-items: center; }
+.cart-overlay { position: fixed; inset: 0; background: rgba(26,24,20,.35); opacity: 0; pointer-events: none; transition: opacity .35s; z-index: 300; }
+.cart-overlay.open { opacity: 1; pointer-events: all; }
+.cart-drawer { position: fixed; top: 0; right: 0; bottom: 0; width: min(440px, 100vw); background: var(--paper); z-index: 301; transform: translateX(100%); transition: transform .45s cubic-bezier(.2,.7,.2,1); display: flex; flex-direction: column; box-shadow: -20px 0 60px rgba(26,24,20,.12); }
+.cart-drawer.open { transform: translateX(0); }
+.cart-head { padding: 1.6rem 1.8rem 1.2rem; display: flex; justify-content: space-between; align-items: baseline; border-bottom: 1px solid rgba(26,24,20,.08); }
+.cart-head h3 { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 1.8rem; }
+.cart-close { background: none; border: none; font-size: 1.3rem; color: var(--ink-faint); cursor: none; }
+.cart-close:hover { color: var(--rust); }
+.cart-body { flex: 1; overflow-y: auto; padding: 1.2rem 1.8rem; }
+.cart-empty { text-align: center; color: var(--ink-faint); padding: 4rem 1rem; font-size: .85rem; line-height: 1.8; }
+.cart-empty .btn { margin-top: 1.5rem; }
+.cart-item { display: grid; grid-template-columns: 64px 1fr auto; gap: 1rem; align-items: center; padding: .9rem 0; border-bottom: 1px solid rgba(26,24,20,.06); }
+.cart-thumb { width: 64px; height: 64px; background: var(--paper-dark) center / cover no-repeat; }
+.cart-item-name { font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; line-height: 1.2; }
+.cart-item-type { font-size: .58rem; letter-spacing: .18em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: .2rem; }
+.cart-qty { display: inline-flex; align-items: center; gap: .55rem; margin-top: .4rem; font-size: .75rem; }
+.cart-qty button { width: 22px; height: 22px; border: 1px solid rgba(26,24,20,.18); background: none; cursor: none; color: var(--ink-light); line-height: 1; }
+.cart-qty button:hover { border-color: var(--rust); color: var(--rust); }
+.cart-item-price { font-size: .85rem; color: var(--rust); text-align: right; white-space: nowrap; }
+.cart-remove { display: block; margin-top: .35rem; background: none; border: none; font-size: .6rem; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-faint); cursor: none; margin-left: auto; }
+.cart-remove:hover { color: var(--rust); }
+.cart-foot { padding: 1.3rem 1.8rem 1.6rem; border-top: 1px solid rgba(26,24,20,.08); background: var(--paper-dark); }
+.sum-row { display: flex; justify-content: space-between; font-size: .8rem; color: var(--ink-light); padding: .25rem 0; }
+.sum-row.discount { color: #2a6040; }
+.sum-row.total { font-size: 1rem; color: var(--ink); padding-top: .6rem; margin-top: .4rem; border-top: 1px solid rgba(26,24,20,.1); }
+.sum-row.total span:last-child { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; }
+.cart-foot .btn { width: 100%; justify-content: center; margin-top: 1rem; text-align: center; }
+.co-section { margin: 1.2rem 0 1.6rem; }
+.co-label { font-size: .6rem; letter-spacing: .22em; text-transform: uppercase; color: var(--rust); margin-bottom: .8rem; display: block; }
+.co-field { display: flex; flex-direction: column; gap: .3rem; margin-bottom: .7rem; min-width: 0; }
+.co-field input, .co-field select, .co-field textarea { width: 100%; box-sizing: border-box; }
+.co-field label { font-size: .6rem; letter-spacing: .15em; text-transform: uppercase; color: var(--ink-faint); }
+.co-field input, .co-field select, .co-field textarea { padding: .7rem .85rem; border: 1px solid rgba(26,24,20,.14); background: var(--white); font-family: 'Jost', sans-serif; font-size: .85rem; color: var(--ink); outline: none; border-radius: 0; }
+.co-field input:focus, .co-field select:focus, .co-field textarea:focus { border-color: var(--rust); }
+.co-2 { display: grid; grid-template-columns: 1fr 1fr; gap: .7rem; }
+.co-opts { display: grid; gap: .5rem; }
+.co-opt { display: flex; gap: .8rem; align-items: flex-start; padding: .85rem 1rem; border: 1px solid rgba(26,24,20,.14); background: var(--white); cursor: none; transition: border-color .25s, background .25s; }
+.co-opt:hover { border-color: rgba(184,74,30,.5); }
+.co-opt.sel { border-color: var(--rust); background: #fbf3ee; }
+.co-opt input { accent-color: var(--rust); margin-top: .2rem; }
+.co-opt strong { display: block; font-weight: 400; font-size: .85rem; color: var(--ink); }
+.co-opt small { display: block; font-size: .72rem; color: var(--ink-faint); line-height: 1.5; margin-top: .15rem; }
+.co-tag { display: inline-block; margin-left: .4rem; background: #2a6040; color: #fff; font-size: .55rem; letter-spacing: .12em; text-transform: uppercase; padding: .15rem .4rem; vertical-align: middle; }
+.co-back { background: none; border: none; font-size: .65rem; letter-spacing: .15em; text-transform: uppercase; color: var(--ink-faint); cursor: none; padding: 0; }
+.co-back:hover { color: var(--rust); }
+.co-error { color: #c0392b; font-size: .75rem; margin-top: .6rem; min-height: 1em; }
+.co-note { font-size: .7rem; color: var(--ink-faint); line-height: 1.6; margin-top: .8rem; text-align: center; }
+.wa-fab { position: fixed; right: 1.6rem; bottom: 1.6rem; width: 54px; height: 54px; border-radius: 50%; background: #25d366; color: #fff; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 24px rgba(0,0,0,.18); z-index: 200; transition: transform .3s; }
+.wa-fab:hover { transform: scale(1.07); }
+.toast { position: fixed; left: 50%; top: 1.5rem; transform: translate(-50%, -200%); max-width: 90vw; text-align: center; background: var(--ink); color: var(--white); padding: .85rem 1.4rem; font-size: .78rem; letter-spacing: .04em; z-index: 400; transition: transform .4s; }
+.toast.show { transform: translate(-50%, 0); }
+.como-comprar { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: rgba(26,24,20,.08); border: 1px solid rgba(26,24,20,.08); margin-top: 4rem; }
+.cc-item { background: var(--paper); padding: 2rem 1.8rem; }
+.cc-n { font-family: 'Cormorant Garamond', serif; font-size: 2rem; color: var(--rust); line-height: 1; }
+.cc-t { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; margin: .7rem 0 .5rem; }
+.cc-d { font-size: .8rem; color: var(--ink-light); line-height: 1.8; }
+.cc-d b { font-weight: 500; color: var(--ink); }
+@media (max-width: 768px) {
+  .como-comprar { grid-template-columns: 1fr; }
+  .wa-fab { right: 1rem; bottom: 1rem; width: 50px; height: 50px; }
+  .cart-btn .cart-word { display: none; }
+  .producto-add { transform: translateY(0); }
+}
+.laminas-head { display: flex; justify-content: space-between; align-items: end; gap: 2rem; flex-wrap: wrap; margin: 0 0 2rem; }
+.laminas-head h3 { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 2rem; }
+.laminas-head h3 em { color: var(--ink-light); }
+.precios-chips { display: flex; gap: .5rem; flex-wrap: wrap; }
+.chip { border: 1px solid rgba(26,24,20,.14); padding: .45rem .8rem; font-size: .68rem; letter-spacing: .08em; color: var(--ink-light); background: var(--white); }
+.chip b { color: var(--rust); font-weight: 400; }
+.laminas { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2.2rem 1.6rem; }
+.lamina-img { aspect-ratio: 4 / 5; background: var(--paper-dark); display: flex; align-items: center; justify-content: center; padding: 9%; position: relative; overflow: hidden; transition: background .4s; }
+.lamina-img img { max-width: 100%; max-height: 100%; display: block; box-shadow: 0 6px 18px rgba(26,24,20,.16); transition: transform .6s ease, box-shadow .4s; }
+.lamina:hover .lamina-img img { transform: scale(1.03); }
+.lamina.kiri .lamina-img img { outline: 9px solid #d8c3a0; outline-offset: 0; box-shadow: 0 0 0 10px #c9b28c, 0 10px 26px rgba(26,24,20,.22); }
+.lamina-name { font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; margin: .9rem 0 .5rem; }
+.lamina-opts { display: flex; gap: .4rem; flex-wrap: wrap; align-items: center; }
+.seg { display: inline-flex; border: 1px solid rgba(26,24,20,.16); }
+.seg button { background: none; border: none; padding: .35rem .65rem; font-family: 'Jost', sans-serif; font-size: .65rem; letter-spacing: .1em; color: var(--ink-light); cursor: none; }
+.seg button.on { background: var(--ink); color: var(--white); }
+.kiri-toggle { display: inline-flex; align-items: center; gap: .35rem; font-size: .65rem; letter-spacing: .06em; color: var(--ink-light); cursor: none; user-select: none; }
+.kiri-toggle input { accent-color: var(--rust); }
+.lamina-foot { display: flex; justify-content: space-between; align-items: center; margin-top: .8rem; }
+.lamina-price { color: var(--rust); font-size: .95rem; }
+.lamina-add { background: none; border: 1px solid var(--ink); padding: .45rem .8rem; font-family: 'Jost', sans-serif; font-size: .62rem; letter-spacing: .16em; text-transform: uppercase; color: var(--ink); cursor: none; transition: all .25s; }
+.lamina-add:hover { background: var(--ink); color: var(--white); }
+.tienda-extra-head { margin: 5rem 0 2rem; }
+@media (max-width: 1024px) { .laminas { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 768px) { .laminas { grid-template-columns: repeat(2, 1fr); gap: 1.8rem 1rem; } .lamina-name { font-size: 1rem; } }
 </style>
 </head>
 <body>
@@ -813,7 +909,10 @@ body::before {
     <li><a href="#encargos">Encargos</a></li>
     <li><a href="#contacto">Contacto</a></li>
   </ul>
-  <button class="lang-btn" onclick="toggleLang()">EN</button>
+  <div class="nav-right">
+    <button class="cart-btn" onclick="abrirCarrito()" aria-label="Carrito"><span class="cart-word">Carrito</span><span class="cart-count" data-n="0">0</span></button>
+    <button class="lang-btn" onclick="toggleLang()">EN</button>
+  </div>
 </nav>
 
 <!-- HERO -->
@@ -872,7 +971,7 @@ body::before {
       <p data-es="Acuarelas de alta pigmentación, acrílicos y carbonillas. Obras disponibles para adquirir o encargar bajo pedido." data-en="High-pigmentation watercolors, acrylics and charcoal. Works available for purchase or custom order.">Acuarelas de alta pigmentación, acrílicos y carbonillas. Obras disponibles para adquirir o encargar bajo pedido.</p>
     </div>
   </div>
-  <div class="serie-filter reveal">
+  <div class="serie-filter reveal" id="obras-filtros" style="display:none">
     <button class="filt active" data-es="Todo" data-en="All">Todo</button>
     <button class="filt" data-es="Acuarela" data-en="Watercolor">Acuarela</button>
     <button class="filt" data-es="Acrílico" data-en="Acrylic">Acrílico</button>
@@ -880,59 +979,53 @@ body::before {
     <button class="filt" data-es="Serie Caleidoscopio" data-en="Caleidoscope series">Serie Caleidoscopio</button>
     <button class="filt" data-es="Serie Elementos" data-en="Elements series">Serie Elementos</button>
   </div>
-  <div class="obras-grid reveal">
+  <div class="obras-grid reveal" id="obras-grid">
     <div class="obra">
       <div class="obra-bg w1"></div>
-      <span class="obra-tag">Acuarela</span>
-      <span class="obra-price">USD 280</span>
+      <span class="obra-tag" data-es="Acuarela" data-en="Watercolor">Acuarela</span>
       <div class="obra-info">
-        <div class="obra-title">El Paseo de Flodeo</div>
-        <div class="obra-meta">30 × 40 cm — 2023 — Serie Caleidoscopio</div>
+        <div class="obra-title">Tormenta en el campo</div>
+        <div class="obra-meta" data-es="Acuarela sobre papel" data-en="Watercolor on paper">Acuarela sobre papel</div>
       </div>
     </div>
     <div class="obra">
       <div class="obra-bg w2"></div>
-      <span class="obra-tag">Acuarela</span>
-      <span class="obra-price">USD 220</span>
+      <span class="obra-tag" data-es="Acuarela" data-en="Watercolor">Acuarela</span>
       <div class="obra-info">
-        <div class="obra-title">Sombra Alizarin</div>
-        <div class="obra-meta">30 × 40 cm — 2023 — Serie Caleidoscopio</div>
+        <div class="obra-title">Ciudad al atardecer</div>
+        <div class="obra-meta" data-es="Acuarela sobre papel" data-en="Watercolor on paper">Acuarela sobre papel</div>
       </div>
     </div>
     <div class="obra">
       <div class="obra-bg w3"></div>
-      <span class="obra-tag">Acuarela</span>
-      <span class="obra-price">USD 180</span>
+      <span class="obra-tag" data-es="Acuarela" data-en="Watercolor">Acuarela</span>
       <div class="obra-info">
-        <div class="obra-title">Cadmios</div>
-        <div class="obra-meta">25 × 30 cm — 2022</div>
+        <div class="obra-title">El caballo</div>
+        <div class="obra-meta" data-es="Acuarela sobre papel" data-en="Watercolor on paper">Acuarela sobre papel</div>
       </div>
     </div>
     <div class="obra">
       <div class="obra-bg w4"></div>
-      <span class="obra-tag">Acrílico</span>
-      <span class="obra-price">USD 480</span>
+      <span class="obra-tag" data-es="Acuarela" data-en="Watercolor">Acuarela</span>
       <div class="obra-info">
-        <div class="obra-title">Urbe Dorada</div>
-        <div class="obra-meta">40 × 140 cm — 2023 — Serie Elementos</div>
+        <div class="obra-title">Paisano</div>
+        <div class="obra-meta" data-es="Acuarela sobre papel" data-en="Watercolor on paper">Acuarela sobre papel</div>
       </div>
     </div>
     <div class="obra">
       <div class="obra-bg w5"></div>
-      <span class="obra-tag">Carbonilla</span>
-      <span class="obra-price">USD 160</span>
+      <span class="obra-tag" data-es="Acuarela" data-en="Watercolor">Acuarela</span>
       <div class="obra-info">
-        <div class="obra-title">Lo Sensual I</div>
-        <div class="obra-meta">53 × 83 cm — 2023 — Serie Elementos</div>
+        <div class="obra-title">Cordero en el corral</div>
+        <div class="obra-meta" data-es="Acuarela sobre papel" data-en="Watercolor on paper">Acuarela sobre papel</div>
       </div>
     </div>
     <div class="obra">
       <div class="obra-bg w6"></div>
-      <span class="obra-tag">Acuarela</span>
-      <span class="obra-price">USD 380</span>
+      <span class="obra-tag" data-es="Acuarela" data-en="Watercolor">Acuarela</span>
       <div class="obra-info">
-        <div class="obra-title">Necesidad Interrumpida</div>
-        <div class="obra-meta">100 × 150 cm — 2023 — Serie Elementos</div>
+        <div class="obra-title">La aguada</div>
+        <div class="obra-meta" data-es="Acuarela sobre papel" data-en="Watercolor on paper">Acuarela sobre papel</div>
       </div>
     </div>
   </div>
@@ -966,73 +1059,25 @@ body::before {
       <span class="section-tag" style="font-size:.65rem;letter-spacing:.3em;text-transform:uppercase;color:var(--rust);display:block;margin-bottom:1rem;" data-es="Tienda" data-en="Shop">Tienda</span>
       <h2 data-es="Llevate un pedazo<br>del mundo <em>Nayart</em>" data-en="Take a piece<br>of the <em>Nayart</em> world">Llevate un pedazo<br>del mundo <em>Nayart</em></h2>
     </div>
-    <p data-es="Obras originales, prints, ebooks de técnica, stickers y kits de materiales seleccionados por el artista." data-en="Original works, prints, technique ebooks, stickers and artist-curated material kits.">Obras originales, prints, ebooks de técnica, stickers y kits de materiales seleccionados por el artista.</p>
+    <p data-es="Láminas de todas mis acuarelas en A4 y A5, con la opción de llevarlas enmarcadas en madera kiri. Envíos a todo el país." data-en="Prints of all my watercolors in A4 and A5, with the option of a kiri wood frame. Shipping across Argentina.">Láminas de todas mis acuarelas en A4 y A5, con la opción de llevarlas enmarcadas en madera kiri. Envíos a todo el país.</p>
   </div>
-  <div class="tienda-cats reveal">
-    <button class="filt active" data-es="Todo" data-en="All">Todo</button>
-    <button class="filt" data-es="Obras originales" data-en="Original works">Obras originales</button>
-    <button class="filt" data-es="Prints" data-en="Prints">Prints</button>
-    <button class="filt" data-es="Ebooks" data-en="Ebooks">Ebooks</button>
-    <button class="filt" data-es="Stickers" data-en="Stickers">Stickers</button>
-    <button class="filt" data-es="Materiales" data-en="Materials">Materiales</button>
+  <div class="laminas-head reveal">
+    <h3 data-es="Láminas de <em>todas</em> mis obras" data-en="Prints of <em>all</em> my works">Láminas de <em>todas</em> mis obras</h3>
+    <div class="precios-chips">
+      <span class="chip">A4 <b>$10.000</b></span>
+      <span class="chip">A5 <b>$8.000</b></span>
+      <span class="chip" data-es="Marco de madera kiri <b>+$20.000</b>" data-en="Kiri wood frame <b>+$20.000</b>">Marco de madera kiri <b>+$20.000</b></span>
+    </div>
   </div>
-  <div class="productos reveal">
-    <div class="producto">
-      <div class="producto-img">
-        <div class="producto-img-bg p1"></div>
-        <span class="producto-badge" data-es="Original" data-en="Original">Original</span>
-        <button class="producto-add" data-es="Agregar al carrito" data-en="Add to cart">Agregar al carrito</button>
-      </div>
-      <div class="producto-tipo" data-es="Acuarela original" data-en="Original watercolor">Acuarela original</div>
-      <div class="producto-nombre">Necesidad Interrumpida</div>
-      <div class="producto-precio">USD 380</div>
-    </div>
-    <div class="producto">
-      <div class="producto-img">
-        <div class="producto-img-bg p2"></div>
-        <span class="producto-badge" data-es="Ebook" data-en="Ebook">Ebook</span>
-        <button class="producto-add" data-es="Agregar al carrito" data-en="Add to cart">Agregar al carrito</button>
-      </div>
-      <div class="producto-tipo" data-es="Ebook digital" data-en="Digital ebook">Ebook digital</div>
-      <div class="producto-nombre" data-es="La mirada del acuarelista" data-en="The watercolorist's eye">La mirada del acuarelista</div>
-      <div class="producto-precio">USD 18 <s>USD 25</s></div>
-    </div>
-    <div class="producto">
-      <div class="producto-img">
-        <div class="producto-img-bg p3"></div>
-        <button class="producto-add" data-es="Agregar al carrito" data-en="Add to cart">Agregar al carrito</button>
-      </div>
-      <div class="producto-tipo" data-es="Print A3" data-en="A3 Print">Print A3</div>
-      <div class="producto-nombre">El Paseo de Flodeo</div>
-      <div class="producto-precio">USD 35</div>
-    </div>
-    <div class="producto">
-      <div class="producto-img">
-        <div class="producto-img-bg p4"></div>
-        <button class="producto-add" data-es="Agregar al carrito" data-en="Add to cart">Agregar al carrito</button>
-      </div>
-      <div class="producto-tipo" data-es="Kit de materiales" data-en="Materials kit">Kit de materiales</div>
-      <div class="producto-nombre" data-es="Kit Nayart Básico" data-en="Nayart Basic Kit">Kit Nayart Básico</div>
-      <div class="producto-precio" data-es="ARS — consultar" data-en="ARS — inquire">ARS — consultar</div>
-    </div>
-    <div class="producto">
-      <div class="producto-img">
-        <div class="producto-img-bg p5"></div>
-        <button class="producto-add" data-es="Agregar al carrito" data-en="Add to cart">Agregar al carrito</button>
-      </div>
-      <div class="producto-tipo" data-es="Pack de stickers" data-en="Sticker pack">Pack de stickers</div>
-      <div class="producto-nombre" data-es="Manchas vol. 1" data-en="Stains vol. 1">Manchas vol. 1</div>
-      <div class="producto-precio">USD 8</div>
-    </div>
-    <div class="producto">
-      <div class="producto-img">
-        <div class="producto-img-bg p6"></div>
-        <button class="producto-add" data-es="Agregar al carrito" data-en="Add to cart">Agregar al carrito</button>
-      </div>
-      <div class="producto-tipo" data-es="Print A4" data-en="A4 Print">Print A4</div>
-      <div class="producto-nombre">Cadmios</div>
-      <div class="producto-precio">USD 22</div>
-    </div>
+  <div class="laminas reveal" id="laminas"></div>
+  <div id="tienda-extra" style="display:none">
+    <div class="laminas-head tienda-extra-head"><h3 data-es="Originales y <em>más</em>" data-en="Originals and <em>more</em>">Originales y <em>más</em></h3></div>
+    <div class="productos" id="productos-api"></div>
+  </div>
+  <div class="como-comprar reveal">
+    <div class="cc-item"><div class="cc-n">01</div><div class="cc-t" data-es="Armá tu pedido" data-en="Build your order">Armá tu pedido</div><div class="cc-d" data-es="Elegí la obra, el tamaño y si la querés con marco de madera kiri. Sumala al carrito." data-en="Pick the work, the size and whether you want it in a kiri wood frame. Add it to the cart.">Elegí la obra, el tamaño y si la querés con marco de madera kiri. Sumala al carrito.</div></div>
+    <div class="cc-item"><div class="cc-n">02</div><div class="cc-t" data-es="Pagá como prefieras" data-en="Pay your way">Pagá como prefieras</div><div class="cc-d" data-es="Mercado Pago, o <b>transferencia con 10% de descuento</b>." data-en="Mercado Pago, or <b>bank transfer with 10% off</b>.">Mercado Pago, o <b>transferencia con 10% de descuento</b>.</div></div>
+    <div class="cc-item"><div class="cc-n">03</div><div class="cc-t" data-es="Recibilo en tu casa" data-en="Get it at home">Recibilo en tu casa</div><div class="cc-d" data-es="Envíos a todo el país con costo según tu zona, o retiro sin cargo en Río Cuarto. El pedido me llega por WhatsApp y coordinamos." data-en="Shipping across Argentina priced by zone, or free pickup in Río Cuarto. Your order reaches me on WhatsApp and we coordinate.">Envíos a todo el país con costo según tu zona, o retiro sin cargo en Río Cuarto. El pedido me llega por WhatsApp y coordinamos.</div></div>
   </div>
 </section>
 
@@ -1120,6 +1165,20 @@ body::before {
   <div class="footer-copy">© 2025 Nayart</div>
 </footer>
 
+<!-- CARRITO -->
+<div class="cart-overlay" id="cart-overlay" onclick="cerrarCarrito()"></div>
+<aside class="cart-drawer" id="cart-drawer" aria-label="Carrito">
+  <div class="cart-head">
+    <h3 id="cart-title">Tu carrito</h3>
+    <button class="cart-close" onclick="cerrarCarrito()" aria-label="Cerrar">✕</button>
+  </div>
+  <div class="cart-body" id="cart-body"></div>
+  <div class="cart-foot" id="cart-foot"></div>
+</aside>
+<a class="wa-fab" href="https://wa.me/5493584390961?text=Hola%20NAYA!%20Te%20escribo%20desde%20la%20web." target="_blank" rel="noopener" aria-label="WhatsApp">
+  <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.7.1-.2.3-.8.9-.9 1.1-.2.2-.3.2-.6.1-.3-.1-1.2-.5-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6l.4-.5c.2-.2.2-.3.3-.5.1-.2 0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4s1 2.8 1.2 3c.1.2 2 3.1 4.9 4.3.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.6-.1 1.7-.7 1.9-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3zM12 21.8c-1.8 0-3.5-.5-5-1.4l-.4-.2-3.7 1 1-3.6-.2-.4C2.7 15.6 2.2 13.8 2.2 12 2.2 6.6 6.6 2.2 12 2.2c2.6 0 5.1 1 6.9 2.9 1.8 1.8 2.9 4.3 2.9 6.9 0 5.4-4.4 9.8-9.8 9.8zM20.5 3.5C18.2 1.2 15.2 0 12 0 5.4 0 .1 5.3.1 11.9c0 2.1.6 4.2 1.6 6L0 24l6.3-1.6c1.8 1 3.8 1.5 5.7 1.5 6.6 0 11.9-5.3 11.9-11.9 0-3.2-1.2-6.2-3.4-8.5z"/></svg>
+</a>
+<div class="toast" id="toast"></div>
 <script>
 // Cursor
 const cur = document.getElementById('cursor');
@@ -1139,11 +1198,42 @@ window.addEventListener('scroll', ()=> nav.classList.toggle('scrolled', scrollY>
 const obs = new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('visible'); }), {threshold:.08});
 document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
 
+// Obras reales desde el backend (si hay cargadas en el panel)
+(async function cargarObras(){
+  try {
+    const r = await fetch('https://nayart-web.onrender.com/api/obras?limit=6');
+    if(!r.ok) return;
+    const { obras } = await r.json();
+    if(!obras || !obras.length) return;
+    const tec = {ACUARELA:'Acuarela', ACRILICO:'Acrílico', CARBONILLA:'Carbonilla', MIXTA:'Técnica mixta', OTRO:'Otro'};
+    const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+    const grid = document.getElementById('obras-grid');
+    grid.innerHTML = obras.map(o => `
+      <div class="obra" data-tec="${esc(o.tecnica)}" data-serie="${esc(o.serie||'')}">
+        <div class="obra-bg" style="background:#2a2420 url('${esc(o.imagenUrl)}') center / cover no-repeat"></div>
+        <span class="obra-tag">${esc(tec[o.tecnica]||o.tecnica)}</span>
+        ${o.disponible==='DISPONIBLE' && o.precio ? `<span class="obra-price">${esc(o.moneda||'USD')} ${esc(o.precio)}</span>` : (o.disponible==='VENDIDA' ? '<span class="obra-price">Vendida</span>' : '')}
+        <div class="obra-info">
+          <div class="obra-title">${esc(o.titulo)}</div>
+          <div class="obra-meta">${esc(o.ancho)} × ${esc(o.alto)} cm — ${esc(o.anio)}${o.serie ? ' — Serie '+esc(o.serie) : ''}</div>
+        </div>
+      </div>`).join('');
+    const f = document.getElementById('obras-filtros'); if(f) f.style.display='';
+  } catch(e) { /* si el servidor no responde, quedan las acuarelas de muestra */ }
+})();
+
 // Filters
 document.querySelectorAll('.filt').forEach(btn=>{
   btn.addEventListener('click', ()=>{
     btn.closest('.serie-filter, .tienda-cats').querySelectorAll('.filt').forEach(b=>b.classList.remove('active'));
     btn.classList.add('active');
+    if(btn.closest('.serie-filter')){
+      const t = btn.dataset.es;
+      const map = {'Acuarela':['tec','ACUARELA'],'Acrílico':['tec','ACRILICO'],'Carbonilla':['tec','CARBONILLA'],'Serie Caleidoscopio':['serie','Caleidoscopio'],'Serie Elementos':['serie','Elementos en Movimiento']};
+      document.querySelectorAll('#obras-grid .obra').forEach(o=>{
+        const m = map[t]; o.style.display = !m || (m[0]==='tec' ? o.dataset.tec===m[1] : (o.dataset.serie||'').includes(m[1].split(' ')[0])) ? '' : 'none';
+      });
+    }
   });
 });
 
@@ -1169,6 +1259,273 @@ function handleForm(e){
   btn.style.background='#2a6040';
   setTimeout(()=>{ btn.textContent=lang==='es'?'Enviar mensaje':'Send message'; btn.style.background=''; },3000);
 }
+
+// ════════════ TIENDA: LÁMINAS, CARRITO Y PEDIDO POR WHATSAPP ════════════
+const NAYA_API = 'https://nayart-web.onrender.com/api';
+const NAYA_WA  = '5493584390961';
+const PRECIO_LAMINA = { A4: 10000, A5: 8000 };
+const PRECIO_KIRI = 20000;
+const DESC_TRANSFERENCIA = 0.10;
+const LAMINAS = [
+  ['01','Bote en la orilla'],['02','La tranquera'],['03','Ciudad al atardecer'],['04','El caballo'],
+  ['05','Tormenta en el campo'],['06','El canal'],['07','Niebla'],['08','Laguna azul'],['09','Siesta'],
+  ['10','Arboleda'],['12','Tarde en el campo'],['13','Camino de tierra'],['14','Cielo de tormenta'],
+  ['15','Paisano'],['16','Bajo el árbol'],['17','Cordero en el corral'],['18','Chanchos'],
+  ['19','La aguada'],['20','Atardecer violeta']
+];
+const ZONAS_RESPALDO = [
+  { id:'', nombre:'Río Cuarto / Córdoba capital', costo:1500 },
+  { id:'', nombre:'Resto de Córdoba', costo:2500 },
+  { id:'', nombre:'Buenos Aires (CABA y GBA)', costo:3500 },
+  { id:'', nombre:'Interior del país', costo:4500 },
+];
+let zonas = ZONAS_RESPALDO;
+let carrito = [];
+let paso = 'carrito';
+let checkout = { entrega:'ENVIO', zona:0, pago:'TRANSFERENCIA' };
+
+const escH = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmt = (n, moneda='ARS') => moneda === 'USD' ? 'USD ' + n.toLocaleString('es-AR') : '$' + Math.round(n).toLocaleString('es-AR');
+
+function guardar(){ try { localStorage.setItem('nayart_carrito', JSON.stringify(carrito)); } catch(e){} }
+function cargar(){ try { carrito = JSON.parse(localStorage.getItem('nayart_carrito')) || []; } catch(e){ carrito = []; } }
+function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); clearTimeout(t._h); t._h=setTimeout(()=>t.classList.remove('show'),2600); }
+
+// ── Láminas ──
+function renderLaminas(){
+  const g = document.getElementById('laminas'); if(!g) return;
+  g.innerHTML = LAMINAS.map(([id, t]) => `
+    <div class="lamina" data-id="${id}" data-tam="A4">
+      <div class="lamina-img"><img src="img/laminas/${id}.jpg" alt="${escH(t)}" loading="lazy"></div>
+      <div class="lamina-name">${escH(t)}</div>
+      <div class="lamina-opts">
+        <div class="seg"><button class="on" data-t="A4">A4</button><button data-t="A5">A5</button></div>
+        <label class="kiri-toggle"><input type="checkbox"> Marco kiri</label>
+      </div>
+      <div class="lamina-foot"><span class="lamina-price">${fmt(PRECIO_LAMINA.A4)}</span><button class="lamina-add">Agregar</button></div>
+    </div>`).join('');
+  g.querySelectorAll('.lamina').forEach(card => {
+    const upd = () => {
+      const kiri = card.querySelector('input').checked;
+      card.classList.toggle('kiri', kiri);
+      card.querySelector('.lamina-price').textContent = fmt(PRECIO_LAMINA[card.dataset.tam] + (kiri ? PRECIO_KIRI : 0));
+    };
+    card.querySelectorAll('.seg button').forEach(b => b.onclick = () => {
+      card.querySelectorAll('.seg button').forEach(x=>x.classList.remove('on')); b.classList.add('on');
+      card.dataset.tam = b.dataset.t; upd();
+    });
+    card.querySelector('input').onchange = upd;
+    card.querySelector('.lamina-add').onclick = () => {
+      const id = card.dataset.id, tam = card.dataset.tam, marco = card.querySelector('input').checked;
+      const titulo = LAMINAS.find(l=>l[0]===id)[1];
+      agregar({ key:`lam-${id}-${tam}-${marco?'k':'s'}`, tipo:'lamina', titulo, tamano:tam, marco,
+        nombre:`Lámina ${tam}${marco?' + marco kiri':''}`, precio: PRECIO_LAMINA[tam] + (marco?PRECIO_KIRI:0), moneda:'ARS', img:`img/laminas/${id}.jpg` });
+    };
+  });
+}
+
+// ── Productos y obras originales cargados desde el panel ──
+async function cargarTiendaAPI(){
+  try {
+    const [rp, ro] = await Promise.all([
+      fetch(NAYA_API+'/productos').then(r=>r.ok?r.json():[]).catch(()=>[]),
+      fetch(NAYA_API+'/obras?disponible=DISPONIBLE&limit=50').then(r=>r.ok?r.json():{}).catch(()=>({})),
+    ]);
+    const prods = (Array.isArray(rp) ? rp : (rp.data||[])).filter(p=>p.activo!==false && p.precio>0);
+    const obras = (ro.obras||[]).filter(o=>o.precio>0);
+    const items = [
+      ...obras.map(o=>({ key:'obra-'+o.id, tipo:'obra', id:o.id, nombre:o.titulo, titulo:o.titulo, sub:'Original — '+o.ancho+' × '+o.alto+' cm', precio:o.precio, moneda:o.moneda||'USD', img:o.imagenUrl, unico:true })),
+      ...prods.map(p=>({ key:'prod-'+p.id, tipo:'producto', id:p.id, nombre:p.nombre, titulo:p.nombre, sub:p.tipo, precio:p.precio, moneda:p.moneda||'USD', img:p.imagenUrl })),
+    ];
+    if(!items.length) return;
+    window._itemsAPI = items;
+    document.getElementById('productos-api').innerHTML = items.map((it,i)=>`
+      <div class="producto">
+        <div class="producto-img">
+          <div class="producto-img-bg" style="background:var(--paper-dark) url('${escH(it.img||'')}') center/cover no-repeat"></div>
+          <button class="producto-add" onclick="agregar(window._itemsAPI[${i}])">Agregar al carrito</button>
+        </div>
+        <div class="producto-tipo">${escH(it.sub)}</div>
+        <div class="producto-nombre">${escH(it.nombre)}</div>
+        <div class="producto-precio">${fmt(it.precio, it.moneda)}</div>
+      </div>`).join('');
+    document.getElementById('tienda-extra').style.display='';
+  } catch(e){}
+}
+async function cargarZonas(){
+  try {
+    const r = await fetch(NAYA_API+'/config/envios');
+    if(!r.ok) return;
+    const z = await r.json();
+    if(Array.isArray(z) && z.length) zonas = z.sort((a,b)=>a.costo-b.costo);
+  } catch(e){}
+}
+
+// ── Carrito ──
+function agregar(item){
+  const ex = carrito.find(i=>i.key===item.key);
+  if(ex){ if(item.unico){ toast('Esa obra ya está en tu carrito'); abrirCarrito(); return; } ex.cantidad++; }
+  else carrito.push({ ...item, cantidad:1 });
+  guardar(); actualizarContador(); toast('Agregado: '+item.titulo); 
+}
+function cambiarCant(key, d){
+  const it = carrito.find(i=>i.key===key); if(!it) return;
+  it.cantidad += d; if(it.cantidad<1 || (it.unico && d>0)) { if(it.cantidad<1) carrito = carrito.filter(i=>i.key!==key); else it.cantidad=1; }
+  guardar(); actualizarContador(); render();
+}
+function quitar(key){ carrito = carrito.filter(i=>i.key!==key); guardar(); actualizarContador(); render(); }
+function actualizarContador(){
+  const n = carrito.reduce((s,i)=>s+i.cantidad,0);
+  document.querySelectorAll('.cart-count').forEach(el=>{ el.textContent=n; el.dataset.n=n; });
+}
+function abrirCarrito(){ paso='carrito'; render(); document.getElementById('cart-drawer').classList.add('open'); document.getElementById('cart-overlay').classList.add('open'); }
+function cerrarCarrito(){ document.getElementById('cart-drawer').classList.remove('open'); document.getElementById('cart-overlay').classList.remove('open'); }
+
+function totales(){
+  const sub = { ARS:0, USD:0 };
+  carrito.forEach(i=> sub[i.moneda] += i.precio*i.cantidad);
+  const desc = checkout.pago==='TRANSFERENCIA' ? { ARS: Math.round(sub.ARS*DESC_TRANSFERENCIA), USD: Math.round(sub.USD*DESC_TRANSFERENCIA*100)/100 } : { ARS:0, USD:0 };
+  const envio = checkout.entrega==='ENVIO' ? (zonas[checkout.zona]?.costo||0) : 0;
+  const total = { ARS: sub.ARS - desc.ARS + envio, USD: sub.USD - desc.USD };
+  return { sub, desc, envio, total };
+}
+const montos = o => ['ARS','USD'].filter(m=>o[m]).map(m=>fmt(o[m],m)).join(' + ') || fmt(0);
+
+function render(){
+  const body = document.getElementById('cart-body'), foot = document.getElementById('cart-foot');
+  document.getElementById('cart-title').textContent = paso==='carrito' ? 'Tu carrito' : 'Finalizar pedido';
+  if(!carrito.length){
+    body.innerHTML = `<div class="cart-empty">Tu carrito está vacío.<br>Elegí una lámina de tus obras favoritas.<br><a href="#tienda" class="btn btn-dark" onclick="cerrarCarrito()">Ver láminas</a></div>`;
+    foot.innerHTML = ''; return;
+  }
+  const t = totales();
+  if(paso==='carrito'){
+    body.innerHTML = carrito.map(i=>`
+      <div class="cart-item">
+        <div class="cart-thumb" style="background-image:url('${escH(i.img||'')}')"></div>
+        <div>
+          <div class="cart-item-type">${escH(i.nombre)}</div>
+          <div class="cart-item-name">${escH(i.titulo)}</div>
+          <div class="cart-qty"><button onclick="cambiarCant('${i.key}',-1)">−</button>${i.cantidad}<button onclick="cambiarCant('${i.key}',1)">+</button></div>
+        </div>
+        <div><div class="cart-item-price">${fmt(i.precio*i.cantidad, i.moneda)}</div><button class="cart-remove" onclick="quitar('${i.key}')">Quitar</button></div>
+      </div>`).join('');
+    foot.innerHTML = `
+      <div class="sum-row"><span>Subtotal</span><span>${montos(t.sub)}</span></div>
+      <div class="sum-row discount"><span>Pagando por transferencia</span><span>10% off</span></div>
+      <button class="btn btn-dark" onclick="paso='checkout';render()">Continuar</button>`;
+    return;
+  }
+  // Paso checkout
+  const zonaOpts = zonas.map((z,i)=>`<option value="${i}" ${i==checkout.zona?'selected':''}>${escH(z.nombre)} — ${fmt(z.costo)}</option>`).join('');
+  const v = id => escH(checkout[id]||'');
+  body.innerHTML = `
+    <button class="co-back" onclick="leerForm();paso='carrito';render()">← Volver al carrito</button>
+    <div class="co-section">
+      <span class="co-label">Tus datos</span>
+      <div class="co-field"><label>Nombre y apellido</label><input id="co-nombre" value="${v('nombre')}" autocomplete="name"></div>
+      <div class="co-2">
+        <div class="co-field"><label>WhatsApp / teléfono</label><input id="co-tel" value="${v('tel')}" inputmode="tel" autocomplete="tel"></div>
+        <div class="co-field"><label>Email (opcional)</label><input id="co-email" value="${v('email')}" type="email" autocomplete="email"></div>
+      </div>
+    </div>
+    <div class="co-section">
+      <span class="co-label">Entrega</span>
+      <div class="co-opts">
+        <label class="co-opt ${checkout.entrega==='ENVIO'?'sel':''}"><input type="radio" name="co-ent" value="ENVIO" ${checkout.entrega==='ENVIO'?'checked':''}><span><strong>Envío a domicilio</strong><small>A todo el país. El costo depende de tu zona.</small></span></label>
+        <label class="co-opt ${checkout.entrega==='RETIRO_PRESENCIAL'?'sel':''}"><input type="radio" name="co-ent" value="RETIRO_PRESENCIAL" ${checkout.entrega==='RETIRO_PRESENCIAL'?'checked':''}><span><strong>Retiro en Río Cuarto</strong><small>Sin cargo. Coordinamos día y lugar por WhatsApp.</small></span></label>
+      </div>
+      ${checkout.entrega==='ENVIO' ? `
+      <div style="margin-top:1rem">
+        <div class="co-field"><label>Zona de envío</label><select id="co-zona">${zonaOpts}</select></div>
+        <div class="co-field"><label>Dirección</label><input id="co-dir" value="${v('dir')}" autocomplete="street-address"></div>
+        <div class="co-2">
+          <div class="co-field"><label>Ciudad</label><input id="co-ciudad" value="${v('ciudad')}" autocomplete="address-level2"></div>
+          <div class="co-field"><label>Provincia</label><input id="co-prov" value="${v('prov')}" autocomplete="address-level1"></div>
+        </div>
+        <div class="co-field"><label>Código postal</label><input id="co-cp" value="${v('cp')}" autocomplete="postal-code"></div>
+      </div>` : ''}
+    </div>
+    <div class="co-section">
+      <span class="co-label">Pago</span>
+      <div class="co-opts">
+        <label class="co-opt ${checkout.pago==='TRANSFERENCIA'?'sel':''}"><input type="radio" name="co-pago" value="TRANSFERENCIA" ${checkout.pago==='TRANSFERENCIA'?'checked':''}><span><strong>Transferencia bancaria <span class="co-tag">10% off</span></strong><small>Te paso el alias por WhatsApp.</small></span></label>
+        <label class="co-opt ${checkout.pago==='MERCADOPAGO'?'sel':''}"><input type="radio" name="co-pago" value="MERCADOPAGO" ${checkout.pago==='MERCADOPAGO'?'checked':''}><span><strong>Mercado Pago</strong><small>Tarjeta, débito o dinero en cuenta. Te envío el link de pago.</small></span></label>
+      </div>
+    </div>
+    <div class="co-section">
+      <div class="co-field"><label>Comentarios (opcional)</label><textarea id="co-nota" rows="2">${v('nota')}</textarea></div>
+    </div>`;
+  foot.innerHTML = `
+    <div class="sum-row"><span>Subtotal</span><span>${montos(t.sub)}</span></div>
+    ${checkout.pago==='TRANSFERENCIA' ? `<div class="sum-row discount"><span>Descuento transferencia 10%</span><span>−${montos(t.desc)}</span></div>` : ''}
+    <div class="sum-row"><span>Envío</span><span>${checkout.entrega==='ENVIO' ? fmt(t.envio) : 'Sin cargo'}</span></div>
+    <div class="sum-row total"><span>Total</span><span>${montos(t.total)}</span></div>
+    <div class="co-error" id="co-error"></div>
+    <button class="btn btn-dark" id="co-enviar" onclick="enviarPedido()">Enviar pedido por WhatsApp</button>
+    <div class="co-note">Se abre WhatsApp con el detalle de tu pedido listo para enviar.</div>`;
+  body.querySelectorAll('input[name="co-ent"]').forEach(r=>r.onchange=()=>{ leerForm(); checkout.entrega=r.value; render(); });
+  body.querySelectorAll('input[name="co-pago"]').forEach(r=>r.onchange=()=>{ leerForm(); checkout.pago=r.value; render(); });
+  const zs = document.getElementById('co-zona'); if(zs) zs.onchange=()=>{ leerForm(); checkout.zona=+zs.value; render(); };
+}
+function leerForm(){
+  const g = id => document.getElementById(id)?.value?.trim();
+  [['nombre','co-nombre'],['tel','co-tel'],['email','co-email'],['dir','co-dir'],['ciudad','co-ciudad'],['prov','co-prov'],['cp','co-cp'],['nota','co-nota']]
+    .forEach(([k,id])=>{ const x=g(id); if(x!==undefined) checkout[k]=x; });
+}
+
+async function enviarPedido(){
+  leerForm();
+  const err = document.getElementById('co-error');
+  const c = checkout;
+  if(!c.nombre || !c.tel){ err.textContent='Completá tu nombre y tu teléfono.'; return; }
+  if(c.entrega==='ENVIO' && (!c.dir || !c.ciudad || !c.prov)){ err.textContent='Completá dirección, ciudad y provincia para el envío.'; return; }
+  err.textContent='';
+  // Se abre la pestaña ya (los navegadores bloquean ventanas abiertas después de esperar al servidor)
+  const win = window.open('', '_blank');
+  const btn = document.getElementById('co-enviar'); btn.disabled=true; btn.textContent='Preparando pedido...';
+  const t = totales();
+  const zona = zonas[c.zona];
+  let numero = null;
+  // Registrar el pedido en el panel (si algo falla, el pedido igual sale por WhatsApp)
+  try {
+    const ctrl = new AbortController(); const to = setTimeout(()=>ctrl.abort(), 9000);
+    const r = await fetch(NAYA_API+'/pedidos', { method:'POST', headers:{'Content-Type':'application/json'}, signal: ctrl.signal,
+      body: JSON.stringify({
+        clienteNombre:c.nombre, clienteTelefono:c.tel, clienteEmail:c.email||'',
+        tipoEntrega:c.entrega, direccion:c.dir, ciudad:c.ciudad, provincia:c.prov, codigoPostal:c.cp,
+        zonaId: c.entrega==='ENVIO' ? (zona?.id||undefined) : undefined,
+        metodoPago:c.pago, notas:c.nota,
+        items: carrito.map(i=> i.tipo==='lamina' ? { tipo:'lamina', titulo:i.titulo, tamano:i.tamano, marco:i.marco, cantidad:i.cantidad } : { tipo:i.tipo, id:i.id, cantidad:i.cantidad })
+      })});
+    clearTimeout(to);
+    if(r.ok){ const d = await r.json(); numero = d.numero; }
+  } catch(e){}
+  const L = [];
+  L.push('¡Hola NAYA! Quiero hacer este pedido desde la web' + (numero ? ` (pedido #${numero})` : '') + ':');
+  L.push('');
+  carrito.forEach(i=> L.push(`• ${i.cantidad} × ${i.nombre} — ${i.titulo}: ${fmt(i.precio*i.cantidad, i.moneda)}`));
+  L.push('');
+  L.push(`Subtotal: ${montos(t.sub)}`);
+  if(c.pago==='TRANSFERENCIA') L.push(`Descuento transferencia 10%: −${montos(t.desc)}`);
+  L.push(c.entrega==='ENVIO' ? `Envío (${zona?.nombre}): ${fmt(t.envio)}` : 'Retiro en Río Cuarto: sin cargo');
+  L.push(`*Total: ${montos(t.total)}*`);
+  L.push('');
+  L.push(`Pago: ${c.pago==='TRANSFERENCIA' ? 'Transferencia (10% off)' : 'Mercado Pago'}`);
+  if(c.entrega==='ENVIO') L.push(`Envío a: ${c.dir}, ${c.ciudad}, ${c.prov}${c.cp?' (CP '+c.cp+')':''}`);
+  L.push(`Nombre: ${c.nombre}`);
+  L.push(`Teléfono: ${c.tel}`);
+  if(c.email) L.push(`Email: ${c.email}`);
+  if(c.nota) L.push(`Comentario: ${c.nota}`);
+  const url = `https://wa.me/${NAYA_WA}?text=${encodeURIComponent(L.join('\n'))}`;
+  if(win) win.location.href = url; else location.href = url;
+  carrito = []; guardar(); actualizarContador();
+  document.getElementById('cart-body').innerHTML = `<div class="cart-empty"><div style="font-family:'Cormorant Garamond',serif;font-size:1.6rem;color:var(--ink);margin-bottom:.8rem">¡Gracias, ${escH(c.nombre.split(' ')[0])}!</div>Se abrió WhatsApp con tu pedido${numero?` #${numero}`:''}.<br>Enviá el mensaje y te respondo para coordinar el pago y el envío.<br><a href="${url}" target="_blank" rel="noopener" class="btn btn-dark">Abrir WhatsApp de nuevo</a></div>`;
+  document.getElementById('cart-foot').innerHTML = '';
+}
+
+cargar(); actualizarContador(); renderLaminas(); cargarZonas(); cargarTiendaAPI();
+document.querySelectorAll('#laminas').forEach(el=>{ if(typeof obs!=='undefined') obs.observe(el); });
 </script>
 </body>
 </html>

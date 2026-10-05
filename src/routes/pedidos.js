@@ -17,7 +17,11 @@ router.post('/', async (req, res, next) => {
       clienteNombre, clienteEmail, clienteTelefono,
       tipoEntrega, direccion, ciudad, provincia, codigoPostal,
       items, // [{ tipo: 'obra'|'producto', id, cantidad }]
+      metodoPago, // 'MERCADOPAGO' | 'TRANSFERENCIA'
+      zonaId,     // zona de envío elegida en la página
+      notas,
     } = req.body
+    if (!clienteNombre || !clienteTelefono) throw new AppError('Faltan nombre y teléfono')
 
     if (!items?.length) throw new AppError('El carrito está vacío')
 
@@ -26,6 +30,19 @@ router.post('/', async (req, res, next) => {
     const itemsData = []
 
     for (const item of items) {
+      if (item.tipo === 'lamina') {
+        // Láminas: precio fijado en el servidor (ARS)
+        const PRECIO_TAMANO = { A4: 10000, A5: 8000 }
+        const MARCO_KIRI = 20000
+        const base = PRECIO_TAMANO[item.tamano]
+        if (!base) throw new AppError('Tamaño de lámina inválido')
+        const cant = Math.max(1, Math.min(20, parseInt(item.cantidad) || 1))
+        const precio = base + (item.marco ? MARCO_KIRI : 0)
+        const titulo = String(item.titulo || 'Obra').slice(0, 80)
+        itemsData.push({ descripcion: `Lámina ${item.tamano} — ${titulo}${item.marco ? ' — con marco kiri' : ''}`, cantidad: cant, precioUnit: precio, moneda: 'ARS' })
+        subtotal += precio * cant
+        continue
+      }
       if (item.tipo === 'obra') {
         const obra = await prisma.obra.findUniqueOrThrow({ where: { id: item.id } })
         if (obra.disponible !== 'DISPONIBLE') throw new AppError(`"${obra.titulo}" ya no está disponible`)
@@ -44,18 +61,33 @@ router.post('/', async (req, res, next) => {
 
     // Costo de envío
     let costoEnvio = 0
-    if (tipoEntrega === 'ENVIO' && provincia) {
-      const zona = await resolverZonaEnvio(provincia)
+    let zonaNombre = null
+    if (tipoEntrega === 'ENVIO') {
+      const zona = zonaId
+        ? await prisma.zonaEnvio.findFirst({ where: { id: zonaId, activa: true } })
+        : (provincia ? await resolverZonaEnvio(provincia) : null)
       costoEnvio = zona?.costo || 0
+      zonaNombre = zona?.nombre || null
     }
+
+    // 10% de descuento pagando por transferencia (sobre los productos, no el envío)
+    const pago = ['MERCADOPAGO', 'TRANSFERENCIA'].includes(metodoPago) ? metodoPago : null
+    const descuento = pago === 'TRANSFERENCIA' ? Math.round(subtotal * 0.10 * 100) / 100 : 0
+    const notasPedido = [
+      zonaNombre && `Zona de envío: ${zonaNombre}`,
+      descuento && `Descuento transferencia 10%: -${descuento}`,
+      notas,
+    ].filter(Boolean).join('\n') || null
 
     // Crear pedido en transacción
     const pedido = await prisma.$transaction(async (tx) => {
       const p = await tx.pedido.create({
         data: {
-          clienteNombre, clienteEmail, clienteTelefono,
+          clienteNombre, clienteEmail: clienteEmail || '', clienteTelefono,
           tipoEntrega, direccion, ciudad, provincia, codigoPostal,
-          subtotal, costoEnvio, total: subtotal + costoEnvio,
+          subtotal, costoEnvio, total: subtotal - descuento + costoEnvio,
+          metodoPago: pago, notas: notasPedido,
+          moneda: itemsData.every(i => i.moneda === 'ARS') ? 'ARS' : 'USD',
           items: { create: itemsData },
           historial: { create: { estado: 'PENDIENTE' } },
         },
@@ -81,7 +113,7 @@ router.post('/', async (req, res, next) => {
       return p
     })
 
-    res.status(201).json({ pedidoId: pedido.id, numero: pedido.numero, total: pedido.total })
+    res.status(201).json({ pedidoId: pedido.id, numero: pedido.numero, subtotal, descuento, costoEnvio, total: pedido.total })
   } catch (e) { next(e) }
 })
 

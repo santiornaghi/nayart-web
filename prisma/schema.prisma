@@ -144,6 +144,7 @@ model PedidoItem {
   productoId  String?
   producto    Producto? @relation(fields: [productoId], references: [id])
   // Snapshot del precio al momento de compra
+  descripcion String?  // ítems sin obra/producto (ej: láminas)
   cantidad    Int      @default(1)
   precioUnit  Float
   moneda      Moneda   @default(USD)

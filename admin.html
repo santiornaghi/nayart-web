@@ -1399,7 +1399,7 @@ async function loadPedidos(){
       <tr style="cursor:pointer;" onclick="openPedido('${p.id}')">
         <td>#${p.id.slice(-6).toUpperCase()}</td>
         <td>${p.clienteNombre||p.clienteEmail}</td>
-        <td>${(p.items||[]).map(i=>i.producto?.nombre||i.obra?.titulo||'—').join(', ')||'—'}</td>
+        <td>${(p.items||[]).map(i=>i.producto?.nombre||i.obra?.titulo||i.descripcion||'—').join(', ')||'—'}</td>
         <td>USD ${p.total}</td>
         <td><span class="badge badge-${estadoBadge(p.estado)}">${p.estado}</span></td>
         <td>${new Date(p.creadoEn).toLocaleDateString('es-AR')}</td>

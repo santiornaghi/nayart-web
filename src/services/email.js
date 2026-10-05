@@ -8,7 +8,7 @@ const FROM   = 'Nayart <noreply@nayart.com.ar>'
 export async function emailConfirmacionPedido(pedido) {
   const items = pedido.items.map(i =>
     `<tr>
-      <td style="padding:8px 0;color:#6b6560;">${i.obra?.titulo || i.producto?.nombre}</td>
+      <td style="padding:8px 0;color:#6b6560;">${i.obra?.titulo || i.producto?.nombre || i.descripcion}</td>
       <td style="padding:8px 0;text-align:right;color:#b84a1e;">${i.moneda} ${i.precioUnit}</td>
     </tr>`
   ).join('')

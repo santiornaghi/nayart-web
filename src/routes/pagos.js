@@ -19,7 +19,7 @@ router.post('/mp/preferencia', async (req, res, next) => {
       include: { items: { include: { obra: true, producto: true } } },
     })
     const items = pedido.items.map(item => ({
-      title:      item.obra?.titulo || item.producto?.nombre,
+      title:      item.obra?.titulo || item.producto?.nombre || item.descripcion,
       quantity:   item.cantidad,
       unit_price: item.precioUnit,
       currency_id: 'ARS',
