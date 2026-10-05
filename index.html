@@ -1313,6 +1313,8 @@ footer { border-top: none; }
 .lamina:hover .mockup { transform: translateY(-4px) scale(1.02); box-shadow: inset 0 0 0 1px rgba(60,45,25,.10), inset 0 1px 3px rgba(60,45,25,.12), 0 1px 1px rgba(40,30,15,.10), 0 18px 26px -8px rgba(40,30,15,.30), 0 34px 56px -22px rgba(40,30,15,.34); }
 .lamina.kiri .lamina-img img { outline: none; }
 .laminas-nota { flex-basis: 100%; font-size: .85rem; color: var(--ink-faint); margin-top: -.6rem; }
+.statement-stats { display: grid !important; grid-template-columns: repeat(3, auto); justify-content: start; column-gap: 3rem; }
+@media (max-width: 768px) { .statement-stats { grid-template-columns: repeat(3, 1fr) !important; column-gap: 1rem; } }
 </style>
 </head>
 <body>
@@ -1360,7 +1362,7 @@ footer { border-top: none; }
     <span class="statement-label" data-es="El artista" data-en="The artist">El artista</span>
     <div class="statement-collage">
       <figure class="sc-a"><img src="img/vida/pintando-noche.jpg" alt="Santiago Ornaghi pintando de noche frente al atril" loading="lazy"></figure>
-      <figure class="sc-b" data-vel="-0.08"><img src="img/vida/mural.jpg" alt="Santiago Ornaghi pintando un mural" loading="lazy"><span class="fig-cap" data-es="Mural en proceso" data-en="Mural in progress">Mural en proceso</span></figure>
+      <figure class="sc-b" data-vel="-0.08"><img src="img/vida/mural.jpg" alt="Santiago Ornaghi pintando un mural" loading="lazy"></figure>
     </div>
   </div>
   <div class="statement-body">
@@ -1369,10 +1371,9 @@ footer { border-top: none; }
     <p data-es="Aprendí dibujo con Gabriel Yabar y perfeccioné la técnica con el paisajista Haroldo Cortez. Pasé por los talleres de Urban Sketchers Córdoba, donde compartí encuadres con Gabriel Canteros, y sumé cursos con Pito Campos, Juan Linares, Alex Hillkurtz, Ale Casanova, Roberto Zangarelli, Xavier Denia, Gonzalo Ibañez y Diego Catalán. Cada uno me dejó algo distinto." data-en="I learned drawing with Gabriel Yabar and refined my technique with landscape painter Haroldo Cortez. I went through the Urban Sketchers Córdoba workshops, sharing views with Gabriel Canteros, and took courses with Pito Campos, Juan Linares, Alex Hillkurtz, Ale Casanova, Roberto Zangarelli, Xavier Denia, Gonzalo Ibañez and Diego Catalán. Each of them left me something different.">Aprendí dibujo con Gabriel Yabar y perfeccioné la técnica con el paisajista Haroldo Cortez. Pasé por los talleres de Urban Sketchers Córdoba, donde compartí encuadres con Gabriel Canteros, y sumé cursos con Pito Campos, Juan Linares, Alex Hillkurtz, Ale Casanova, Roberto Zangarelli, Xavier Denia, Gonzalo Ibañez y Diego Catalán. Cada uno me dejó algo distinto.</p>
     <p data-es="Formo parte de la selección de artistas de ArteCba y expuse en el Centro Cultural España. Trabajo la acuarela de alta pigmentación: capas que se leen, color que no se apaga." data-en="I’m part of the ArteCba artist selection and have exhibited at the Centro Cultural España. I work with high-pigment watercolor: layers you can read, colour that doesn’t fade.">Formo parte de la selección de artistas de ArteCba y expuse en el Centro Cultural España. Trabajo la acuarela de alta pigmentación: capas que se leen, color que no se apaga.</p>
     <div class="statement-stats">
-      <div class="stat"><span class="stat-n">5</span><span class="stat-l" data-es="ferias de arte" data-en="art fairs">ferias de arte</span></div>
-      <div class="stat"><span class="stat-n">2</span><span class="stat-l" data-es="murales" data-en="murals">murales</span></div>
-      <div class="stat"><span class="stat-n">26</span><span class="stat-l" data-es="ilustraciones para calendario" data-en="calendar illustrations">ilustraciones para calendario</span></div>
-      <div class="stat"><span class="stat-n">1</span><span class="stat-l" data-es="etiqueta de vino" data-en="wine label">etiqueta de vino</span></div>
+      <div class="stat"><span class="stat-n">+10</span><span class="stat-l" data-es="ferias de arte" data-en="art fairs">ferias de arte</span></div>
+      <div class="stat"><span class="stat-n">5</span><span class="stat-l" data-es="murales" data-en="murals">murales</span></div>
+      <div class="stat"><span class="stat-n">+26</span><span class="stat-l" data-es="ilustraciones" data-en="illustrations">ilustraciones</span></div>
     </div>
   </div>
 </section>
