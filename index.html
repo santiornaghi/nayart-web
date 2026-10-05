@@ -20,7 +20,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Hanken+Grotesk:wght@400;500&display=swap" rel="stylesheet">
 
 <style>
 :root {
@@ -41,10 +41,10 @@ html { scroll-behavior: smooth; font-size: 16px; }
 body {
   background: var(--paper);
   color: var(--ink);
-  font-family: 'Jost', sans-serif;
+  font-family: 'Hanken Grotesk', sans-serif;
   font-weight: 300;
   overflow-x: hidden;
-  cursor: none;
+  cursor: pointer;
 }
 
 /* CURSOR */
@@ -131,8 +131,8 @@ nav.scrolled {
   border: 1px solid rgba(26,24,20,.2);
   color: var(--ink-light);
   padding: .35rem .75rem;
-  font-family: 'Jost', sans-serif;
-  cursor: none;
+  font-family: 'Hanken Grotesk', sans-serif;
+  cursor: pointer;
   transition: all .3s;
 }
 .lang-btn:hover { border-color: var(--rust); color: var(--rust); }
@@ -187,13 +187,13 @@ nav.scrolled {
   animation: up .9s ease .8s forwards;
 }
 .btn {
-  font-family: 'Jost', sans-serif;
+  font-family: 'Hanken Grotesk', sans-serif;
   font-size: .7rem;
   letter-spacing: .18em;
   text-transform: uppercase;
   text-decoration: none;
   padding: .9rem 2rem;
-  cursor: none;
+  cursor: pointer;
   transition: all .3s;
   display: inline-block;
   border: none;
@@ -374,7 +374,7 @@ nav.scrolled {
   flex-wrap: wrap;
 }
 .filt {
-  font-family: 'Jost', sans-serif;
+  font-family: 'Hanken Grotesk', sans-serif;
   font-size: .65rem;
   letter-spacing: .15em;
   text-transform: uppercase;
@@ -382,7 +382,7 @@ nav.scrolled {
   border: 1px solid rgba(26,24,20,.15);
   color: var(--ink-light);
   padding: .45rem 1.1rem;
-  cursor: none;
+  cursor: pointer;
   transition: all .25s;
 }
 .filt.active, .filt:hover {
@@ -400,7 +400,7 @@ nav.scrolled {
 .obra {
   position: relative;
   overflow: hidden;
-  cursor: none;
+  cursor: pointer;
   background: var(--paper-dark);
 }
 /* Layout asimétrico */
@@ -511,7 +511,7 @@ nav.scrolled {
   gap: 2.5rem;
 }
 .producto {
-  cursor: none;
+  cursor: pointer;
   position: relative;
 }
 .producto-img {
@@ -551,11 +551,11 @@ nav.scrolled {
   color: var(--white);
   border: none;
   padding: .8rem;
-  font-family: 'Jost', sans-serif;
+  font-family: 'Hanken Grotesk', sans-serif;
   font-size: .65rem;
   letter-spacing: .15em;
   text-transform: uppercase;
-  cursor: none;
+  cursor: pointer;
   transform: translateY(100%);
   transition: transform .3s ease;
 }
@@ -647,7 +647,7 @@ nav.scrolled {
 }
 .enc-img:first-child { grid-column: 1/3; aspect-ratio: 16/7; }
 .e1 { background: #2a2420 url('img/obras/tranquera.jpg') center 55% / cover no-repeat; }
-.e2 { background: #2a2420 url('img/obras/calendario.jpg') 25% center / cover no-repeat; }
+.e2 { background: #2a2420 url('img/obras/arboleda.jpg') center / cover no-repeat; }
 .e3 { background: #2a2420 url('img/obras/canal.jpg') center 60% / cover no-repeat; }
 
 /* ── CONTACTO ── */
@@ -717,12 +717,12 @@ nav.scrolled {
   border: 1px solid rgba(26,24,20,.12);
   color: var(--ink);
   padding: .85rem 1rem;
-  font-family: 'Jost', sans-serif;
+  font-family: 'Hanken Grotesk', sans-serif;
   font-size: .85rem;
   font-weight: 300;
   outline: none;
   transition: border-color .3s;
-  cursor: none;
+  cursor: pointer;
   width: 100%;
 }
 .fg input:focus, .fg textarea:focus, .fg select:focus { border-color: var(--rust); }
@@ -816,12 +816,12 @@ body::before {
 }
 
 /* ── CARRITO / CHECKOUT ── */
-.cart-btn { position: relative; background: none; border: 1px solid rgba(26,24,20,.2); color: var(--ink-light); padding: .35rem .7rem; font-family: 'Jost', sans-serif; font-size: .65rem; letter-spacing: .18em; text-transform: uppercase; cursor: none; margin-right: .75rem; transition: all .3s; display: inline-flex; align-items: center; gap: .45rem; }
+.cart-btn { position: relative; background: none; border: 1px solid rgba(26,24,20,.2); color: var(--ink-light); padding: .35rem .7rem; font-family: 'Hanken Grotesk', sans-serif; font-size: .65rem; letter-spacing: .18em; text-transform: uppercase; cursor: pointer; margin-right: .75rem; transition: all .3s; display: inline-flex; align-items: center; gap: .45rem; }
 .cart-btn:hover { border-color: var(--rust); color: var(--rust); }
 .cart-count { background: var(--rust); color: var(--white); border-radius: 999px; min-width: 1.15rem; height: 1.15rem; font-size: .6rem; letter-spacing: 0; display: inline-flex; align-items: center; justify-content: center; padding: 0 .3rem; }
 .cart-count[data-n="0"] { background: rgba(26,24,20,.15); color: var(--ink-light); }
 .nav-right { display: flex; align-items: center; }
-.menu-btn { display: none; background: none; border: none; width: 34px; height: 34px; margin-left: .6rem; cursor: none; flex-direction: column; justify-content: center; gap: 6px; padding: 6px; }
+.menu-btn { display: none; background: none; border: none; width: 34px; height: 34px; margin-left: .6rem; cursor: pointer; flex-direction: column; justify-content: center; gap: 6px; padding: 6px; }
 .menu-btn span { display: block; height: 1px; background: var(--ink); transition: transform .3s, opacity .3s; }
 nav.menu-open .menu-btn span:first-child { transform: translateY(3.5px) rotate(45deg); }
 nav.menu-open .menu-btn span:last-child { transform: translateY(-3.5px) rotate(-45deg); }
@@ -831,7 +831,7 @@ nav.menu-open .menu-btn span:last-child { transform: translateY(-3.5px) rotate(-
 .cart-drawer.open { transform: translateX(0); }
 .cart-head { padding: 1.6rem 1.8rem 1.2rem; display: flex; justify-content: space-between; align-items: baseline; border-bottom: 1px solid rgba(26,24,20,.08); }
 .cart-head h3 { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 1.8rem; }
-.cart-close { background: none; border: none; font-size: 1.3rem; color: var(--ink-faint); cursor: none; }
+.cart-close { background: none; border: none; font-size: 1.3rem; color: var(--ink-faint); cursor: pointer; }
 .cart-close:hover { color: var(--rust); }
 .cart-body { flex: 1; overflow-y: auto; padding: 1.2rem 1.8rem; }
 .cart-empty { text-align: center; color: var(--ink-faint); padding: 4rem 1rem; font-size: .85rem; line-height: 1.8; }
@@ -841,10 +841,10 @@ nav.menu-open .menu-btn span:last-child { transform: translateY(-3.5px) rotate(-
 .cart-item-name { font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; line-height: 1.2; }
 .cart-item-type { font-size: .58rem; letter-spacing: .18em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: .2rem; }
 .cart-qty { display: inline-flex; align-items: center; gap: .55rem; margin-top: .4rem; font-size: .75rem; }
-.cart-qty button { width: 22px; height: 22px; border: 1px solid rgba(26,24,20,.18); background: none; cursor: none; color: var(--ink-light); line-height: 1; }
+.cart-qty button { width: 22px; height: 22px; border: 1px solid rgba(26,24,20,.18); background: none; cursor: pointer; color: var(--ink-light); line-height: 1; }
 .cart-qty button:hover { border-color: var(--rust); color: var(--rust); }
 .cart-item-price { font-size: .85rem; color: var(--rust); text-align: right; white-space: nowrap; }
-.cart-remove { display: block; margin-top: .35rem; background: none; border: none; font-size: .6rem; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-faint); cursor: none; margin-left: auto; }
+.cart-remove { display: block; margin-top: .35rem; background: none; border: none; font-size: .6rem; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-faint); cursor: pointer; margin-left: auto; }
 .cart-remove:hover { color: var(--rust); }
 .cart-foot { padding: 1.3rem 1.8rem 1.6rem; border-top: 1px solid rgba(26,24,20,.08); background: var(--paper-dark); }
 .sum-row { display: flex; justify-content: space-between; font-size: .8rem; color: var(--ink-light); padding: .25rem 0; }
@@ -857,11 +857,11 @@ nav.menu-open .menu-btn span:last-child { transform: translateY(-3.5px) rotate(-
 .co-field { display: flex; flex-direction: column; gap: .3rem; margin-bottom: .7rem; min-width: 0; }
 .co-field input, .co-field select, .co-field textarea { width: 100%; box-sizing: border-box; }
 .co-field label { font-size: .6rem; letter-spacing: .15em; text-transform: uppercase; color: var(--ink-faint); }
-.co-field input, .co-field select, .co-field textarea { padding: .7rem .85rem; border: 1px solid rgba(26,24,20,.14); background: var(--white); font-family: 'Jost', sans-serif; font-size: .85rem; color: var(--ink); outline: none; border-radius: 0; }
+.co-field input, .co-field select, .co-field textarea { padding: .7rem .85rem; border: 1px solid rgba(26,24,20,.14); background: var(--white); font-family: 'Hanken Grotesk', sans-serif; font-size: .85rem; color: var(--ink); outline: none; border-radius: 0; }
 .co-field input:focus, .co-field select:focus, .co-field textarea:focus { border-color: var(--rust); }
 .co-2 { display: grid; grid-template-columns: 1fr 1fr; gap: .7rem; }
 .co-opts { display: grid; gap: .5rem; }
-.co-opt { display: flex; gap: .8rem; align-items: flex-start; padding: .85rem 1rem; border: 1px solid rgba(26,24,20,.14); background: var(--white); cursor: none; transition: border-color .25s, background .25s; }
+.co-opt { display: flex; gap: .8rem; align-items: flex-start; padding: .85rem 1rem; border: 1px solid rgba(26,24,20,.14); background: var(--white); cursor: pointer; transition: border-color .25s, background .25s; }
 .co-opt:hover { border-color: rgba(184,74,30,.5); }
 .co-opt.sel { border-color: var(--rust); background: #fbf3ee; }
 .co-opt input { accent-color: var(--rust); margin-top: .2rem; }
@@ -869,7 +869,7 @@ nav.menu-open .menu-btn span:last-child { transform: translateY(-3.5px) rotate(-
 .co-opt small { display: block; font-size: .72rem; color: var(--ink-faint); line-height: 1.5; margin-top: .15rem; }
 .co-tag { display: inline-block; margin-left: .4rem; background: #2a6040; color: #fff; font-size: .55rem; letter-spacing: .12em; text-transform: uppercase; padding: .15rem .4rem; vertical-align: middle; }
 .ent-tabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: .5rem; }
-.ent-tab { position: relative; display: flex; flex-direction: column; gap: .4rem; padding: .9rem .8rem .8rem; min-height: 104px; border: 1px solid rgba(26,24,20,.14); background: var(--white); cursor: none; transition: border-color .2s, box-shadow .2s; }
+.ent-tab { position: relative; display: flex; flex-direction: column; gap: .4rem; padding: .9rem .8rem .8rem; min-height: 104px; border: 1px solid rgba(26,24,20,.14); background: var(--white); cursor: pointer; transition: border-color .2s, box-shadow .2s; }
 .ent-tab:hover { border-color: rgba(26,24,20,.35); }
 .ent-tab input { position: absolute; opacity: 0; pointer-events: none; }
 .ent-tab svg { width: 20px; height: 20px; color: var(--ink-light); }
@@ -885,7 +885,7 @@ nav.menu-open .menu-btn span:last-child { transform: translateY(-3.5px) rotate(-
 .cotiz { display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: .7rem .9rem; background: var(--paper); margin: .1rem 0 .9rem; font-size: .78rem; color: var(--ink-light); }
 .cotiz strong { font-weight: 400; font-size: .82rem; color: var(--ink-faint); text-align: right; }
 .cotiz.ok strong { font-family: 'Cormorant Garamond', serif; font-size: 1.35rem; color: var(--ink); }
-.co-back { background: none; border: none; font-size: .65rem; letter-spacing: .15em; text-transform: uppercase; color: var(--ink-faint); cursor: none; padding: 0; }
+.co-back { background: none; border: none; font-size: .65rem; letter-spacing: .15em; text-transform: uppercase; color: var(--ink-faint); cursor: pointer; padding: 0; }
 .co-back:hover { color: var(--rust); }
 .co-error { color: #c0392b; font-size: .75rem; margin-top: .6rem; min-height: 1em; }
 .co-note { font-size: .7rem; color: var(--ink-faint); line-height: 1.6; margin-top: .8rem; text-align: center; }
@@ -920,13 +920,13 @@ nav.menu-open .menu-btn span:last-child { transform: translateY(-3.5px) rotate(-
 .lamina-name { font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; margin: .9rem 0 .5rem; }
 .lamina-opts { display: flex; gap: .4rem; flex-wrap: wrap; align-items: center; }
 .seg { display: inline-flex; border: 1px solid rgba(26,24,20,.16); }
-.seg button { background: none; border: none; padding: .35rem .65rem; font-family: 'Jost', sans-serif; font-size: .65rem; letter-spacing: .1em; color: var(--ink-light); cursor: none; }
+.seg button { background: none; border: none; padding: .35rem .65rem; font-family: 'Hanken Grotesk', sans-serif; font-size: .65rem; letter-spacing: .1em; color: var(--ink-light); cursor: pointer; }
 .seg button.on { background: var(--ink); color: var(--white); }
-.kiri-toggle { display: inline-flex; align-items: center; gap: .35rem; font-size: .65rem; letter-spacing: .06em; color: var(--ink-light); cursor: none; user-select: none; }
+.kiri-toggle { display: inline-flex; align-items: center; gap: .35rem; font-size: .65rem; letter-spacing: .06em; color: var(--ink-light); cursor: pointer; user-select: none; }
 .kiri-toggle input { accent-color: var(--rust); }
 .lamina-foot { display: flex; justify-content: space-between; align-items: center; margin-top: .8rem; }
 .lamina-price { color: var(--rust); font-size: .95rem; }
-.lamina-add { background: none; border: 1px solid var(--ink); padding: .45rem .8rem; font-family: 'Jost', sans-serif; font-size: .62rem; letter-spacing: .16em; text-transform: uppercase; color: var(--ink); cursor: none; transition: all .25s; }
+.lamina-add { background: none; border: 1px solid var(--ink); padding: .45rem .8rem; font-family: 'Hanken Grotesk', sans-serif; font-size: .62rem; letter-spacing: .16em; text-transform: uppercase; color: var(--ink); cursor: pointer; transition: all .25s; }
 .lamina-add:hover { background: var(--ink); color: var(--white); }
 .tienda-extra-head { margin: 5rem 0 2rem; }
 .stickers { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.6rem; }
@@ -957,7 +957,7 @@ nav.menu-open .menu-btn span:last-child { transform: translateY(-3.5px) rotate(-
 @keyframes respirar { from { transform: scale(1) translate(0,0); } to { transform: scale(1.07) translate(-1.2%, -1%); } }
 .hero-velo { position: absolute; inset: 0; background: linear-gradient(to top, rgba(20,22,18,.62) 0%, rgba(20,22,18,.18) 38%, transparent 62%); pointer-events: none; }
 .hero-texto { position: absolute; left: 4rem; bottom: 4.5rem; right: 4rem; max-width: 760px; color: #fbfaf7; animation: aparecer 1.4s ease 1.6s both; }
-.hero-autor { font-family: 'Jost', sans-serif; font-size: .95rem; font-weight: 300; letter-spacing: .02em; opacity: .9; margin-bottom: 1.2rem; }
+.hero-autor { font-family: 'Hanken Grotesk', sans-serif; font-size: .95rem; font-weight: 300; letter-spacing: .02em; opacity: .9; margin-bottom: 1.2rem; }
 .hero-titulo { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(3.2rem, 8.5vw, 8rem); line-height: .92; letter-spacing: -.01em; text-shadow: 0 2px 30px rgba(0,0,0,.18); }
 .hero-texto .hero-ctas { margin-top: 2.4rem; display: flex; gap: .8rem; flex-wrap: wrap; }
 .btn-claro { background: #fbfaf7; color: var(--ink); }
@@ -965,7 +965,7 @@ nav.menu-open .menu-btn span:last-child { transform: translateY(-3.5px) rotate(-
 .btn-linea-clara { background: transparent; color: #fbfaf7; border: 1px solid rgba(251,250,247,.6); }
 .btn-linea-clara:hover { border-color: #fff; background: rgba(255,255,255,.08); }
 .hero-ficha { position: absolute; right: 7.5rem; bottom: 4.6rem; text-align: right; color: rgba(251,250,247,.88); font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; line-height: 1.4; animation: aparecer 1.4s ease 2.2s both; }
-.hero-ficha span { display: block; font-family: 'Jost', sans-serif; font-size: .72rem; opacity: .8; }
+.hero-ficha span { display: block; font-family: 'Hanken Grotesk', sans-serif; font-size: .72rem; opacity: .8; }
 @keyframes aparecer { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
 nav:not(.scrolled) .cart-btn, nav:not(.scrolled) .lang-btn { background: rgba(245,242,237,.82); border-color: transparent; color: var(--ink); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
 nav:not(.scrolled) .nav-links a { color: var(--ink); text-shadow: 0 0 14px rgba(245,242,237,.9); }
@@ -989,7 +989,7 @@ nav:not(.scrolled) .nav-links a { color: var(--ink); text-shadow: 0 0 14px rgba(
 .pieza-compra { display: flex; align-items: baseline; gap: 1.2rem; margin-top: 1rem; }
 .pieza-precio { color: var(--rust); font-size: .95rem; }
 .pieza-precio.vendida { color: var(--ink-faint); }
-.pieza-btn { background: none; border: none; border-bottom: 1px solid var(--ink); padding: 0 0 .15rem; font-family: 'Jost', sans-serif; font-size: .82rem; color: var(--ink); cursor: none; }
+.pieza-btn { background: none; border: none; border-bottom: 1px solid var(--ink); padding: 0 0 .15rem; font-family: 'Hanken Grotesk', sans-serif; font-size: .82rem; color: var(--ink); cursor: pointer; }
 .pieza-btn:hover { color: var(--rust); border-color: var(--rust); }
 .galeria-mas { text-align: center; margin-top: 6rem; }
 
@@ -1011,6 +1011,98 @@ nav:not(.scrolled) .nav-links a { color: var(--ink); text-shadow: 0 0 14px rgba(
 @media (prefers-reduced-motion: reduce) {
   .hero-pintura, .hero-texto, .hero-ficha { animation: none !important; -webkit-mask-image: none; mask-image: none; }
   .js-mov .pieza .pieza-marco, .js-mov .pieza .pieza-marco img, .js-mov .pieza figcaption { clip-path: none !important; filter: none !important; transform: none !important; opacity: 1 !important; transition: none !important; }
+}
+
+/* ══════════ SISTEMA VISUAL (versión profesional) ══════════
+   Papel #F2EFE9 · tinta #1E1C19 · texto #48443D · secundario #7A746B
+   Acento: gris de Payne #3B4760 (pigmento de acuarela)
+   Títulos: Cormorant Garamond 400 · Texto e interfaz: Hanken Grotesk */
+:root { --paper:#F2EFE9; --paper-dark:#E8E3DA; --white:#FAF8F4; --ink:#1E1C19; --ink-light:#48443D; --ink-faint:#7A746B; --rust:#3B4760; --rust-light:#56648A; }
+html { font-size: 16px; }
+body { font-family: 'Hanken Grotesk', sans-serif; font-weight: 400; color: var(--ink); background: var(--paper); cursor: auto; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+.cursor, .cursor-ring { display: none !important; }
+::selection { background: #3B4760; color: #fff; }
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible { outline: 2px solid var(--rust); outline-offset: 3px; }
+
+/* Rótulos decorativos fuera: el título alcanza */
+.section-tag, .statement-label { display: none !important; }
+
+/* Títulos de sección */
+.statement-body h2, .serie-header-left h2, .de-cerca-head h2, .tienda-header h2, .encargos-text h2, .contacto-left h2 {
+  font-family: 'Cormorant Garamond', serif; font-weight: 400; font-style: normal;
+  font-size: clamp(2.6rem, 4.6vw, 4.2rem); line-height: 1; letter-spacing: -.012em; color: var(--ink); margin-bottom: 1.4rem;
+}
+h2 em, h3 em { font-style: normal; color: inherit; }
+.laminas-head h3 { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 2rem; }
+
+/* Texto de lectura: más grande, más oscuro, líneas cortas */
+.statement-body p, .serie-header-right p, .de-cerca-head p, .tienda-header p, .encargos-text p, .contacto-left p {
+  font-family: 'Hanken Grotesk', sans-serif; font-weight: 400; font-size: 1.06rem; line-height: 1.7; color: var(--ink-light); max-width: 56ch;
+}
+.statement-body p + p { margin-top: 1rem; }
+
+/* Interfaz en minúsculas normales, sin tracking de rótulo */
+.nav-links a, .btn, .cart-btn, .lang-btn, .seg button, .kiri-toggle, .lamina-add, .chip, .cart-item-type, .co-label,
+.co-field label, .fg label, .dato-label, .fig-cap, .producto-tipo, .producto-badge, .footer-links a, .co-back, .cart-remove,
+.pieza-btn, .obra-tag, .stat-l, .hero-autor, .co-tag, .filter-pill, .filt {
+  text-transform: none !important; letter-spacing: .005em !important;
+}
+.nav-links a { font-size: .9rem; color: var(--ink); }
+.btn { font-size: .88rem; font-weight: 500; padding: 1rem 1.7rem; }
+.cart-btn, .lang-btn { font-size: .82rem; }
+.hero-autor { font-size: 1.02rem; }
+.hero-titulo { font-weight: 400; letter-spacing: -.015em; }
+
+/* Sobre el artista */
+.statement { padding-top: 8rem; padding-bottom: 8rem; align-items: start; }
+.statement-stats { gap: 2.5rem; border-top: 1px solid rgba(30,28,25,.12); padding-top: 1.8rem; margin-top: 2.4rem; }
+.stat-n { font-family: 'Cormorant Garamond', serif; font-size: 2.6rem; color: var(--ink); line-height: 1; }
+.stat-l { font-size: .88rem; color: var(--ink-faint); margin-top: .4rem; display: block; }
+.fig-cap { font-size: .82rem; color: var(--ink-faint); margin-top: .7rem; }
+
+/* Galería */
+.serie-header { margin-bottom: 4.5rem; align-items: end; }
+.pieza-titulo { font-size: 1.8rem; }
+.pieza-meta { font-size: .86rem; color: var(--ink-faint); margin-top: .3rem; }
+.pieza-desc { font-family: 'Hanken Grotesk', sans-serif; font-size: 1rem; line-height: 1.65; color: var(--ink-light); }
+.pieza-precio { color: var(--ink); font-size: 1rem; font-weight: 500; }
+.pieza-btn { font-size: .9rem; color: var(--rust); border-color: var(--rust); }
+.banda-acuarela .fig-cap { font-size: .82rem; }
+
+/* Tienda */
+.chip { font-size: .84rem; background: transparent; border-color: rgba(30,28,25,.16); color: var(--ink-light); }
+.chip b { color: var(--ink); font-weight: 500; }
+.lamina-img, .sticker-img { background: #E9E4DB; }
+.lamina-name { font-size: 1.25rem; margin-top: 1rem; }
+.seg button { font-size: .8rem; padding: .4rem .75rem; }
+.kiri-toggle { font-size: .84rem; color: var(--ink-light); }
+.lamina-price { color: var(--ink); font-weight: 500; font-size: 1rem; }
+.lamina-add { font-size: .84rem; padding: .5rem .9rem; }
+.como-comprar { background: none; border: none; border-top: 1px solid rgba(30,28,25,.12); gap: 3rem; margin-top: 6rem; padding-top: 2.5rem; }
+.cc-item { background: none; padding: 0; }
+.cc-n { font-family: 'Hanken Grotesk', sans-serif; font-size: .85rem; color: var(--ink-faint); }
+.cc-t { font-size: 1.6rem; margin: .5rem 0 .6rem; }
+.cc-d { font-size: .98rem; color: var(--ink-light); line-height: 1.65; }
+
+/* Encargos y contacto */
+.servicios li { font-size: 1rem; color: var(--ink); }
+.dato-label { font-size: .82rem; color: var(--ink-faint); }
+.dato-value { font-size: 1.02rem; }
+.fg label, .co-field label { font-size: .84rem; color: var(--ink-light); }
+.fg input, .fg select, .fg textarea { font-size: 1rem; }
+.co-label { font-size: .95rem; color: var(--ink); font-weight: 500; }
+
+/* Carrito: acento sobrio */
+.co-opt.sel { background: #EEF0F4; }
+.sum-row.discount, .ent-tab small.gratis { color: #3B6B4B; }
+.cart-count { background: var(--ink); }
+.toast { background: var(--ink); opacity: 0; visibility: hidden; transition: transform .4s, opacity .3s, visibility .3s; }
+.toast.show { opacity: 1; visibility: visible; }
+@media (max-width: 768px) {
+  .statement-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 1.6rem 1rem; }
+  .statement { padding-top: 5rem; padding-bottom: 5rem; }
+  .statement-body h2, .serie-header-left h2, .de-cerca-head h2, .tienda-header h2, .encargos-text h2, .contacto-left h2 { font-size: 2.6rem; }
+  .como-comprar { gap: 2rem; }
 }
 </style>
 </head>
@@ -1042,8 +1134,8 @@ nav:not(.scrolled) .nav-links a { color: var(--ink); text-shadow: 0 0 14px rgba(
   <div class="hero-capa"><div class="hero-pintura" role="img" aria-label="Tormenta en el campo, acuarela de Santiago Ornaghi"></div></div>
   <div class="hero-velo"></div>
   <div class="hero-texto">
-    <p class="hero-autor" data-es="Santiago Ornaghi, acuarelista. Río Cuarto, Córdoba." data-en="Santiago Ornaghi, watercolorist. Río Cuarto, Argentina.">Santiago Ornaghi, acuarelista. Río Cuarto, Córdoba.</p>
-    <h1 class="hero-titulo" data-es="El arte de ver lo vivo" data-en="The art of seeing the living">El arte de ver lo vivo</h1>
+    <p class="hero-autor" data-es="Acuarelas de Santiago Ornaghi, Río Cuarto" data-en="Watercolors by Santiago Ornaghi, Río Cuarto, Argentina">Acuarelas de Santiago Ornaghi, Río Cuarto</p>
+    <h1 class="hero-titulo" data-es="El arte de ver<br>lo vivo" data-en="The art of seeing<br>the living">El arte de ver<br>lo vivo</h1>
     <div class="hero-ctas">
       <a href="#obras" class="btn btn-claro" data-es="Ver obras" data-en="View works">Ver obras</a>
       <a href="#tienda" class="btn btn-linea-clara" data-es="Comprar láminas" data-en="Shop prints">Comprar láminas</a>
@@ -1058,18 +1150,18 @@ nav:not(.scrolled) .nav-links a { color: var(--ink); text-shadow: 0 0 14px rgba(
     <span class="statement-label" data-es="El artista" data-en="The artist">El artista</span>
     <figure class="statement-fig">
       <img src="img/detalles/pruebas-pincel.jpg" alt="Pruebas de pincel y caligrafía de los meses del año" loading="lazy">
-      <span class="fig-cap" data-es="Pruebas de pincel — calendario" data-en="Brush studies — calendar">Pruebas de pincel — calendario</span>
+      <span class="fig-cap" data-es="Pruebas de pincel para un calendario" data-en="Brush studies for a calendar">Pruebas de pincel para un calendario</span>
     </figure>
   </div>
   <div class="statement-body">
-    <h2 data-es="Pigmentos que<br>cuentan <em>historias</em>" data-en="Pigments that<br>tell <em>stories</em>">Pigmentos que<br>cuentan <em>historias</em></h2>
-    <p data-es="No podría definir cuándo comenzó mi encuentro con el arte. Naturalmente fue un modo de expresión desde muy temprana edad, donde las tizas, los lápices y los papeles fueron escenario de mis vivencias." data-en="I couldn't define when my encounter with art began. Naturally it was a mode of expression from a very early age, where chalks, pencils and papers were the stage for my experiences.">No podría definir cuándo comenzó mi encuentro con el arte. Naturalmente fue un modo de expresión desde muy temprana edad, donde las tizas, los lápices y los papeles fueron escenario de mis vivencias.</p>
-    <p data-es="Hoy disfruto de mi encuentro con la acuarela y sus maravillosos pigmentos, versionando escenarios de la vida y del alma." data-en="Today I enjoy my encounter with watercolor and its wonderful pigments, creating versions of life's and the soul's landscapes.">Hoy disfruto de mi encuentro con la acuarela y sus maravillosos pigmentos, versionando escenarios de la vida y del alma.</p>
+    <h2 data-es="Santiago Ornaghi" data-en="Santiago Ornaghi">Santiago Ornaghi</h2>
+    <p data-es="No sabría decir cuándo empezó mi encuentro con el arte. Fue, naturalmente, una forma de expresarme desde muy chico: tizas, lápices y papeles fueron el escenario de lo que vivía." data-en="I couldn’t say when my encounter with art began. It was a natural way of expressing myself from an early age: chalk, pencils and paper were the stage for what I lived.">No sabría decir cuándo empezó mi encuentro con el arte. Fue, naturalmente, una forma de expresarme desde muy chico: tizas, lápices y papeles fueron el escenario de lo que vivía.</p>
+    <p data-es="Hoy pinto con acuarela. Me interesan el campo, la ciudad y los animales, y sobre todo la luz y el movimiento de lo que tengo enfrente." data-en="Today I paint in watercolor. I’m drawn to the countryside, the city and animals, and above all to the light and movement of what is in front of me.">Hoy pinto con acuarela. Me interesan el campo, la ciudad y los animales, y sobre todo la luz y el movimiento de lo que tengo enfrente.</p>
     <div class="statement-stats">
-      <div class="stat"><span class="stat-n">5</span><span class="stat-l" data-es="Ferias" data-en="Art fairs">Ferias</span></div>
-      <div class="stat"><span class="stat-n">2</span><span class="stat-l" data-es="Murales" data-en="Murals">Murales</span></div>
-      <div class="stat"><span class="stat-n">26</span><span class="stat-l" data-es="Ilustraciones<br>de calendario" data-en="Calendar<br>illustrations">Ilustraciones<br>de calendario</span></div>
-      <div class="stat"><span class="stat-n">1</span><span class="stat-l" data-es="Etiqueta<br>de vino" data-en="Wine<br>label">Etiqueta<br>de vino</span></div>
+      <div class="stat"><span class="stat-n">5</span><span class="stat-l" data-es="ferias de arte" data-en="art fairs">ferias de arte</span></div>
+      <div class="stat"><span class="stat-n">2</span><span class="stat-l" data-es="murales" data-en="murals">murales</span></div>
+      <div class="stat"><span class="stat-n">26</span><span class="stat-l" data-es="ilustraciones para calendario" data-en="calendar illustrations">ilustraciones para calendario</span></div>
+      <div class="stat"><span class="stat-n">1</span><span class="stat-l" data-es="etiqueta de vino" data-en="wine label">etiqueta de vino</span></div>
     </div>
   </div>
 </section>
@@ -1079,29 +1171,29 @@ nav:not(.scrolled) .nav-links a { color: var(--ink); text-shadow: 0 0 14px rgba(
   <div class="serie-header reveal">
     <div class="serie-header-left">
       <span class="section-tag" data-es="Obras" data-en="Works">Obras</span>
-      <h2 data-es="Galería<br><em>seleccionada</em>" data-en="Selected<br><em>gallery</em>">Galería<br><em>seleccionada</em></h2>
+      <h2 data-es="Obras" data-en="Works">Obras</h2>
     </div>
     <div class="serie-header-right">
-      <p data-es="Acuarelas de alta pigmentación, acrílicos y carbonillas. Obras disponibles para adquirir o encargar bajo pedido." data-en="High-pigmentation watercolors, acrylics and charcoal. Works available for purchase or custom order.">Acuarelas de alta pigmentación, acrílicos y carbonillas. Obras disponibles para adquirir o encargar bajo pedido.</p>
+      <p data-es="Acuarelas originales sobre papel. Cada obra es única y está a la venta; el precio figura debajo de cada una." data-en="Original watercolors on paper. Each piece is one of a kind and for sale; the price is shown below each one.">Acuarelas originales sobre papel. Cada obra es única y está a la venta; el precio figura debajo de cada una.</p>
     </div>
   </div>
   <div class="galeria" id="galeria"></div>
-  <div class="galeria-mas"><a href="#tienda" class="btn btn-outline" data-es="Ver todas las obras en la tienda" data-en="See all works in the shop">Ver todas las obras en la tienda</a></div>
+  <div class="galeria-mas"><a href="#tienda" class="btn btn-outline" data-es="Ver láminas de todas las obras" data-en="See prints of every work">Ver láminas de todas las obras</a></div>
 </section>
 
 <!-- BANDA DE ACUARELA -->
 <div class="banda-acuarela reveal">
   <img src="img/detalles/banda-tormenta.jpg" alt="Cielo de tormenta en acuarela" loading="lazy">
-  <span class="fig-cap" data-es="Detalle — cielo de tormenta" data-en="Detail — stormy sky">Detalle — cielo de tormenta</span>
+  <span class="fig-cap" data-es="Detalle de Tormenta en el campo" data-en="Detail of Storm over the fields">Detalle de Tormenta en el campo</span>
 </div>
 <!-- DE CERCA -->
 <section class="de-cerca" id="detalles">
   <div class="de-cerca-head reveal">
     <div>
       <span class="section-tag" data-es="De cerca" data-en="Up close">De cerca</span>
-      <h2 data-es="El pigmento<br>sobre el <em>papel</em>" data-en="Pigment<br>on <em>paper</em>">El pigmento<br>sobre el <em>papel</em></h2>
+      <h2 data-es="De cerca" data-en="Up close">De cerca</h2>
     </div>
-    <p data-es="Fragmentos escaneados en alta resolución: el agua, la textura y el gesto del pincel tal como quedaron en la hoja." data-en="High-resolution scanned fragments: the water, the texture and the brush gesture just as they stayed on the sheet.">Fragmentos escaneados en alta resolución: el agua, la textura y el gesto del pincel tal como quedaron en la hoja.</p>
+    <p data-es="Detalles de los escaneos en alta resolución: el grano del papel, el agua y el gesto del pincel." data-en="Details from high-resolution scans: the grain of the paper, the water and the brushwork.">Detalles de los escaneos en alta resolución: el grano del papel, el agua y el gesto del pincel.</p>
   </div>
   <div class="de-cerca-grid reveal">
     <figure><img src="img/detalles/detalle-agua.jpg" alt="Detalle de acuarela: animales reflejados en el agua" loading="lazy"></figure>
@@ -1115,32 +1207,32 @@ nav:not(.scrolled) .nav-links a { color: var(--ink); text-shadow: 0 0 14px rgba(
   <div class="tienda-header reveal">
     <div>
       <span class="section-tag" style="font-size:.65rem;letter-spacing:.3em;text-transform:uppercase;color:var(--rust);display:block;margin-bottom:1rem;" data-es="Tienda" data-en="Shop">Tienda</span>
-      <h2 data-es="Llevate un pedazo<br>del mundo <em>Nayart</em>" data-en="Take a piece<br>of the <em>Nayart</em> world">Llevate un pedazo<br>del mundo <em>Nayart</em></h2>
+      <h2 data-es="Láminas y originales" data-en="Prints and originals">Láminas y originales</h2>
     </div>
-    <p data-es="Láminas de todas mis acuarelas en A4 y A5, con la opción de llevarlas enmarcadas en madera kiri, originales y stickers. Entrega gratis en Río Cuarto y Córdoba, envíos a todo el país." data-en="Prints of all my watercolors in A4 and A5, with the option of a kiri wood frame. Shipping across Argentina.">Láminas de todas mis acuarelas en A4 y A5, con la opción de llevarlas enmarcadas en madera kiri, originales y stickers. Entrega gratis en Río Cuarto y Córdoba, envíos a todo el país.</p>
+    <p data-es="Impresiones de mis acuarelas en A4 y A5, con opción de marco de madera kiri. También vendo los originales y stickers." data-en="Prints of my watercolors in A4 and A5, with an optional kiri wood frame. Originals and stickers are also available.">Impresiones de mis acuarelas en A4 y A5, con opción de marco de madera kiri. También vendo los originales y stickers.</p>
   </div>
   <div class="laminas-head reveal">
-    <h3 data-es="Láminas de <em>todas</em> mis obras" data-en="Prints of <em>all</em> my works">Láminas de <em>todas</em> mis obras</h3>
+    <h3 data-es="Láminas" data-en="Prints">Láminas</h3>
     <div class="precios-chips">
       <span class="chip">A4 <b>$10.000</b></span>
       <span class="chip">A5 <b>$8.000</b></span>
-      <span class="chip" data-es="Con marco kiri: A4 <b>$35.000</b> · A5 <b>$25.000</b>" data-en="Kiri wood frame: A4 <b>$35.000</b> · A5 <b>$25.000</b>">Con marco kiri: A4 <b>$35.000</b> · A5 <b>$25.000</b></span>
+      <span class="chip" data-es="Con marco kiri: A4 <b>$35.000</b>, A5 <b>$25.000</b>" data-en="With kiri frame: A4 <b>$35.000</b>, A5 <b>$25.000</b>">Con marco kiri: A4 <b>$35.000</b>, A5 <b>$25.000</b></span>
     </div>
   </div>
   <div class="laminas reveal" id="laminas"></div>
   <div class="laminas-head tienda-extra-head reveal">
-    <h3 data-es="<em>Stickers</em>" data-en="<em>Stickers</em>"><em>Stickers</em></h3>
-    <div class="precios-chips"><span class="chip" data-es="Cada uno <b>$2.000</b>" data-en="Each <b>$2.000</b>">Cada uno <b>$2.000</b></span></div>
+    <h3 data-es="Stickers" data-en="Stickers">Stickers</h3>
+    <div class="precios-chips"><span class="chip" data-es="<b>$2.000</b> cada uno" data-en="<b>$2.000</b> each"><b>$2.000</b> cada uno</span></div>
   </div>
   <div class="stickers reveal" id="stickers"></div>
   <div id="tienda-extra" style="display:none">
-    <div class="laminas-head tienda-extra-head"><h3 data-es="Originales y <em>más</em>" data-en="Originals and <em>more</em>">Originales y <em>más</em></h3></div>
+    <div class="laminas-head tienda-extra-head"><h3 data-es="Originales" data-en="Originals">Originales</h3></div>
     <div class="productos" id="productos-api"></div>
   </div>
   <div class="como-comprar reveal">
-    <div class="cc-item"><div class="cc-n">01</div><div class="cc-t" data-es="Armá tu pedido" data-en="Build your order">Armá tu pedido</div><div class="cc-d" data-es="Elegí la obra, el tamaño y si la querés con marco de madera kiri. Sumala al carrito." data-en="Pick the work, the size and whether you want it in a kiri wood frame. Add it to the cart.">Elegí la obra, el tamaño y si la querés con marco de madera kiri. Sumala al carrito.</div></div>
-    <div class="cc-item"><div class="cc-n">02</div><div class="cc-t" data-es="Pagá como prefieras" data-en="Pay your way">Pagá como prefieras</div><div class="cc-d" data-es="Mercado Pago, o <b>transferencia con 10% de descuento</b>." data-en="Mercado Pago, or <b>bank transfer with 10% off</b>.">Mercado Pago, o <b>transferencia con 10% de descuento</b>.</div></div>
-    <div class="cc-item"><div class="cc-n">03</div><div class="cc-t" data-es="Recibilo en tu casa" data-en="Get it at home">Recibilo en tu casa</div><div class="cc-d" data-es="<b>Entrega gratis en Río Cuarto y Córdoba capital.</b> Al resto del país envío por Andreani: elegís tu provincia y ves el costo en el carrito. El pedido me llega por WhatsApp y coordinamos." data-en="<b>Free delivery in Río Cuarto and Córdoba city.</b> Elsewhere in Argentina we ship with Andreani: pick your province and see the cost in the cart. Your order reaches me on WhatsApp and we coordinate."><b>Entrega gratis en Río Cuarto y Córdoba capital.</b> Al resto del país envío por Andreani: elegís tu provincia y ves el costo en el carrito. El pedido me llega por WhatsApp y coordinamos.</div></div>
+    <div class="cc-item"><div class="cc-n">01</div><div class="cc-t" data-es="Elegí" data-en="Choose">Elegí</div><div class="cc-d" data-es="La lámina, el tamaño y si la querés con marco de madera kiri." data-en="The print, the size and whether you want a kiri wood frame.">La lámina, el tamaño y si la querés con marco de madera kiri.</div></div>
+    <div class="cc-item"><div class="cc-n">02</div><div class="cc-t" data-es="Pagá" data-en="Pay">Pagá</div><div class="cc-d" data-es="Por transferencia tenés <b>10% de descuento</b>. También podés pagar con Mercado Pago." data-en="Bank transfer gets <b>10% off</b>. Mercado Pago is also accepted.">Por transferencia tenés <b>10% de descuento</b>. También podés pagar con Mercado Pago.</div></div>
+    <div class="cc-item"><div class="cc-n">03</div><div class="cc-t" data-es="Recibí" data-en="Receive">Recibí</div><div class="cc-d" data-es="Retiro sin cargo en Río Cuarto o Córdoba, o envío a todo el país por Andreani con el costo calculado en el carrito." data-en="Free pickup in Río Cuarto or Córdoba, or nationwide shipping with Andreani, priced in the cart.">Retiro sin cargo en Río Cuarto o Córdoba, o envío a todo el país por Andreani con el costo calculado en el carrito.</div></div>
   </div>
 </section>
 
@@ -1148,16 +1240,16 @@ nav:not(.scrolled) .nav-links a { color: var(--ink); text-shadow: 0 0 14px rgba(
 <section class="encargos" id="encargos">
   <div class="encargos-text reveal">
     <span class="section-tag" data-es="Encargos" data-en="Commissions">Encargos</span>
-    <h2 data-es="Una obra <em>hecha<br>para vos</em>" data-en="A piece <em>made<br>for you</em>">Una obra <em>hecha<br>para vos</em></h2>
-    <p data-es="Trabajo bajo pedido para particulares y empresas. Con experiencia en etiquetas de vino, ilustraciones corporativas, murales y pintadas en vivo." data-en="I work on commission for individuals and companies. Experienced in wine labels, corporate illustrations, murals and live painting events.">Trabajo bajo pedido para particulares y empresas. Con experiencia en etiquetas de vino, ilustraciones corporativas, murales y pintadas en vivo.</p>
+    <h2 data-es="Encargos" data-en="Commissions">Encargos</h2>
+    <p data-es="Pinto por encargo para particulares y empresas. Hice etiquetas de vino, ilustraciones para calendarios, murales y pintura en vivo en eventos." data-en="I paint on commission for individuals and companies, including wine labels, calendar illustrations, murals and live painting at events.">Pinto por encargo para particulares y empresas. Hice etiquetas de vino, ilustraciones para calendarios, murales y pintura en vivo en eventos.</p>
     <ul class="servicios">
       <li data-es="Obras originales personalizadas" data-en="Custom original works">Obras originales personalizadas</li>
       <li data-es="Etiquetas para bodegas y bebidas" data-en="Wine and beverage labels">Etiquetas para bodegas y bebidas</li>
-      <li data-es="Ilustraciones para calendarios y editorial" data-en="Calendar and editorial illustrations">Ilustraciones para calendarios y editorial</li>
-      <li data-es="Murales en espacios" data-en="Murals">Murales en espacios</li>
-      <li data-es="Pintadas en vivo para eventos" data-en="Live painting for events">Pintadas en vivo para eventos</li>
+      <li data-es="Ilustraciones para calendarios y publicaciones" data-en="Illustrations for calendars and publications">Ilustraciones para calendarios y publicaciones</li>
+      <li data-es="Murales" data-en="Murals">Murales</li>
+      <li data-es="Pintura en vivo en eventos" data-en="Live painting at events">Pintura en vivo en eventos</li>
     </ul>
-    <a href="#contacto" class="btn btn-dark" data-es="Consultar encargo" data-en="Inquire about a commission">Consultar encargo</a>
+    <a href="#contacto" class="btn btn-dark" data-es="Consultar un encargo" data-en="Ask about a commission">Consultar un encargo</a>
   </div>
   <div class="encargos-visual reveal">
     <div class="enc-img e1"></div>
@@ -1170,8 +1262,8 @@ nav:not(.scrolled) .nav-links a { color: var(--ink); text-shadow: 0 0 14px rgba(
 <section class="contacto" id="contacto">
   <div class="contacto-left reveal">
     <span class="section-tag" data-es="Contacto" data-en="Contact">Contacto</span>
-    <h2 data-es="Hablemos<br>de <em>tu proyecto</em>" data-en="Let's talk<br>about <em>your project</em>">Hablemos<br>de <em>tu proyecto</em></h2>
-    <p data-es="Ya sea una obra para tu hogar, una colaboración con tu marca o una consulta sobre materiales, estoy disponible." data-en="Whether it's a piece for your home, a collaboration with your brand or a materials inquiry, I'm available.">Ya sea una obra para tu hogar, una colaboración con tu marca o una consulta sobre materiales, estoy disponible.</p>
+    <h2 data-es="Contacto" data-en="Contact">Contacto</h2>
+    <p data-es="Escribime por una obra, un encargo o cualquier consulta. Te respondo por WhatsApp." data-en="Write to me about a work, a commission or anything else. I reply on WhatsApp.">Escribime por una obra, un encargo o cualquier consulta. Te respondo por WhatsApp.</p>
     <div class="contacto-datos">
       <div><span class="dato-label">Email</span><span class="dato-value">santiornaghi@gmail.com</span></div>
       <div><span class="dato-label" data-es="Teléfono" data-en="Phone">Teléfono</span><span class="dato-value">+54 358 439 0961</span></div>
@@ -1212,7 +1304,7 @@ nav:not(.scrolled) .nav-links a { color: var(--ink); text-shadow: 0 0 14px rgba(
         <label data-es="Mensaje" data-en="Message">Mensaje</label>
         <textarea id="ct-msg" placeholder="Contame sobre tu proyecto..." required></textarea>
       </div>
-      <button type="submit" class="btn btn-dark" style="border:none;text-align:center;" data-es="Enviar mensaje" data-en="Send message">Enviar mensaje</button>
+      <button type="submit" class="btn btn-dark" style="border:none;text-align:center;" data-es="Enviar consulta" data-en="Send inquiry">Enviar consulta</button>
     </form>
   </div>
 </section>
@@ -1229,7 +1321,7 @@ nav:not(.scrolled) .nav-links a { color: var(--ink); text-shadow: 0 0 14px rgba(
     <li><a href="#contacto" data-es="Contacto" data-en="Contact">Contacto</a></li>
     <li><a href="https://instagram.com/naya__artt" target="_blank">Instagram</a></li>
   </ul>
-  <div class="footer-copy">© 2025 Nayart</div>
+  <div class="footer-copy">© 2026 Santiago Ornaghi</div>
 </footer>
 
 <!-- CARRITO -->
@@ -1315,8 +1407,8 @@ async function handleForm(e){
   const url = `https://wa.me/${NAYA_WA}?text=${encodeURIComponent(texto)}`;
   if(win) win.location.href = url; else location.href = url;
   e.target.reset();
-  btn.disabled=false; btn.textContent='✓ '+(lang==='es'?'Mensaje enviado':'Message sent'); btn.style.background='#2a6040';
-  setTimeout(()=>{ btn.textContent=lang==='es'?'Enviar mensaje':'Send message'; btn.style.background=''; },4000);
+  btn.disabled=false; btn.textContent=(lang==='es'?'Consulta enviada':'Inquiry sent'); btn.style.background='#2a6040';
+  setTimeout(()=>{ btn.textContent=lang==='es'?'Enviar consulta':'Send inquiry'; btn.style.background=''; },4000);
 }
 
 // ════════════ TIENDA: LÁMINAS, CARRITO Y PEDIDO POR WHATSAPP ════════════
