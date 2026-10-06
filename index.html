@@ -2277,7 +2277,8 @@ function render(){
         </div>
         <div class="cotiz ${costoAndreani()?'ok':''}"><span>Andreani a domicilio</span><strong>${textoEnvioAndreani()}</strong></div>
         <div class="co-field"><label>Dirección</label><input id="co-dir" value="${v('dir')}" autocomplete="street-address" placeholder="Calle, número, piso"></div>
-        <div class="co-field"><label>Ciudad</label><input id="co-ciudad" value="${v('ciudad')}" autocomplete="address-level2"></div>`}
+        <div class="co-field"><label>Ciudad</label><input id="co-ciudad" value="${v('ciudad')}" autocomplete="address-level2"></div>
+        <div class="co-field"><label>DNI de quien recibe</label><input id="co-dni" value="${v('dni')}" inputmode="numeric" maxlength="10" placeholder="Lo pide Andreani"></div>`}
       </div>
     </div>
     <div class="co-section">
@@ -2306,7 +2307,7 @@ function render(){
 }
 function leerForm(){
   const g = id => document.getElementById(id)?.value?.trim();
-  [['nombre','co-nombre'],['tel','co-tel'],['email','co-email'],['dir','co-dir'],['ciudad','co-ciudad'],['prov','co-prov'],['cp','co-cp'],['nota','co-nota']]
+  [['nombre','co-nombre'],['tel','co-tel'],['email','co-email'],['dni','co-dni'],['dir','co-dir'],['ciudad','co-ciudad'],['prov','co-prov'],['cp','co-cp'],['nota','co-nota']]
     .forEach(([k,id])=>{ const x=g(id); if(x!==undefined) checkout[k]=x; });
 }
 
@@ -2315,7 +2316,7 @@ async function enviarPedido(){
   const err = document.getElementById('co-error');
   const c = checkout;
   if(!c.nombre || !c.tel){ err.textContent='Completá tu nombre y tu teléfono.'; return; }
-  if(c.entrega==='ANDREANI' && (!c.dir || !c.ciudad || !c.prov || !c.cp)){ err.textContent='Completá dirección, ciudad, provincia y código postal para cotizar el envío.'; return; }
+  if(c.entrega==='ANDREANI' && (!c.dir || !c.ciudad || !c.prov || !c.cp || !c.dni)){ err.textContent='Completá dirección, ciudad, provincia, código postal y DNI para el envío.'; return; }
   err.textContent='';
   // Se abre la pestaña ya (los navegadores bloquean ventanas abiertas después de esperar al servidor)
   const win = window.open('', '_blank');
@@ -2330,7 +2331,7 @@ async function enviarPedido(){
       body: JSON.stringify({
         clienteNombre:c.nombre, clienteTelefono:c.tel, clienteEmail:c.email||'',
         tipoEntrega:ENTREGAS[c.entrega].tipo,
-        ...(c.entrega==='ANDREANI' ? { direccion:c.dir, ciudad:c.ciudad, provincia:c.prov, codigoPostal:c.cp, zonaId: zonaDeProvincia(c.prov)?.id } : {}),
+        ...(c.entrega==='ANDREANI' ? { direccion:c.dir, ciudad:c.ciudad, provincia:c.prov, codigoPostal:c.cp, clienteDni:c.dni, zonaId: zonaDeProvincia(c.prov)?.id } : {}),
         metodoPago:c.pago, notas:[ENTREGAS[c.entrega].nombre + (c.entrega==='ANDREANI' ? (costoAndreani() ? '' : ' — costo a cotizar') : ' — sin cargo'), c.nota].filter(Boolean).join('\n'),
         items: carrito.map(i=> i.tipo==='lamina' ? { tipo:'lamina', titulo:i.titulo, tamano:i.tamano, marco:i.marco, cantidad:i.cantidad } : { tipo:i.tipo, id:i.id, cantidad:i.cantidad })
       })});

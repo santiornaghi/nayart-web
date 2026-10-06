@@ -1,8 +1,10 @@
 // Cotización de envíos por Andreani.
-// - Si están cargadas ENVIOPACK_API_KEY y ENVIOPACK_SECRET_KEY (cuenta de Envíopack),
+// - Si está cargada ANDREANI_CREDENTIAL (cuenta Andreani Pyme), cotiza directo con Andreani.
+// - Si no (o si falla), y están cargadas ENVIOPACK_API_KEY y ENVIOPACK_SECRET_KEY (cuenta de Envíopack),
 //   cotiza en tiempo real por código postal.
 // - Si no, usa la tarifa por región que se carga en Panel → Envíos.
 import { PrismaClient } from '@prisma/client'
+import { cotizarAndreani, andreaniActivo } from './andreani.js'
 const prisma = new PrismaClient()
 
 // Provincias → código ISO 3166-2:AR (sin "AR-"), que usa Envíopack
@@ -60,7 +62,13 @@ async function cotizarTabla({ provincia, marcos }) {
 }
 
 // Devuelve { costo (null = a cotizar), fuente, ... }
-export async function cotizarEnvio({ provincia, cp, marcos = 0, otros = 0 }) {
+export async function cotizarEnvio({ provincia, cp, marcos = 0, otros = 0, valor }) {
+  if (andreaniActivo()) {
+    try {
+      const r = await cotizarAndreani({ cp, marcos, otros, valor })
+      if (r) return r
+    } catch (e) { console.error('[andreani]', e.message, e.data ? JSON.stringify(e.data) : '') }
+  }
   if (process.env.ENVIOPACK_API_KEY && process.env.ENVIOPACK_SECRET_KEY) {
     try {
       const r = await cotizarEnviopack({ provincia, cp, marcos, otros })

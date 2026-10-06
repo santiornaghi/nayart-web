@@ -4,6 +4,7 @@ import { MercadoPagoConfig, Preference, Payment } from 'mercadopago'
 import Stripe from 'stripe'
 import { emailConfirmacionPedido, emailEntregaDigital } from '../services/email.js'
 import { urlDescargaPrivada } from '../services/cloudinary.js'
+import { procesarEnvioPedido } from '../services/andreani.js'
 
 const router = Router()
 const prisma = new PrismaClient()
@@ -24,6 +25,9 @@ router.post('/mp/preferencia', async (req, res, next) => {
       unit_price: item.precioUnit,
       currency_id: 'ARS',
     }))
+    if (pedido.costoEnvio > 0) {
+      items.push({ title: 'Envío por Andreani', quantity: 1, unit_price: pedido.costoEnvio, currency_id: 'ARS' })
+    }
     const preference = new Preference(mp)
     const result = await preference.create({
       body: {
@@ -60,6 +64,7 @@ router.post('/mp/webhook', async (req, res, next) => {
         include: { items: { include: { obra: true, producto: true } } },
       })
       await emailConfirmacionPedido(pedido)
+      procesarEnvioPedido(pedidoId).catch(e => console.error('[andreani]', e))
     }
     res.sendStatus(200)
   } catch (e) { next(e) }

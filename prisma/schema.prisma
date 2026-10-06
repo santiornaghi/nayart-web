@@ -106,6 +106,7 @@ model Pedido {
   clienteNombre   String
   clienteEmail    String
   clienteTelefono String?
+  clienteDni      String?       // lo pide Andreani para el envío
   // Entrega
   tipoEntrega     TipoEntrega
   direccion       String?
@@ -124,6 +125,8 @@ model Pedido {
   // Estado
   estado          EstadoPedido  @default(PENDIENTE)
   trackingNumero  String?
+  andreaniEstado  String?       // null | PROCESANDO | CREADO | ERROR
+  andreaniError   String?
   notas           String?
   creadoEn        DateTime      @default(now())
   actualizadoEn   DateTime      @updatedAt

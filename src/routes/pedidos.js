@@ -5,6 +5,7 @@ import { emailConfirmacionPedido, emailPedidoEnviado, emailEntregaDigital } from
 import { urlDescargaPrivada } from '../services/cloudinary.js'
 import { AppError } from '../middleware/errorHandler.js'
 import { cotizarEnvio } from '../services/envios.js'
+import { procesarEnvioPedido } from '../services/andreani.js'
 
 const router = Router()
 const prisma = new PrismaClient()
@@ -15,7 +16,7 @@ const prisma = new PrismaClient()
 router.post('/', async (req, res, next) => {
   try {
     const {
-      clienteNombre, clienteEmail, clienteTelefono,
+      clienteNombre, clienteEmail, clienteTelefono, clienteDni,
       tipoEntrega, direccion, ciudad, provincia, codigoPostal,
       items, // [{ tipo: 'obra'|'producto', id, cantidad }]
       metodoPago, // 'MERCADOPAGO' | 'TRANSFERENCIA'
@@ -84,7 +85,7 @@ router.post('/', async (req, res, next) => {
       // Mismo cálculo que ve el cliente en el carrito (Envíopack/Andreani o tabla por región)
       const marcos = items.filter(i => (i.tipo === 'lamina' && i.marco) || i.tipo === 'marco').reduce((s, i) => s + (parseInt(i.cantidad) || 1), 0)
       const otros  = items.filter(i => !((i.tipo === 'lamina' && i.marco) || i.tipo === 'marco')).reduce((s, i) => s + (parseInt(i.cantidad) || 1), 0)
-      const cot = await cotizarEnvio({ provincia, cp: codigoPostal, marcos, otros })
+      const cot = await cotizarEnvio({ provincia, cp: codigoPostal, marcos, otros, valor: subtotal })
       costoEnvio = cot.costo || 0
       zonaNombre = `Andreani${cot.fuente === 'andreani' ? ' (cotización en línea)' : (cot.zona ? ' — ' + cot.zona.replace('Andreani — ', '') : '')}${costoEnvio ? '' : ' — a cotizar'}`
     }
@@ -114,6 +115,7 @@ router.post('/', async (req, res, next) => {
       const p = await tx.pedido.create({
         data: {
           clienteNombre, clienteEmail: clienteEmail || '', clienteTelefono,
+          clienteDni: clienteDni ? String(clienteDni).replace(/\D/g, '').slice(0, 10) : null,
           tipoEntrega, direccion, ciudad, provincia, codigoPostal,
           subtotal, costoEnvio, total: subtotal - descuento + costoEnvio,
           metodoPago: pago, notas: notasPedido,
@@ -214,6 +216,11 @@ router.patch('/:id/estado', authMiddleware, adminOnly, async (req, res, next) =>
       await tx.pedidoHistorial.create({ data: { pedidoId: p.id, estado, nota } })
       return p
     })
+
+    // Al confirmar el pago se da de alta el envío en Andreani (en segundo plano)
+    if (estado === 'CONFIRMADO' && pedido.tipoEntrega === 'ENVIO') {
+      procesarEnvioPedido(pedido.id).catch(e => console.error('[andreani]', e))
+    }
 
     // Notificaciones automáticas
     if (estado === 'ENVIADO') {
