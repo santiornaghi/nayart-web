@@ -1789,7 +1789,7 @@ const OBRA = [
   {s:'ponte', t:'Ponte', tec:'Acuarela sobre papel', m:'25 × 30 cm', y:2023, img:['img/rincones/ponte.jpg'], vendida:true},
   {s:'sombra-alizarin', t:'Sombra Alizarin', tec:'Acuarela sobre papel', m:'30 × 40 cm', y:2023, img:['img/rincones/sombra-alizarin.jpg'], vendida:true},
   {s:'el-paseo-de-flodeo', t:'El Paseo de Flodeo', tec:'Acuarela sobre papel', m:'30 × 40 cm', y:2023, img:['img/rincones/paseo-de-flodeo.jpg'], vendida:true},
-  {s:'urbe-dorada', t:'Urbe dorada', tec:'Acrílico', m:'40 × 140 cm', y:2023, img:['img/movimiento/urbe-dorada.jpg'], vendida:true},
+  {s:'urbe-dorada', t:'Urbe dorada', tec:'Acrílico sobre lienzo', m:'40 × 140 cm', y:2023, img:['img/movimiento/urbe-dorada.jpg'], vendida:true},
   {s:'lo-sensual-i', t:'Lo sensual I', tec:'Carbonilla sobre papel', m:'53 × 83 cm', y:2023, img:['img/movimiento/lo-sensual-1.jpg'], vendida:true},
   {s:'lo-sensual-ii', t:'Lo sensual II', tec:'Carbonilla sobre papel', m:'53 × 83 cm', y:2023, img:['img/movimiento/lo-sensual-2.jpg'], vendida:true},
   {s:'cadmios', t:'Cadmios', tec:'Acuarela sobre papel', m:'25 × 30 cm', y:2022, img:['img/rincones/cadmios.jpg'], vendida:true},
@@ -2294,7 +2294,7 @@ function renderObra(s){
   const G = o.vendida ? PORT : DISP, gi = G.indexOf(o);
   const prev=G[(gi-1+G.length)%G.length], next=G[(gi+1)%G.length];
   const volver = o.vendida ? '#/portfolio' : '#/lista';
-  const tecEn = o.tec.replace('Acuarela sobre papel, díptico','Watercolor on paper, diptych').replace('Acuarela sobre papel','Watercolor on paper').replace('Carbonilla sobre papel','Charcoal on paper').replace('Acrílico sobre papel','Acrylic on paper').replace(/^Acrílico$/,'Acrylic');
+  const tecEn = o.tec.replace('Acuarela sobre papel, díptico','Watercolor on paper, diptych').replace('Acuarela sobre papel','Watercolor on paper').replace('Carbonilla sobre papel','Charcoal on paper').replace('Acrílico sobre papel','Acrylic on paper').replace('Acrílico sobre lienzo','Acrylic on canvas').replace(/^Acrílico$/,'Acrylic');
   const compra = o.venta ? `<div class="ob-marco"><div class="seg ob-seg"><button class="on" data-k="0" type="button">${L('Sin marco','No frame')}</button><button data-k="1" type="button">${L('Con marco kiri','Kiri frame')} +${fmt(PRECIO_MARCO_OBRA)}</button></div><span class="mono ob-nota">${L('Madera kiri con paspartú','Kiri wood with mat')}</span></div>
     <div class="ob-compra"><span class="ob-precio">${fmt(o.venta.precio,o.venta.moneda)}<span class="ob-mas"></span></span><button class="btn-m" onclick="comprarObraMarco(${o.gi})">${L('Agregar al carrito','Add to cart')}</button><span class="mono" style="font-size:.7rem;color:var(--ink-faint)">${L('10% off por transferencia','10% off by bank transfer')}</span></div>`
     : (o.vendida ? `<div class="ob-compra"><span class="mono ob-vendida">${L('Vendida — colección privada','Sold — private collection')}</span></div>`
