@@ -26,6 +26,8 @@ app.use(cors({
   origin: [
     process.env.FRONTEND_URL,
     'https://santiornaghi.github.io',
+    'https://nayaart.com',
+    'https://www.nayaart.com',
     'http://localhost:5500',  // live-server local
     'http://127.0.0.1:5500',
   ],

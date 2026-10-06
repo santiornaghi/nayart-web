@@ -12,7 +12,7 @@ const mp     = new MercadoPagoConfig({ accessToken: process.env.MP_ACCESS_TOKEN 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
 
 // Adónde vuelve el comprador después de pagar: la página que lo mandó, si es una de las nuestras
-const FRONTS = [process.env.FRONTEND_URL, 'https://santiornaghi.github.io/nayart-web'].filter(Boolean).map(u => u.replace(/\/$/, ''))
+const FRONTS = [process.env.FRONTEND_URL, 'https://santiornaghi.github.io/nayart-web', 'https://nayaart.com', 'https://www.nayaart.com'].filter(Boolean).map(u => u.replace(/\/$/, ''))
 function urlRetorno(pedida) {
   const u = String(pedida || '').split(/[?#]/)[0].replace(/\/index\.html$/, '').replace(/\/$/, '')
   return FRONTS.find(f => u === f || u.startsWith(f + '/')) ? u : FRONTS[0]

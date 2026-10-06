@@ -5,19 +5,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Naya Lab® — Acuarelas de Santiago Ornaghi</title>
 <meta name="description" content="Acuarelas de Santiago Ornaghi (NAYA). Obras originales y láminas A4 y A5, con marco de madera kiri opcional. Entrega gratis en Río Cuarto y Córdoba, envíos a todo el país.">
-<meta name="theme-color" content="#f5f2ed">
+<meta name="theme-color" content="#fafaf8">
 <link rel="icon" type="image/png" href="img/favicon.png">
 <link rel="apple-touch-icon" href="img/icono-180.png">
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="NAYA">
+<meta property="og:site_name" content="Naya Lab®">
 <meta property="og:title" content="Naya Lab® — Acuarelas de Santiago Ornaghi">
 <meta property="og:description" content="Acuarelas de Santiago Ornaghi (NAYA). Obras originales y láminas A4 y A5, con marco de madera kiri opcional. Entrega gratis en Río Cuarto y Córdoba, envíos a todo el país.">
-<meta property="og:image" content="https://santiornaghi.github.io/nayart-web/img/og-nayart.jpg">
+<meta property="og:image" content="https://nayaart.com/img/og-nayart.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:url" content="https://santiornaghi.github.io/nayart-web/">
+<meta property="og:url" content="https://nayaart.com/">
 <meta property="og:locale" content="es_AR">
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Person", "name": "Santiago Ornaghi", "alternateName": "NAYA", "jobTitle": "Artista plástico, acuarelista", "address": {"@type": "PostalAddress", "addressLocality": "Río Cuarto", "addressRegion": "Córdoba", "addressCountry": "AR"}, "url": "https://santiornaghi.github.io/nayart-web/", "image": "https://santiornaghi.github.io/nayart-web/img/og-nayart.jpg", "sameAs": ["https://instagram.com/naya__artt"]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Person", "name": "Santiago Ornaghi", "alternateName": "NAYA", "jobTitle": "Artista plástico, acuarelista", "address": {"@type": "PostalAddress", "addressLocality": "Río Cuarto", "addressRegion": "Córdoba", "addressCountry": "AR"}, "url": "https://nayaart.com/", "image": "https://nayaart.com/img/og-nayart.jpg", "sameAs": ["https://instagram.com/naya__artt"]}</script>
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1747,6 +1747,37 @@ body.tema-pf .solo-pf { display: inline-flex !important; } body.tema-pf .solo-cl
   .pie-fin { flex-direction: column; gap: .6rem; }
   .pie-big { font-size: clamp(2.2rem, 10.5vw, 3.4rem); white-space: normal; }
 }
+:focus-visible { outline: 1px solid currentColor; outline-offset: 3px; }
+.exterior { font-size: .82rem; line-height: 1.5; color: var(--ink-light); margin-top: 1.4rem; max-width: 46ch; }
+.exterior a { color: var(--ink); text-decoration: none; border-bottom: 1px solid currentColor; }
+.t-ext { margin-top: 2.4rem; padding-top: 1.2rem; border-top: 1px solid var(--rule); max-width: none; }
+.portada .marca { position: relative; z-index: 3; }
+.ix-preview img, .ix-thumb { border-radius: 0 !important; }
+/* ═════════ Carrito y checkout dentro del mismo sistema ═════════ */
+.cart-drawer input, .cart-drawer select, .cart-drawer textarea { border-radius: 0 !important; }
+.cart-drawer .co-label { font-family: 'JetBrains Mono', monospace !important; font-size: .68rem !important; letter-spacing: 0 !important; text-transform: uppercase !important; color: var(--ink) !important; font-weight: 400 !important; margin-bottom: .9rem; }
+@media (max-width: 720px) { .toast { top: auto !important; bottom: 1rem !important; left: 1rem !important; right: 1rem !important; transform: none !important; text-align: center; } }
+.cart-drawer .co-opt { border-color: var(--rule); }
+.cart-drawer .co-opt:hover { border-color: rgba(26,24,20,.4); }
+.cart-drawer .co-opt.sel { border-color: var(--ink); background: #f3f1ec; box-shadow: inset 0 0 0 1px var(--ink); }
+.cart-drawer .co-opt input { accent-color: #2c3a2b; }
+.cart-drawer .co-tag { background: #2c3a2b; color: #ece5d2; font-family: 'JetBrains Mono', monospace; letter-spacing: 0; font-size: .58rem; }
+.cart-drawer .ent-tab small.gratis, .cart-drawer .sum-row.discount { color: #2c3a2b !important; }
+.cart-drawer .ent-tab small { color: var(--ink-light); }
+.cart-drawer .sum-row.total span:last-child, .cart-drawer .cotiz.ok strong { font-family: 'Instrument Serif', serif !important; font-size: 2rem; letter-spacing: -0.01em; line-height: 1; }
+.cart-drawer .cart-empty > div[style] { font-family: 'Instrument Serif', serif !important; font-size: 2.2rem !important; }
+.cart-drawer .cart-item-name { font-family: 'Instrument Serif', serif; font-size: 1.25rem; line-height: 1.05; }
+/* ═════════ Integración tipográfica: serif para títulos, mono para rótulos ═════════ */
+.vista .v-title { font-family: 'Instrument Serif', serif !important; font-style: normal; font-weight: 400 !important; text-transform: none !important; letter-spacing: -0.025em !important; font-size: clamp(3.2rem, 8vw, 6.6rem) !important; line-height: .9 !important; margin-bottom: clamp(2rem, 5vh, 3.4rem); }
+.ob-top h2 { font-family: 'Instrument Serif', serif !important; text-transform: none !important; font-size: clamp(2.4rem, 5.4vw, 4.4rem) !important; letter-spacing: -0.015em !important; line-height: .95 !important; }
+.ob-top > span.mono, .obra-v .ob-meta { display: none; }
+.ob-top { margin-bottom: clamp(1.6rem, 4vh, 2.6rem); }
+.lista li:has(.y) { display: grid; grid-template-columns: 7.5rem 1fr; align-items: baseline; }
+.lista li:has(.y) .y { width: auto; }
+@media (max-width: 720px) { .lista li:has(.y) { display: block; } }
+.wa-fab { transition: opacity .4s, transform .4s !important; }
+body.pie-visible .wa-fab { opacity: 0; pointer-events: none; transform: scale(.85); }
+@media (max-width: 720px) { .wa-fab { width: 44px !important; height: 44px !important; right: .9rem !important; bottom: .9rem !important; } }
 @media (prefers-reduced-motion: reduce) { .pie-tex div { transition: none; } .pie-marca { transform: none; transition: none; } }
 /* carrito y extras */
 .cart-drawer { border-radius: 0 !important; }
@@ -1816,6 +1847,7 @@ body.tema-pf .solo-pf { display: inline-flex !important; } body.tema-pf .solo-cl
       <div><span class="v-lab" data-es="02 Pagá" data-en="02 Pay">02 Pagá</span><p data-es="Transferencia con 10% de descuento o Mercado Pago." data-en="Bank transfer with 10% off, or Mercado Pago.">Transferencia con 10% de descuento o Mercado Pago.</p></div>
       <div><span class="v-lab" data-es="03 Recibí" data-en="03 Receive">03 Recibí</span><p data-es="Retiro sin cargo en Río Cuarto o Córdoba, o envío por Andreani a todo el país." data-en="Free pickup in Río Cuarto or Córdoba, or Andreani shipping nationwide.">Retiro sin cargo en Río Cuarto o Córdoba, o envío por Andreani a todo el país.</p></div>
     </div>
+    <p class="exterior t-ext"><span data-es="¿Estás fuera de Argentina? Escribime y coordinamos el pago y el envío internacional." data-en="Outside Argentina? Write to me and we will arrange international payment and shipping.">¿Estás fuera de Argentina? Escribime y coordinamos el pago y el envío internacional.</span> <a href="mailto:santiornaghi@gmail.com?subject=International%20order%20%E2%80%94%20Naya%20Lab">Email</a> · <a href="https://wa.me/5493584390961?text=Hi!%20I%20would%20like%20to%20buy%20from%20outside%20Argentina." target="_blank" rel="noopener">WhatsApp</a></p>
   </div>
 </section>
 
@@ -2029,6 +2061,7 @@ function toggleLang(){
     else el.innerHTML=val;
   });
   document.documentElement.lang=lang;
+  if(window.renderIndice) renderIndice();
   if(window.ruta) ruta();
 }
 
@@ -2139,9 +2172,9 @@ function renderLaminas(){
       <div class="lamina-name">${escH(t)}</div>
       <div class="lamina-opts">
         <div class="seg"><button class="on" data-t="A4">A4</button><button data-t="A5">A5</button></div>
-        <label class="kiri-toggle"><input type="checkbox"> Marco kiri</label>
+        <label class="kiri-toggle"><input type="checkbox"> <span data-es="Marco kiri" data-en="Kiri frame">Marco kiri</span></label>
       </div>
-      <div class="lamina-foot"><span class="lamina-price">${fmt(PRECIO_LAMINA.A4)}</span><button class="lamina-add">Agregar</button></div>
+      <div class="lamina-foot"><span class="lamina-price">${fmt(PRECIO_LAMINA.A4)}</span><button class="lamina-add" data-es="Agregar" data-en="Add">Agregar</button></div>
     </div>`).join('');
   g.querySelectorAll('.lamina').forEach(card => {
     const upd = () => {
@@ -2614,6 +2647,7 @@ function heroPortfolio(){
     if(e.isIntersecting){ cargar(); pie.classList.add('dentro'); if(!quieto && !timer) timer=setInterval(()=>{ capas[k].classList.remove('on'); k=(k+1)%capas.length; capas[k].classList.add('on'); },7000); }
     else { clearInterval(timer); timer=null; }
   }),{rootMargin:'200px 0px'}).observe(pie);
+  new IntersectionObserver(es=>es.forEach(e=>document.body.classList.toggle('pie-visible', e.isIntersecting)),{rootMargin:'0px 0px -30% 0px'}).observe(pie);
   let pend=false;
   addEventListener('scroll',()=>{ if(pend||quieto) return; pend=true; requestAnimationFrame(()=>{ pend=false; const r=pie.getBoundingClientRect(); if(r.top>innerHeight) return; const p=(r.top)/innerHeight; capas.forEach(c=>c.style.setProperty('--pty',Math.max(-80,Math.min(80,p*70)).toFixed(1)+'px')); }); },{passive:true});
 })();
@@ -2637,7 +2671,8 @@ function renderObra(s){
   const volver = o.vendida ? '#/portfolio' : '#/lista';
   const tecEn = o.tec.replace('Acuarela sobre papel, díptico','Watercolor on paper, diptych').replace('Acuarela sobre papel','Watercolor on paper').replace('Carbonilla sobre papel','Charcoal on paper').replace('Acrílico sobre papel','Acrylic on paper').replace('Acrílico sobre lienzo','Acrylic on canvas').replace(/^Acrílico$/,'Acrylic');
   const compra = o.venta ? `<div class="ob-marco"><div class="seg ob-seg"><button class="on" data-k="0" type="button">${L('Sin marco','No frame')}</button><button data-k="1" type="button">${L('Con marco kiri','Kiri frame')} +${fmt(PRECIO_MARCO_OBRA)}</button></div><span class="mono ob-nota">${L('Madera kiri con paspartú','Kiri wood with mat')}</span></div>
-    <div class="ob-compra"><span class="ob-precio">${fmt(o.venta.precio,o.venta.moneda)}<span class="ob-mas"></span></span><button class="btn-m" onclick="comprarObraMarco(${o.gi})">${L('Agregar al carrito','Add to cart')}</button><span class="mono" style="font-size:.7rem;color:var(--ink-faint)">${L('10% off por transferencia','10% off by bank transfer')}</span></div>`
+    <div class="ob-compra"><span class="ob-precio">${fmt(o.venta.precio,o.venta.moneda)}<span class="ob-mas"></span></span><button class="btn-m" onclick="comprarObraMarco(${o.gi})">${L('Agregar al carrito','Add to cart')}</button><span class="mono" style="font-size:.7rem;color:var(--ink-faint)">${L('10% off por transferencia','10% off by bank transfer')}</span></div>
+    <p class="exterior">${L('¿Estás fuera de Argentina? Escribime y coordinamos el pago y el envío internacional.','Outside Argentina? Write to me and we will arrange international payment and shipping.')} <a href="mailto:santiornaghi@gmail.com?subject=International%20order%20%E2%80%94%20Naya%20Lab">Email</a> · <a href="https://wa.me/5493584390961?text=${encodeURIComponent('Hi! I would like to buy «'+o.t+'» from outside Argentina.')}" target="_blank" rel="noopener">WhatsApp</a></p>`
     : (o.vendida ? `<div class="ob-compra"><span class="mono ob-vendida">${L('Vendida — colección privada','Sold — private collection')}</span></div>`
     : `<div class="ob-compra"><a class="btn-m linea" target="_blank" rel="noopener" href="https://wa.me/${NAYA_WA}?text=${encodeURIComponent('Hola Naya! Quería consultar por la obra «'+o.t+'».')}">${L('Consultar por esta obra','Ask about this work')}</a></div>`);
   v.innerHTML = `<div class="envoltura obra-v">
@@ -2692,6 +2727,9 @@ function ruta(){
   else if(vista==='portfolio' && deObra && window._pfScroll) window.scrollTo(0,window._pfScroll);
   else window.scrollTo(0,0);
   window._rutaPrev=h;
+  const TIT={tienda:'Shop',acerca:'About',fotos:'Photos',portfolio:'Portfolio',contacto:'Contact'};
+  const ob=vista==='obra' ? TODAS.find(o=>'#/obra/'+o.s===h) : null;
+  document.title = (ob ? ob.t+' — ' : TIT[vista] ? TIT[vista]+' — ' : '') + 'Naya Lab® — Acuarelas de Santiago Ornaghi';
   const nv=document.querySelector('.lh'); if(nv) nv.classList.toggle('scrolled', scrollY>20);
 }
 // telón: cuando cambia el clima (claro ↔ verde) una cortina del color de destino cubre y descubre
