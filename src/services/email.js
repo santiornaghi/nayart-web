@@ -121,6 +121,38 @@ export async function emailNuevoEncargo(encargo) {
   })
 }
 
+export async function emailAdminPagoAprobado(pedido) {
+  if (!process.env.EMAIL_ADMIN) return
+  const items = pedido.items.map(i =>
+    `<tr><td style="padding:4px 0;">${i.cantidad} × ${i.obra?.titulo || i.producto?.nombre || i.descripcion}</td>
+     <td style="text-align:right;">$${Math.round(i.precioUnit * i.cantidad).toLocaleString('es-AR')}</td></tr>`
+  ).join('')
+  const entrega = pedido.tipoEntrega === 'ENVIO'
+    ? `Envío Andreani a ${pedido.direccion}, ${pedido.ciudad}, ${pedido.provincia} (CP ${pedido.codigoPostal})`
+    : (pedido.notas || '').split('\n').find(l => l.startsWith('Retiro')) || 'Retiro presencial'
+  await resend.emails.send({
+    from: FROM,
+    to:   process.env.EMAIL_ADMIN,
+    subject: `💳 Pago aprobado · Pedido #${pedido.numero} · $${Math.round(pedido.total).toLocaleString('es-AR')}`,
+    html: emailBase(`
+      <h2 style="font-family:Georgia,serif;font-weight:300;font-size:1.4rem;margin-bottom:1rem;">
+        Pago aprobado en Mercado Pago
+      </h2>
+      <table style="width:100%;">
+        <tr><td style="color:#b0aba3;padding:4px 0;width:120px;">Cliente</td><td>${pedido.clienteNombre}</td></tr>
+        <tr><td style="color:#b0aba3;padding:4px 0;">Teléfono</td><td>${pedido.clienteTelefono || '—'}</td></tr>
+        <tr><td style="color:#b0aba3;padding:4px 0;">Email</td><td>${pedido.clienteEmail || '—'}</td></tr>
+        <tr><td style="color:#b0aba3;padding:4px 0;">Entrega</td><td>${entrega}</td></tr>
+      </table>
+      <table style="width:100%;border-top:1px solid #e8e4de;margin-top:1rem;">${items}
+        <tr><td style="padding:4px 0;">Envío</td><td style="text-align:right;">$${Math.round(pedido.costoEnvio).toLocaleString('es-AR')}</td></tr>
+        <tr><td style="padding:4px 0;"><strong>Total cobrado</strong></td><td style="text-align:right;"><strong>$${Math.round(pedido.total).toLocaleString('es-AR')}</strong></td></tr>
+      </table>
+      ${pedido.tipoEntrega === 'ENVIO' ? '<p style="color:#6b6560;">La etiqueta de Andreani te llega en otro mail.</p>' : '<p style="color:#6b6560;">Escribile para coordinar el retiro.</p>'}
+    `),
+  })
+}
+
 // ── TEMPLATE BASE ──────────────────────────────────────────
 function emailBase(content) {
   return `<!DOCTYPE html>

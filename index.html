@@ -2285,7 +2285,7 @@ function render(){
       <span class="co-label">Pago</span>
       <div class="co-opts">
         <label class="co-opt ${checkout.pago==='TRANSFERENCIA'?'sel':''}"><input type="radio" name="co-pago" value="TRANSFERENCIA" ${checkout.pago==='TRANSFERENCIA'?'checked':''}><span><strong>Transferencia bancaria <span class="co-tag">10% off</span></strong><small>Te paso el alias por WhatsApp.</small></span></label>
-        <label class="co-opt ${checkout.pago==='MERCADOPAGO'?'sel':''}"><input type="radio" name="co-pago" value="MERCADOPAGO" ${checkout.pago==='MERCADOPAGO'?'checked':''}><span><strong>Mercado Pago</strong><small>Tarjeta, débito o dinero en cuenta. Te envío el link de pago.</small></span></label>
+        <label class="co-opt ${checkout.pago==='MERCADOPAGO'?'sel':''}"><input type="radio" name="co-pago" value="MERCADOPAGO" ${checkout.pago==='MERCADOPAGO'?'checked':''}><span><strong>Mercado Pago</strong><small>Tarjeta, débito o dinero en cuenta. Pagás ahora en Mercado Pago.</small></span></label>
       </div>
     </div>
     <div class="co-section">
@@ -2297,7 +2297,7 @@ function render(){
     <div class="sum-row"><span>Envío${checkout.entrega==='ANDREANI' ? ' Andreani' : ''}</span><span>${checkout.entrega!=='ANDREANI' ? 'Sin cargo' : textoEnvioAndreani()}</span></div>
     <div class="sum-row total"><span>Total${checkout.entrega==='ANDREANI' && !costoAndreani() ? ' + envío' : ''}</span><span>${montos(t.total)}</span></div>
     <div class="co-error" id="co-error"></div>
-    <button class="btn btn-dark" id="co-enviar" onclick="enviarPedido()">Enviar pedido por WhatsApp</button>
+    <button class="btn btn-dark" id="co-enviar" onclick="enviarPedido()">${checkout.pago==='MERCADOPAGO' ? 'Ir a pagar con Mercado Pago' : 'Enviar pedido por WhatsApp'}</button>
     <div class="co-note">Se abre WhatsApp con el detalle de tu pedido listo para enviar.</div>`;
   body.querySelectorAll('input[name="co-ent"]').forEach(r=>r.onchange=()=>{ leerForm(); checkout.entrega=r.value; render(); });
   body.querySelectorAll('input[name="co-pago"]').forEach(r=>r.onchange=()=>{ leerForm(); checkout.pago=r.value; render(); });
@@ -2318,6 +2318,7 @@ async function enviarPedido(){
   if(!c.nombre || !c.tel){ err.textContent='Completá tu nombre y tu teléfono.'; return; }
   if(c.entrega==='ANDREANI' && (!c.dir || !c.ciudad || !c.prov || !c.cp || !c.dni)){ err.textContent='Completá dirección, ciudad, provincia, código postal y DNI para el envío.'; return; }
   err.textContent='';
+  if(c.pago==='MERCADOPAGO') return pagarConMP(c, err);
   // Se abre la pestaña ya (los navegadores bloquean ventanas abiertas después de esperar al servidor)
   const win = window.open('', '_blank');
   if(c.entrega==='ANDREANI' && c.cot?.cargando){ err.textContent='Esperá un segundo, estamos calculando el envío.'; if(win) win.close(); return; }
@@ -2361,6 +2362,69 @@ async function enviarPedido(){
   document.getElementById('cart-body').innerHTML = `<div class="cart-empty"><div style="font-family:'Inter Tight',sans-serif;font-size:1.6rem;color:var(--ink);margin-bottom:.8rem">¡Gracias, ${escH(c.nombre.split(' ')[0])}!</div>Se abrió WhatsApp con tu pedido${numero?` #${numero}`:''}.<br>Enviá el mensaje y te respondo para coordinar el pago y el envío.<br><a href="${url}" target="_blank" rel="noopener" class="btn btn-dark">Abrir WhatsApp de nuevo</a></div>`;
   document.getElementById('cart-foot').innerHTML = '';
 }
+
+// ── MERCADO PAGO ─────────────────────────────────────────
+function datosPedido(c){
+  return {
+    clienteNombre:c.nombre, clienteTelefono:c.tel, clienteEmail:c.email||'',
+    tipoEntrega:ENTREGAS[c.entrega].tipo,
+    ...(c.entrega==='ANDREANI' ? { direccion:c.dir, ciudad:c.ciudad, provincia:c.prov, codigoPostal:c.cp, clienteDni:c.dni, zonaId: zonaDeProvincia(c.prov)?.id } : {}),
+    metodoPago:c.pago, notas:[ENTREGAS[c.entrega].nombre + (c.entrega==='ANDREANI' ? '' : ' — sin cargo'), c.nota].filter(Boolean).join('\n'),
+    items: carrito.map(i=> i.tipo==='lamina' ? { tipo:'lamina', titulo:i.titulo, tamano:i.tamano, marco:i.marco, cantidad:i.cantidad } : { tipo:i.tipo, id:i.id, cantidad:i.cantidad })
+  };
+}
+async function irAMercadoPago(pedidoId){
+  const r = await fetch(NAYA_API+'/pagos/mp/preferencia', { method:'POST', headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({ pedidoId, volverA: location.origin + location.pathname }) });
+  const d = await r.json().catch(()=>({}));
+  if(!r.ok || !d.initPoint) throw new Error(d.error || 'No pudimos abrir Mercado Pago. Probá de nuevo o elegí transferencia.');
+  location.href = d.initPoint;
+}
+async function pagarConMP(c, err){
+  if(carrito.some(i=>i.moneda && i.moneda!=='ARS')){ err.textContent='Mercado Pago solo cobra en pesos. Para obras en dólares elegí transferencia.'; return; }
+  if(c.entrega==='ANDREANI' && c.cot?.cargando){ err.textContent='Esperá un segundo, estamos calculando el envío.'; return; }
+  if(c.entrega==='ANDREANI' && !costoAndreani()){ err.textContent='No pudimos cotizar el envío a tu código postal. Elegí transferencia y lo coordinamos por WhatsApp.'; return; }
+  const btn = document.getElementById('co-enviar'); btn.disabled=true; btn.textContent='Abriendo Mercado Pago...';
+  try {
+    const r = await fetch(NAYA_API+'/pedidos', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(datosPedido(c)) });
+    const d = await r.json().catch(()=>({}));
+    if(!r.ok) throw new Error(d.error || 'No pudimos registrar el pedido. Probá de nuevo.');
+    try { localStorage.setItem('nayart_pago_mp', JSON.stringify({ id:d.pedidoId, numero:d.numero, nombre:c.nombre })); } catch(e){}
+    await irAMercadoPago(d.pedidoId);
+  } catch(e){
+    err.textContent = e.message;
+    btn.disabled=false; btn.textContent='Ir a pagar con Mercado Pago';
+  }
+}
+// Vuelta desde Mercado Pago: ?pago=ok|error|pendiente&pedido=N
+(function volverDeMP(){
+  const q = new URLSearchParams(location.search), estado = q.get('pago');
+  if(!estado) return;
+  const numero = q.get('pedido');
+  let guardado = null; try { guardado = JSON.parse(localStorage.getItem('nayart_pago_mp')); } catch(e){}
+  history.replaceState(null, '', location.pathname + location.hash);
+  const nombre = guardado?.nombre ? ', ' + escH(guardado.nombre.split(' ')[0]) : '';
+  let html;
+  if(estado==='ok'){
+    carrito = []; guardar(); actualizarContador();
+    try { localStorage.removeItem('nayart_pago_mp'); } catch(e){}
+    html = `<div style="font-family:'Inter Tight',sans-serif;font-size:1.6rem;color:var(--ink);margin-bottom:.8rem">¡Gracias${nombre}!</div>Tu pago se aprobó${numero?` y tu pedido #${escH(numero)} quedó confirmado`:''}.<br>Te escribo por WhatsApp con los detalles de la entrega.`;
+  } else if(estado==='pendiente'){
+    carrito = []; guardar(); actualizarContador();
+    html = `<div style="font-family:'Inter Tight',sans-serif;font-size:1.6rem;color:var(--ink);margin-bottom:.8rem">Pago en proceso</div>Mercado Pago está procesando tu pago${numero?` del pedido #${escH(numero)}`:''}.<br>Cuando se acredite, el pedido se confirma solo.`;
+  } else {
+    html = `<div style="font-family:'Inter Tight',sans-serif;font-size:1.6rem;color:var(--ink);margin-bottom:.8rem">El pago no se completó</div>No se te cobró nada. Podés intentarlo de nuevo${guardado?.id ? '' : ' desde el carrito'}.
+      ${guardado?.id ? `<br><button class="btn btn-dark" id="mp-reintentar">Reintentar con Mercado Pago</button><div class="co-error" id="mp-error"></div>` : ''}`;
+  }
+  document.getElementById('cart-title').textContent = 'Tu pedido';
+  document.getElementById('cart-body').innerHTML = `<div class="cart-empty">${html}</div>`;
+  document.getElementById('cart-foot').innerHTML = '';
+  document.getElementById('cart-drawer').classList.add('open');
+  document.getElementById('cart-overlay').classList.add('open');
+  const b = document.getElementById('mp-reintentar');
+  if(b) b.onclick = async ()=>{ b.disabled=true; b.textContent='Abriendo Mercado Pago...';
+    try { await irAMercadoPago(guardado.id); } catch(e){ document.getElementById('mp-error').textContent=e.message; b.disabled=false; b.textContent='Reintentar con Mercado Pago'; } };
+})();
 
 document.querySelectorAll('.nav-links a').forEach(a=>a.addEventListener('click',()=>document.getElementById('nav').classList.remove('menu-open')));
 const STICKERS = [['1','Calle soleada'],['2','Callejón']];
