@@ -1422,7 +1422,7 @@ footer { flex-wrap: wrap; }
 html { scroll-behavior: auto; }
 body { background: var(--paper) !important; color: var(--ink); font-family: 'Inter Tight', sans-serif !important; font-size: 15px; -webkit-font-smoothing: antialiased; }
 body::before { display: none !important; }
-.mono, .lh, .lmenu, .ix2-head, .ob-meta, .ob-cap, .ob-nav, .lf, .v-title, .v-lab, .ab-lab, .btn-m { font-family: 'JetBrains Mono', ui-monospace, monospace !important; font-weight: 400 !important; letter-spacing: 0 !important; text-transform: uppercase; }
+.mono, .lh, .lmenu, .ix2-head, .ob-meta, .ob-cap, .ob-nav, .v-title, .v-lab, .ab-lab, .btn-m { font-family: 'JetBrains Mono', ui-monospace, monospace !important; font-weight: 400 !important; letter-spacing: 0 !important; text-transform: uppercase; }
 a { color: inherit; }
 .vista { display: none; }
 .vista.on { display: block; animation: aparecer .7s cubic-bezier(.2,.7,.2,1); }
@@ -1533,6 +1533,8 @@ body.tema-pf .ob-cap { text-align: center; }
 .laminas-mas { text-align: left; margin-top: 2.4rem; }
 .t-sec { margin-top: 5rem; }
 .t-fuera { display: none !important; }
+.cart-drawer { box-shadow: none !important; visibility: hidden; transition: transform .45s cubic-bezier(.2,.7,.2,1), visibility 0s .45s !important; }
+.cart-drawer.open { box-shadow: -20px 0 60px rgba(26,24,20,.12) !important; visibility: visible; transition: transform .45s cubic-bezier(.2,.7,.2,1), visibility 0s !important; }
 .t-orig { margin: 3.5rem 0 0; } .t-orig a { font-size: .76rem; text-decoration: none; border-bottom: 1px solid currentColor; padding-bottom: 2px; }
 .stickers { grid-template-columns: repeat(4, 1fr) !important; }
 .como { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-top: 5rem; padding-top: 1.4rem; border-top: 1px solid var(--rule); }
@@ -1572,7 +1574,6 @@ body.tema-pf .lh-logo img { filter: invert(93%) sepia(12%) saturate(300%) hue-ro
 body.tema-pf .lh-burger span { background: var(--pf-ink); }
 body.tema-pf .lmenu { background: rgba(44,58,43,.82); }
 body.tema-pf .lmenu a, body.tema-pf .lmenu button { color: var(--pf-ink); }
-body.tema-pf .lf { border-top-color: rgba(236,229,210,.15); color: var(--pf-dim); }
 body.tema-pf .wa-fab { background: var(--pf-acc) !important; color: #2c3a2b !important; }
 body.tema-pf .obra-v .ob-meta, body.tema-pf .obra-v .ob-cap, body.tema-pf .ob-vendida { color: var(--pf-dim); }
 body.tema-pf .ob-nav { border-top-color: rgba(236,229,210,.15); }
@@ -1700,10 +1701,48 @@ body.tema-pf { transition: background-color 1.4s ease; }
 .form input, .form select, .form textarea { border-radius: 0 !important; background: #fff !important; border: 1px solid var(--rule) !important; font-family: 'Inter Tight', sans-serif !important; }
 @media (max-width: 720px) { .form .form-row { grid-template-columns: 1fr !important; } .ct-grid { grid-template-columns: 1fr; gap: 2.4rem; } }
 /* pie */
-.lf { display: flex; justify-content: space-between; gap: 2rem; padding: 1.6rem; border-top: 1px solid var(--rule); font-size: .72rem; line-height: 1.8; }
-.lf a { text-decoration: none; display: block; }
-.lf a:hover { color: var(--ink-faint); }
-.lf .der { text-align: right; }
+/* ═════════ PIE: la sala se oscurece al final de cada página ═════════ */
+.pie { position: relative; z-index: 3; margin-top: clamp(5rem, 12vh, 9rem); background: #2c3a2b; color: #ece5d2; overflow: hidden; --pie-dim: #a9b096; --pie-acc: #d9c48a; }
+.pie-borde { position: absolute; left: 0; right: 0; top: 0; height: clamp(90px, 9vw, 190px); background: url('img/pie-borde.png') center top / 100% 100% no-repeat; transform: translateY(-62%); z-index: 3; pointer-events: none; -webkit-mask-image: linear-gradient(180deg, #000 66%, transparent 100%); mask-image: linear-gradient(180deg, #000 66%, transparent 100%); }
+.pie { overflow: visible; }
+.pie-tex, .pie-velo { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.pie-tex div { position: absolute; inset: -30% 0 -10% 0; background-size: cover; background-position: center; opacity: 0; transition: opacity 2.4s ease; transform: translate3d(0, var(--pty,0px), 0) scale(1.15); will-change: transform; filter: saturate(.75) contrast(1.05); }
+.pie-tex div.on { opacity: .5; }
+.pie-velo { background:
+   linear-gradient(180deg, #2c3a2b 0%, rgba(44,58,43,.35) 22%, rgba(44,58,43,.55) 55%, #2c3a2b 92%),
+   radial-gradient(120% 80% at 50% 30%, transparent 30%, rgba(20,28,20,.55) 100%); }
+.pie-velo::before { content:''; position:absolute; inset:0; background:#2c3a2b; mix-blend-mode: color; opacity: .55; }
+.pie-velo::after { content:''; position:absolute; inset:0; opacity:.22; mix-blend-mode: overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1  0 0 0 0 .95  0 0 0 0 .85  0 0 0 .9 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+.pie-in { position: relative; z-index: 2; text-align: left; padding-top: clamp(5rem, 14vh, 9rem); padding-bottom: 2rem; }
+.pie-ir { display: inline-flex; flex-direction: column; gap: 1rem; text-decoration: none; color: inherit; max-width: 100%; }
+.pie-ojo { font-size: .7rem; color: var(--pie-dim); }
+.pie-big { font-family: 'Instrument Serif', serif; font-style: italic; font-size: clamp(2.6rem, 6.3vw, 6.2rem); line-height: .95; white-space: nowrap; letter-spacing: -0.02em; position: relative; padding-bottom: .12em; }
+.pie-big::after { content:''; position:absolute; left:0; bottom:0; height:1px; width:100%; background: currentColor; opacity:.35; transform-origin: left; transform: scaleX(0); transition: transform .9s cubic-bezier(.2,.7,.2,1), opacity .6s; }
+.pie-ir:hover .pie-big::after { transform: scaleX(1); opacity: .7; }
+.pie-big i { font-style: normal; display: inline-block; transition: transform .6s cubic-bezier(.2,.7,.2,1); color: var(--pie-acc); }
+.pie-ir:hover .pie-big i { transform: translateX(.25em); }
+.solo-pf { display: none !important; }
+body.tema-pf .solo-pf { display: inline-flex !important; } body.tema-pf .solo-claro { display: none !important; }
+.pie-cols { display: grid; grid-template-columns: 1.3fr 1fr 1.2fr 1.3fr; gap: 2rem; margin-top: clamp(4rem, 10vh, 7rem); padding-top: 1.4rem; border-top: 1px solid rgba(236,229,210,.16); }
+.pie-cols > div { display: flex; flex-direction: column; gap: .35rem; font-size: .9rem; line-height: 1.45; }
+.pie-cols p { margin: 0; color: rgba(236,229,210,.82); max-width: 30ch; }
+.pie-cols a { color: #ece5d2; text-decoration: none; width: fit-content; background: linear-gradient(currentColor,currentColor) 0 100% / 0 1px no-repeat; transition: background-size .5s; }
+.pie-cols a:hover { background-size: 100% 1px; }
+.pie-lab { font-size: .64rem; color: var(--pie-dim); margin-bottom: .45rem; }
+.pie-fin { display: flex; justify-content: space-between; gap: 1rem; margin-top: 3.5rem; font-size: .66rem; color: var(--pie-dim); }
+.pie-fin a { color: var(--pie-dim); text-decoration: none; } .pie-fin a:hover { color: #ece5d2; }
+.pie-marca { position: relative; z-index: 1; font-family: 'Inter Tight', sans-serif; font-weight: 500; font-size: clamp(5rem, 21vw, 22rem); letter-spacing: -0.055em; line-height: .78; white-space: nowrap; text-align: center; color: rgba(236,229,210,.07); margin-top: 1rem; margin-bottom: -0.08em; transform: translateY(var(--pmy, 30px)); transition: transform 1.6s cubic-bezier(.2,.7,.2,1); user-select: none; overflow: hidden; padding: 0 1rem; }
+.pie-marca sup { font-size: .22em; vertical-align: top; position: relative; top: .5em; letter-spacing: 0; }
+.pie.dentro .pie-marca { --pmy: 0px; }
+@media (max-width: 860px) {
+  .pie-cols { grid-template-columns: 1fr 1fr; gap: 2rem 1.2rem; }
+  .pie-cols > div:first-child { grid-column: 1 / 3; }
+  .pie-cols > div:last-child { grid-column: 1 / 3; }
+  .pie-fin { flex-direction: column; gap: .6rem; }
+  .pie-big { font-size: clamp(2.2rem, 10.5vw, 3.4rem); white-space: normal; }
+}
+@media (prefers-reduced-motion: reduce) { .pie-tex div { transition: none; } .pie-marca { transform: none; transition: none; } }
 /* carrito y extras */
 .cart-drawer { border-radius: 0 !important; }
 .cart-head h3 { font-family: 'JetBrains Mono', monospace !important; text-transform: uppercase; font-size: .9rem !important; font-weight: 400 !important; letter-spacing: 0 !important; }
@@ -1898,10 +1937,29 @@ body.tema-pf { transition: background-color 1.4s ease; }
 </section>
 </main>
 
-<div class="lf">
-  <div>© 2026 Santiago Ornaghi<br><a href="#/lista">Work</a><a href="#/portfolio">Portfolio</a><a href="#/tienda">Shop</a><a href="#/fotos">Photos</a><a href="#/acerca">About</a></div>
-  <div class="der"><a href="#/contacto">Contact</a><a href="mailto:santiornaghi@gmail.com">Email</a><a href="https://instagram.com/naya__artt" target="_blank" rel="noopener">Instagram</a></div>
-</div>
+<footer class="pie" id="pie">
+  <div class="pie-borde" aria-hidden="true"></div>
+  <div class="pie-tex" id="pie-tex" aria-hidden="true"></div>
+  <div class="pie-velo" aria-hidden="true"></div>
+  <div class="envoltura pie-in">
+    <a class="pie-ir solo-claro" href="#/portfolio">
+      <span class="mono pie-ojo">Portfolio <span class="pie-n" id="pie-n"></span></span>
+      <span class="pie-big"><span data-es="Obras en colecciones privadas" data-en="Works in private collections">Obras en colecciones privadas</span> <i>→</i></span>
+    </a>
+    <a class="pie-ir solo-pf" href="#/lista">
+      <span class="mono pie-ojo">Work</span>
+      <span class="pie-big"><span data-es="Obras disponibles" data-en="Available works">Obras disponibles</span> <i>→</i></span>
+    </a>
+    <div class="pie-cols">
+      <div><span class="mono pie-lab">Naya Lab®</span><p data-es="Acuarelas de Santiago Ornaghi.<br>Río Cuarto, Córdoba, Argentina." data-en="Watercolors by Santiago Ornaghi.<br>Río Cuarto, Córdoba, Argentina.">Acuarelas de Santiago Ornaghi.<br>Río Cuarto, Córdoba, Argentina.</p></div>
+      <div><span class="mono pie-lab">Index</span><a href="#/lista">Work</a><a href="#/portfolio">Portfolio</a><a href="#/tienda">Shop</a><a href="#/fotos">Photos</a><a href="#/acerca">About</a></div>
+      <div><span class="mono pie-lab">Contact</span><a href="mailto:santiornaghi@gmail.com">santiornaghi@gmail.com</a><a href="https://wa.me/5493584390961" target="_blank" rel="noopener">WhatsApp</a><a href="https://instagram.com/naya__artt" target="_blank" rel="noopener">Instagram</a></div>
+      <div><span class="mono pie-lab">Shop</span><p data-es="Envíos por Andreani a todo el país. Retiro sin cargo en Río Cuarto y Córdoba." data-en="Shipping across Argentina with Andreani. Free pickup in Río Cuarto and Córdoba.">Envíos por Andreani a todo el país. Retiro sin cargo en Río Cuarto y Córdoba.</p></div>
+    </div>
+    <div class="pie-fin mono"><span>© 2026 Santiago Ornaghi</span><a href="#/" onclick="scrollTo({top:0,behavior:'smooth'})" data-es="Volver arriba ↑" data-en="Back to top ↑">Volver arriba ↑</a></div>
+  </div>
+  <div class="pie-marca" aria-hidden="true">Naya Lab<sup>®</sup></div>
+</footer>
 <!-- CARRITO -->
 <div class="cart-overlay" id="cart-overlay" onclick="cerrarCarrito()"></div>
 <aside class="cart-drawer" id="cart-drawer" aria-label="Carrito">
@@ -2409,7 +2467,7 @@ function renderIndice(){
   DISP = TODAS.filter(o=>!o.vendida); PORT = TODAS.filter(o=>o.vendida);
   const l=document.getElementById('ix2-list'); if(l) l.innerHTML = DISP.map(filaIx).join('');
   const n=document.getElementById('ix2-n'); if(n) n.textContent='('+DISP.length+')';
-  renderPortfolio();
+  renderPortfolio(); piePortfolioN();
   const np=document.getElementById('ix2-n-p'); if(np) np.textContent='('+String(PORT.length).padStart(2,'0')+') '+L('obras','works');
   previewIndice();
 }
@@ -2475,6 +2533,21 @@ function heroPortfolio(){
   addEventListener('pointermove',e=>{ if(e.pointerType!=='mouse') return; const s=document.getElementById('v-portfolio'); if(!s) return; s.style.setProperty('--mx',e.clientX+'px'); s.style.setProperty('--my',e.clientY+'px'); },{passive:true});
   window._pfPaso=paso;
 })();
+// ═════════ Pie: texturas que derivan con el scroll ═════════
+(function(){
+  const pie=document.getElementById('pie'), tex=document.getElementById('pie-tex'); if(!pie||!tex) return;
+  const F=['img/rincones/sombra-alizarin.jpg','img/detalles/detalle-paja.jpg','img/movimiento/textura-roja.jpg','img/hd/02.jpg','img/movimiento/ocre.jpg','img/detalles/detalle-niebla.jpg'];
+  let capas=[], k=0, timer=null, cargado=false;
+  function cargar(){ if(cargado) return; cargado=true; tex.innerHTML=F.map(f=>`<div style="background-image:url('${f}')"></div>`).join(''); capas=[...tex.children]; capas[0].classList.add('on'); }
+  const quieto=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  new IntersectionObserver(es=>es.forEach(e=>{
+    if(e.isIntersecting){ cargar(); pie.classList.add('dentro'); if(!quieto && !timer) timer=setInterval(()=>{ capas[k].classList.remove('on'); k=(k+1)%capas.length; capas[k].classList.add('on'); },7000); }
+    else { clearInterval(timer); timer=null; }
+  }),{rootMargin:'200px 0px'}).observe(pie);
+  let pend=false;
+  addEventListener('scroll',()=>{ if(pend||quieto) return; pend=true; requestAnimationFrame(()=>{ pend=false; const r=pie.getBoundingClientRect(); if(r.top>innerHeight) return; const p=(r.top)/innerHeight; capas.forEach(c=>c.style.setProperty('--pty',Math.max(-80,Math.min(80,p*70)).toFixed(1)+'px')); }); },{passive:true});
+})();
+function piePortfolioN(){ const n=document.getElementById('pie-n'); if(n && PORT.length) n.textContent='('+String(PORT.length).padStart(2,'0')+')'; }
 // la galería del panel alimenta el índice
 renderGaleria = function(obras){ window._obrasGaleria = obras; if(obras.some(o=>o.id)) window._apiLista = true; renderIndice(); if(location.hash.startsWith('#/obra/')) ruta(); };
 function previewIndice(){
