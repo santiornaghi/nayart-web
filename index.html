@@ -1574,47 +1574,110 @@ body.tema-pf .wa-fab { background: var(--pf-acc) !important; color: #2c3a2b !imp
 body.tema-pf .obra-v .ob-meta, body.tema-pf .obra-v .ob-cap, body.tema-pf .ob-vendida { color: var(--pf-dim); }
 body.tema-pf .ob-nav { border-top-color: rgba(236,229,210,.15); }
 body.tema-pf .ob-top h2 { font-family: 'Instrument Serif', serif !important; text-transform: none; font-size: clamp(2.2rem, 5vw, 4rem) !important; letter-spacing: -0.01em !important; }
-#v-portfolio { position: relative; }
-.pf-lavado { position: absolute; inset: 0 0 auto 0; height: 120vh; pointer-events: none; z-index: 0; filter: blur(40px); opacity: .55;
-  background:
-    radial-gradient(38% 30% at 18% 22%, rgba(140,160,96,.55), transparent 70%),
-    radial-gradient(30% 26% at 82% 12%, rgba(217,196,138,.35), transparent 70%),
-    radial-gradient(45% 34% at 70% 60%, rgba(78,104,70,.6), transparent 72%),
-    radial-gradient(28% 22% at 30% 75%, rgba(180,150,90,.25), transparent 70%); }
-.pf { position: relative; z-index: 2; padding-top: 8.5rem; padding-bottom: 6rem; }
-.pf-cab { display: grid; grid-template-columns: 1fr; gap: .4rem; margin-bottom: clamp(3rem, 8vh, 6rem); max-width: 900px; }
-.pf-n { color: var(--pf-dim); font-size: .74rem; }
-.pf-tit { font-family: 'Instrument Serif', serif !important; font-weight: 400 !important; font-style: italic; font-size: clamp(4.2rem, 13vw, 10.5rem) !important; line-height: .85 !important; letter-spacing: -0.03em !important; color: var(--pf-ink); text-transform: none; }
-.pf-sub { font-family: 'Instrument Serif', serif; font-size: clamp(1.25rem, 2.2vw, 1.7rem); line-height: 1.25; color: var(--pf-dim); max-width: 34ch; margin-top: 1rem; }
-.pf-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: clamp(2.2rem, 5vw, 4.5rem) clamp(1rem, 2.4vw, 2rem); align-items: start; }
-.pf-card { position: relative; text-decoration: none; color: inherit; display: block; opacity: 0; transform: translateY(50px); transition: opacity 1.1s ease, transform 1.2s cubic-bezier(.2,.7,.2,1); transition-delay: calc(var(--i) * 60ms); }
-.pf-card.dentro { opacity: 1; transform: none; }
-.pf-a { grid-column: 1 / 8; }
-.pf-b { grid-column: 9 / 13; margin-top: 9rem; }
-.pf-c { grid-column: 2 / 6; }
-.pf-d { grid-column: 7 / 13; margin-top: 4rem; }
-.pf-e { grid-column: 1 / 6; margin-top: 2rem; }
-.pf-f { grid-column: 7 / 12; margin-top: 7rem; }
-.pf-img { position: relative; overflow: hidden; background: #243023; padding: clamp(.6rem, 1.4vw, 1.1rem); box-shadow: 0 30px 60px -30px rgba(0,0,0,.6); }
-.pf-img::after { content:''; position:absolute; inset:0; pointer-events:none; box-shadow: inset 0 0 0 1px rgba(236,229,210,.08); }
-.pf-img img { width: 100%; height: auto; display: block; transition: transform 1.4s cubic-bezier(.2,.7,.2,1), filter .8s; filter: saturate(.92); }
-.pf-img.dos { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; }
-.pf-card:hover .pf-img img { transform: scale(1.035); filter: saturate(1.05); }
-.pf-cap { display: flex; flex-direction: column; gap: .3rem; margin-top: 1rem; }
-.pf-t { font-family: 'Instrument Serif', serif; font-size: clamp(1.5rem, 2.4vw, 2.1rem); line-height: 1; color: var(--pf-ink); }
-.pf-cap .mono { font-size: .68rem; color: var(--pf-dim); }
-.pf-sello { position: absolute; top: 1.6rem; right: -0.6rem; transform: rotate(4deg); background: var(--pf-acc); color: #2c3a2b; font-size: .62rem; padding: .35rem .6rem; box-shadow: 0 6px 16px rgba(0,0,0,.25); opacity: 0; transition: opacity .4s, transform .5s; }
-.pf-card:hover .pf-sello { opacity: 1; transform: rotate(-2deg); }
-.pf-pie { margin-top: 6rem; padding-top: 1.4rem; border-top: 1px solid rgba(236,229,210,.15); }
-.pf-pie a { color: var(--pf-acc); text-decoration: none; font-size: .78rem; }
-@media (max-width: 760px) {
-  .pf { padding-top: 6.5rem; }
-  .pf-grid { grid-template-columns: 1fr; gap: 3rem; }
-  .pf-card { grid-column: 1 !important; margin-top: 0 !important; }
-  .pf-card:nth-child(even) { margin-left: 12%; }
-  .pf-sello { opacity: 1; right: .4rem; }
+#v-portfolio { position: relative; --pf-tono:#2c3a2b; background: var(--pf-tono); transition: background-color 1.4s ease; }
+body.tema-pf { transition: background-color 1.4s ease; }
+/* luz de sala que sigue al cursor */
+#v-portfolio::before { content:''; position: fixed; inset: 0; pointer-events: none; z-index: 1;
+  background: radial-gradient(600px 480px at var(--mx,50%) var(--my,30%), rgba(255,240,205,.09), transparent 70%); }
+/* HERO: macro de las obras, a la deriva */
+.pfh { position: relative; height: 100svh; min-height: 560px; overflow: hidden; z-index: 2; }
+.pfh-cap { position: absolute; inset: 0; opacity: 0; transition: opacity 2.2s ease; background-size: cover; background-position: center; will-change: transform, opacity; transform: scale(1.18); }
+.pfh-cap.on { opacity: 1; animation: deriva 14s ease-out forwards; }
+@keyframes deriva { from { transform: scale(1.32) translate3d(2%, 1.5%, 0); } to { transform: scale(1.12) translate3d(-2%, -1%, 0); } }
+.pfh::after { content:''; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(180deg, rgba(36,48,35,.55) 0%, rgba(36,48,35,.15) 35%, rgba(36,48,35,.35) 65%, var(--pf-tono) 100%),
+              radial-gradient(120% 90% at 50% 40%, transparent 40%, rgba(20,28,20,.65) 100%); }
+.pfh-tinta { position: absolute; inset: 0; background: #2c3a2b; mix-blend-mode: color; opacity: .55; z-index: 1; pointer-events: none; }
+.pfh-txt { position: absolute; z-index: 3; left: 0; right: 0; bottom: clamp(2rem, 8vh, 5rem); }
+.pf-n { color: var(--pf-ink); opacity: .8; font-size: .72rem; display: block; margin-bottom: 1rem; }
+.pfh-txt .envoltura { display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 2rem; }
+.pf-tit { font-family: 'Instrument Serif', serif !important; font-weight: 400 !important; font-style: italic; font-size: clamp(5rem, 17vw, 15rem) !important; line-height: .8 !important; letter-spacing: -0.035em !important; color: var(--pf-ink); text-transform: none; text-shadow: 0 2px 40px rgba(0,0,0,.25); }
+.pf-sub { font-family: 'Instrument Serif', serif; font-size: clamp(1.15rem, 1.8vw, 1.5rem); line-height: 1.25; color: var(--pf-ink); opacity: .85; margin-top: 1.2rem; }
+.pfh-der { text-align: right; display: flex; flex-direction: column; gap: .5rem; align-items: flex-end; }
+.pfh-der .mono { font-size: .7rem; color: var(--pf-ink); opacity: .8; }
+.pfh-pista { width: 1px; height: 56px; background: linear-gradient(var(--pf-ink), transparent); opacity: .6; animation: pista 2.4s ease-in-out infinite; transform-origin: top; }
+@keyframes pista { 0% { transform: scaleY(0); } 50% { transform: scaleY(1); } 100% { transform: scaleY(1); opacity: 0; } }
+/* SALAS */
+.pf-salas { position: relative; z-index: 2; }
+.sala { position: relative; min-height: 100svh; display: flex; align-items: center; padding: clamp(5rem, 12vh, 9rem) 0; }
+.sala-in { display: grid; grid-template-columns: repeat(12, 1fr); gap: clamp(1rem, 2.4vw, 2.2rem); align-items: center; width: 100%; }
+.sala-num { position: absolute; top: clamp(2rem, 7vh, 5rem); font-family: 'Instrument Serif', serif; font-size: clamp(8rem, 22vw, 20rem); line-height: .8; color: transparent; -webkit-text-stroke: 1px rgba(236,229,210,.1); pointer-events: none; user-select: none; z-index: 0; }
+.sala:nth-child(odd) .sala-num { left: 2vw; } .sala:nth-child(even) .sala-num { right: 2vw; }
+.muro { grid-column: 1 / 8; position: relative; display: flex; justify-content: center; align-items: center; min-height: 64vh; z-index: 1; }
+.sala:nth-child(even) .muro { grid-column: 6 / 13; order: 2; }
+.sala:nth-child(even) .ficha { grid-column: 1 / 5; order: 1; }
+.muro::before { content:''; position: absolute; left: 50%; top: -14%; width: 120%; height: 80%; transform: translateX(-50%); pointer-events: none;
+  background: radial-gradient(50% 60% at 50% 0%, rgba(255,236,196,.16), transparent 70%); }
+/* marcos: kiri para acuarela, negro fino para carbonilla, bastidor para lienzo */
+.cuadro { position: relative; display: block; text-decoration: none; transform: translate3d(0, var(--py,0px), 0); transition: transform .25s linear; max-width: 100%; }
+.cuadro .hoja { display: flex; gap: clamp(.6rem, 1.4vw, 1.2rem); background: #f6f2e8; padding: clamp(1.1rem, 3.2vw, 2.6rem);
+  box-shadow: inset 0 0 0 1px rgba(80,60,30,.12), inset 2px 3px 8px rgba(60,40,20,.18); }
+.cuadro img { display: block; max-height: 62vh; width: auto; max-width: 100%; height: auto; box-shadow: 0 0 0 1px rgba(0,0,0,.06); }
+.cuadro.dos img { max-height: 56vh; max-width: calc(50% - .4rem); }
+.marco-kiri { border: clamp(10px, 1.3vw, 16px) solid #d6bb8f; border-image: linear-gradient(135deg, #e7d0a8, #cfae7f 28%, #e1c597 52%, #c7a571 78%, #dcc195) 1; }
+.marco-negro { border: clamp(8px, .9vw, 11px) solid #161616; }
+.marco-negro .hoja { background: #fbf9f4; }
+.marco-lienzo .hoja { padding: 0; background: none; box-shadow: none; }
+.marco-lienzo img { max-height: 58vh; box-shadow: 4px 0 0 #8a6a32, 0 0 0 1px rgba(0,0,0,.2); }
+.cuadro::after { content:''; position: absolute; inset: 0; pointer-events: none; box-shadow: 0 2px 3px rgba(0,0,0,.25), 18px 34px 50px -18px rgba(10,14,8,.75), 40px 70px 90px -40px rgba(10,14,8,.5); }
+.cuadro img { transition: filter .8s; filter: saturate(.95) contrast(1.02); }
+.cuadro:hover img { filter: saturate(1.08) contrast(1.04); }
+/* ficha: cartela de museo + lupa */
+.ficha { grid-column: 9 / 13; display: flex; flex-direction: column; gap: 1.6rem; z-index: 1; }
+.sala.ancha .muro { grid-column: 1 / 13 !important; order: 1 !important; min-height: 0; }
+.sala.ancha .ficha { grid-column: 1 / 13 !important; order: 2 !important; display: grid; grid-template-columns: 300px 1fr; gap: 2.4rem; align-items: end; margin-top: 2rem; }
+.sala.ancha .lupa { aspect-ratio: 16/9; }
+.sala.ancha .cuadro img { max-height: none; width: 100%; }
+.sala.ancha .cuadro { width: 100%; }
+.lupa { position: relative; aspect-ratio: 4/5; overflow: hidden; background-size: 520%; background-repeat: no-repeat; background-position: var(--bx,50%) var(--by,50%); transition: background-position .3s linear;
+  box-shadow: 0 30px 50px -30px rgba(0,0,0,.7); clip-path: inset(0 round 2px); max-width: 300px; }
+.lupa::after { content:''; position:absolute; inset:0; box-shadow: inset 0 0 0 1px rgba(236,229,210,.18); }
+.lupa-et { position: absolute; left: .6rem; bottom: .6rem; font-size: .58rem; color: #f3eee0; background: rgba(28,36,27,.55); backdrop-filter: blur(6px); padding: .25rem .45rem; border-radius: 2px; }
+.cartela { border-top: 1px solid rgba(236,229,210,.22); padding-top: 1rem; display: flex; flex-direction: column; gap: .55rem; }
+.cartela .mono { font-size: .66rem; color: var(--pf-dim); }
+.cartela h3 { font-family: 'Instrument Serif', serif !important; font-weight: 400 !important; font-size: clamp(2rem, 3.4vw, 3.2rem) !important; line-height: .95 !important; letter-spacing: -0.01em !important; text-transform: none !important; color: var(--pf-ink); }
+.cartela dl { display: grid; grid-template-columns: auto 1fr; gap: .25rem 1rem; margin: .4rem 0 0; font-size: .86rem; color: var(--pf-ink); opacity: .86; }
+.cartela dt { font-family: 'JetBrains Mono', monospace; font-size: .62rem; text-transform: uppercase; color: var(--pf-dim); padding-top: .2rem; }
+.cartela dd { margin: 0; }
+.sello { align-self: flex-start; margin-top: .5rem; font-size: .6rem; color: var(--pf-acc); border: 1px solid currentColor; padding: .35rem .6rem; border-radius: 99px; }
+.cartela a.ver { color: var(--pf-ink); font-size: .7rem; text-decoration: none; border-bottom: 1px solid rgba(236,229,210,.35); align-self: flex-start; padding-bottom: 2px; }
+/* revelado */
+.sala .muro, .sala .ficha { opacity: 0; transform: translateY(40px); transition: opacity 1.2s ease, transform 1.4s cubic-bezier(.2,.7,.2,1); }
+.sala .ficha { transition-delay: .18s; }
+.sala.dentro .muro, .sala.dentro .ficha { opacity: 1; transform: none; }
+/* banda crudo entre salas */
+.banda-crudo { position: relative; z-index: 2; background: #e8e1cd; color: #2c3a2b; overflow: hidden; padding: 1.2rem 0; }
+.banda-crudo .pista-b { display: flex; gap: 1.2rem; width: max-content; animation: desliza 70s linear infinite; }
+.banda-crudo .pista-b div { height: clamp(120px, 18vw, 220px); aspect-ratio: 1; background-size: 300%; background-position: center; flex: none; filter: saturate(.9); }
+@keyframes desliza { to { transform: translateX(-50%); } }
+/* cierre: índice tipo hoja de contactos */
+.pf-cierre { position: relative; z-index: 2; padding: clamp(5rem, 12vh, 8rem) 0 4rem; }
+.pf-cierre h4 { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; font-size: clamp(2.4rem, 5vw, 4rem); line-height: 1; margin-bottom: 2rem; color: var(--pf-ink); }
+.contactos { display: grid; grid-template-columns: repeat(11, 1fr); gap: .6rem; }
+.contactos a { display: block; aspect-ratio: 3/4; background-size: cover; background-position: center; filter: grayscale(.85) brightness(.85); transition: filter .5s, transform .5s; position: relative; }
+.contactos a:hover { filter: none; transform: translateY(-6px); }
+.contactos a span { position: absolute; left: .35rem; top: .3rem; font-size: .55rem; color: #fff; mix-blend-mode: difference; }
+.pf-pie { margin-top: 3.5rem; padding-top: 1.4rem; border-top: 1px solid rgba(236,229,210,.15); display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+.pf-pie a, .pf-pie span { color: var(--pf-acc); text-decoration: none; font-size: .74rem; }
+.pf-pie span { color: var(--pf-dim); }
+@media (max-width: 860px) {
+  .sala { min-height: auto; padding: 4.5rem 0; }
+  .sala-in { grid-template-columns: 1fr 1fr; gap: 1.6rem 1rem; }
+  .muro, .sala:nth-child(even) .muro { grid-column: 1 / 3; order: 1; min-height: 0; }
+  .ficha, .sala:nth-child(even) .ficha { grid-column: 1 / 3; order: 2; display: grid; grid-template-columns: 38% 1fr; gap: 1rem; align-items: start; }
+  .cuadro img { max-height: 58vh; } .cuadro.dos img { max-height: 40vh; }
+  .sala-num { font-size: 9rem; top: 1.5rem; }
+  .cartela h3 { font-size: 1.9rem !important; }
+  .contactos { grid-template-columns: repeat(4, 1fr); }
+  .pfh-txt .envoltura { grid-template-columns: 1fr; } .pfh-der { align-items: flex-start; text-align: left; }
+  .pfh-pista { display: none; }
 }
-@media (prefers-reduced-motion: reduce) { .pf-card { opacity: 1; transform: none; transition: none; } }
+@media (prefers-reduced-motion: reduce) {
+  .pfh-cap.on { animation: none; transform: scale(1.15); }
+  .sala .muro, .sala .ficha { opacity: 1; transform: none; transition: none; }
+  .banda-crudo .pista-b { animation: none; }
+  .cuadro { transform: none !important; }
+}
 /* contacto */
 .ct-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 4rem; }
 .form .fg label { font-family: 'JetBrains Mono', monospace; text-transform: uppercase; font-size: .7rem; letter-spacing: 0; color: var(--ink); }
@@ -1752,16 +1815,24 @@ body.tema-pf .ob-top h2 { font-family: 'Instrument Serif', serif !important; tex
 
 <!-- PORTFOLIO -->
 <section class="vista" id="v-portfolio">
-  <div class="pf-lavado" aria-hidden="true"></div>
-  <div class="envoltura pf">
-    <div class="pf-cab">
-      <span class="mono pf-n" id="ix2-n-p"></span>
-      <h2 class="pf-tit">Portfolio</h2>
-      <p class="pf-sub" data-es="Obras vendidas, hoy en colecciones privadas." data-en="Sold works, now in private collections.">Obras vendidas, hoy en colecciones privadas.</p>
-    </div>
-    <div class="pf-grid" id="pf-grid"></div>
-    <div class="pf-pie"><a class="mono" href="#/lista" data-es="Ver obras disponibles →" data-en="See available works →">Ver obras disponibles →</a></div>
+  <div class="pfh">
+    <div id="pfh-capas"></div>
+    <div class="pfh-tinta"></div>
+    <div class="pfh-txt"><div class="envoltura">
+      <div>
+        <span class="mono pf-n" id="ix2-n-p"></span>
+        <h2 class="pf-tit">Portfolio</h2>
+        <p class="pf-sub" data-es="Obras vendidas, hoy en colecciones privadas." data-en="Sold works, now in private collections.">Obras vendidas, hoy en colecciones privadas.</p>
+      </div>
+      <div class="pfh-der"><span class="mono">2022 — 2023</span><span class="mono" data-es="Acuarela · Carbonilla · Acrílico" data-en="Watercolor · Charcoal · Acrylic">Acuarela · Carbonilla · Acrílico</span><span class="pfh-pista"></span></div>
+    </div></div>
   </div>
+  <div class="pf-salas" id="pf-salas"></div>
+  <div class="pf-cierre"><div class="envoltura">
+    <h4 data-es="Índice" data-en="Index">Índice</h4>
+    <div class="contactos" id="pf-contactos"></div>
+    <div class="pf-pie"><span class="mono">Naya Lab® — Río Cuarto</span><a class="mono" href="#/lista" data-es="Ver obras disponibles →" data-en="See available works →">Ver obras disponibles →</a></div>
+  </div></div>
 </section>
 <!-- FOTOS -->
 <section class="vista" id="v-fotos">
@@ -1850,9 +1921,9 @@ const OBRA = [
   {s:'ponte', t:'Ponte', tec:'Acuarela sobre papel', m:'25 × 30 cm', y:2023, img:['img/rincones/ponte.jpg'], vendida:true},
   {s:'sombra-alizarin', t:'Sombra Alizarin', tec:'Acuarela sobre papel', m:'30 × 40 cm', y:2023, img:['img/rincones/sombra-alizarin.jpg'], vendida:true},
   {s:'el-paseo-de-flodeo', t:'El Paseo de Flodeo', tec:'Acuarela sobre papel', m:'30 × 40 cm', y:2023, img:['img/rincones/paseo-de-flodeo.jpg'], vendida:true},
-  {s:'urbe-dorada', t:'Urbe dorada', tec:'Acrílico sobre lienzo', m:'40 × 140 cm', y:2023, img:['img/movimiento/urbe-dorada.jpg'], vendida:true},
-  {s:'lo-sensual-i', t:'Lo sensual I', tec:'Carbonilla sobre papel', m:'53 × 83 cm', y:2023, img:['img/movimiento/lo-sensual-1.jpg'], vendida:true},
-  {s:'lo-sensual-ii', t:'Lo sensual II', tec:'Carbonilla sobre papel', m:'53 × 83 cm', y:2023, img:['img/movimiento/lo-sensual-2.jpg'], vendida:true},
+  {s:'urbe-dorada', t:'Urbe dorada', tec:'Acrílico sobre lienzo', m:'40 × 140 cm', y:2023, img:['img/portfolio/urbe-dorada.jpg'], vendida:true},
+  {s:'lo-sensual-i', t:'Lo sensual I', tec:'Carbonilla sobre papel', m:'53 × 83 cm', y:2023, img:['img/portfolio/lo-sensual-1.jpg'], vendida:true},
+  {s:'lo-sensual-ii', t:'Lo sensual II', tec:'Carbonilla sobre papel', m:'53 × 83 cm', y:2023, img:['img/portfolio/lo-sensual-2.jpg'], vendida:true},
   {s:'cadmios', t:'Cadmios', tec:'Acuarela sobre papel', m:'25 × 30 cm', y:2022, img:['img/rincones/cadmios.jpg'], vendida:true},
   {s:'el-paso', t:'El Paso', tec:'Acuarela sobre papel', m:'25 × 30 cm', y:2022, img:['img/rincones/el-paso.jpg'], vendida:true},
 ];
@@ -2334,19 +2405,72 @@ function renderIndice(){
   DISP = TODAS.filter(o=>!o.vendida); PORT = TODAS.filter(o=>o.vendida);
   const l=document.getElementById('ix2-list'); if(l) l.innerHTML = DISP.map(filaIx).join('');
   const n=document.getElementById('ix2-n'); if(n) n.textContent='('+DISP.length+')';
-  const g=document.getElementById('pf-grid');
-  if(g){ const F=['a','b','c','d','e','f'];
-    g.innerHTML = PORT.map((o,i)=>`<a class="pf-card pf-${F[i%6]}" href="#/obra/${o.s}" style="--i:${i%6}">
-      <div class="pf-img ${o.img.length>1?'dos':''}">${o.img.map(src=>`<img src="${escH(src)}" alt="${escH(o.t)}" loading="lazy">`).join('')}</div>
-      <div class="pf-cap"><span class="pf-t">${escH(o.t)}</span><span class="mono">${escH(L(o.tec, o.tec.replace('Acuarela sobre papel, díptico','Watercolor, diptych').replace('Acuarela sobre papel','Watercolor on paper').replace('Carbonilla sobre papel','Charcoal on paper').replace('Acrílico sobre lienzo','Acrylic on canvas')))} · ${escH(o.m)} · ${o.y}</span></div>
-      <span class="pf-sello mono">${L('Colección privada','Private collection')}</span>
-    </a>`).join('');
-    const io=new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('dentro'); io.unobserve(e.target); } }),{threshold:.15});
-    g.querySelectorAll('.pf-card').forEach(c=>io.observe(c));
-  }
+  renderPortfolio();
   const np=document.getElementById('ix2-n-p'); if(np) np.textContent='('+String(PORT.length).padStart(2,'0')+') '+L('obras','works');
   previewIndice();
 }
+
+// ═════════ Portfolio: salas ═════════
+const TONO={'che-vuole':'#3e3f32','pasitos-siesteros':'#373d30','necesidad-interrumpida':'#493922','ponte':'#404a32','sombra-alizarin':'#47432d','el-paseo-de-flodeo':'#43452f','urbe-dorada':'#3d3f2f','lo-sensual-i':'#3f4337','lo-sensual-ii':'#404539','cadmios':'#3d4030','el-paso':'#403f31'};
+const LUPA={'che-vuole':'35% 70%','pasitos-siesteros':'50% 60%','necesidad-interrumpida':'45% 40%','ponte':'60% 55%','sombra-alizarin':'40% 50%','el-paseo-de-flodeo':'55% 65%','urbe-dorada':'50% 45%','lo-sensual-i':'50% 40%','lo-sensual-ii':'50% 45%','cadmios':'45% 55%','el-paso':'50% 55%'};
+function tecEN(t){ return t.replace('Acuarela sobre papel, díptico','Watercolor on paper, diptych').replace('Acuarela sobre papel','Watercolor on paper').replace('Carbonilla sobre papel','Charcoal on paper').replace('Acrílico sobre lienzo','Acrylic on canvas'); }
+function marcoDe(o){ return /lienzo/.test(o.tec)?'marco-lienzo':'marco-kiri'; }
+let _pfIO=null, _pfHeroT=null;
+function renderPortfolio(){
+  const box=document.getElementById('pf-salas'); if(!box) return;
+  const N=PORT.length, pad=n=>String(n).padStart(2,'0');
+  box.innerHTML = PORT.map((o,i)=>`<section class="sala ${o.s==='urbe-dorada'?'ancha':''}" data-tono="${TONO[o.s]||'#2c3a2b'}" data-s="${o.s}">
+    <span class="sala-num" aria-hidden="true">${pad(i+1)}</span>
+    <div class="envoltura sala-in">
+      <div class="muro"><a class="cuadro ${marcoDe(o)} ${o.img.length>1?'dos':''}" href="#/obra/${o.s}" aria-label="${escH(o.t)}"><div class="hoja">${o.img.map(src=>`<img src="${escH(src)}" alt="${escH(o.t)}" loading="lazy">`).join('')}</div></a></div>
+      <div class="ficha">
+        <div class="lupa" style="background-image:url('${escH(o.img[0])}');--bx0:${(LUPA[o.s]||'50% 50%').split(' ')[0]};--by0:${(LUPA[o.s]||'50% 50%').split(' ')[1]}"><span class="lupa-et mono">${L('Detalle','Detail')}</span></div>
+        <div class="cartela">
+          <span class="mono">${pad(i+1)} / ${pad(N)}</span>
+          <h3>${escH(o.t)}</h3>
+          <dl><dt>${L('Técnica','Medium')}</dt><dd>${escH(L(o.tec,tecEN(o.tec)))}</dd><dt>${L('Medida','Size')}</dt><dd>${escH(o.m)}</dd><dt>${L('Año','Year')}</dt><dd>${o.y}</dd></dl>
+          <span class="sello mono">${L('Colección privada','Private collection')}</span>
+        </div>
+      </div>
+    </div></section>`).join('');
+  // banda crudo con detalles, a mitad de recorrido
+  const mitad=box.children[Math.min(5,N-1)];
+  if(mitad){ const tiras=PORT.concat(PORT).map(o=>`<div style="background-image:url('${escH(o.img[0])}');background-position:${LUPA[o.s]||'50% 50%'}"></div>`).join('');
+    mitad.insertAdjacentHTML('afterend',`<div class="banda-crudo" aria-hidden="true"><div class="pista-b">${tiras}</div></div>`); }
+  const ct=document.getElementById('pf-contactos');
+  if(ct) ct.innerHTML = PORT.map((o,i)=>`<a href="#/obra/${o.s}" style="background-image:url('${escH(o.img[0])}')" aria-label="${escH(o.t)}"><span class="mono">${pad(i+1)}</span></a>`).join('');
+  const sec=document.getElementById('v-portfolio');
+  if(_pfIO) _pfIO.disconnect();
+  _pfIO=new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('dentro'); sec.style.setProperty('--pf-tono', e.target.dataset.tono); document.body.style.backgroundColor=e.target.dataset.tono; } }),{threshold:.35});
+  box.querySelectorAll('.sala').forEach(x=>_pfIO.observe(x));
+  const ci=document.querySelector('.pf-cierre'); if(ci){ ci.dataset.tono='#2c3a2b'; _pfIO.observe(ci); }
+  box.querySelectorAll('.lupa').forEach(l=>{ const u=(l.style.backgroundImage.match(/url\(["']?(.*?)["']?\)/)||[])[1]; if(!u) return; const im=new Image(); im.onload=()=>{ const w=l.clientWidth||300; l.style.backgroundSize=Math.max(180,Math.min(520, im.naturalWidth*1.25/w*100)).toFixed(0)+'%'; }; im.src=u; });
+  heroPortfolio();
+}
+function heroPortfolio(){
+  const h=document.getElementById('pfh-capas'); if(!h || h.dataset.ok) return; h.dataset.ok=1;
+  const fuentes=['img/hd/02.jpg','img/movimiento/textura-roja.jpg','img/rincones/sombra-alizarin.jpg','img/detalles/detalle-paja.jpg','img/portfolio/urbe-dorada.jpg','img/detalles/detalle-niebla.jpg','img/rincones/che-vuole.jpg','img/movimiento/ocre.jpg'];
+  h.innerHTML=fuentes.map(f=>`<div class="pfh-cap" style="background-image:url('${f}')"></div>`).join('');
+  const caps=[...h.children]; let k=0; caps[0].classList.add('on');
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  _pfHeroT=setInterval(()=>{ if(!document.body.classList.contains('tema-pf')) return; const prev=caps[k]; k=(k+1)%caps.length; const c=caps[k]; c.classList.remove('on'); void c.offsetWidth; c.classList.add('on'); setTimeout(()=>prev.classList.remove('on'),2300); },6500);
+}
+// parallax + lupa que recorre la textura + luz de cursor
+(function(){
+  let pend=false;
+  function paso(){ pend=false; if(!document.body.classList.contains('tema-pf')) return;
+    const vh=innerHeight;
+    document.querySelectorAll('#v-portfolio .sala').forEach(sa=>{ const r=sa.getBoundingClientRect(); if(r.bottom<0||r.top>vh) return;
+      const p=(r.top+r.height/2-vh/2)/vh; // -1..1
+      const c=sa.querySelector('.cuadro'); if(c) c.style.setProperty('--py', (p*-38).toFixed(1)+'px');
+      const l=sa.querySelector('.lupa'); if(l){ const bx=parseFloat(l.style.getPropertyValue('--bx0'))||50, by=parseFloat(l.style.getPropertyValue('--by0'))||50;
+        l.style.setProperty('--bx',(bx+p*14).toFixed(1)+'%'); l.style.setProperty('--by',(by-p*18).toFixed(1)+'%'); } });
+  }
+  addEventListener('scroll',()=>{ if(!pend){ pend=true; requestAnimationFrame(paso); } },{passive:true});
+  addEventListener('resize',paso);
+  addEventListener('pointermove',e=>{ if(e.pointerType!=='mouse') return; const s=document.getElementById('v-portfolio'); if(!s) return; s.style.setProperty('--mx',e.clientX+'px'); s.style.setProperty('--my',e.clientY+'px'); },{passive:true});
+  window._pfPaso=paso;
+})();
 // la galería del panel alimenta el índice
 renderGaleria = function(obras){ window._obrasGaleria = obras; if(obras.some(o=>o.id)) window._apiLista = true; renderIndice(); if(location.hash.startsWith('#/obra/')) ruta(); };
 function previewIndice(){
@@ -2410,6 +2534,8 @@ function ruta(){
   document.querySelectorAll('.vista').forEach(x=>x.classList.toggle('on', x.id==='v-'+vista));
   const obraV = vista==='obra' && (TODAS.find(o=>'#/obra/'+o.s===h)||{}).vendida;
   document.body.classList.toggle('tema-pf', vista==='portfolio' || !!obraV);
+  if(vista!=='portfolio'){ document.body.style.backgroundColor=''; const vp=document.getElementById('v-portfolio'); if(vp) vp.style.setProperty('--pf-tono','#2c3a2b'); }
+  else setTimeout(()=>window._pfPaso&&window._pfPaso(),50);
   document.body.classList.remove('menu-abierto');
   const p=document.querySelector('.ix-preview'); if(p) p.classList.remove('on');
   if(h==='#/lista'){ const l=document.getElementById('lista'); if(l) setTimeout(()=>l.scrollIntoView(),10); }
