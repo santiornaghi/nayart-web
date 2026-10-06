@@ -80,6 +80,8 @@ async function main() {
   // Aumento del 10% (oct 2026): originales que seguían en USD 100 pasan a USD 110
   const subidas = await prisma.obra.updateMany({ where: { imagenUrl: { contains: '/img/originales/' }, precio: 100, moneda: 'USD' }, data: { precio: 110 } })
   if (subidas.count) console.log(`✓ ${subidas.count} originales actualizados a USD 110`)
+  const puercos = await prisma.obra.updateMany({ where: { titulo: 'Los puercos', precio: 100, moneda: 'USD' }, data: { precio: 110 } })
+  if (puercos.count) console.log('✓ Los puercos actualizado a USD 110')
 
   // Obras retiradas del sitio: se borran si nunca tuvieron pedidos
   for (const titulo of ['El caballo', 'Siesta']) {

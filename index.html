@@ -1532,6 +1532,8 @@ body.tema-pf .ob-cap { text-align: center; }
 .lamina-add { font-family: 'JetBrains Mono', monospace !important; font-size: .68rem !important; text-transform: uppercase !important; padding: .45rem .7rem !important; letter-spacing: 0 !important; }
 .laminas-mas { text-align: left; margin-top: 2.4rem; }
 .t-sec { margin-top: 5rem; }
+.t-fuera { display: none !important; }
+.t-orig { margin: 3.5rem 0 0; } .t-orig a { font-size: .76rem; text-decoration: none; border-bottom: 1px solid currentColor; padding-bottom: 2px; }
 .stickers { grid-template-columns: repeat(4, 1fr) !important; }
 .como { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-top: 5rem; padding-top: 1.4rem; border-top: 1px solid var(--rule); }
 .como p { font-size: .92rem; line-height: 1.55; color: var(--ink-light); }
@@ -1724,7 +1726,6 @@ body.tema-pf { transition: background-color 1.4s ease; }
   <a href="#/portfolio">Portfolio</a>
   <a href="#/tienda">Shop</a>
   <a href="#/fotos">Photos</a>
-  <a href="#/fotos" class="sub">I —</a>
   <a href="#/acerca">About</a>
   <a href="#/contacto">Contact</a>
   <a href="https://instagram.com/naya__artt" target="_blank" rel="noopener">Instagram</a>
@@ -1752,7 +1753,7 @@ body.tema-pf { transition: background-color 1.4s ease; }
 <section class="vista" id="v-tienda">
   <div class="envoltura pagina">
     <h2 class="v-title" data-es="Tienda" data-en="Shop">Tienda</h2>
-    <p class="t-intro" data-es="Láminas de mis acuarelas, impresas en A4 y A5, con marco de madera kiri opcional. También originales y stickers." data-en="Prints of my watercolors in A4 and A5, with an optional kiri wood frame. Originals and stickers too.">Láminas de mis acuarelas, impresas en A4 y A5, con marco de madera kiri opcional. También originales y stickers.</p>
+    <p class="t-intro" data-es="Láminas de acuarelas originales, impresas en A4 y A5. Opcional: marco de madera kiri con paspartú." data-en="Prints of original watercolors in A4 and A5. Optional kiri wood frame with mat.">Láminas de acuarelas originales, impresas en A4 y A5. Opcional: marco de madera kiri con paspartú.</p>
     <div class="t-precios">A4 $22.000 · A5 $16.500<br><span data-es="Con marco kiri: A4 $38.500 · A5 $27.500" data-en="With kiri frame: A4 $38.500 · A5 $27.500">Con marco kiri: A4 $38.500 · A5 $27.500</span><br><span data-es="10% off por transferencia" data-en="10% off by bank transfer">10% off por transferencia</span></div>
     <div class="lam-filtros" role="tablist">
       <button class="lam-f on" data-g="" type="button" data-es="Todas" data-en="All">Todas</button>
@@ -1761,14 +1762,11 @@ body.tema-pf { transition: background-color 1.4s ease; }
     </div>
     <div class="laminas recortada" id="laminas"></div>
     <div class="laminas-mas"><button class="btn-m linea" id="laminas-btn" type="button" onclick="verTodasLaminas()">Ver todas las láminas</button></div>
-    <div class="t-sec">
-      <span class="v-lab">Stickers · $2.200</span>
-      <div class="stickers" id="stickers"></div>
-    </div>
-    <div class="t-sec" id="tienda-extra" style="display:none">
+    <div class="t-sec t-fuera" id="tienda-extra" style="display:none">
       <span class="v-lab" data-es="Originales" data-en="Originals">Originales</span>
       <div class="productos" id="productos-api"></div>
     </div>
+    <p class="t-orig"><a class="mono" href="#/lista" data-es="Obras originales → Work" data-en="Original works → Work">Obras originales → Work</a></p>
     <div class="como">
       <div><span class="v-lab" data-es="01 Elegí" data-en="01 Choose">01 Elegí</span><p data-es="La lámina, el tamaño y si la querés con marco." data-en="The print, the size and whether you want a frame.">La lámina, el tamaño y si la querés con marco.</p></div>
       <div><span class="v-lab" data-es="02 Pagá" data-en="02 Pay">02 Pagá</span><p data-es="Transferencia con 10% de descuento o Mercado Pago." data-en="Bank transfer with 10% off, or Mercado Pago.">Transferencia con 10% de descuento o Mercado Pago.</p></div>
@@ -1784,17 +1782,11 @@ body.tema-pf { transition: background-color 1.4s ease; }
     <div class="ab-grid">
       <div>
         <div class="ab-foto"><img src="img/vida/pintando-noche.jpg" alt="Santiago Ornaghi pintando frente al atril" loading="lazy"></div>
-        <div class="ab-contacto">
-          <span class="v-lab" style="margin:1rem 0 .3rem" data-es="Contacto" data-en="Contact">Contacto</span>
-          <a href="mailto:santiornaghi@gmail.com">santiornaghi@gmail.com</a>
-          <a href="https://wa.me/5493584390961" target="_blank" rel="noopener">WhatsApp +54 358 439 0961</a>
-          <a href="https://instagram.com/naya__artt" target="_blank" rel="noopener">Instagram @naya__artt</a>
-        </div>
       </div>
       <div class="ab-texto">
         <div class="bloque">
-          <p data-es="Nací en Río Cuarto, Córdoba. De chico ya dibujaba con tizas, con lo que hubiera. Después llegó la acuarela: el agua y el pigmento hacen su parte, yo hago la mía." data-en="I was born in Río Cuarto, Córdoba. As a kid I was already drawing with chalk, with whatever was around. Then came watercolor: water and pigment do their part, I do mine.">Nací en Río Cuarto, Córdoba. De chico ya dibujaba con tizas, con lo que hubiera. Después llegó la acuarela: el agua y el pigmento hacen su parte, yo hago la mía.</p>
-          <p data-es="Trabajo la acuarela de alta pigmentación, al aire libre y en el taller." data-en="I work with high-pigment watercolor, outdoors and in the studio.">Trabajo la acuarela de alta pigmentación, al aire libre y en el taller.</p>
+          <p data-es="Santiago Ornaghi (Naya) es acuarelista. Nació y trabaja en Río Cuarto, Córdoba, Argentina." data-en="Santiago Ornaghi (Naya) is a watercolorist, born and based in Río Cuarto, Córdoba, Argentina.">Santiago Ornaghi (Naya) es acuarelista. Nació y trabaja en Río Cuarto, Córdoba, Argentina.</p>
+          <p data-es="Pinta al aire libre y en taller, con acuarela de alta pigmentación. También trabaja en carbonilla y acrílico." data-en="He paints outdoors and in the studio with high-pigment watercolor, and also works in charcoal and acrylic.">Pinta al aire libre y en taller, con acuarela de alta pigmentación. También trabaja en carbonilla y acrílico.</p>
         </div>
         <div class="bloque">
           <span class="v-lab" data-es="Formación" data-en="Training">Formación</span>
@@ -1810,16 +1802,17 @@ body.tema-pf { transition: background-color 1.4s ease; }
           <ul class="lista">
             <li><i>Selección de artistas</i> | ArteCba</li>
             <li><i data-es="Muestra" data-en="Exhibition">Muestra</i> | Centro Cultural España</li>
-            <li data-es="Más de 10 ferias de arte" data-en="More than 10 art fairs">Más de 10 ferias de arte</li>
+            <li data-es="Ferias de arte (más de 10)" data-en="Art fairs (10+)">Ferias de arte (más de 10)</li>
           </ul>
         </div>
         <div class="bloque">
           <span class="v-lab" data-es="Encargos" data-en="Commissions">Encargos</span>
           <ul class="lista">
-            <li data-es="Obras originales a pedido" data-en="Original works on commission">Obras originales a pedido</li>
+            <li data-es="Obra original a pedido" data-en="Original work on commission">Obra original a pedido</li>
             <li data-es="Ilustraciones para calendarios (+26 acuarelas)" data-en="Calendar illustrations (26+ watercolors)">Ilustraciones para calendarios (+26 acuarelas)</li>
             <li data-es="Murales (5)" data-en="Murals (5)">Murales (5)</li>
-            <li data-es="Etiquetas y pintura en vivo en eventos" data-en="Labels and live painting at events">Etiquetas y pintura en vivo en eventos</li>
+            <li data-es="Etiquetas para marcas" data-en="Labels for brands">Etiquetas para marcas</li>
+            <li data-es="Pintura en vivo en eventos" data-en="Live painting at events">Pintura en vivo en eventos</li>
           </ul>
           <p style="margin-top:1.4rem"><a class="btn-m linea" href="#/contacto" data-es="Consultar un encargo" data-en="Ask about a commission">Consultar un encargo</a></p>
         </div>
@@ -1852,22 +1845,18 @@ body.tema-pf { transition: background-color 1.4s ease; }
 <!-- FOTOS -->
 <section class="vista" id="v-fotos">
   <div class="envoltura pagina">
-    <h2 class="v-title" data-es="Fotos I" data-en="Photos I">Fotos I</h2>
+    <h2 class="v-title" data-es="Fotos" data-en="Photos">Fotos</h2>
     <div class="fotos">
-      <img src="img/fotos/f01.jpg" alt="Fotografía de Santiago Ornaghi" loading="lazy">
-      <img src="img/fotos/f09.jpg" alt="Fotografía de Santiago Ornaghi" loading="lazy">
+<img src="img/fotos/f01.jpg" alt="Fotografía de Santiago Ornaghi" loading="lazy">
       <img src="img/fotos/f10.jpg" alt="Fotografía de Santiago Ornaghi" loading="lazy">
-      <img src="img/fotos/f04.jpg" alt="Fotografía de Santiago Ornaghi" loading="lazy">
+      <img src="img/fotos/f09.jpg" alt="Fotografía de Santiago Ornaghi" loading="lazy">
       <img src="img/fotos/f12.jpg" alt="Fotografía de Santiago Ornaghi" loading="lazy">
-      <img src="img/fotos/f06.jpg" alt="Fotografía de Santiago Ornaghi" loading="lazy">
-      <img src="img/fotos/f11.jpg" alt="Fotografía de Santiago Ornaghi" loading="lazy">
       <img src="img/fotos/f02.jpg" alt="Fotografía de Santiago Ornaghi" loading="lazy">
       <img src="img/fotos/f14.jpg" alt="Fotografía de Santiago Ornaghi" loading="lazy">
-      <img src="img/fotos/f07.jpg" alt="Fotografía de Santiago Ornaghi" loading="lazy">
+      <img src="img/fotos/f11.jpg" alt="Fotografía de Santiago Ornaghi" loading="lazy">
+      <img src="img/fotos/f06.jpg" alt="Fotografía de Santiago Ornaghi" loading="lazy">
+      <img src="img/fotos/f04.jpg" alt="Fotografía de Santiago Ornaghi" loading="lazy">
       <img src="img/fotos/f13.jpg" alt="Fotografía de Santiago Ornaghi" loading="lazy">
-      <img src="img/fotos/f03.jpg" alt="Fotografía de Santiago Ornaghi" loading="lazy">
-      <img src="img/fotos/f08.jpg" alt="Fotografía de Santiago Ornaghi" loading="lazy">
-      <img src="img/fotos/f05.jpg" alt="Fotografía de Santiago Ornaghi" loading="lazy">
     </div>
   </div>
 </section>
@@ -2581,7 +2570,7 @@ function menu(){ document.body.classList.toggle('menu-abierto'); }
   const mouse=matchMedia('(hover: hover) and (pointer: fine)').matches;
   let k=0;
   const FUERA=['lo-sensual-i','lo-sensual-ii','chanchos','los-puercos'];
-  const FOTOS=[1,9,4,11,13,3,6].map(n=>'img/fotos/f'+String(n).padStart(2,'0')+'.jpg');
+  const FOTOS=[1,9,4,11,13,10,6].map(n=>'img/fotos/f'+String(n).padStart(2,'0')+'.jpg');
   const lista=()=>{ const obras=TODAS.filter(o=>!FUERA.includes(o.s)).map(o=>o.img[0]); const out=[];
     obras.forEach((x,i)=>{ out.push(x); if(i%2===1 && FOTOS[(i-1)/2]) out.push(FOTOS[(i-1)/2]); }); return out; };
   function soltar(x,y,w,vida){
