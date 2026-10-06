@@ -2298,7 +2298,7 @@ function render(){
     <div class="sum-row total"><span>Total${checkout.entrega==='ANDREANI' && !costoAndreani() ? ' + envío' : ''}</span><span>${montos(t.total)}</span></div>
     <div class="co-error" id="co-error"></div>
     <button class="btn btn-dark" id="co-enviar" onclick="enviarPedido()">${checkout.pago==='MERCADOPAGO' ? 'Ir a pagar con Mercado Pago' : 'Enviar pedido por WhatsApp'}</button>
-    <div class="co-note">Se abre WhatsApp con el detalle de tu pedido listo para enviar.</div>`;
+    <div class="co-note">${checkout.pago==='MERCADOPAGO' ? 'Pagás en Mercado Pago y volvés a esta página.' : 'Se abre WhatsApp con el detalle de tu pedido listo para enviar.'}</div>`;
   body.querySelectorAll('input[name="co-ent"]').forEach(r=>r.onchange=()=>{ leerForm(); checkout.entrega=r.value; render(); });
   body.querySelectorAll('input[name="co-pago"]').forEach(r=>r.onchange=()=>{ leerForm(); checkout.pago=r.value; render(); });
   const ps = document.getElementById('co-prov'); if(ps) ps.onchange=()=>{ leerForm(); cotizar(); render(); };
