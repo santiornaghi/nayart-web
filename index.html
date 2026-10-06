@@ -1552,10 +1552,19 @@ body.tema-pf .ob-cap { text-align: center; }
 @media (max-width: 720px) { .como { grid-template-columns: 1fr; gap: 1.4rem; } .stickers { grid-template-columns: 1fr 1fr !important; } }
 
 /* fotos */
+.ft-nav { display: flex; gap: 1.6rem; margin: -1.2rem 0 1rem; font-size: .74rem; flex-wrap: wrap; }
+.ft-nav a { text-decoration: none; color: var(--ink-faint); padding-bottom: .2rem; border-bottom: 1px solid transparent; }
+.ft-nav a.on { color: var(--ink); border-bottom-color: currentColor; }
+.ft-nota { font-size: .66rem; color: var(--ink-faint); margin: 0 0 3.4rem; }
+.ft-sig { margin-top: 5rem; padding-top: 1.2rem; border-top: 1px solid var(--rule); text-align: right; }
+.ft-sig a { font-size: .74rem; text-decoration: none; }
+.fotos[hidden] { display: none !important; }
+#ft-num { font-style: italic; }
 .fotos-nota { font-size: .74rem; color: var(--ink-faint); margin: -1.8rem 0 3rem; }
 .fotos { display: flex; flex-direction: column; align-items: center; gap: 5rem; }
 .fotos img { display: block; max-width: min(100%, 980px); max-height: 88vh; width: auto; height: auto; }
-.lmenu a.sub { font-style: italic; font-size: .8rem; margin-top: -.6rem; }
+.lmenu a.sub { font-style: italic; font-size: .8rem; }
+.lmenu .sub-fila { display: flex; gap: 1rem; margin-top: -.6rem; }
 @media (max-width: 720px) { .fotos { gap: 1.4rem; } .fotos img { max-height: none; width: 100%; max-width: 100%; } }
 
 /* marco en obras */
@@ -1801,6 +1810,7 @@ body.pie-visible .wa-fab { opacity: 0; pointer-events: none; transform: scale(.8
   <a href="#/portfolio">Portfolio</a>
   <a href="#/tienda">Shop</a>
   <a href="#/fotos">Photos</a>
+  <div class="sub-fila"><a href="#/fotos" class="sub">I</a><a href="#/fotos/2" class="sub">II</a><a href="#/fotos/3" class="sub">III</a></div>
   <a href="#/acerca">About</a>
   <a href="#/contacto">Contact</a>
   <a href="https://instagram.com/naya__artt" target="_blank" rel="noopener">Instagram</a>
@@ -1921,9 +1931,11 @@ body.pie-visible .wa-fab { opacity: 0; pointer-events: none; transform: scale(.8
 <!-- FOTOS -->
 <section class="vista" id="v-fotos">
   <div class="envoltura pagina">
-    <h2 class="v-title" data-es="Fotos" data-en="Photos">Fotos</h2>
-    <div class="fotos">
-<img src="img/fotos/f01.jpg" alt="Fotografía de Santiago Ornaghi" loading="lazy">
+    <h2 class="v-title"><span data-es="Fotos" data-en="Photos">Fotos</span> <span id="ft-num">I</span></h2>
+    <div class="ft-nav mono" role="navigation" aria-label="Series de fotos"><a href="#/fotos" data-n="1">I</a><a href="#/fotos/2" data-n="2">II <span data-es="Ciudad" data-en="City">Ciudad</span></a><a href="#/fotos/3" data-n="3">III <span data-es="Sur" data-en="South">Sur</span></a></div>
+    <p class="ft-nota mono" id="ft-nota"></p>
+    <div class="fotos" data-serie="1">
+      <img src="img/fotos/f01.jpg" alt="Fotografía de Santiago Ornaghi" loading="lazy">
       <img src="img/fotos/f10.jpg" alt="Fotografía de Santiago Ornaghi" loading="lazy">
       <img src="img/fotos/f09.jpg" alt="Fotografía de Santiago Ornaghi" loading="lazy">
       <img src="img/fotos/f12.jpg" alt="Fotografía de Santiago Ornaghi" loading="lazy">
@@ -1934,6 +1946,26 @@ body.pie-visible .wa-fab { opacity: 0; pointer-events: none; transform: scale(.8
       <img src="img/fotos/f04.jpg" alt="Fotografía de Santiago Ornaghi" loading="lazy">
       <img src="img/fotos/f13.jpg" alt="Fotografía de Santiago Ornaghi" loading="lazy">
     </div>
+    <div class="fotos" data-serie="2" hidden>
+      <img src="img/fotos/c01.jpg" alt="Fotografía de Santiago Ornaghi" loading="lazy">
+      <img src="img/fotos/c02.jpg" alt="Fotografía de Santiago Ornaghi" loading="lazy">
+      <img src="img/fotos/c03.jpg" alt="Fotografía de Santiago Ornaghi" loading="lazy">
+      <img src="img/fotos/c04.jpg" alt="Fotografía de Santiago Ornaghi" loading="lazy">
+      <img src="img/fotos/c05.jpg" alt="Fotografía de Santiago Ornaghi" loading="lazy">
+      <img src="img/fotos/c06.jpg" alt="Fotografía de Santiago Ornaghi" loading="lazy">
+      <img src="img/fotos/c07.jpg" alt="Fotografía de Santiago Ornaghi" loading="lazy">
+      <img src="img/fotos/c08.jpg" alt="Fotografía de Santiago Ornaghi" loading="lazy">
+      <img src="img/fotos/c09.jpg" alt="Fotografía de Santiago Ornaghi" loading="lazy">
+    </div>
+    <div class="fotos" data-serie="3" hidden>
+      <img src="img/fotos/s01.jpg" alt="Fotografía de Santiago Ornaghi" loading="lazy">
+      <img src="img/fotos/s02.jpg" alt="Fotografía de Santiago Ornaghi" loading="lazy">
+      <img src="img/fotos/s03.jpg" alt="Fotografía de Santiago Ornaghi" loading="lazy">
+      <img src="img/fotos/s04.jpg" alt="Fotografía de Santiago Ornaghi" loading="lazy">
+      <img src="img/fotos/s05.jpg" alt="Fotografía de Santiago Ornaghi" loading="lazy">
+      <img src="img/fotos/s06.jpg" alt="Fotografía de Santiago Ornaghi" loading="lazy">
+    </div>
+    <div class="ft-sig mono"><a id="ft-sig" href="#/fotos/2"></a></div>
   </div>
 </section>
 
@@ -2713,7 +2745,12 @@ function ruta(){
   if(h.startsWith('#/obra/')){ vista='obra'; renderObra(decodeURIComponent(h.slice(7))); activarMarco(); }
   else if(h==='#/tienda') vista='tienda';
   else if(h==='#/acerca') vista='acerca';
-  else if(h==='#/fotos') vista='fotos';
+  else if(h==='#/fotos' || h.startsWith('#/fotos/')){ vista='fotos'; const n=Math.min(3,Math.max(1,parseInt(h.split('/')[2])||1)); const R=['I','II','III'];
+    document.querySelectorAll('#v-fotos .fotos').forEach(f=>f.hidden = f.dataset.serie!=String(n));
+    document.querySelectorAll('.ft-nav a').forEach(a=>a.classList.toggle('on', a.dataset.n==String(n)));
+    document.getElementById('ft-num').textContent=R[n-1];
+    document.getElementById('ft-nota').textContent=[L('Fotografía analógica','Analog photography'),L('Ciudad · Rollo 35 mm','City · 35 mm film'),L('Sur · Rollo 35 mm','South · 35 mm film')][n-1];
+    const sg=document.getElementById('ft-sig'), m=n%3+1; sg.href=m===1?'#/fotos':'#/fotos/'+m; sg.textContent=L('Siguiente','Next')+': '+L('Fotos','Photos')+' '+R[m-1]+' →'; }
   else if(h==='#/portfolio') vista='portfolio';
   else if(h==='#/contacto') vista='contacto';
   document.querySelectorAll('.vista').forEach(x=>x.classList.toggle('on', x.id==='v-'+vista));
