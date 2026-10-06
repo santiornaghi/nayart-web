@@ -1488,7 +1488,8 @@ body.menu-abierto .lmenu { opacity: 1; pointer-events: auto; }
 .ob-img { display: grid; gap: .6rem; }
 .ob-img.dos { grid-template-columns: 1fr 1fr; }
 .ob-img img { width: 100%; height: auto; display: block; max-height: 82vh; object-fit: contain; object-position: left top; background: var(--paper); }
-.ob-cap { font-size: .72rem; color: var(--ink-light); text-align: right; margin-top: .7rem; }
+.ob-cap { font-size: .72rem; color: var(--ink-light); text-align: left; margin-top: .7rem; }
+body.tema-pf .ob-cap { text-align: center; }
 .ob-about { display: grid; grid-template-columns: 9rem 1fr; gap: 1.6rem; margin: 3.5rem 0 0; max-width: 760px; }
 .ob-about .v-lab { font-size: .74rem; padding-top: .2rem; }
 .ob-about p { font-size: .98rem; line-height: 1.6; color: var(--ink); }
@@ -1574,7 +1575,13 @@ body.tema-pf .wa-fab { background: var(--pf-acc) !important; color: #2c3a2b !imp
 body.tema-pf .obra-v .ob-meta, body.tema-pf .obra-v .ob-cap, body.tema-pf .ob-vendida { color: var(--pf-dim); }
 body.tema-pf .ob-nav { border-top-color: rgba(236,229,210,.15); }
 body.tema-pf .ob-top h2 { font-family: 'Instrument Serif', serif !important; text-transform: none; font-size: clamp(2.2rem, 5vw, 4rem) !important; letter-spacing: -0.01em !important; }
-#v-portfolio { position: relative; --pf-tono:#2c3a2b; background: var(--pf-tono); transition: background-color 1.4s ease; }
+body.cargando, body.cargando #v-portfolio, body.cargando .lh { transition: none !important; }
+#telon { position: fixed; inset: 0; z-index: 200; pointer-events: none; visibility: hidden; clip-path: inset(100% 0 0 0); }
+#telon.pf { background: #2c3a2b; } #telon.claro { background: var(--paper, #fafaf8); }
+#telon.pf::after { content:''; position:absolute; inset:0; opacity:.25; mix-blend-mode: overlay; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+#telon.cubre { visibility: visible; clip-path: inset(0 0 0 0); transition: clip-path .48s cubic-bezier(.7,0,.3,1); }
+#telon.cubre.descubre { clip-path: inset(0 0 100% 0); transition: clip-path .65s cubic-bezier(.7,0,.3,1); }
+#v-portfolio { position: relative; overflow-x: clip; --pf-tono:#2c3a2b; background: var(--pf-tono); transition: background-color 1.4s ease; }
 body.tema-pf { transition: background-color 1.4s ease; }
 /* luz de sala que sigue al cursor */
 #v-portfolio::before { content:''; position: fixed; inset: 0; pointer-events: none; z-index: 1;
@@ -1624,6 +1631,13 @@ body.tema-pf { transition: background-color 1.4s ease; }
 .cuadro:hover img { filter: saturate(1.08) contrast(1.04); }
 /* ficha: cartela de museo + lupa */
 .ficha { grid-column: 9 / 13; display: flex; flex-direction: column; gap: 1.6rem; z-index: 1; }
+.ob-img.oculto { display: none !important; }
+.ob-muro { position: relative; display: flex; justify-content: center; padding: clamp(2rem, 6vh, 4rem) 0 clamp(1rem, 3vh, 2rem); }
+.ob-muro::before { content:''; position:absolute; left:50%; top:0; width:80%; height:70%; transform:translateX(-50%); pointer-events:none; background: radial-gradient(50% 60% at 50% 0%, rgba(255,236,196,.14), transparent 70%); }
+.ob-muro .cuadro { transform: none; }
+.ob-muro .cuadro img { max-height: 72vh; }
+.ob-muro .marco-lienzo img { max-height: none; width: 100%; }
+.ob-muro .marco-lienzo { width: 100%; }
 .sala.ancha .muro { grid-column: 1 / 13 !important; order: 1 !important; min-height: 0; }
 .sala.ancha .ficha { grid-column: 1 / 13 !important; order: 2 !important; display: grid; grid-template-columns: 300px 1fr; gap: 2.4rem; align-items: end; margin-top: 2rem; }
 .sala.ancha .lupa { aspect-ratio: 16/9; }
@@ -1697,6 +1711,7 @@ body.tema-pf { transition: background-color 1.4s ease; }
 </style>
 </head>
 <body>
+<div id="telon" class="telon" aria-hidden="true"></div>
 <header class="lh" id="nav">
   <a href="#/" class="lh-logo" aria-label="Naya, inicio"><img src="img/logo-naya.png" alt="NAYA"></a>
   <div class="lh-r">
@@ -2496,11 +2511,12 @@ function renderObra(s){
   v.innerHTML = `<div class="envoltura obra-v">
     <div class="ob-top"><h2>${escH(o.t)}</h2><span class="mono" style="font-size:.8rem">${o.y}</span></div>
     <div class="ob-meta">${escH(L(o.tec,tecEn))}<br>${escH(o.m)}<br>${o.y}</div>
-    <div class="ob-img ${o.img.length>1?'dos':''}" id="ob-img">${o.img.map(src=>{ const m=String(src).match(/img\/originales\/(\d+)\.jpg/); return m ? `<img src="${escH(src)}" srcset="${escH(src)} 1600w, img/hd/${m[1]}.jpg 2400w" sizes="(max-width: 760px) 100vw, 1180px" alt="${escH(o.t)}">` : `<img src="${escH(src)}" alt="${escH(o.t)}">`; }).join('')}</div>
+    ${o.vendida ? `<div class="ob-muro"><div class="cuadro ${marcoDe(o)} ${o.img.length>1?'dos':''}"><div class="hoja">${o.img.map(src=>`<img src="${escH(src)}" alt="${escH(o.t)}">`).join('')}</div></div></div>` : ''}
+    <div class="ob-img ${o.img.length>1?'dos':''} ${o.vendida?'oculto':''}" id="ob-img">${o.img.map(src=>{ const m=String(src).match(/img\/originales\/(\d+)\.jpg/); return m ? `<img src="${escH(src)}" srcset="${escH(src)} 1600w, img/hd/${m[1]}.jpg 2400w" sizes="(max-width: 760px) 100vw, 1180px" alt="${escH(o.t)}">` : `<img src="${escH(src)}" alt="${escH(o.t)}">`; }).join('')}</div>
     <div class="ob-cap">${escH(o.t)} · ${escH(L(o.tec,tecEn))} · ${escH(o.m)} · ${o.y}</div>
     ${o.desc ? `<div class="ob-about"><span class="v-lab">${L('Sobre la obra','About')}</span><p>${escH(o.desc)}</p></div>` : ''}
     ${compra}
-    <div class="ob-nav"><a href="#/obra/${prev.s}">← ${L('Anterior','Previous')}</a><a href="${volver}">${L('Volver a la lista','Back to list')}</a><a href="#/obra/${next.s}">${L('Siguiente','Next')} →</a></div>
+    <div class="ob-nav"><a href="#/obra/${prev.s}">← ${L('Anterior','Previous')}</a><a href="${volver}">${o.vendida?L('Volver al portfolio','Back to portfolio'):L('Volver a la lista','Back to list')}</a><a href="#/obra/${next.s}">${L('Siguiente','Next')} →</a></div>
   </div>`;
 }
 const PRECIO_MARCO_OBRA = 16500;
@@ -2523,6 +2539,7 @@ function comprarObraMarco(i){
 const RUTAS_VIEJAS = { '#tienda':'#/tienda', '#laminas':'#/tienda', '#encargos':'#/acerca', '#contacto':'#/contacto', '#obras':'#/', '#series':'#/', '#about':'#/acerca' };
 function ruta(){
   let h = location.hash || '#/';
+  if(window._rutaPrev==='#/portfolio' && h!=='#/portfolio') window._pfScroll=scrollY;
   if(RUTAS_VIEJAS[h]){ history.replaceState(null,'',RUTAS_VIEJAS[h]); h=RUTAS_VIEJAS[h]; }
   let vista='inicio';
   if(h.startsWith('#/obra/')){ vista='obra'; renderObra(decodeURIComponent(h.slice(7))); activarMarco(); }
@@ -2538,10 +2555,24 @@ function ruta(){
   else setTimeout(()=>window._pfPaso&&window._pfPaso(),50);
   document.body.classList.remove('menu-abierto');
   const p=document.querySelector('.ix-preview'); if(p) p.classList.remove('on');
+  const deObra = (window._rutaPrev||'').startsWith('#/obra/');
   if(h==='#/lista'){ const l=document.getElementById('lista'); if(l) setTimeout(()=>l.scrollIntoView(),10); }
+  else if(vista==='portfolio' && deObra && window._pfScroll) window.scrollTo(0,window._pfScroll);
   else window.scrollTo(0,0);
+  window._rutaPrev=h;
+  const nv=document.querySelector('.lh'); if(nv) nv.classList.toggle('scrolled', scrollY>20);
 }
-addEventListener('hashchange', ruta);
+// telón: cuando cambia el clima (claro ↔ verde) una cortina del color de destino cubre y descubre
+try{ history.scrollRestoration='manual'; }catch(e){}
+function temaDe(h){ if(h==='#/portfolio') return 'pf'; if(h.startsWith('#/obra/')){ const o=TODAS.find(x=>'#/obra/'+x.s===h); return o&&o.vendida?'pf':'claro'; } return 'claro'; }
+function cambioRuta(){
+  const h=location.hash||'#/'; const t=document.getElementById('telon');
+  const antes=document.body.classList.contains('tema-pf')?'pf':'claro', despues=temaDe(h);
+  if(!t || antes===despues || matchMedia('(prefers-reduced-motion: reduce)').matches){ ruta(); return; }
+  t.className='telon '+despues; void t.offsetWidth; t.classList.add('cubre');
+  clearTimeout(window._telT); window._telT=setTimeout(()=>{ ruta(); t.classList.add('descubre'); window._telT=setTimeout(()=>{ t.className='telon'; },700); },480);
+}
+addEventListener('hashchange', cambioRuta);
 function menu(){ document.body.classList.toggle('menu-abierto'); }
 // estela de imágenes en la portada (mouse en compu; sola en el celular)
 (function(){
@@ -2602,7 +2633,7 @@ document.querySelectorAll('.lam-f').forEach(b=>b.addEventListener('click',()=>{
 function verTodasLaminas(){ document.getElementById('laminas').classList.remove('recortada'); }
 (function(){ const b=document.getElementById('laminas-btn'); if(b){ const n=document.querySelectorAll('#laminas .lamina').length; b.dataset.es=`Ver las ${n} láminas`; b.dataset.en=`See all ${n} prints`; b.textContent=b.dataset.es; } })();
 
-renderIndice(); cargarGaleria(); ruta();
+document.body.classList.add('cargando'); renderIndice(); cargarGaleria(); ruta(); setTimeout(()=>document.body.classList.remove('cargando'),120);
 
 </script>
 </body>
