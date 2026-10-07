@@ -1762,6 +1762,9 @@ body.tema-pf .solo-pf { display: inline-flex !important; } body.tema-pf .solo-cl
   .pie-big { font-size: clamp(2.2rem, 10.5vw, 3.4rem); white-space: normal; }
 }
 :focus-visible { outline: 1px solid currentColor; outline-offset: 3px; }
+/* imágenes protegidas: sin arrastrar, sin menú de guardar, sin seleccionar */
+img, .lupa, .pfh-cap, .contactos a, .pista-b div, .pie-tex div { -webkit-user-drag: none; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; }
+img { pointer-events: auto; }
 .exterior { font-size: .82rem; line-height: 1.5; color: var(--ink-light); margin-top: 1.4rem; max-width: 46ch; }
 .exterior a { color: var(--ink); text-decoration: none; border-bottom: 1px solid currentColor; }
 .t-ext { margin-top: 2.4rem; padding-top: 1.2rem; border-top: 1px solid var(--rule); max-width: none; }
@@ -2695,6 +2698,15 @@ function heroPortfolio(){
   addEventListener('scroll',()=>{ if(pend||quieto) return; pend=true; requestAnimationFrame(()=>{ pend=false; const r=pie.getBoundingClientRect(); if(r.top>innerHeight) return; const p=(r.top)/innerHeight; capas.forEach(c=>c.style.setProperty('--pty',Math.max(-80,Math.min(80,p*70)).toFixed(1)+'px')); }); },{passive:true});
 })();
 function piePortfolioN(){ const n=document.getElementById('pie-n'); if(n && PORT.length) n.textContent='('+String(PORT.length).padStart(2,'0')+')'; }
+// Protección de imágenes: sin clic derecho, sin arrastrar, sin mantener apretado para guardar
+(function(){
+  const esImagen = t => t && (t.tagName==='IMG' || (t.closest && t.closest('.lupa,.pfh,.contactos,.banda-crudo,.pie-tex,.estela,.cuadro,.fotos,.ob-img,.lamina-img')));
+  document.addEventListener('contextmenu', e => { if(esImagen(e.target)) e.preventDefault(); });
+  document.addEventListener('dragstart', e => { if(esImagen(e.target)) e.preventDefault(); });
+  document.addEventListener('selectstart', e => { if(e.target && e.target.tagName==='IMG') e.preventDefault(); });
+  document.querySelectorAll('img').forEach(i => i.setAttribute('draggable','false'));
+  new MutationObserver(ms => ms.forEach(m => m.addedNodes.forEach(n => { if(n.querySelectorAll) n.querySelectorAll('img').forEach(i => i.setAttribute('draggable','false')); if(n.tagName==='IMG') n.setAttribute('draggable','false'); }))).observe(document.body,{childList:true,subtree:true});
+})();
 // la galería del panel alimenta el índice
 renderGaleria = function(obras){ window._obrasGaleria = obras; if(obras.some(o=>o.id)) window._apiLista = true; renderIndice(); if(location.hash.startsWith('#/obra/')) ruta(); };
 function previewIndice(){
