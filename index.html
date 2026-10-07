@@ -1614,11 +1614,11 @@ body.tema-pf { transition: background-color 1.4s ease; }
 .pfh-cap.on { opacity: 1; animation: deriva 14s ease-out forwards; }
 @keyframes deriva { from { transform: scale(1.32) translate3d(2%, 1.5%, 0); } to { transform: scale(1.12) translate3d(-2%, -1%, 0); } }
 .pfh::after { content:''; position: absolute; inset: 0; pointer-events: none;
-  background: linear-gradient(180deg, rgba(20,26,19,.45) 0%, rgba(20,26,19,0) 30%, rgba(20,26,19,.1) 55%, var(--pf-tono) 100%),
-              radial-gradient(130% 100% at 50% 40%, transparent 55%, rgba(20,28,20,.45) 100%); }
+  background: linear-gradient(180deg, rgba(20,26,19,.35) 0%, rgba(20,26,19,0) 18%, rgba(20,26,19,0) 55%, rgba(20,26,19,.55) 82%, var(--pf-tono) 100%); }
 .pfh-tinta { display: none; }
 .pfh-txt { position: absolute; z-index: 3; left: 0; right: 0; bottom: clamp(2rem, 8vh, 5rem); }
 .pf-n { color: var(--pf-ink); opacity: .8; font-size: .72rem; display: block; margin-bottom: 1rem; }
+.pfh-txt .mono, .pfh-txt .pf-sub { text-shadow: 0 1px 12px rgba(0,0,0,.55), 0 0 2px rgba(0,0,0,.35); }
 .pfh-txt .envoltura { display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 2rem; }
 .pf-tit { font-family: 'Instrument Serif', serif !important; font-weight: 400 !important; font-style: italic; font-size: clamp(5rem, 17vw, 15rem) !important; line-height: .8 !important; letter-spacing: -0.035em !important; color: var(--pf-ink); text-transform: none; text-shadow: 0 2px 40px rgba(0,0,0,.25); }
 .pf-sub { font-family: 'Instrument Serif', serif; font-size: clamp(1.15rem, 1.8vw, 1.5rem); line-height: 1.25; color: var(--pf-ink); opacity: .85; margin-top: 1.2rem; }
@@ -2657,7 +2657,7 @@ function renderPortfolio(){
 }
 function heroPortfolio(){
   const h=document.getElementById('pfh-capas'); if(!h || h.dataset.ok) return; h.dataset.ok=1;
-  const fuentes=['img/detalles/textura-02.jpg','img/movimiento/textura-roja.jpg','img/rincones/sombra-alizarin.jpg','img/detalles/detalle-paja.jpg','img/portfolio/urbe-dorada.jpg','img/detalles/detalle-niebla.jpg','img/rincones/che-vuole.jpg','img/detalles/textura-ocre.jpg'];
+  const fuentes=['img/rincones/che-vuole.jpg','img/rincones/sombra-alizarin.jpg','img/portfolio/urbe-dorada.jpg','img/rincones/paseo-de-flodeo.jpg','img/movimiento/necesidad-1.jpg','img/rincones/ponte.jpg','img/rincones/cadmios.jpg'];
   h.innerHTML=fuentes.map(f=>`<div class="pfh-cap" style="background-image:url('${f}')"></div>`).join('');
   const caps=[...h.children]; let k=0; caps[0].classList.add('on');
   if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
