@@ -1552,7 +1552,8 @@ body.tema-pf .ob-cap { text-align: center; }
 @media (max-width: 720px) { .como { grid-template-columns: 1fr; gap: 1.4rem; } .stickers { grid-template-columns: 1fr 1fr !important; } }
 
 /* fotos */
-.ft-nav { display: flex; gap: 1.6rem; margin: -1.2rem 0 1rem; font-size: .74rem; flex-wrap: wrap; }
+.ft-oculto { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; margin: 0 !important; }
+.ft-nav { display: flex; gap: 1.6rem; margin: 0 0 1rem; font-size: .74rem; flex-wrap: wrap; }
 .ft-nav a { text-decoration: none; color: var(--ink-faint); padding-bottom: .2rem; border-bottom: 1px solid transparent; }
 .ft-nav a.on { color: var(--ink); border-bottom-color: currentColor; }
 .ft-info { display: block; align-items: start; margin: .6rem 0 3.6rem; padding-top: 1.1rem; border-top: 1px solid var(--rule); max-width: 760px; }
@@ -1935,7 +1936,7 @@ body.pie-visible .wa-fab { opacity: 0; pointer-events: none; transform: scale(.8
 <!-- FOTOS -->
 <section class="vista" id="v-fotos">
   <div class="envoltura pagina">
-    <h2 class="v-title"><span data-es="Fotos" data-en="Photos">Fotos</span> <span id="ft-num">I</span></h2>
+    <h2 class="v-title ft-oculto"><span data-es="Fotos" data-en="Photos">Fotos</span> <span id="ft-num">I</span></h2>
     <div class="ft-nav mono" role="navigation" aria-label="Series de fotos"><a href="#/fotos" data-n="1">I</a><a href="#/fotos/2" data-n="2">II</a><a href="#/fotos/3" data-n="3">III</a></div>
     <div class="ft-info" id="ft-info"></div>
     <div class="fotos" data-serie="1">
