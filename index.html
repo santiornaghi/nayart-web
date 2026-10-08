@@ -21,7 +21,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500&family=JetBrains+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
 <style>
 :root {
@@ -1564,7 +1564,7 @@ body.tema-pf .ob-cap { text-align: center; }
 .ft-sig { margin-top: 5rem; padding-top: 1.2rem; border-top: 1px solid var(--rule); text-align: right; }
 .ft-sig a { font-size: .74rem; text-decoration: none; }
 .fotos[hidden] { display: none !important; }
-#ft-num { font-style: italic; }
+
 .fotos-nota { font-size: .74rem; color: var(--ink-faint); margin: -1.8rem 0 3rem; }
 .fotos { display: flex; flex-direction: column; align-items: center; gap: 5rem; }
 .fotos img { display: block; max-width: min(100%, 980px); max-height: 88vh; width: auto; height: auto; }
@@ -1596,7 +1596,7 @@ body.tema-pf .lmenu a, body.tema-pf .lmenu button { color: var(--pf-ink); }
 body.tema-pf .wa-fab { background: var(--pf-acc) !important; color: #2c3a2b !important; }
 body.tema-pf .obra-v .ob-meta, body.tema-pf .obra-v .ob-cap, body.tema-pf .ob-vendida { color: var(--pf-dim); }
 body.tema-pf .ob-nav { border-top-color: rgba(236,229,210,.15); }
-body.tema-pf .ob-top h2 { font-family: 'Instrument Serif', serif !important; text-transform: none; font-size: clamp(2.2rem, 5vw, 4rem) !important; letter-spacing: -0.01em !important; }
+body.tema-pf .ob-top h2 { font-family: 'Inter Tight', sans-serif !important; text-transform: none; font-size: clamp(2.2rem, 5vw, 4rem) !important; letter-spacing: -0.01em !important; }
 body.cargando, body.cargando #v-portfolio, body.cargando .lh { transition: none !important; }
 #telon { position: fixed; inset: 0; z-index: 200; pointer-events: none; visibility: hidden; clip-path: inset(100% 0 0 0); }
 #telon.pf { background: #2c3a2b; } #telon.claro { background: var(--paper, #fafaf8); }
@@ -1620,8 +1620,8 @@ body.tema-pf { transition: background-color 1.4s ease; }
 .pf-n { color: var(--pf-ink); opacity: .8; font-size: .72rem; display: block; margin-bottom: 1rem; }
 .pfh-txt .mono, .pfh-txt .pf-sub { text-shadow: 0 1px 12px rgba(0,0,0,.55), 0 0 2px rgba(0,0,0,.35); }
 .pfh-txt .envoltura { display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 2rem; }
-.pf-tit { font-family: 'Instrument Serif', serif !important; font-weight: 400 !important; font-style: italic; font-size: clamp(5rem, 17vw, 15rem) !important; line-height: .8 !important; letter-spacing: -0.035em !important; color: var(--pf-ink); text-transform: none; text-shadow: 0 2px 40px rgba(0,0,0,.25); }
-.pf-sub { font-family: 'Instrument Serif', serif; font-size: clamp(1.15rem, 1.8vw, 1.5rem); line-height: 1.25; color: var(--pf-ink); opacity: .85; margin-top: 1.2rem; }
+.pf-tit { font-family: 'Inter Tight', sans-serif !important; font-weight: 400 !important; font-style: italic; font-size: clamp(5rem, 17vw, 15rem) !important; line-height: .8 !important; letter-spacing: -0.035em !important; color: var(--pf-ink); text-transform: none; text-shadow: 0 2px 40px rgba(0,0,0,.25); }
+.pf-sub { font-family: 'Inter Tight', sans-serif; font-size: clamp(1.15rem, 1.8vw, 1.5rem); line-height: 1.25; color: var(--pf-ink); opacity: .85; margin-top: 1.2rem; }
 .pfh-der { text-align: right; display: flex; flex-direction: column; gap: .5rem; align-items: flex-end; }
 .pfh-der .mono { font-size: .7rem; color: var(--pf-ink); opacity: .8; }
 .pfh-pista { width: 1px; height: 56px; background: linear-gradient(var(--pf-ink), transparent); opacity: .6; animation: pista 2.4s ease-in-out infinite; transform-origin: top; }
@@ -1630,7 +1630,7 @@ body.tema-pf { transition: background-color 1.4s ease; }
 .pf-salas { position: relative; z-index: 2; }
 .sala { position: relative; min-height: 100svh; display: flex; align-items: center; padding: clamp(5rem, 12vh, 9rem) 0; }
 .sala-in { display: grid; grid-template-columns: repeat(12, 1fr); gap: clamp(1rem, 2.4vw, 2.2rem); align-items: center; width: 100%; }
-.sala-num { position: absolute; top: clamp(2rem, 7vh, 5rem); font-family: 'Instrument Serif', serif; font-size: clamp(8rem, 22vw, 20rem); line-height: .8; color: transparent; -webkit-text-stroke: 1px rgba(236,229,210,.1); pointer-events: none; user-select: none; z-index: 0; }
+.sala-num { position: absolute; top: clamp(2rem, 7vh, 5rem); font-family: 'Inter Tight', sans-serif; font-size: clamp(8rem, 22vw, 20rem); line-height: .8; color: transparent; -webkit-text-stroke: 1px rgba(236,229,210,.1); pointer-events: none; user-select: none; z-index: 0; }
 .sala:nth-child(odd) .sala-num { left: 2vw; } .sala:nth-child(even) .sala-num { right: 2vw; }
 .muro { grid-column: 1 / 8; position: relative; display: flex; justify-content: center; align-items: center; min-height: 64vh; z-index: 1; }
 .sala:nth-child(even) .muro { grid-column: 6 / 13; order: 2; }
@@ -1671,7 +1671,7 @@ body.tema-pf { transition: background-color 1.4s ease; }
 .lupa-et { position: absolute; left: .6rem; bottom: .6rem; font-size: .58rem; color: #f3eee0; background: rgba(28,36,27,.55); backdrop-filter: blur(6px); padding: .25rem .45rem; border-radius: 2px; }
 .cartela { border-top: 1px solid rgba(236,229,210,.22); padding-top: 1rem; display: flex; flex-direction: column; gap: .55rem; }
 .cartela .mono { font-size: .66rem; color: var(--pf-dim); }
-.cartela h3 { font-family: 'Instrument Serif', serif !important; font-weight: 400 !important; font-size: clamp(2rem, 3.4vw, 3.2rem) !important; line-height: .95 !important; letter-spacing: -0.01em !important; text-transform: none !important; color: var(--pf-ink); }
+.cartela h3 { font-family: 'Inter Tight', sans-serif !important; font-weight: 400 !important; font-size: clamp(2rem, 3.4vw, 3.2rem) !important; line-height: .95 !important; letter-spacing: -0.01em !important; text-transform: none !important; color: var(--pf-ink); }
 .cartela dl { display: grid; grid-template-columns: auto 1fr; gap: .25rem 1rem; margin: .4rem 0 0; font-size: .86rem; color: var(--pf-ink); opacity: .86; }
 .cartela dt { font-family: 'JetBrains Mono', monospace; font-size: .62rem; text-transform: uppercase; color: var(--pf-dim); padding-top: .2rem; }
 .cartela dd { margin: 0; }
@@ -1688,7 +1688,7 @@ body.tema-pf { transition: background-color 1.4s ease; }
 @keyframes desliza { to { transform: translateX(-50%); } }
 /* cierre: índice tipo hoja de contactos */
 .pf-cierre { position: relative; z-index: 2; padding: clamp(5rem, 12vh, 8rem) 0 4rem; }
-.pf-cierre h4 { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; font-size: clamp(2.4rem, 5vw, 4rem); line-height: 1; margin-bottom: 2rem; color: var(--pf-ink); }
+.pf-cierre h4 { font-family: 'Inter Tight', sans-serif; font-style: italic; font-weight: 400; font-size: clamp(2.4rem, 5vw, 4rem); line-height: 1; margin-bottom: 2rem; color: var(--pf-ink); }
 .contactos { display: grid; grid-template-columns: repeat(11, 1fr); gap: .6rem; }
 .contactos a { display: block; aspect-ratio: 3/4; background-size: cover; background-position: center; filter: grayscale(.85) brightness(.85); transition: filter .5s, transform .5s; position: relative; }
 .contactos a:hover { filter: none; transform: translateY(-6px); }
@@ -1736,7 +1736,7 @@ body.tema-pf { transition: background-color 1.4s ease; }
 .pie-in { position: relative; z-index: 2; text-align: left; padding-top: clamp(5rem, 14vh, 9rem); padding-bottom: 2rem; }
 .pie-ir { display: inline-flex; flex-direction: column; gap: 1rem; text-decoration: none; color: inherit; max-width: 100%; }
 .pie-ojo { font-size: .7rem; color: var(--pie-dim); }
-.pie-big { font-family: 'Instrument Serif', serif; font-style: italic; font-size: clamp(2.6rem, 6.3vw, 6.2rem); line-height: .95; white-space: nowrap; letter-spacing: -0.02em; position: relative; padding-bottom: .12em; }
+.pie-big { font-family: 'Inter Tight', sans-serif; font-style: normal; letter-spacing: -0.045em !important; font-size: clamp(2.6rem, 6.3vw, 6.2rem); line-height: .95; white-space: nowrap; letter-spacing: -0.02em; position: relative; padding-bottom: .12em; }
 .pie-big::after { content:''; position:absolute; left:0; bottom:0; height:1px; width:100%; background: currentColor; opacity:.35; transform-origin: left; transform: scaleX(0); transition: transform .9s cubic-bezier(.2,.7,.2,1), opacity .6s; }
 .pie-ir:hover .pie-big::after { transform: scaleX(1); opacity: .7; }
 .pie-big i { font-style: normal; display: inline-block; transition: transform .6s cubic-bezier(.2,.7,.2,1); color: var(--pie-acc); }
@@ -1770,6 +1770,65 @@ img { pointer-events: auto; }
 .t-ext { margin-top: 2.4rem; padding-top: 1.2rem; border-top: 1px solid var(--rule); max-width: none; }
 .portada .marca { position: relative; z-index: 3; }
 .ix-preview img, .ix-thumb { border-radius: 0 !important; }
+/* ═════════ Inicio: obras destacadas ═════════ */
+.dest-sec { padding-top: clamp(4rem, 10vh, 7rem); }
+.dest-cab { display: flex; justify-content: space-between; align-items: baseline; font-size: .74rem; padding-bottom: .9rem; border-bottom: 1px solid var(--rule); margin-bottom: 2.4rem; }
+.dest-cab a { text-decoration: none; }
+.dest-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 3.2rem 1.4rem; align-items: start; }
+.dest { text-decoration: none; color: inherit; display: block; }
+.dest-0 { grid-column: 1 / 7; } .dest-1 { grid-column: 8 / 13; margin-top: 5rem; } .dest-2 { grid-column: 2 / 6; } .dest-3 { grid-column: 7 / 12; margin-top: 2rem; } .dest-4 { grid-column: 4 / 10; }
+.dest-img { position: relative; overflow: hidden; background: #efede8; }
+.dest-img img { display: block; width: 100%; height: auto; transition: transform 1.2s cubic-bezier(.2,.7,.2,1), filter .6s; }
+.dest-info { position: absolute; inset: auto 0 0 0; padding: 1.1rem 1.1rem 1rem; display: flex; flex-direction: column; gap: .35rem; color: #fff;
+  background: linear-gradient(180deg, transparent, rgba(16,15,13,.78)); opacity: 0; transform: translateY(12px); transition: opacity .45s, transform .55s cubic-bezier(.2,.7,.2,1); }
+.dest-serie, .dest-f { font-size: .64rem; opacity: .85; }
+.dest-t { font-family: 'Inter Tight', sans-serif; font-size: 1.5rem; letter-spacing: -0.03em; line-height: 1.05; }
+.dest-btn { align-self: flex-start; margin-top: .5rem; font-size: .66rem; background: #fff; color: #111; padding: .5rem .8rem; }
+.dest-pie { display: flex; justify-content: space-between; gap: 1rem; margin-top: .7rem; font-size: .92rem; }
+.dest-pie .mono { font-size: .64rem; color: var(--ink-faint); padding-top: .2rem; }
+@media (hover: hover) { .dest:hover .dest-info { opacity: 1; transform: none; } .dest:hover .dest-img img { transform: scale(1.03); } .dest:hover .dest-pie { opacity: 0; } .dest-pie { transition: opacity .3s; } }
+.dest-pie-sec { margin-top: 4rem; text-align: center; }
+@media (max-width: 760px) {
+  .dest-grid { grid-template-columns: 1fr; gap: 2.6rem; }
+  .dest-grid .dest { grid-column: 1 !important; margin-top: 0 !important; }
+  .dest-img { background: none; } .dest-img img { background: #efede8; }
+  .dest-info { position: static; opacity: 1; transform: none; background: none; color: var(--ink); padding: .8rem 0 0; }
+  .dest-info .dest-t { font-size: 1.3rem; } .dest-pie { display: none; }
+  .dest-btn { background: var(--ink); color: #fff; }
+}
+/* ═════════ Store ═════════ */
+.st-filtros { display: flex; gap: 1.6rem; flex-wrap: wrap; margin: 0 0 2.6rem; }
+.st-f { background: none; border: none; padding: 0 0 .2rem; font-family: 'JetBrains Mono', monospace; text-transform: uppercase; font-size: .74rem; color: var(--ink-faint); cursor: pointer; border-bottom: 1px solid transparent; }
+.st-f.on { color: var(--ink); border-bottom-color: currentColor; }
+.st-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3rem 1.4rem; }
+.st-card { text-decoration: none; color: inherit; display: block; }
+.st-card[hidden] { display: none; }
+.st-img { aspect-ratio: 4 / 5; background: #efede8; display: flex; align-items: center; justify-content: center; padding: 9%; overflow: hidden; }
+.st-img img { max-width: 100%; max-height: 100%; width: auto; height: auto; display: block; box-shadow: 0 10px 24px -14px rgba(30,25,15,.45); transition: transform .8s cubic-bezier(.2,.7,.2,1); }
+.st-card:hover .st-img img { transform: scale(1.04); }
+.st-t { margin-top: .8rem; font-size: .98rem; letter-spacing: -0.01em; }
+.st-m { display: flex; justify-content: space-between; gap: .6rem; margin-top: .3rem; font-size: .64rem; color: var(--ink-light); }
+@media (max-width: 1000px) { .st-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 720px) { .st-grid { grid-template-columns: 1fr 1fr; gap: 2.2rem .9rem; } .st-m { flex-direction: column; gap: .1rem; } }
+/* ═════════ Producto ═════════ */
+.pr-ruta { font-size: .7rem; color: var(--ink-faint); margin-bottom: 2rem; } .pr-ruta a { text-decoration: none; color: var(--ink); }
+.pr-grid { display: grid; grid-template-columns: 1.35fr 1fr; gap: clamp(2rem, 5vw, 5rem); align-items: start; }
+.pr-izq { position: sticky; top: 6rem; }
+.pr-izq .ob-img { background: #efede8; padding: clamp(1.4rem, 4vw, 3.4rem); display: flex; justify-content: center; }
+.pr-izq .ob-img img { max-height: 72vh; width: auto; max-width: 100%; object-fit: contain; }
+.pr-t { font-family: 'Inter Tight', sans-serif !important; font-weight: 400 !important; font-size: clamp(2rem, 3.6vw, 3.2rem) !important; letter-spacing: -0.04em !important; line-height: 1 !important; text-transform: none !important; margin: 0 0 1.4rem; }
+.pr-ficha { display: grid; grid-template-columns: 6.5rem 1fr; gap: .35rem 1rem; font-size: .7rem; margin: 0 0 2rem; padding-bottom: 1.4rem; border-bottom: 1px solid var(--rule); }
+.pr-ficha dt { color: var(--ink-faint); } .pr-ficha dd { margin: 0; }
+.pr-op { margin-bottom: 1.3rem; } .pr-op[hidden] { display: none; }
+.pr-lab { display: block; font-size: .66rem; color: var(--ink-faint); margin-bottom: .5rem; }
+.pr-seg { display: inline-flex; flex-wrap: wrap; }
+.pr-seg button { font-family: 'JetBrains Mono', monospace !important; text-transform: uppercase !important; letter-spacing: 0 !important; font-size: .7rem; padding: .7rem 1rem; border: 1px solid var(--rule); background: #fff; color: var(--ink); cursor: pointer; margin: 0 -1px -1px 0; border-radius: 0 !important; }
+.pr-seg button.on { background: var(--ink); color: #fff; border-color: var(--ink); }
+.pr-nota { font-size: .64rem; color: var(--ink-faint); margin-top: .5rem; display: block; }
+.pr-compra { display: flex; align-items: center; gap: 1.4rem; flex-wrap: wrap; margin-top: 2rem; padding-top: 1.4rem; border-top: 1px solid var(--rule); }
+.pr-precio { font-size: 1.6rem; letter-spacing: -0.03em; }
+.pr-about { margin-top: 2.4rem; } .pr-about p { font-size: 1rem; line-height: 1.6; color: var(--ink-light); max-width: 46ch; }
+@media (max-width: 860px) { .pr-grid { grid-template-columns: 1fr; } .pr-izq { position: static; } }
 /* ═════════ Carrito y checkout dentro del mismo sistema ═════════ */
 .cart-drawer input, .cart-drawer select, .cart-drawer textarea { border-radius: 0 !important; }
 .cart-drawer .co-label { font-family: 'JetBrains Mono', monospace !important; font-size: .68rem !important; letter-spacing: 0 !important; text-transform: uppercase !important; color: var(--ink) !important; font-weight: 400 !important; margin-bottom: .9rem; }
@@ -1781,14 +1840,9 @@ img { pointer-events: auto; }
 .cart-drawer .co-tag { background: #2c3a2b; color: #ece5d2; font-family: 'JetBrains Mono', monospace; letter-spacing: 0; font-size: .58rem; }
 .cart-drawer .ent-tab small.gratis, .cart-drawer .sum-row.discount { color: #2c3a2b !important; }
 .cart-drawer .ent-tab small { color: var(--ink-light); }
-.cart-drawer .sum-row.total span:last-child, .cart-drawer .cotiz.ok strong { font-family: 'Instrument Serif', serif !important; font-size: 2rem; letter-spacing: -0.01em; line-height: 1; }
-.cart-drawer .cart-empty > div[style] { font-family: 'Instrument Serif', serif !important; font-size: 2.2rem !important; }
-.cart-drawer .cart-item-name { font-family: 'Instrument Serif', serif; font-size: 1.25rem; line-height: 1.05; }
-/* ═════════ Integración tipográfica: serif para títulos, mono para rótulos ═════════ */
-.vista .v-title { font-family: 'Instrument Serif', serif !important; font-style: normal; font-weight: 400 !important; text-transform: none !important; letter-spacing: -0.025em !important; font-size: clamp(3.2rem, 8vw, 6.6rem) !important; line-height: .9 !important; margin-bottom: clamp(2rem, 5vh, 3.4rem); }
-.ob-top h2 { font-family: 'Instrument Serif', serif !important; text-transform: none !important; font-size: clamp(2.4rem, 5.4vw, 4.4rem) !important; letter-spacing: -0.015em !important; line-height: .95 !important; }
-.ob-top > span.mono, .obra-v .ob-meta { display: none; }
-.ob-top { margin-bottom: clamp(1.6rem, 4vh, 2.6rem); }
+.cart-drawer .sum-row.total span:last-child, .cart-drawer .cotiz.ok strong { font-family: 'Inter Tight', sans-serif !important; font-size: 2rem; letter-spacing: -0.01em; line-height: 1; }
+.cart-drawer .cart-empty > div[style] { font-family: 'Inter Tight', sans-serif !important; font-size: 2.2rem !important; }
+.cart-drawer .cart-item-name { font-family: 'Inter Tight', sans-serif; font-size: 1.25rem; line-height: 1.05; }
 .lista li:has(.y) { display: grid; grid-template-columns: 7.5rem 1fr; align-items: baseline; }
 .lista li:has(.y) .y { width: auto; }
 @media (max-width: 720px) { .lista li:has(.y) { display: block; } }
@@ -1814,9 +1868,7 @@ body.pie-visible .wa-fab { opacity: 0; pointer-events: none; transform: scale(.8
   </div>
 </header>
 <div class="lmenu" role="navigation" aria-label="Menú">
-  <a href="#/lista">Work</a>
-  <a href="#/portfolio">Portfolio</a>
-  <a href="#/tienda">Shop</a>
+  <a href="#/tienda">Store</a>
   <a href="#/fotos">Photos</a>
   <div class="sub-fila"><a href="#/fotos" class="sub">I</a><a href="#/fotos/2" class="sub">II</a><a href="#/fotos/3" class="sub">III</a></div>
   <a href="#/acerca">About</a>
@@ -1830,13 +1882,13 @@ body.pie-visible .wa-fab { opacity: 0; pointer-events: none; transform: scale(.8
 <section class="vista" id="v-inicio">
   <div class="portada">
     <h1 class="marca">Naya Lab<sup>®</sup></h1>
-    <a class="flecha" href="#/lista" aria-label="Ver obras">↓</a>
+    <a class="flecha" href="#/lista" aria-label="Ver obras" onclick="event.preventDefault();document.getElementById('lista').scrollIntoView({behavior:'smooth'})">↓</a>
   </div>
-  <div class="envoltura ix2" id="lista">
-    <div class="ix2-head"><span data-es="Año" data-en="Year">Año</span><span data-es="Título" data-en="Title">Título</span><span class="c-m" data-es="Medida" data-en="Size">Medida</span><span id="ix2-n" style="text-align:right"></span></div>
-    <div class="ix2-list" id="ix2-list"></div>
+  <div class="envoltura dest-sec" id="lista">
+    <div class="dest-cab"><span class="mono" data-es="Obras destacadas" data-en="Selected works">Obras destacadas</span><a class="mono" href="#/tienda">Store →</a></div>
+    <div class="dest-grid" id="dest-grid"></div>
+    <div class="dest-pie-sec"><a class="btn-m linea" href="#/tienda" data-es="Ver todas en el Store" data-en="See all in the Store">Ver todas en el Store</a></div>
   </div>
-  <div class="ix-preview" aria-hidden="true"><img alt=""></div>
 </section>
 
 <!-- OBRA -->
@@ -1845,23 +1897,21 @@ body.pie-visible .wa-fab { opacity: 0; pointer-events: none; transform: scale(.8
 <!-- TIENDA -->
 <section class="vista" id="v-tienda">
   <div class="envoltura pagina">
-    <h2 class="v-title" data-es="Tienda" data-en="Shop">Tienda</h2>
-    <p class="t-intro" data-es="Láminas de acuarelas originales, impresas en A4 y A5. Opcional: marco de madera kiri con paspartú." data-en="Prints of original watercolors in A4 and A5. Optional kiri wood frame with mat.">Láminas de acuarelas originales, impresas en A4 y A5. Opcional: marco de madera kiri con paspartú.</p>
-    <div class="t-precios">A4 $22.000 · A5 $16.500<br><span data-es="Con marco kiri: A4 $38.500 · A5 $27.500" data-en="With kiri frame: A4 $38.500 · A5 $27.500">Con marco kiri: A4 $38.500 · A5 $27.500</span><br><span data-es="10% off por transferencia" data-en="10% off by bank transfer">10% off por transferencia</span></div>
-    <div class="lam-filtros" role="tablist">
-      <button class="lam-f on" data-g="" type="button" data-es="Todas" data-en="All">Todas</button>
-      <button class="lam-f" data-g="p" type="button" data-es="Paisajes y ciudad" data-en="Landscapes and city">Paisajes y ciudad</button>
-      <button class="lam-f" data-g="c" type="button" data-es="Campo en color" data-en="Countryside in colour">Campo en color</button>
+    <h2 class="v-title">Store</h2>
+    <p class="t-intro" data-es="Cada obra está disponible como original, como lámina A4 o A5, o ambas. Todas se pueden pedir con marco de madera kiri y paspartú." data-en="Each work is available as an original, as an A4 or A5 print, or both. All can be ordered with a kiri wood frame and mat.">Cada obra está disponible como original, como lámina A4 o A5, o ambas. Todas se pueden pedir con marco de madera kiri y paspartú.</p>
+    <div class="st-filtros" role="tablist">
+      <button class="st-f on" data-g="" type="button" data-es="Todas" data-en="All">Todas</button>
+      <button class="st-f" data-g="p" type="button" data-es="Paisajes y ciudad" data-en="Landscapes &amp; city">Paisajes y ciudad</button>
+      <button class="st-f" data-g="c" type="button" data-es="Campo en color" data-en="Countryside in colour">Campo en color</button>
     </div>
-    <div class="laminas recortada" id="laminas"></div>
-    <div class="laminas-mas"><button class="btn-m linea" id="laminas-btn" type="button" onclick="verTodasLaminas()">Ver todas las láminas</button></div>
+    <div class="st-grid" id="st-grid"></div>
+    <div class="laminas" id="laminas" hidden></div>
     <div class="t-sec t-fuera" id="tienda-extra" style="display:none">
       <span class="v-lab" data-es="Originales" data-en="Originals">Originales</span>
       <div class="productos" id="productos-api"></div>
     </div>
-    <p class="t-orig"><a class="mono" href="#/lista" data-es="Obras originales → Work" data-en="Original works → Work">Obras originales → Work</a></p>
     <div class="como">
-      <div><span class="v-lab" data-es="01 Elegí" data-en="01 Choose">01 Elegí</span><p data-es="La lámina, el tamaño y si la querés con marco." data-en="The print, the size and whether you want a frame.">La lámina, el tamaño y si la querés con marco.</p></div>
+      <div><span class="v-lab" data-es="01 Elegí" data-en="01 Choose">01 Elegí</span><p data-es="Original o lámina, el tamaño y si la querés con marco." data-en="Original or print, the size and whether you want a frame.">Original o lámina, el tamaño y si la querés con marco.</p></div>
       <div><span class="v-lab" data-es="02 Pagá" data-en="02 Pay">02 Pagá</span><p data-es="Transferencia con 10% de descuento o Mercado Pago." data-en="Bank transfer with 10% off, or Mercado Pago.">Transferencia con 10% de descuento o Mercado Pago.</p></div>
       <div><span class="v-lab" data-es="03 Recibí" data-en="03 Receive">03 Recibí</span><p data-es="Retiro sin cargo en Río Cuarto o Córdoba, o envío por Andreani a todo el país." data-en="Free pickup in Río Cuarto or Córdoba, or Andreani shipping nationwide.">Retiro sin cargo en Río Cuarto o Córdoba, o envío por Andreani a todo el país.</p></div>
     </div>
@@ -1915,27 +1965,6 @@ body.pie-visible .wa-fab { opacity: 0; pointer-events: none; transform: scale(.8
   </div>
 </section>
 
-<!-- PORTFOLIO -->
-<section class="vista" id="v-portfolio">
-  <div class="pfh">
-    <div id="pfh-capas"></div>
-    <div class="pfh-tinta"></div>
-    <div class="pfh-txt"><div class="envoltura">
-      <div>
-        <span class="mono pf-n" id="ix2-n-p"></span>
-        <h2 class="pf-tit">Portfolio</h2>
-        <p class="pf-sub" data-es="Obras vendidas, hoy en colecciones privadas." data-en="Sold works, now in private collections.">Obras vendidas, hoy en colecciones privadas.</p>
-      </div>
-      <div class="pfh-der"><span class="mono">2022 — 2023</span><span class="mono" data-es="Acuarela · Carbonilla · Acrílico" data-en="Watercolor · Charcoal · Acrylic">Acuarela · Carbonilla · Acrílico</span><span class="pfh-pista"></span></div>
-    </div></div>
-  </div>
-  <div class="pf-salas" id="pf-salas"></div>
-  <div class="pf-cierre"><div class="envoltura">
-    <h4 data-es="Índice" data-en="Index">Índice</h4>
-    <div class="contactos" id="pf-contactos"></div>
-    <div class="pf-pie"><span class="mono">Naya Lab® — Río Cuarto</span><a class="mono" href="#/lista" data-es="Ver obras disponibles →" data-en="See available works →">Ver obras disponibles →</a></div>
-  </div></div>
-</section>
 <!-- FOTOS -->
 <section class="vista" id="v-fotos">
   <div class="envoltura pagina">
@@ -2020,23 +2049,18 @@ body.pie-visible .wa-fab { opacity: 0; pointer-events: none; transform: scale(.8
 </main>
 
 <footer class="pie" id="pie">
-  <div class="pie-borde" aria-hidden="true"></div>
   <div class="pie-tex" id="pie-tex" aria-hidden="true"></div>
   <div class="pie-velo" aria-hidden="true"></div>
   <div class="envoltura pie-in">
-    <a class="pie-ir solo-claro" href="#/portfolio">
-      <span class="mono pie-ojo">Portfolio <span class="pie-n" id="pie-n"></span></span>
-      <span class="pie-big"><span data-es="Obras en colecciones privadas" data-en="Works in private collections">Obras en colecciones privadas</span> <i>→</i></span>
-    </a>
-    <a class="pie-ir solo-pf" href="#/lista">
-      <span class="mono pie-ojo">Work</span>
-      <span class="pie-big"><span data-es="Obras disponibles" data-en="Available works">Obras disponibles</span> <i>→</i></span>
+    <a class="pie-ir" href="#/tienda">
+      <span class="mono pie-ojo">Store</span>
+      <span class="pie-big"><span data-es="Originales y láminas" data-en="Originals and prints">Originales y láminas</span> <i>→</i></span>
     </a>
     <div class="pie-cols">
       <div><span class="mono pie-lab">Naya Lab®</span><p data-es="Acuarelas de Santiago Ornaghi.<br>Río Cuarto, Córdoba, Argentina." data-en="Watercolors by Santiago Ornaghi.<br>Río Cuarto, Córdoba, Argentina.">Acuarelas de Santiago Ornaghi.<br>Río Cuarto, Córdoba, Argentina.</p></div>
-      <div><span class="mono pie-lab">Index</span><a href="#/lista">Work</a><a href="#/portfolio">Portfolio</a><a href="#/tienda">Shop</a><a href="#/fotos">Photos</a><a href="#/acerca">About</a></div>
+      <div><span class="mono pie-lab">Index</span><a href="#/tienda">Store</a><a href="#/fotos">Photos</a><a href="#/acerca">About</a></div>
       <div><span class="mono pie-lab">Contact</span><a href="mailto:santiornaghi@gmail.com">santiornaghi@gmail.com</a><a href="https://wa.me/5493584390961" target="_blank" rel="noopener">WhatsApp</a><a href="https://instagram.com/naya__artt" target="_blank" rel="noopener">Instagram</a></div>
-      <div><span class="mono pie-lab">Shop</span><p data-es="Envíos por Andreani a todo el país. Retiro sin cargo en Río Cuarto y Córdoba." data-en="Shipping across Argentina with Andreani. Free pickup in Río Cuarto and Córdoba.">Envíos por Andreani a todo el país. Retiro sin cargo en Río Cuarto y Córdoba.</p></div>
+      <div><span class="mono pie-lab">Store</span><p data-es="Envíos por Andreani a todo el país. Retiro sin cargo en Río Cuarto y Córdoba." data-en="Shipping across Argentina with Andreani. Free pickup in Río Cuarto and Córdoba.">Envíos por Andreani a todo el país. Retiro sin cargo en Río Cuarto y Córdoba.</p></div>
     </div>
     <div class="pie-fin mono"><span>© 2026 Santiago Ornaghi</span><a href="#/" onclick="scrollTo({top:0,behavior:'smooth'})" data-es="Volver arriba ↑" data-en="Back to top ↑">Volver arriba ↑</a></div>
   </div>
@@ -2596,30 +2620,53 @@ const L = (es,en) => lang==='en' ? en : es;
 const slug = s => String(s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
 let TODAS = [];
 const th = src => String(src||'').replace(/(^|\/)img\/(originales|rincones|movimiento|portfolio|fotos)\/([^/]+)$/,'$1img/$2/m/$3');
+const SERIE_N = { p:['Paisajes y ciudad','Landscapes & city'], c:['Campo en color','Countryside in colour'] };
+const serieDe = o => o.serieTxt || L(SERIE_N[o.g][0], SERIE_N[o.g][1]);
+const DEST_DEF = ['atardecer-violeta','jinetes-en-magenta','la-aguada','el-canal','cordero-en-el-corral','el-rodeo','paisano','niebla','ciudad-al-atardecer','molino-al-atardecer'];
 function armarTodas(){
-  const orig = (window._obrasGaleria||[]).map((o,i)=>({
-    s: slug(o.titulo), t:o.titulo, tec:(TECNICA[o.tecnica]||'Acuarela')+' sobre papel', m:`${o.ancho} × ${o.alto} cm`, y:o.anio||2025,
-    img:[o.imagenUrl], desc:o.concepto||DESCRIPCIONES[o.titulo]||'', gi:i,
-    venta: o.id && o.disponible==='DISPONIBLE' && o.precio>0 ? {precio:o.precio, moneda:o.moneda||'USD'} : null,
-    vendida: o.disponible==='VENDIDA'
-  }));
-  const vistos = new Set(OBRA.map(o=>o.s));
-  TODAS = [...orig.filter(o=>!vistos.has(o.s)), ...OBRA].sort((a,b)=>b.y-a.y);
+  const c = {};
+  LAMINAS.forEach(([id,t])=>{ c[slug(t)] = { s:slug(t), t, g:'p', lam:id, img:['img/originales/'+id+'.jpg'], y:2025, m:'', tec:'Acuarela sobre papel', desc:DESCRIPCIONES[t]||'' }; });
+  LAMINAS_SERIE.forEach(([id,t])=>{ c[slug(t)] = { s:slug(t), t, g:'c', lam:id, img:[imgLamina(id)], y:2025, m:'', tec:'Acuarela sobre papel', desc:DESCRIPCIONES[t]||'' }; });
+  (window._obrasGaleria||[]).forEach((o,i)=>{
+    if(o.disponible==='VENDIDA') return;
+    const k=slug(o.titulo); const e = c[k] || (c[k] = { s:k, t:o.titulo, g:'p', img:[o.imagenUrl], y:o.anio||2025, tec:'', desc:'' });
+    e.img=[o.imagenUrl]; e.m=(o.ancho&&o.alto)?`${o.ancho} × ${o.alto} cm`:e.m; e.y=o.anio||e.y;
+    e.tec=(TECNICA[o.tecnica]||'Acuarela')+' sobre papel'; e.desc=o.concepto||e.desc||DESCRIPCIONES[o.titulo]||''; e.gi=i; e.dest=!!o.destacada;
+    if(o.serie) e.serieTxt=o.serie;
+    e.venta = (o.id && o.disponible==='DISPONIBLE' && o.precio>0) ? {precio:o.precio, moneda:o.moneda||'USD'} : null;
+  });
+  TODAS = Object.values(c);
 }
-function filaIx(o){
-  const der = o.venta ? `${o.venta.moneda} ${o.venta.precio}` : (o.vendida ? L('Vendida','Sold') : '');
-  return `<a class="ix2-row" href="#/obra/${o.s}" data-img="${escH(th(o.img[0]))}"><span class="c-y">${o.y}</span><span class="c-t">${escH(o.t)}</span><span class="c-m">${escH(o.m)}</span><span class="c-e ${o.venta?'disp':''}">${der}</span></a>`;
-}
+const formatos = o => [o.venta?L('Original','Original'):'', o.lam?L('Lámina','Print'):''].filter(Boolean).join(' · ');
+const desde = o => o.lam ? L('Desde ','From ')+fmt(PRECIO_LAMINA.A5) : (o.venta ? fmt(o.venta.precio,o.venta.moneda) : '');
 let DISP=[], PORT=[];
 function renderIndice(){
-  armarTodas();
-  DISP = TODAS.filter(o=>!o.vendida); PORT = TODAS.filter(o=>o.vendida);
-  const l=document.getElementById('ix2-list'); if(l) l.innerHTML = DISP.map(filaIx).join('');
-  const n=document.getElementById('ix2-n'); if(n) n.textContent='('+DISP.length+')';
-  renderPortfolio(); piePortfolioN();
-  const np=document.getElementById('ix2-n-p'); if(np) np.textContent='('+String(PORT.length).padStart(2,'0')+') '+L('obras','works');
-  previewIndice();
+  armarTodas(); DISP = TODAS;
+  // destacadas del inicio
+  const d=document.getElementById('dest-grid');
+  if(d){ let D = TODAS.filter(o=>o.dest); if(!D.length) D = DEST_DEF.map(k=>TODAS.find(o=>o.s===k)).filter(Boolean);
+    d.innerHTML = D.map((o,i)=>`<a class="dest dest-${i%5}" href="#/obra/${o.s}">
+      <div class="dest-img"><img src="${escH(th(o.img[0]))}" alt="${escH(o.t)}" loading="lazy">
+        <div class="dest-info">
+          <span class="mono dest-serie">${L('Serie','Series')} · ${escH(serieDe(o))}</span>
+          <span class="dest-t">${escH(o.t)}</span>
+          <span class="mono dest-f">${formatos(o)}${o.m?' · '+escH(o.m):''} · ${o.y}</span>
+          <span class="mono dest-btn">${L('Ver en Store','View in Store')} →</span>
+        </div></div>
+      <div class="dest-pie"><span>${escH(o.t)}</span><span class="mono">${escH(serieDe(o))}</span></div>
+    </a>`).join(''); }
+  // grilla del store
+  const g=document.getElementById('st-grid');
+  if(g){ g.innerHTML = TODAS.map(o=>`<a class="st-card" href="#/obra/${o.s}" data-g="${o.g}">
+      <div class="st-img"><img src="${escH(th(o.img[0]))}" alt="${escH(o.t)}" loading="lazy"></div>
+      <div class="st-t">${escH(o.t)}</div>
+      <div class="st-m mono"><span>${formatos(o)}</span><span>${desde(o)}</span></div>
+    </a>`).join(''); filtrarStore(); }
 }
+let stFiltro='';
+function filtrarStore(){ document.querySelectorAll('.st-card').forEach(c=>c.hidden = !!stFiltro && c.dataset.g!==stFiltro); }
+document.addEventListener('click',e=>{ const b=e.target.closest('.st-f'); if(!b) return;
+  document.querySelectorAll('.st-f').forEach(x=>x.classList.toggle('on',x===b)); stFiltro=b.dataset.g; filtrarStore(); });
 
 // ═════════ Portfolio: salas ═════════
 const TONO={'che-vuole':'#3e3f32','pasitos-siesteros':'#373d30','necesidad-interrumpida':'#493922','ponte':'#404a32','sombra-alizarin':'#47432d','el-paseo-de-flodeo':'#43452f','urbe-dorada':'#3d3f2f','lo-sensual-i':'#3f4337','lo-sensual-ii':'#404539','cadmios':'#3d4030','el-paso':'#403f31'};
@@ -2718,39 +2765,63 @@ function previewIndice(){
   });
   if(!window._pvMove){ window._pvMove=true; addEventListener('mousemove',e=>{ prev.style.transform=`translate3d(${e.clientX+24}px,${e.clientY-90}px,0)`; },{passive:true}); }
 }
+const PRECIO_MARCO_OBRA = 16500;
+let obMarco = false, OB = { o:null, fmt:'lam', tam:'A4', marco:false };
+const TAM_TXT = { A4:'21 × 29,7 cm', A5:'14,8 × 21 cm' };
 function renderObra(s){
   const i=TODAS.findIndex(o=>o.s===s); const o=TODAS[i]; const v=document.getElementById('v-obra');
-  if(!o){ v.innerHTML = window._apiLista ? `<div class="envoltura obra-v"><p>${L('No encontré esa obra.','Work not found.')}</p><p><a href="#/lista">${L('Volver a la lista','Back to list')}</a></p></div>` : `<div class="envoltura obra-v"><p class="mono">${L('Cargando…','Loading…')}</p></div>`; return; }
-  const G = o.vendida ? PORT : DISP, gi = G.indexOf(o);
-  const prev=G[(gi-1+G.length)%G.length], next=G[(gi+1)%G.length];
-  const volver = o.vendida ? '#/portfolio' : '#/lista';
-  const tecEn = o.tec.replace('Acuarela sobre papel, díptico','Watercolor on paper, diptych').replace('Acuarela sobre papel','Watercolor on paper').replace('Carbonilla sobre papel','Charcoal on paper').replace('Acrílico sobre papel','Acrylic on paper').replace('Acrílico sobre lienzo','Acrylic on canvas').replace(/^Acrílico$/,'Acrylic');
-  const compra = o.venta ? `<div class="ob-marco"><div class="seg ob-seg"><button class="on" data-k="0" type="button">${L('Sin marco','No frame')}</button><button data-k="1" type="button">${L('Con marco kiri','Kiri frame')} +${fmt(PRECIO_MARCO_OBRA)}</button></div><span class="mono ob-nota">${L('Madera kiri con paspartú','Kiri wood with mat')}</span></div>
-    <div class="ob-compra"><span class="ob-precio">${fmt(o.venta.precio,o.venta.moneda)}<span class="ob-mas"></span></span><button class="btn-m" onclick="comprarObraMarco(${o.gi})">${L('Agregar al carrito','Add to cart')}</button><span class="mono" style="font-size:.7rem;color:var(--ink-faint)">${L('10% off por transferencia','10% off by bank transfer')}</span></div>
-    <p class="exterior">${L('¿Estás fuera de Argentina? Escribime y coordinamos el pago y el envío internacional.','Outside Argentina? Write to me and we will arrange international payment and shipping.')} <a href="mailto:santiornaghi@gmail.com?subject=International%20order%20%E2%80%94%20Naya%20Lab">Email</a> · <a href="https://wa.me/5493584390961?text=${encodeURIComponent('Hi! I would like to buy «'+o.t+'» from outside Argentina.')}" target="_blank" rel="noopener">WhatsApp</a></p>`
-    : (o.vendida ? `<div class="ob-compra"><span class="mono ob-vendida">${L('Vendida — colección privada','Sold — private collection')}</span></div>`
-    : `<div class="ob-compra"><a class="btn-m linea" target="_blank" rel="noopener" href="https://wa.me/${NAYA_WA}?text=${encodeURIComponent('Hola Naya! Quería consultar por la obra «'+o.t+'».')}">${L('Consultar por esta obra','Ask about this work')}</a></div>`);
-  v.innerHTML = `<div class="envoltura obra-v">
-    <div class="ob-top"><h2>${escH(o.t)}</h2><span class="mono" style="font-size:.8rem">${o.y}</span></div>
-    <div class="ob-meta">${escH(L(o.tec,tecEn))}<br>${escH(o.m)}<br>${o.y}</div>
-    ${o.vendida ? `<div class="ob-muro"><div class="cuadro ${marcoDe(o)} ${o.img.length>1?'dos':''}"><div class="hoja">${o.img.map(src=>`<img src="${escH(src)}" alt="${escH(o.t)}">`).join('')}</div></div></div>` : ''}
-    <div class="ob-img ${o.img.length>1?'dos':''} ${o.vendida?'oculto':''}" id="ob-img">${o.img.map(src=>{ const m=String(src).match(/img\/originales\/(\d+)\.jpg/); return m ? `<img src="${escH(src)}" srcset="${escH(src)} 1600w, img/hd/${m[1]}.jpg 2400w" sizes="(max-width: 760px) 100vw, 1180px" alt="${escH(o.t)}">` : `<img src="${escH(src)}" alt="${escH(o.t)}">`; }).join('')}</div>
-    <div class="ob-cap">${escH(o.t)} · ${escH(L(o.tec,tecEn))} · ${escH(o.m)} · ${o.y}</div>
-    ${o.desc ? `<div class="ob-about"><span class="v-lab">${L('Sobre la obra','About')}</span><p>${escH(o.desc)}</p></div>` : ''}
-    ${compra}
-    <div class="ob-nav"><a href="#/obra/${prev.s}">← ${L('Anterior','Previous')}</a><a href="${volver}">${o.vendida?L('Volver al portfolio','Back to portfolio'):L('Volver a la lista','Back to list')}</a><a href="#/obra/${next.s}">${L('Siguiente','Next')} →</a></div>
+  if(!o){ v.innerHTML = window._apiLista ? `<div class="envoltura obra-v"><p>${L('Esta obra ya no está disponible.','This work is no longer available.')}</p><p><a class="mono" href="#/tienda">${L('Ir al Store →','Go to Store →')}</a></p></div>` : `<div class="envoltura obra-v"><p class="mono">${L('Cargando…','Loading…')}</p></div>`; return; }
+  const prev=TODAS[(i-1+TODAS.length)%TODAS.length], next=TODAS[(i+1)%TODAS.length];
+  const tecEn = tecEN(o.tec||'Acuarela sobre papel');
+  OB = { o, fmt: o.venta ? 'orig' : 'lam', tam:'A4', marco:false };
+  const fmtSeg = [o.venta?`<button type="button" data-v="orig">${L('Original','Original')}</button>`:'', o.lam?`<button type="button" data-v="lam">${L('Lámina','Print')}</button>`:''].join('');
+  v.innerHTML = `<div class="envoltura obra-v pr">
+    <div class="pr-ruta mono"><a href="#/tienda">Store</a> / <span>${escH(serieDe(o))}</span></div>
+    <div class="pr-grid">
+      <div class="pr-izq"><div class="ob-img" id="ob-img"><img src="${escH(o.img[0])}" alt="${escH(o.t)}"></div></div>
+      <div class="pr-der">
+        <h2 class="pr-t">${escH(o.t)}</h2>
+        <dl class="pr-ficha mono">
+          <dt>${L('Serie','Series')}</dt><dd>${escH(serieDe(o))}</dd>
+          <dt>${L('Técnica','Medium')}</dt><dd>${escH(L(o.tec||'Acuarela sobre papel',tecEn))}</dd>
+          ${o.m?`<dt>${L('Original','Original')}</dt><dd>${escH(o.m)}</dd>`:''}
+          <dt>${L('Año','Year')}</dt><dd>${o.y}</dd>
+        </dl>
+        <div class="pr-op"><span class="mono pr-lab">${L('Formato','Format')}</span><div class="seg pr-seg" data-k="fmt">${fmtSeg}</div></div>
+        <div class="pr-op" id="pr-tam"><span class="mono pr-lab">${L('Tamaño','Size')}</span><div class="seg pr-seg" data-k="tam"><button type="button" data-v="A4">A4</button><button type="button" data-v="A5">A5</button></div><span class="mono pr-nota" id="pr-tam-n"></span></div>
+        <div class="pr-op"><span class="mono pr-lab">${L('Marco','Frame')}</span><div class="seg pr-seg" data-k="marco"><button type="button" data-v="0">${L('Sin marco','No frame')}</button><button type="button" data-v="1">${L('Madera kiri con paspartú','Kiri wood with mat')}</button></div></div>
+        <div class="pr-compra"><span class="pr-precio" id="pr-precio"></span><button class="btn-m" type="button" onclick="agregarProducto()">${L('Agregar al carrito','Add to cart')}</button></div>
+        <p class="mono pr-nota" id="pr-nota"></p>
+        ${o.desc?`<div class="pr-about"><span class="mono pr-lab">${L('Sobre la obra','About the work')}</span><p>${escH(o.desc)}</p></div>`:''}
+        <p class="exterior">${L('¿Estás fuera de Argentina? Escribime y coordinamos el pago y el envío internacional.','Outside Argentina? Write to me and we will arrange international payment and shipping.')} <a href="mailto:santiornaghi@gmail.com?subject=International%20order%20%E2%80%94%20Naya%20Lab">Email</a> · <a href="https://wa.me/5493584390961?text=${encodeURIComponent('Hi! I would like to buy «'+o.t+'» from outside Argentina.')}" target="_blank" rel="noopener">WhatsApp</a></p>
+      </div>
+    </div>
+    <div class="ob-nav"><a href="#/obra/${prev.s}">← ${L('Anterior','Previous')}</a><a href="#/tienda">${L('Volver al Store','Back to Store')}</a><a href="#/obra/${next.s}">${L('Siguiente','Next')} →</a></div>
   </div>`;
+  v.querySelectorAll('.pr-seg').forEach(sg=>sg.querySelectorAll('button').forEach(b=>b.onclick=()=>{
+    const k=sg.dataset.k; OB[k] = k==='marco' ? b.dataset.v==='1' : b.dataset.v; pintarProducto(); }));
+  pintarProducto();
 }
-const PRECIO_MARCO_OBRA = 16500;
-let obMarco = false;
-function activarMarco(){
-  obMarco=false; const seg=document.querySelector('.ob-seg'); if(!seg) return;
-  seg.querySelectorAll('button').forEach(b=>b.onclick=()=>{
-    seg.querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b)); obMarco = b.dataset.k==='1';
-    document.getElementById('ob-img').classList.toggle('kiri', obMarco);
-    document.querySelector('.ob-mas').textContent = obMarco ? ' + '+fmt(PRECIO_MARCO_OBRA) : '';
-  });
+function pintarProducto(){
+  const o=OB.o; if(!o) return; const lam = OB.fmt==='lam';
+  document.querySelectorAll('.pr-seg').forEach(sg=>{ const k=sg.dataset.k, val = k==='marco' ? (OB.marco?'1':'0') : OB[k];
+    sg.querySelectorAll('button').forEach(b=>b.classList.toggle('on', b.dataset.v===val)); });
+  document.getElementById('pr-tam').hidden = !lam;
+  document.getElementById('pr-tam-n').textContent = TAM_TXT[OB.tam];
+  const img=document.querySelector('#ob-img img'); const src = lam && o.g==='p' ? 'img/laminas/'+o.lam+'.jpg' : o.img[0];
+  if(img && img.getAttribute('src')!==src) img.src=src;
+  document.getElementById('ob-img').classList.toggle('kiri', OB.marco);
+  document.getElementById('pr-precio').textContent = lam ? fmt((OB.marco?PRECIO_KIRI:PRECIO_LAMINA)[OB.tam]) : fmt(o.venta.precio,o.venta.moneda) + (OB.marco ? ' + '+fmt(PRECIO_MARCO_OBRA) : '');
+  document.getElementById('pr-nota').textContent = (lam ? L('Lámina impresa · ','Printed reproduction · ') : L('Pieza única · ','One of a kind · ')) + L('10% off por transferencia','10% off by bank transfer');
 }
+function agregarProducto(){
+  const o=OB.o; if(!o) return;
+  if(OB.fmt==='lam'){
+    agregar({ key:`lam-${o.lam}-${OB.tam}-${OB.marco?'k':'s'}`, tipo:'lamina', titulo:o.t, tamano:OB.tam, marco:OB.marco,
+      nombre:`Lámina ${OB.tam}${OB.marco?' + marco kiri':''}`, precio:(OB.marco?PRECIO_KIRI:PRECIO_LAMINA)[OB.tam], moneda:'ARS', img:imgLamina(o.lam) });
+  } else { obMarco = OB.marco; comprarObraMarco(o.gi); }
+}
+function activarMarco(){}
 function comprarObraMarco(i){
   const o=window._obrasGaleria[i]; comprarObra(i);
   if(obMarco && !carrito.find(x=>x.key==='marco-'+o.id)){
@@ -2758,7 +2829,7 @@ function comprarObraMarco(i){
     guardar(); actualizarContador();
   }
 }
-const RUTAS_VIEJAS = { '#tienda':'#/tienda', '#laminas':'#/tienda', '#encargos':'#/acerca', '#contacto':'#/contacto', '#obras':'#/', '#series':'#/', '#about':'#/acerca' };
+const RUTAS_VIEJAS = { '#/lista':'#/', '#/portfolio':'#/', '#/shop':'#/tienda', '#/store':'#/tienda', '#tienda':'#/tienda', '#laminas':'#/tienda', '#encargos':'#/acerca', '#contacto':'#/contacto', '#obras':'#/', '#series':'#/', '#about':'#/acerca' };
 function ruta(){
   let h = location.hash || '#/';
   if(window._rutaPrev==='#/portfolio' && h!=='#/portfolio') window._pfScroll=scrollY;
@@ -2791,7 +2862,7 @@ function ruta(){
   else if(vista==='portfolio' && deObra && window._pfScroll) window.scrollTo(0,window._pfScroll);
   else window.scrollTo(0,0);
   window._rutaPrev=h;
-  const TIT={tienda:'Shop',acerca:'About',fotos:'Photos',portfolio:'Portfolio',contacto:'Contact'};
+  const TIT={tienda:'Store',acerca:'About',fotos:'Photos',portfolio:'Portfolio',contacto:'Contact'};
   const ob=vista==='obra' ? TODAS.find(o=>'#/obra/'+o.s===h) : null;
   document.title = (ob ? ob.t+' — ' : TIT[vista] ? TIT[vista]+' — ' : '') + 'Naya Lab® — Acuarelas de Santiago Ornaghi';
   const nv=document.querySelector('.lh'); if(nv) nv.classList.toggle('scrolled', scrollY>20);
@@ -2829,7 +2900,7 @@ function menu(){ document.body.classList.toggle('menu-abierto'); }
   }
   if(quieto){ // una sola imagen fija debajo del nombre
     const d=document.createElement('div'); d.className='estela in fija';
-    d.innerHTML='<img src="'+th(OBRA[0].img[0])+'" alt="">'; port.appendChild(d); return;
+    d.innerHTML='<img src="'+th((TODAS[0]||OBRA[0]).img[0])+'" alt="">'; port.appendChild(d); return;
   }
   if(mouse){
     let lx=0, ly=0;
@@ -2858,15 +2929,6 @@ function menu(){ document.body.classList.toggle('menu-abierto'); }
     if(Math.hypot(x-lx,y-ly) < 70) return; lx=x; ly=y; soltar(x,y,Math.min(r.width*0.4,200),800);
   },{passive:true});
 })();
-// filtros de láminas
-document.querySelectorAll('.lam-f').forEach(b=>b.addEventListener('click',()=>{
-  document.querySelectorAll('.lam-f').forEach(x=>x.classList.toggle('on',x===b));
-  const g=document.getElementById('laminas'); g.dataset.g=b.dataset.g;
-  if(b.dataset.g) g.classList.remove('recortada');
-}));
-function verTodasLaminas(){ document.getElementById('laminas').classList.remove('recortada'); }
-(function(){ const b=document.getElementById('laminas-btn'); if(b){ const n=document.querySelectorAll('#laminas .lamina').length; b.dataset.es=`Ver las ${n} láminas`; b.dataset.en=`See all ${n} prints`; b.textContent=b.dataset.es; } })();
-
 document.body.classList.add('cargando'); renderIndice(); cargarGaleria(); ruta(); setTimeout(()=>document.body.classList.remove('cargando'),120);
 
 </script>
