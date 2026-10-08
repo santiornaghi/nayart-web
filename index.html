@@ -2238,8 +2238,8 @@ function textoEnvioAndreani(){
 }
 async function cotizar(){
   if(checkout.entrega!=='ANDREANI' || !checkout.prov){ checkout.cot=null; return; }
-  const marcos = carrito.filter(i=>(i.tipo==='lamina'&&i.marco)||i.tipo==='marco').reduce((s,i)=>s+i.cantidad,0);
-  const otros  = carrito.filter(i=>!((i.tipo==='lamina'&&i.marco)||i.tipo==='marco')).reduce((s,i)=>s+i.cantidad,0);
+  const marcos = carrito.filter(i=>(i.tipo==='lamina'&&i.marco)||i.tipo==='marco').reduce((s,i)=>s+i.cantidad*(i.piezas||1),0);
+  const otros  = carrito.filter(i=>!((i.tipo==='lamina'&&i.marco)||i.tipo==='marco')).reduce((s,i)=>s+i.cantidad*(i.piezas||1),0);
   const cp = /^\d{4}$/.test(checkout.cp||'') ? checkout.cp : '';
   const key = [checkout.prov,cp,marcos,otros].join('|');
   if(checkout.cot && checkout.cot.key===key) return;
@@ -2481,7 +2481,7 @@ async function enviarPedido(){
         tipoEntrega:ENTREGAS[c.entrega].tipo,
         ...(c.entrega==='ANDREANI' ? { direccion:c.dir, ciudad:c.ciudad, provincia:c.prov, codigoPostal:c.cp, clienteDni:c.dni, zonaId: zonaDeProvincia(c.prov)?.id } : {}),
         metodoPago:c.pago, notas:[ENTREGAS[c.entrega].nombre + (c.entrega==='ANDREANI' ? (costoAndreani() ? '' : ' — costo a cotizar') : ' — sin cargo'), c.nota].filter(Boolean).join('\n'),
-        items: carrito.map(i=> i.tipo==='lamina' ? { tipo:'lamina', titulo:i.titulo, tamano:i.tamano, marco:i.marco, cantidad:i.cantidad } : { tipo:i.tipo, id:i.id, cantidad:i.cantidad })
+        items: carrito.map(i=> i.tipo==='lamina' ? { tipo:'lamina', titulo:i.titulo, tamano:i.tamano, marco:i.marco, cantidad:i.cantidad*(i.piezas||1) } : { tipo:i.tipo, id:i.id, cantidad:i.cantidad })
       })});
     clearTimeout(to);
     if(r.ok){ const d = await r.json(); numero = d.numero; }
@@ -2686,7 +2686,8 @@ function armarTodas(){
 }
 const lamImg = o => /^(s?\d+)$/.test(o.lam) ? (o.g==='p' ? 'img/laminas/'+o.lam+'.jpg' : imgLamina(o.lam)) : o.img[0];
 const formatos = o => [o.venta?L('Original','Original'):'', L('Lámina','Print'), o.vendida?L('Original vendido','Original sold'):''].filter(Boolean).join(' · ');
-const desde = o => o.lam ? L('Desde ','From ')+fmt(PRECIO_LAMINA.A5) : (o.venta ? fmt(o.venta.precio,o.venta.moneda) : '');
+const piezasDe = o => (o.img && o.img.length>1) ? 2 : 1;
+const desde = o => o.lam ? L('Desde ','From ')+fmt(PRECIO_LAMINA.A5*piezasDe(o)) : (o.venta ? fmt(o.venta.precio,o.venta.moneda) : '');
 let DISP=[], PORT=[];
 function renderIndice(){
   armarTodas(); DISP = TODAS;
@@ -2906,14 +2907,14 @@ function pintarProducto(){
   const img=document.querySelector('#ob-img img'); const src = SIN_MARCO.includes(o.s) ? (lam ? lamImg(o) : o.img[0]) : rc(o.img[0]);
   if(img && img.getAttribute('src')!==src) img.src=src;
   document.getElementById('ob-img').classList.toggle('kiri', !SIN_MARCO.includes(OB.o.s)); document.getElementById('ob-img').classList.toggle('libre', SIN_MARCO.includes(OB.o.s));
-  document.getElementById('pr-precio').textContent = lam ? fmt((OB.marco?PRECIO_KIRI:PRECIO_LAMINA)[OB.tam]) : fmt(o.venta.precio,o.venta.moneda) + (OB.marco ? ' + '+fmt(PRECIO_MARCO_OBRA) : '');
-  document.getElementById('pr-nota').textContent = (lam ? L('Lámina impresa · ','Printed reproduction · ') : L('Pieza única · ','One of a kind · ')) + L('10% off por transferencia','10% off by bank transfer');
+  document.getElementById('pr-precio').textContent = lam ? fmt((OB.marco?PRECIO_KIRI:PRECIO_LAMINA)[OB.tam]*piezasDe(o)) : fmt(o.venta.precio,o.venta.moneda) + (OB.marco ? ' + '+fmt(PRECIO_MARCO_OBRA) : '');
+  document.getElementById('pr-nota').textContent = (lam ? (piezasDe(o)>1 ? L('Díptico: 2 láminas'+(OB.marco?' y 2 marcos':'')+' · ','Diptych: 2 prints'+(OB.marco?' and 2 frames':'')+' · ') : L('Lámina impresa · ','Printed reproduction · ')) : L('Pieza única · ','One of a kind · ')) + L('10% off por transferencia','10% off by bank transfer');
 }
 function agregarProducto(){
   const o=OB.o; if(!o) return;
   if(OB.fmt==='lam'){
     agregar({ key:`lam-${o.lam}-${OB.tam}-${OB.marco?'k':'s'}`, tipo:'lamina', titulo:o.t, tamano:OB.tam, marco:OB.marco,
-      nombre:`Lámina ${OB.tam}${OB.marco?' + marco kiri':''}`, precio:(OB.marco?PRECIO_KIRI:PRECIO_LAMINA)[OB.tam], moneda:'ARS', img:lamImg(o) });
+      nombre: piezasDe(o)>1 ? `Díptico · 2 láminas ${OB.tam}${OB.marco?' + 2 marcos kiri':''}` : `Lámina ${OB.tam}${OB.marco?' + marco kiri':''}`, precio:(OB.marco?PRECIO_KIRI:PRECIO_LAMINA)[OB.tam]*piezasDe(o), piezas:piezasDe(o), moneda:'ARS', img:lamImg(o) });
   } else { obMarco = OB.marco; comprarObraMarco(o.gi); }
 }
 function activarMarco(){}
