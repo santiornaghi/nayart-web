@@ -1814,6 +1814,7 @@ img { pointer-events: auto; }
 .pr-ruta { font-size: .7rem; color: var(--ink-faint); margin-bottom: 2rem; } .pr-ruta a { text-decoration: none; color: var(--ink); }
 .pr-grid { display: grid; grid-template-columns: 1.35fr 1fr; gap: clamp(2rem, 5vw, 5rem); align-items: start; }
 .pr-izq { position: sticky; top: 6rem; }
+.pr-izq .ob-img.dos { display: grid; grid-template-columns: 1fr 1fr; gap: .6rem; align-items: center; }
 .pr-izq .ob-img { background: #efede8; padding: clamp(1.4rem, 4vw, 3.4rem); display: flex; justify-content: center; }
 .pr-izq .ob-img img { max-height: 72vh; width: auto; max-width: 100%; object-fit: contain; }
 .pr-t { font-family: 'Inter Tight', sans-serif !important; font-weight: 400 !important; font-size: clamp(2rem, 3.6vw, 3.2rem) !important; letter-spacing: -0.04em !important; line-height: 1 !important; text-transform: none !important; margin: 0 0 1.4rem; }
@@ -1898,11 +1899,12 @@ body.pie-visible .wa-fab { opacity: 0; pointer-events: none; transform: scale(.8
 <section class="vista" id="v-tienda">
   <div class="envoltura pagina">
     <h2 class="v-title">Store</h2>
-    <p class="t-intro" data-es="Cada obra está disponible como original, como lámina A4 o A5, o ambas. Todas se pueden pedir con marco de madera kiri y paspartú." data-en="Each work is available as an original, as an A4 or A5 print, or both. All can be ordered with a kiri wood frame and mat.">Cada obra está disponible como original, como lámina A4 o A5, o ambas. Todas se pueden pedir con marco de madera kiri y paspartú.</p>
+    <p class="t-intro" data-es="Todas las obras se pueden pedir como lámina A4 o A5, y las que siguen disponibles, también como original. Cualquiera puede ir con marco de madera kiri y paspartú." data-en="Every work can be ordered as an A4 or A5 print, and the ones still available also as an original. Any of them can come with a kiri wood frame and mat.">Todas las obras se pueden pedir como lámina A4 o A5, y las que siguen disponibles, también como original. Cualquiera puede ir con marco de madera kiri y paspartú.</p>
     <div class="st-filtros" role="tablist">
       <button class="st-f on" data-g="" type="button" data-es="Todas" data-en="All">Todas</button>
       <button class="st-f" data-g="p" type="button" data-es="Paisajes y ciudad" data-en="Landscapes &amp; city">Paisajes y ciudad</button>
       <button class="st-f" data-g="c" type="button" data-es="Campo en color" data-en="Countryside in colour">Campo en color</button>
+      <button class="st-f" data-g="v" type="button" data-es="Colección privada" data-en="Private collection">Colección privada</button>
     </div>
     <div class="st-grid" id="st-grid"></div>
     <div class="laminas" id="laminas" hidden></div>
@@ -2620,9 +2622,9 @@ const L = (es,en) => lang==='en' ? en : es;
 const slug = s => String(s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
 let TODAS = [];
 const th = src => String(src||'').replace(/(^|\/)img\/(originales|rincones|movimiento|portfolio|fotos)\/([^/]+)$/,'$1img/$2/m/$3');
-const SERIE_N = { p:['Paisajes y ciudad','Landscapes & city'], c:['Campo en color','Countryside in colour'] };
+const SERIE_N = { p:['Paisajes y ciudad','Landscapes & city'], c:['Campo en color','Countryside in colour'], v:['Colección privada','Private collection'] };
 const serieDe = o => o.serieTxt || L(SERIE_N[o.g][0], SERIE_N[o.g][1]);
-const DEST_DEF = ['atardecer-violeta','jinetes-en-magenta','la-aguada','el-canal','cordero-en-el-corral','el-rodeo','paisano','niebla','ciudad-al-atardecer','molino-al-atardecer'];
+const DEST_DEF = ['che-vuole','atardecer-violeta','sombra-alizarin','jinetes-en-magenta','urbe-dorada','la-aguada','el-paseo-de-flodeo','cordero-en-el-corral','necesidad-interrumpida','el-canal','ponte','niebla'];
 function armarTodas(){
   const c = {};
   LAMINAS.forEach(([id,t])=>{ c[slug(t)] = { s:slug(t), t, g:'p', lam:id, img:['img/originales/'+id+'.jpg'], y:2025, m:'', tec:'Acuarela sobre papel', desc:DESCRIPCIONES[t]||'' }; });
@@ -2635,9 +2637,13 @@ function armarTodas(){
     if(o.serie) e.serieTxt=o.serie;
     e.venta = (o.id && o.disponible==='DISPONIBLE' && o.precio>0) ? {precio:o.precio, moneda:o.moneda||'USD'} : null;
   });
+  // obras vendidas: el original está en una colección privada, pero se venden como lámina
+  OBRA.forEach(o=>{ if(!c[o.s]) c[o.s] = { s:o.s, t:o.t, g:'v', vendida:true, img:o.img, y:o.y, m:o.m, tec:o.tec, desc:DESCRIPCIONES[o.t]||'' }; });
+  Object.values(c).forEach(e=>{ if(!e.lam) e.lam = e.s; });   // todas se pueden pedir como lámina
   TODAS = Object.values(c);
 }
-const formatos = o => [o.venta?L('Original','Original'):'', o.lam?L('Lámina','Print'):''].filter(Boolean).join(' · ');
+const lamImg = o => /^(s?\d+)$/.test(o.lam) ? (o.g==='p' ? 'img/laminas/'+o.lam+'.jpg' : imgLamina(o.lam)) : o.img[0];
+const formatos = o => [o.venta?L('Original','Original'):'', L('Lámina','Print'), o.vendida?L('Original vendido','Original sold'):''].filter(Boolean).join(' · ');
 const desde = o => o.lam ? L('Desde ','From ')+fmt(PRECIO_LAMINA.A5) : (o.venta ? fmt(o.venta.precio,o.venta.moneda) : '');
 let DISP=[], PORT=[];
 function renderIndice(){
@@ -2778,7 +2784,7 @@ function renderObra(s){
   v.innerHTML = `<div class="envoltura obra-v pr">
     <div class="pr-ruta mono"><a href="#/tienda">Store</a> / <span>${escH(serieDe(o))}</span></div>
     <div class="pr-grid">
-      <div class="pr-izq"><div class="ob-img" id="ob-img"><img src="${escH(o.img[0])}" alt="${escH(o.t)}"></div></div>
+      <div class="pr-izq"><div class="ob-img ${o.img.length>1?'dos':''}" id="ob-img">${o.img.map(x=>`<img src="${escH(x)}" alt="${escH(o.t)}">`).join('')}</div></div>
       <div class="pr-der">
         <h2 class="pr-t">${escH(o.t)}</h2>
         <dl class="pr-ficha mono">
@@ -2787,7 +2793,7 @@ function renderObra(s){
           ${o.m?`<dt>${L('Original','Original')}</dt><dd>${escH(o.m)}</dd>`:''}
           <dt>${L('Año','Year')}</dt><dd>${o.y}</dd>
         </dl>
-        <div class="pr-op"><span class="mono pr-lab">${L('Formato','Format')}</span><div class="seg pr-seg" data-k="fmt">${fmtSeg}</div></div>
+        <div class="pr-op"><span class="mono pr-lab">${L('Formato','Format')}</span><div class="seg pr-seg" data-k="fmt">${fmtSeg}</div>${o.vendida?`<span class="mono pr-nota">${L('Original vendido — hoy en una colección privada','Original sold — now in a private collection')}</span>`:''}</div>
         <div class="pr-op" id="pr-tam"><span class="mono pr-lab">${L('Tamaño','Size')}</span><div class="seg pr-seg" data-k="tam"><button type="button" data-v="A4">A4</button><button type="button" data-v="A5">A5</button></div><span class="mono pr-nota" id="pr-tam-n"></span></div>
         <div class="pr-op"><span class="mono pr-lab">${L('Marco','Frame')}</span><div class="seg pr-seg" data-k="marco"><button type="button" data-v="0">${L('Sin marco','No frame')}</button><button type="button" data-v="1">${L('Madera kiri con paspartú','Kiri wood with mat')}</button></div></div>
         <div class="pr-compra"><span class="pr-precio" id="pr-precio"></span><button class="btn-m" type="button" onclick="agregarProducto()">${L('Agregar al carrito','Add to cart')}</button></div>
@@ -2808,7 +2814,7 @@ function pintarProducto(){
     sg.querySelectorAll('button').forEach(b=>b.classList.toggle('on', b.dataset.v===val)); });
   document.getElementById('pr-tam').hidden = !lam;
   document.getElementById('pr-tam-n').textContent = TAM_TXT[OB.tam];
-  const img=document.querySelector('#ob-img img'); const src = lam && o.g==='p' ? 'img/laminas/'+o.lam+'.jpg' : o.img[0];
+  const img=document.querySelector('#ob-img img'); const src = lam ? lamImg(o) : o.img[0];
   if(img && img.getAttribute('src')!==src) img.src=src;
   document.getElementById('ob-img').classList.toggle('kiri', OB.marco);
   document.getElementById('pr-precio').textContent = lam ? fmt((OB.marco?PRECIO_KIRI:PRECIO_LAMINA)[OB.tam]) : fmt(o.venta.precio,o.venta.moneda) + (OB.marco ? ' + '+fmt(PRECIO_MARCO_OBRA) : '');
@@ -2818,7 +2824,7 @@ function agregarProducto(){
   const o=OB.o; if(!o) return;
   if(OB.fmt==='lam'){
     agregar({ key:`lam-${o.lam}-${OB.tam}-${OB.marco?'k':'s'}`, tipo:'lamina', titulo:o.t, tamano:OB.tam, marco:OB.marco,
-      nombre:`Lámina ${OB.tam}${OB.marco?' + marco kiri':''}`, precio:(OB.marco?PRECIO_KIRI:PRECIO_LAMINA)[OB.tam], moneda:'ARS', img:imgLamina(o.lam) });
+      nombre:`Lámina ${OB.tam}${OB.marco?' + marco kiri':''}`, precio:(OB.marco?PRECIO_KIRI:PRECIO_LAMINA)[OB.tam], moneda:'ARS', img:lamImg(o) });
   } else { obMarco = OB.marco; comprarObraMarco(o.gi); }
 }
 function activarMarco(){}
@@ -2851,7 +2857,7 @@ function ruta(){
   else if(h==='#/portfolio') vista='portfolio';
   else if(h==='#/contacto') vista='contacto';
   document.querySelectorAll('.vista').forEach(x=>x.classList.toggle('on', x.id==='v-'+vista));
-  const obraV = vista==='obra' && (TODAS.find(o=>'#/obra/'+o.s===h)||{}).vendida;
+  const obraV = false;
   document.body.classList.toggle('tema-pf', vista==='portfolio' || !!obraV);
   if(vista!=='portfolio'){ document.body.style.backgroundColor=''; const vp=document.getElementById('v-portfolio'); if(vp) vp.style.setProperty('--pf-tono','#2c3a2b'); }
   else setTimeout(()=>window._pfPaso&&window._pfPaso(),50);
@@ -2869,7 +2875,7 @@ function ruta(){
 }
 // telón: cuando cambia el clima (claro ↔ verde) una cortina del color de destino cubre y descubre
 try{ history.scrollRestoration='manual'; }catch(e){}
-function temaDe(h){ if(h==='#/portfolio') return 'pf'; if(h.startsWith('#/obra/')){ const o=TODAS.find(x=>'#/obra/'+x.s===h); return o&&o.vendida?'pf':'claro'; } return 'claro'; }
+function temaDe(h){ return 'claro'; }
 function cambioRuta(){
   const h=location.hash||'#/'; const t=document.getElementById('telon');
   const antes=document.body.classList.contains('tema-pf')?'pf':'claro', despues=temaDe(h);
