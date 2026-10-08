@@ -1579,7 +1579,7 @@ body.tema-pf .ob-cap { text-align: center; }
 .ob-compra { margin-top: 1.2rem !important; }
 .ob-img img { transition: padding .5s, background .5s, box-shadow .5s; }
 .ob-img.kiri { justify-items: center; align-items: center; container-type: inline-size; background: #efede8; }
-.ob-img.kiri img { box-sizing: border-box; border-style: solid; border-color: #CDAF82; border-image: url(img/detalles/marco-kiri-v4.jpg) 256 stretch; background: linear-gradient(#FCFCFB,#FCFCFB) -2px -2px / calc(100% + 4px) calc(100% + 4px) no-repeat content-box, linear-gradient(rgba(70,60,45,.22),rgba(70,60,45,.22)) -3px -3px / calc(100% + 6px) calc(100% + 6px) no-repeat content-box, url(img/detalles/paspartu-polar.jpg) 0 0 / 256px auto repeat padding-box #F6F7F5; background-clip: padding-box; box-shadow: inset 0 4px 7px -3px rgba(40,30,15,.28), inset 3px 0 6px -4px rgba(40,30,15,.18), 0 16px 30px -14px rgba(30,22,12,.45), 0 2px 4px rgba(30,22,12,.12); padding: 13.5cqw; border-width: 4.8cqw; max-height: 76vh; width: auto; max-width: 100%; object-fit: fill; }
+.ob-img.kiri img { box-sizing: border-box; border-style: solid; border-color: #CDAF82; border-image: url(img/detalles/marco-kiri-v4.jpg) 256 stretch; background: url(img/detalles/paspartu-polar.jpg) 0 0 / 256px auto repeat padding-box #F6F7F5; background-clip: padding-box; box-shadow: inset 0 4px 7px -3px rgba(40,30,15,.28), inset 3px 0 6px -4px rgba(40,30,15,.18), 0 16px 30px -14px rgba(30,22,12,.45), 0 2px 4px rgba(30,22,12,.12); padding: 13.5cqw; border-width: 4.8cqw; max-height: 76vh; width: auto; max-width: 100%; object-fit: fill; }
 .ob-img.kiri.dos img { padding: 6.5cqw; border-width: 2.4cqw; }
 .ob-vendida { font-size: .76rem; color: var(--ink-faint); }
 
@@ -1825,7 +1825,7 @@ img { pointer-events: auto; }
 .st-card, .dest { pointer-events: auto; }
 .st-card[hidden] { display: none; }
 .st-img { aspect-ratio: 4 / 5; background: #efede8; display: flex; align-items: center; justify-content: center; padding: 7%; overflow: hidden; container-type: size; }
-.st-img img { max-width: 100%; max-height: 100%; width: auto; height: auto; display: block; box-sizing: border-box; border-style: solid; border-color: #CDAF82; border-image: url(img/detalles/marco-kiri-v4.jpg) 256 stretch; background: linear-gradient(#FCFCFB,#FCFCFB) -2px -2px / calc(100% + 4px) calc(100% + 4px) no-repeat content-box, linear-gradient(rgba(70,60,45,.22),rgba(70,60,45,.22)) -3px -3px / calc(100% + 6px) calc(100% + 6px) no-repeat content-box, url(img/detalles/paspartu-polar.jpg) 0 0 / 256px auto repeat padding-box #F6F7F5; background-clip: padding-box; box-shadow: inset 0 4px 7px -3px rgba(40,30,15,.28), inset 3px 0 6px -4px rgba(40,30,15,.18), 0 16px 30px -14px rgba(30,22,12,.45), 0 2px 4px rgba(30,22,12,.12); padding: 15cqw; border-width: 5.4cqw; transition: transform .8s cubic-bezier(.2,.7,.2,1); }
+.st-img img { max-width: 100%; max-height: 100%; width: auto; height: auto; display: block; box-sizing: border-box; border-style: solid; border-color: #CDAF82; border-image: url(img/detalles/marco-kiri-v4.jpg) 256 stretch; background: url(img/detalles/paspartu-polar.jpg) 0 0 / 256px auto repeat padding-box #F6F7F5; background-clip: padding-box; box-shadow: inset 0 4px 7px -3px rgba(40,30,15,.28), inset 3px 0 6px -4px rgba(40,30,15,.18), 0 16px 30px -14px rgba(30,22,12,.45), 0 2px 4px rgba(30,22,12,.12); padding: 15cqw; border-width: 5.4cqw; transition: transform .8s cubic-bezier(.2,.7,.2,1); }
 .st-card:hover .st-img img { transform: scale(1.04); }
 .st-t { margin-top: .8rem; font-size: .98rem; letter-spacing: -0.01em; }
 .st-m { display: flex; justify-content: space-between; gap: .6rem; margin-top: .3rem; font-size: .64rem; color: var(--ink-light); }
@@ -2903,7 +2903,7 @@ function pintarProducto(){
     sg.querySelectorAll('button').forEach(b=>b.classList.toggle('on', b.dataset.v===val)); });
   document.getElementById('pr-tam').hidden = !lam;
   document.getElementById('pr-tam-n').textContent = TAM_TXT[OB.tam];
-  const img=document.querySelector('#ob-img img'); const src = lam ? lamImg(o) : o.img[0];
+  const img=document.querySelector('#ob-img img'); const src = SIN_MARCO.includes(o.s) ? (lam ? lamImg(o) : o.img[0]) : rc(o.img[0]);
   if(img && img.getAttribute('src')!==src) img.src=src;
   document.getElementById('ob-img').classList.toggle('kiri', !SIN_MARCO.includes(OB.o.s)); document.getElementById('ob-img').classList.toggle('libre', SIN_MARCO.includes(OB.o.s));
   document.getElementById('pr-precio').textContent = lam ? fmt((OB.marco?PRECIO_KIRI:PRECIO_LAMINA)[OB.tam]) : fmt(o.venta.precio,o.venta.moneda) + (OB.marco ? ' + '+fmt(PRECIO_MARCO_OBRA) : '');
