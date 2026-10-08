@@ -1836,6 +1836,7 @@ img { pointer-events: auto; }
 #zoom img { max-width: 100%; max-height: 94vh; width: auto; height: auto; box-shadow: 0 30px 70px -30px rgba(0,0,0,.4); }
 #zoom button { position: absolute; top: 1rem; right: 1.4rem; background: none; border: none; font-size: 2rem; line-height: 1; cursor: pointer; color: var(--ink); }
 .pr-zoom { font-size: .62rem; color: var(--ink-faint); margin-top: .6rem; display: block; }
+.ab-bio { font-size: clamp(1.15rem, 1.6vw, 1.4rem); line-height: 1.45; letter-spacing: -0.01em; max-width: 38ch; }
 /* ═════════ Carrito y checkout dentro del mismo sistema ═════════ */
 .cart-drawer input, .cart-drawer select, .cart-drawer textarea { border-radius: 0 !important; }
 .cart-drawer .co-label { font-family: 'JetBrains Mono', monospace !important; font-size: .68rem !important; letter-spacing: 0 !important; text-transform: uppercase !important; color: var(--ink) !important; font-weight: 400 !important; margin-bottom: .9rem; }
@@ -1943,12 +1944,11 @@ body.pie-visible .wa-fab { opacity: 0; pointer-events: none; transform: scale(.8
     <h2 class="v-title" data-es="Acerca" data-en="About">Acerca</h2>
     <div class="ab-grid">
       <div>
-        <div class="ab-foto"><img src="img/vida/pintando-noche.jpg" alt="Santiago Ornaghi pintando frente al atril" loading="lazy"></div>
+        <div class="ab-foto"><img src="img/vida/santiago.jpg" alt="Santiago Ornaghi con pinceles" loading="lazy"></div>
       </div>
       <div class="ab-texto">
         <div class="bloque">
-          <p data-es="Santiago Ornaghi (Naya) es acuarelista. Nació y trabaja en Río Cuarto, Córdoba, Argentina." data-en="Santiago Ornaghi (Naya) is a watercolorist, born and based in Río Cuarto, Córdoba, Argentina.">Santiago Ornaghi (Naya) es acuarelista. Nació y trabaja en Río Cuarto, Córdoba, Argentina.</p>
-          <p data-es="Pinta al aire libre y en taller, con acuarela de alta pigmentación. También trabaja en carbonilla y acrílico." data-en="He paints outdoors and in the studio with high-pigment watercolor, and also works in charcoal and acrylic.">Pinta al aire libre y en taller, con acuarela de alta pigmentación. También trabaja en carbonilla y acrílico.</p>
+          <p class="ab-bio" data-es="Santiago Ornaghi (Río Cuarto, 1999) es un artista argentino. Sus pinturas, murales y proyectos participativos parten de paisajes cotidianos de vivencias para explorar el movimiento. Para representarlo, a veces estar vivo es suficiente para parecer real." data-en="Santiago Ornaghi (Río Cuarto, 1999) is an Argentine artist. His paintings, murals and participatory projects start from everyday landscapes of lived experience to explore movement. To represent it, sometimes being alive is enough to seem real.">Santiago Ornaghi (Río Cuarto, 1999) es un artista argentino. Sus pinturas, murales y proyectos participativos parten de paisajes cotidianos de vivencias para explorar el movimiento. Para representarlo, a veces estar vivo es suficiente para parecer real.</p>
         </div>
         <div class="bloque">
           <span class="v-lab" data-es="Formación" data-en="Training">Formación</span>
