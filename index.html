@@ -1719,6 +1719,21 @@ body.tema-pf { transition: background-color 1.4s ease; }
 .form .fg label { font-family: 'JetBrains Mono', monospace; text-transform: uppercase; font-size: .7rem; letter-spacing: 0; color: var(--ink); }
 .form input, .form select, .form textarea { border-radius: 0 !important; background: #fff !important; border: 1px solid var(--rule) !important; font-family: 'Inter Tight', sans-serif !important; }
 @media (max-width: 720px) { .form .form-row { grid-template-columns: 1fr !important; } .ct-grid { grid-template-columns: 1fr; gap: 2.4rem; } }
+
+/* pie minimal (referencia) */
+footer.pmin { display: block !important; padding: 0 !important; text-align: left !important; border-top: 1px solid currentColor !important; flex-direction: initial !important; }
+.pmin-in { width: 100%; box-sizing: border-box; }
+@media (max-width: 600px) { .ob-nav { font-size: .8rem !important; gap: .6rem; } .ob-nav a { white-space: nowrap; flex: none !important; } .pmin-in { padding-left: 1.4rem; padding-right: 1.4rem; } }
+.pmin { margin-top: clamp(5rem, 12vh, 8rem); border-top: 1px solid currentColor; background: transparent; color: var(--ink); }
+.pmin-in { display: flex; justify-content: space-between; gap: 2rem; padding: 1.6rem clamp(1.2rem, 4vw, 3rem) clamp(4rem, 12vh, 7rem); }
+.pmin-izq, .pmin-der { display: flex; flex-direction: column; gap: .55rem; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: .82rem; letter-spacing: .01em; text-transform: uppercase; }
+.pmin-der { align-items: flex-end; text-align: right; padding-top: .2rem; }
+.pmin-c { font-size: .95rem; margin-bottom: .55rem; }
+.pmin a { color: inherit; text-decoration: none; width: fit-content; opacity: .82; transition: opacity .25s; }
+.pmin a:hover { opacity: 1; text-decoration: underline; text-underline-offset: .25em; text-decoration-thickness: 1px; }
+.pmin-l { color: var(--ink-faint); margin-top: .55rem; }
+.ob-nav { border-top: none !important; margin-top: clamp(4rem, 10vh, 6rem) !important; padding: clamp(2.5rem, 6vh, 4rem) 0 !important; font-size: clamp(.9rem, 1.1vw, 1.05rem) !important; text-transform: none !important; align-items: center; }
+.ob-nav a { flex: 1; } .ob-nav a:nth-child(2) { text-align: center; } .ob-nav a:last-child { text-align: right; }
 /* pie */
 /* ═════════ PIE: la sala se oscurece al final de cada página ═════════ */
 .pie { position: relative; z-index: 3; margin-top: clamp(5rem, 12vh, 9rem); background: #2c3a2b; color: #ece5d2; overflow: hidden; --pie-dim: #a9b096; --pie-acc: #d9c48a; }
@@ -2070,20 +2085,21 @@ body.pie-visible .wa-fab { opacity: 0; pointer-events: none; transform: scale(.8
 </section>
 </main>
 
-<footer class="pie" id="pie">
-  <div class="envoltura pie-in">
-    <a class="pie-ir" href="#/tienda">
-      <span class="mono pie-ojo">Store</span>
-      <span class="pie-big"><span data-es="Originales y láminas" data-en="Originals and prints">Originales y láminas</span> <i>→</i></span>
-    </a>
-    <div class="pie-cols">
-      <div><span class="mono pie-lab">Naya Lab®</span><p data-es="Acuarelas de Santiago Ornaghi.<br>Río Cuarto, Córdoba, Argentina." data-en="Watercolors by Santiago Ornaghi.<br>Río Cuarto, Córdoba, Argentina.">Acuarelas de Santiago Ornaghi.<br>Río Cuarto, Córdoba, Argentina.</p></div>
-      <div><span class="mono pie-lab">Index</span><a href="#/tienda">Store</a><a href="#/fotos">Photos</a><a href="#/acerca">About</a></div>
-      <div><span class="mono pie-lab">Contact</span><a href="mailto:santiornaghi@gmail.com">santiornaghi@gmail.com</a><a href="https://wa.me/5493584390961" target="_blank" rel="noopener">WhatsApp</a><a href="https://instagram.com/naya__artt" target="_blank" rel="noopener">Instagram</a></div>
-      <div><span class="mono pie-lab">Store</span><p data-es="Envíos por Andreani a todo el país. Retiro sin cargo en Río Cuarto y Córdoba." data-en="Shipping across Argentina with Andreani. Free pickup in Río Cuarto and Córdoba.">Envíos por Andreani a todo el país. Retiro sin cargo en Río Cuarto y Córdoba.</p></div>
+<footer class="pmin" id="pie">
+  <div class="pmin-in">
+    <div class="pmin-izq">
+      <span class="pmin-c">©2026 Naya Lab®</span>
+      <a href="#/tienda">Store</a>
+      <a href="#/fotos">Photos</a>
+      <a href="#/acerca">About</a>
+      <a href="#/contacto">Contact</a>
     </div>
-    <div class="pie-fin mono"><span>© 2026 Santiago Ornaghi</span><a href="#/" onclick="scrollTo({top:0,behavior:'smooth'})" data-es="Volver arriba ↑" data-en="Back to top ↑">Volver arriba ↑</a></div>
-    <div class="pie-marca" aria-hidden="true">Naya Lab<sup>®</sup></div>
+    <div class="pmin-der">
+      <a href="mailto:santiornaghi@gmail.com">Email</a>
+      <a href="https://wa.me/5493584390961" target="_blank" rel="noopener">WhatsApp</a>
+      <a href="https://instagram.com/naya__artt" target="_blank" rel="noopener">Instagram</a>
+      <span class="pmin-l">Río Cuarto, AR</span>
+    </div>
   </div>
 </footer>
 <!-- CARRITO -->
