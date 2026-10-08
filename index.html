@@ -1724,6 +1724,17 @@ body.tema-pf { transition: background-color 1.4s ease; }
 .st-img.libre img { padding: 0 !important; border: 0 !important; border-image: none !important; background: none !important; box-shadow: 0 18px 34px -16px rgba(30,22,12,.45), 0 2px 5px rgba(30,22,12,.12) !important; }
 .ob-img.libre { background: #efede8; align-items: center; }
 .ob-img.libre img { box-shadow: 0 24px 44px -20px rgba(30,22,12,.45), 0 3px 6px rgba(30,22,12,.12); }
+/* áreas táctiles (mín. ~44px) sin cambiar el diseño */
+.lh-burger::after, .lh-logo::after, .lh-r > button::after, .cart-close::after { content: ''; position: absolute; inset: -14px -10px; }
+.lh-logo, .lh-r > button, .cart-close { position: relative; }
+@media (pointer: coarse) {
+  .lmenu a, .lmenu button, .sub, .st-f, .t-ext a, .pmin a, .ft-nav a, #ft-sig, .dest-cab a, .flecha, .exterior a { padding-top: 12px !important; padding-bottom: 12px !important; margin-top: -12px; margin-bottom: -12px; }
+  .pmin-izq, .pmin-der { gap: 1.15rem; }
+  .pmin-c { margin-bottom: .3rem; }
+  .st-filtros { row-gap: .4rem; }
+}
+/* el botón de WhatsApp no tapa formularios */
+body.en-contacto .wa-fab, body.escribiendo .wa-fab { opacity: 0 !important; pointer-events: none !important; transform: scale(.85) !important; }
 /* pie minimal (referencia) */
 footer.pmin { display: block !important; padding: 0 !important; text-align: left !important; border-top: 1px solid currentColor !important; flex-direction: initial !important; }
 .pmin-in { width: 100%; box-sizing: border-box; }
@@ -1969,7 +1980,7 @@ body.pie-visible .wa-fab { opacity: 0; pointer-events: none; transform: scale(.8
 <!-- ACERCA -->
 <section class="vista" id="v-acerca">
   <div class="envoltura pagina">
-    <h2 class="v-title" data-es="Acerca" data-en="About">Acerca</h2>
+    <h2 class="v-title" data-es="About" data-en="About">About</h2>
     <div class="ab-grid">
       <div>
         <div class="ab-foto"><img src="img/vida/santiago.jpg" alt="Santiago Ornaghi con pinceles" loading="lazy"></div>
@@ -2055,7 +2066,7 @@ body.pie-visible .wa-fab { opacity: 0; pointer-events: none; transform: scale(.8
 <!-- CONTACTO -->
 <section class="vista" id="v-contacto">
   <div class="envoltura pagina">
-    <h2 class="v-title" data-es="Contacto" data-en="Contact">Contacto</h2>
+    <h2 class="v-title" data-es="Contact" data-en="Contact">Contact</h2>
     <div class="ct-grid">
       <div class="ab-contacto" style="margin-top:0">
         <span class="v-lab" style="margin-bottom:.4rem">Email</span><a href="mailto:santiornaghi@gmail.com">santiornaghi@gmail.com</a><br>
@@ -2855,6 +2866,9 @@ function renderObra(s){
   pintarProducto();
 }
 (function(){ const pie=document.getElementById('pie'); if(pie) new IntersectionObserver(es=>es.forEach(e=>document.body.classList.toggle('pie-visible', e.isIntersecting)),{rootMargin:'0px 0px -30% 0px'}).observe(pie); })();
+(function(){ const f=()=>document.body.classList.toggle('en-contacto', location.hash.startsWith('#/contacto')); addEventListener('hashchange',f); f();
+  document.addEventListener('focusin',e=>{ if(e.target.matches('input,textarea,select')) document.body.classList.add('escribiendo'); });
+  document.addEventListener('focusout',e=>{ if(e.target.matches('input,textarea,select')) document.body.classList.remove('escribiendo'); }); })();
 function abrirZoom(src){
   let z=document.getElementById('zoom');
   if(!z){ z=document.createElement('div'); z.id='zoom';
