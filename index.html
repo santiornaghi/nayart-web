@@ -1806,7 +1806,7 @@ img { pointer-events: auto; }
 .st-card, .dest { pointer-events: auto; }
 .st-card[hidden] { display: none; }
 .st-img { aspect-ratio: 4 / 5; background: #efede8; display: flex; align-items: center; justify-content: center; padding: 9%; overflow: hidden; }
-.st-img img { max-width: 100%; max-height: 100%; width: auto; height: auto; display: block; box-shadow: 0 10px 24px -14px rgba(30,25,15,.45); transition: transform .8s cubic-bezier(.2,.7,.2,1); }
+.st-img img { max-width: 100%; max-height: 100%; width: auto; height: auto; display: block; box-sizing: border-box; padding: 4.5%; background: #FCFBF8; border: 8px solid #D9BF95; border-image: linear-gradient(135deg, #E6CFA8, #D4B588 30%, #E2C79C 55%, #CDAC7C 80%, #DDC29A) 1; box-shadow: inset 0 0 0 1px rgba(60,45,25,.1), 0 12px 26px -12px rgba(40,30,15,.4); transition: transform .8s cubic-bezier(.2,.7,.2,1); }
 .st-card:hover .st-img img { transform: scale(1.04); }
 .st-t { margin-top: .8rem; font-size: .98rem; letter-spacing: -0.01em; }
 .st-m { display: flex; justify-content: space-between; gap: .6rem; margin-top: .3rem; font-size: .64rem; color: var(--ink-light); }
@@ -1928,7 +1928,7 @@ body.pie-visible .wa-fab { opacity: 0; pointer-events: none; transform: scale(.8
       <button class="st-f" data-g="v" type="button" data-es="Colección privada" data-en="Private collection">Colección privada</button>
     </div>
     <div class="st-grid" id="st-grid"></div>
-    <div class="laminas" id="laminas" hidden></div>
+    <div id="laminas" style="display:none!important" aria-hidden="true"></div>
     <div class="t-sec t-fuera" id="tienda-extra" style="display:none">
       <span class="v-lab" data-es="Originales" data-en="Originals">Originales</span>
       <div class="productos" id="productos-api"></div>
@@ -1957,13 +1957,6 @@ body.pie-visible .wa-fab { opacity: 0; pointer-events: none; transform: scale(.8
         <div class="bloque">
           <span class="v-lab" data-es="Formación" data-en="Training">Formación</span>
           <p class="ab-auto" data-es="Autodidacta." data-en="Self-taught.">Autodidacta.</p>
-          <span class="v-lab ab-sub" data-es="Influencias y talleres" data-en="Influences and workshops">Influencias y talleres</span>
-          <ul class="lista">
-            <li><span class="y" data-es="Dibujo" data-en="Drawing">Dibujo</span>Gabriel Yabar</li>
-            <li><span class="y" data-es="Paisaje" data-en="Landscape">Paisaje</span>Haroldo Cortez</li>
-            <li><span class="y" data-es="Talleres" data-en="Workshops">Talleres</span>Urban Sketchers Córdoba, con Gabriel Canteros</li>
-            <li><span class="y" data-es="Cursos" data-en="Courses">Cursos</span>Pito Campos, Juan Linares, Alex Hillkurtz, Ale Casanova, Roberto Zangarelli, Xavier Denia, Gonzalo Ibañez, Diego Catalán</li>
-          </ul>
         </div>
         <div class="bloque">
           <span class="v-lab" data-es="Exposiciones y selecciones" data-en="Exhibitions and selections">Exposiciones y selecciones</span>
@@ -2850,7 +2843,7 @@ function pintarProducto(){
   document.getElementById('pr-tam-n').textContent = TAM_TXT[OB.tam];
   const img=document.querySelector('#ob-img img'); const src = lam ? lamImg(o) : o.img[0];
   if(img && img.getAttribute('src')!==src) img.src=src;
-  document.getElementById('ob-img').classList.toggle('kiri', OB.marco);
+  document.getElementById('ob-img').classList.add('kiri');
   document.getElementById('pr-precio').textContent = lam ? fmt((OB.marco?PRECIO_KIRI:PRECIO_LAMINA)[OB.tam]) : fmt(o.venta.precio,o.venta.moneda) + (OB.marco ? ' + '+fmt(PRECIO_MARCO_OBRA) : '');
   document.getElementById('pr-nota').textContent = (lam ? L('Lámina impresa · ','Printed reproduction · ') : L('Pieza única · ','One of a kind · ')) + L('10% off por transferencia','10% off by bank transfer');
 }
