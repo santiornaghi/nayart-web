@@ -1830,6 +1830,12 @@ img { pointer-events: auto; }
 .pr-precio { font-size: 1.6rem; letter-spacing: -0.03em; }
 .pr-about { margin-top: 2.4rem; } .pr-about p { font-size: 1rem; line-height: 1.6; color: var(--ink-light); max-width: 46ch; }
 @media (max-width: 860px) { .pr-grid { grid-template-columns: 1fr; } .pr-izq { position: static; } }
+#ob-img img { cursor: zoom-in; }
+#zoom { position: fixed; inset: 0; z-index: 400; background: rgba(250,250,248,.97); display: flex; align-items: center; justify-content: center; padding: 3vh 3vw; opacity: 0; pointer-events: none; transition: opacity .35s; cursor: zoom-out; }
+#zoom.on { opacity: 1; pointer-events: auto; }
+#zoom img { max-width: 100%; max-height: 94vh; width: auto; height: auto; box-shadow: 0 30px 70px -30px rgba(0,0,0,.4); }
+#zoom button { position: absolute; top: 1rem; right: 1.4rem; background: none; border: none; font-size: 2rem; line-height: 1; cursor: pointer; color: var(--ink); }
+.pr-zoom { font-size: .62rem; color: var(--ink-faint); margin-top: .6rem; display: block; }
 /* ═════════ Carrito y checkout dentro del mismo sistema ═════════ */
 .cart-drawer input, .cart-drawer select, .cart-drawer textarea { border-radius: 0 !important; }
 .cart-drawer .co-label { font-family: 'JetBrains Mono', monospace !important; font-size: .68rem !important; letter-spacing: 0 !important; text-transform: uppercase !important; color: var(--ink) !important; font-weight: 400 !important; margin-bottom: .9rem; }
@@ -1850,6 +1856,16 @@ img { pointer-events: auto; }
 .wa-fab { transition: opacity .4s, transform .4s !important; }
 body.pie-visible .wa-fab { opacity: 0; pointer-events: none; transform: scale(.85); }
 @media (max-width: 720px) { .wa-fab { width: 44px !important; height: 44px !important; right: .9rem !important; bottom: .9rem !important; } }
+/* ═════════ Pie limpio: verde liso, tipografía nítida ═════════ */
+.pie { background: #24301f !important; color: #efe9d8; margin-top: clamp(6rem, 14vh, 10rem); overflow: hidden !important; }
+.pie-in { padding-top: clamp(4rem, 10vh, 6.5rem) !important; padding-bottom: 0 !important; }
+.pie-big { font-size: clamp(2.4rem, 5.6vw, 5.4rem) !important; line-height: 1 !important; padding-bottom: .15em; }
+.pie-big i { color: #efe9d8 !important; }
+.pie-cols { margin-top: clamp(3rem, 8vh, 5rem) !important; border-top-color: rgba(239,233,216,.18) !important; }
+.pie-fin { margin-top: 3rem !important; padding-bottom: 1.4rem; }
+.pie-marca { color: #efe9d8 !important; opacity: 1 !important; font-weight: 400 !important; letter-spacing: -0.06em !important; font-size: clamp(3.6rem, 18.6vw, 16.6rem) !important; white-space: nowrap;
+  line-height: .74 !important; margin: 0 !important; padding: 0 !important; text-align: left !important; transform: none !important; border-top: 1px solid rgba(239,233,216,.18); padding-top: .06em !important; }
+.pie-marca sup { font-size: .16em !important; top: .4em !important; }
 @media (prefers-reduced-motion: reduce) { .pie-tex div { transition: none; } .pie-marca { transform: none; transition: none; } }
 /* carrito y extras */
 .cart-drawer { border-radius: 0 !important; }
@@ -2051,8 +2067,6 @@ body.pie-visible .wa-fab { opacity: 0; pointer-events: none; transform: scale(.8
 </main>
 
 <footer class="pie" id="pie">
-  <div class="pie-tex" id="pie-tex" aria-hidden="true"></div>
-  <div class="pie-velo" aria-hidden="true"></div>
   <div class="envoltura pie-in">
     <a class="pie-ir" href="#/tienda">
       <span class="mono pie-ojo">Store</span>
@@ -2065,8 +2079,8 @@ body.pie-visible .wa-fab { opacity: 0; pointer-events: none; transform: scale(.8
       <div><span class="mono pie-lab">Store</span><p data-es="Envíos por Andreani a todo el país. Retiro sin cargo en Río Cuarto y Córdoba." data-en="Shipping across Argentina with Andreani. Free pickup in Río Cuarto and Córdoba.">Envíos por Andreani a todo el país. Retiro sin cargo en Río Cuarto y Córdoba.</p></div>
     </div>
     <div class="pie-fin mono"><span>© 2026 Santiago Ornaghi</span><a href="#/" onclick="scrollTo({top:0,behavior:'smooth'})" data-es="Volver arriba ↑" data-en="Back to top ↑">Volver arriba ↑</a></div>
+    <div class="pie-marca" aria-hidden="true">Naya Lab<sup>®</sup></div>
   </div>
-  <div class="pie-marca" aria-hidden="true">Naya Lab<sup>®</sup></div>
 </footer>
 <!-- CARRITO -->
 <div class="cart-overlay" id="cart-overlay" onclick="cerrarCarrito()"></div>
@@ -2624,7 +2638,8 @@ let TODAS = [];
 const th = src => String(src||'').replace(/(^|\/)img\/(originales|rincones|movimiento|portfolio|fotos)\/([^/]+)$/,'$1img/$2/m/$3');
 const SERIE_N = { p:['Paisajes y ciudad','Landscapes & city'], c:['Campo en color','Countryside in colour'], v:['Colección privada','Private collection'] };
 const serieDe = o => o.serieTxt || L(SERIE_N[o.g][0], SERIE_N[o.g][1]);
-const DEST_DEF = ['che-vuole','atardecer-violeta','sombra-alizarin','jinetes-en-magenta','urbe-dorada','la-aguada','el-paseo-de-flodeo','cordero-en-el-corral','necesidad-interrumpida','el-canal','ponte','niebla'];
+const DEST_DEF = ['che-vuole','atardecer-violeta','sombra-alizarin','urbe-dorada','la-aguada','el-paseo-de-flodeo','cordero-en-el-corral','paisano','necesidad-interrumpida','el-canal','ponte','niebla'];
+const OCULTAS = ['molino-al-atardecer','curioseando'];
 function armarTodas(){
   const c = {};
   LAMINAS.forEach(([id,t])=>{ c[slug(t)] = { s:slug(t), t, g:'p', lam:id, img:['img/originales/'+id+'.jpg'], y:2025, m:'', tec:'Acuarela sobre papel', desc:DESCRIPCIONES[t]||'' }; });
@@ -2640,6 +2655,7 @@ function armarTodas(){
   // obras vendidas: el original está en una colección privada, pero se venden como lámina
   OBRA.forEach(o=>{ if(!c[o.s]) c[o.s] = { s:o.s, t:o.t, g:'v', vendida:true, img:o.img, y:o.y, m:o.m, tec:o.tec, desc:DESCRIPCIONES[o.t]||'' }; });
   Object.values(c).forEach(e=>{ if(!e.lam) e.lam = e.s; });   // todas se pueden pedir como lámina
+  OCULTAS.forEach(k=>delete c[k]);
   TODAS = Object.values(c);
 }
 const lamImg = o => /^(s?\d+)$/.test(o.lam) ? (o.g==='p' ? 'img/laminas/'+o.lam+'.jpg' : imgLamina(o.lam)) : o.img[0];
@@ -2784,7 +2800,7 @@ function renderObra(s){
   v.innerHTML = `<div class="envoltura obra-v pr">
     <div class="pr-ruta mono"><a href="#/tienda">Store</a> / <span>${escH(serieDe(o))}</span></div>
     <div class="pr-grid">
-      <div class="pr-izq"><div class="ob-img ${o.img.length>1?'dos':''}" id="ob-img">${o.img.map(x=>`<img src="${escH(x)}" alt="${escH(o.t)}">`).join('')}</div></div>
+      <div class="pr-izq"><div class="ob-img ${o.img.length>1?'dos':''}" id="ob-img">${o.img.map(x=>`<img src="${escH(x)}" alt="${escH(o.t)}">`).join('')}</div><span class="mono pr-zoom">${L('Tocá la imagen para ampliarla','Tap the image to enlarge')}</span></div>
       <div class="pr-der">
         <h2 class="pr-t">${escH(o.t)}</h2>
         <dl class="pr-ficha mono">
@@ -2808,6 +2824,15 @@ function renderObra(s){
     const k=sg.dataset.k; OB[k] = k==='marco' ? b.dataset.v==='1' : b.dataset.v; pintarProducto(); }));
   pintarProducto();
 }
+(function(){ const pie=document.getElementById('pie'); if(pie) new IntersectionObserver(es=>es.forEach(e=>document.body.classList.toggle('pie-visible', e.isIntersecting)),{rootMargin:'0px 0px -30% 0px'}).observe(pie); })();
+function abrirZoom(src){
+  let z=document.getElementById('zoom'); if(!z){ z=document.createElement('div'); z.id='zoom'; z.innerHTML='<img alt=""><button type="button" aria-label="Cerrar">×</button>'; document.body.appendChild(z);
+    z.onclick=()=>z.classList.remove('on'); addEventListener('keydown',e=>{ if(e.key==='Escape') z.classList.remove('on'); }); }
+  const m=String(src).match(/img\/originales\/(\d+)\.jpg/); const im=z.querySelector('img'); im.src=src;
+  if(m){ const hd=new Image(); hd.onload=()=>{ if(z.classList.contains('on')) im.src=hd.src; }; hd.src='img/hd/'+m[1]+'.jpg'; }
+  z.classList.add('on');
+}
+document.addEventListener('click',e=>{ const i=e.target.closest('#ob-img img'); if(i) abrirZoom(i.getAttribute('src')); });
 function pintarProducto(){
   const o=OB.o; if(!o) return; const lam = OB.fmt==='lam';
   document.querySelectorAll('.pr-seg').forEach(sg=>{ const k=sg.dataset.k, val = k==='marco' ? (OB.marco?'1':'0') : OB[k];
