@@ -1720,6 +1720,10 @@ body.tema-pf { transition: background-color 1.4s ease; }
 .form input, .form select, .form textarea { border-radius: 0 !important; background: #fff !important; border: 1px solid var(--rule) !important; font-family: 'Inter Tight', sans-serif !important; }
 @media (max-width: 720px) { .form .form-row { grid-template-columns: 1fr !important; } .ct-grid { grid-template-columns: 1fr; gap: 2.4rem; } }
 
+/* obra sin marco */
+.st-img.libre img { padding: 0 !important; border: 0 !important; border-image: none !important; background: none !important; box-shadow: 0 18px 34px -16px rgba(30,22,12,.45), 0 2px 5px rgba(30,22,12,.12) !important; }
+.ob-img.libre { background: #efede8; align-items: center; }
+.ob-img.libre img { box-shadow: 0 24px 44px -20px rgba(30,22,12,.45), 0 3px 6px rgba(30,22,12,.12); }
 /* pie minimal (referencia) */
 footer.pmin { display: block !important; padding: 0 !important; text-align: left !important; border-top: 1px solid currentColor !important; flex-direction: initial !important; }
 .pmin-in { width: 100%; box-sizing: border-box; }
@@ -2655,6 +2659,8 @@ function observarPiezas(){ document.querySelectorAll('.pieza:not(.vista)').forEa
 const L = (es,en) => lang==='en' ? en : es;
 const slug = s => String(s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
 let TODAS = [];
+const SIN_MARCO = ['urbe-dorada'];
+const rc = src => String(src||'').replace(/(^|\/)img\/(originales|serie|rincones|movimiento)\/(m\/)?([^/]+\.jpg)$/,'$1img/recorte/$2/$3$4');
 const th = src => String(src||'').replace(/(^|\/)img\/(originales|rincones|movimiento|portfolio|fotos)\/([^/]+)$/,'$1img/$2/m/$3');
 const SERIE_N = { p:['Paisajes y ciudad','Landscapes & city'], c:['Campo en color','Countryside in colour'], v:['Colección privada','Private collection'] };
 const serieDe = o => o.serieTxt || L(SERIE_N[o.g][0], SERIE_N[o.g][1]);
@@ -2700,7 +2706,7 @@ function renderIndice(){
   // grilla del store
   const g=document.getElementById('st-grid');
   if(g){ g.innerHTML = TODAS.map(o=>`<a class="st-card" href="#/obra/${o.s}" data-g="${o.g}">
-      <div class="st-img"><img src="${escH(th(o.img[0]))}" alt="${escH(o.t)}" loading="lazy"></div>
+      <div class="st-img ${SIN_MARCO.includes(o.s)?'libre':''}"><img src="${escH(SIN_MARCO.includes(o.s)?th(o.img[0]):rc(th(o.img[0])))}" alt="${escH(o.t)}" loading="lazy"></div>
       <div class="st-t">${escH(o.t)}</div>
       <div class="st-m mono"><span>${formatos(o)}</span><span>${desde(o)}</span></div>
     </a>`).join(''); filtrarStore(); }
@@ -2823,7 +2829,7 @@ function renderObra(s){
   v.innerHTML = `<div class="envoltura obra-v pr">
     <div class="pr-ruta mono"><a href="#/tienda">Store</a> / <span>${escH(serieDe(o))}</span></div>
     <div class="pr-grid">
-      <div class="pr-izq"><div class="ob-img ${o.img.length>1?'dos':''}" id="ob-img">${o.img.map(x=>`<img src="${escH(x)}" alt="${escH(o.t)}">`).join('')}</div><span class="mono pr-zoom">${L('Tocá la imagen para ampliarla','Tap the image to enlarge')}</span></div>
+      <div class="pr-izq"><div class="ob-img ${o.img.length>1?'dos':''}" id="ob-img">${o.img.map(x=>`<img src="${escH(SIN_MARCO.includes(o.s)?x:rc(x))}" alt="${escH(o.t)}">`).join('')}</div><span class="mono pr-zoom">${L('Tocá la imagen para ampliarla','Tap the image to enlarge')}</span></div>
       <div class="pr-der">
         <h2 class="pr-t">${escH(o.t)}</h2>
         <dl class="pr-ficha mono">
@@ -2884,7 +2890,7 @@ function abrirZoom(src){
         if(Math.abs(dx)+Math.abs(dy)>6) movido=true; S.x=t0.x+dx; S.y=t0.y+dy; aplicar(false); } },{passive:false});
     lz.addEventListener('touchend',e=>{ if(e.touches.length) { const t=[...e.touches]; t0={k:S.k,x:S.x,y:S.y,p:t.map(q=>({x:q.clientX,y:q.clientY}))}; } else t0=null; });
   }
-  const im=z.querySelector('img'); src=String(src).replace(/\/m\//,'/'); im.src=src;
+  const im=z.querySelector('img'); src=String(src).replace('img/recorte/','img/').replace(/\/m\//,'/'); im.src=src;
   const m=src.match(/img\/originales\/(\d+)\.jpg/);
   if(m){ const hd=new Image(); hd.onload=()=>{ if(z.classList.contains('on')) im.src=hd.src; }; hd.src='img/hd/'+m[1]+'.jpg'; }
   z.querySelector('.zm-ayuda').textContent = matchMedia('(hover:none)').matches ? L('Tocá o pellizcá para acercar','Tap or pinch to zoom') : L('Clic o rueda para acercar · Esc para cerrar','Click or scroll to zoom · Esc to close');
@@ -2899,7 +2905,7 @@ function pintarProducto(){
   document.getElementById('pr-tam-n').textContent = TAM_TXT[OB.tam];
   const img=document.querySelector('#ob-img img'); const src = lam ? lamImg(o) : o.img[0];
   if(img && img.getAttribute('src')!==src) img.src=src;
-  document.getElementById('ob-img').classList.add('kiri');
+  document.getElementById('ob-img').classList.toggle('kiri', !SIN_MARCO.includes(OB.o.s)); document.getElementById('ob-img').classList.toggle('libre', SIN_MARCO.includes(OB.o.s));
   document.getElementById('pr-precio').textContent = lam ? fmt((OB.marco?PRECIO_KIRI:PRECIO_LAMINA)[OB.tam]) : fmt(o.venta.precio,o.venta.moneda) + (OB.marco ? ' + '+fmt(PRECIO_MARCO_OBRA) : '');
   document.getElementById('pr-nota').textContent = (lam ? L('Lámina impresa · ','Printed reproduction · ') : L('Pieza única · ','One of a kind · ')) + L('10% off por transferencia','10% off by bank transfer');
 }
