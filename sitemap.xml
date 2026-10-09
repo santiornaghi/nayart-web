@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://nayaart.com/</loc></url>
+  <url><loc>https://nayaart.com/store/</loc></url>
+  <url><loc>https://nayaart.com/about/</loc></url>
+  <url><loc>https://nayaart.com/contact/</loc></url>
+  <url><loc>https://nayaart.com/fotos/</loc></url>
   <url><loc>https://nayaart.com/obra/bote-en-la-orilla/</loc></url>
   <url><loc>https://nayaart.com/obra/la-tranquera/</loc></url>
   <url><loc>https://nayaart.com/obra/ciudad-al-atardecer/</loc></url>

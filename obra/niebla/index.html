@@ -2114,10 +2114,10 @@ body.pie-visible .wa-fab { opacity: 0; pointer-events: none; transform: scale(.8
   <div class="pmin-in">
     <div class="pmin-izq">
       <span class="pmin-c">©2026 Naya Lab®</span>
-      <a href="#/tienda">Store</a>
-      <a href="#/fotos">Photos</a>
-      <a href="#/acerca">About</a>
-      <a href="#/contacto">Contact</a>
+      <a href="/store/">Store</a>
+      <a href="/fotos/">Photos</a>
+      <a href="/about/">About</a>
+      <a href="/contact/">Contact</a>
     </div>
     <div class="pmin-der">
       <a href="mailto:santiornaghi@gmail.com">Email</a>
@@ -2959,7 +2959,9 @@ function compartirObra(){ const o=OB.o; if(!o) return;
   const d={ title:o.t+' — Naya Lab®', text:o.t+' · '+L('Acuarela de Santiago Ornaghi','Watercolor by Santiago Ornaghi'), url };
   if(navigator.share){ navigator.share(d).catch(()=>{}); return; }
   (navigator.clipboard ? navigator.clipboard.writeText(url) : Promise.reject()).then(()=>toast(L('Link copiado','Link copied'))).catch(()=>prompt(L('Copiá el link','Copy the link'), url)); }
-function rutaActual(){ if(location.hash) return location.hash; const m=location.pathname.match(/\/obra\/([^/]+)\/?$/); return m ? '#/obra/'+m[1] : '#/'; }
+const RUTAS_LIMPIAS = { 'store':'#/tienda', 'about':'#/acerca', 'contact':'#/contacto', 'fotos':'#/fotos', 'fotos/2':'#/fotos/2', 'fotos/3':'#/fotos/3' };
+function rutaActual(){ if(location.hash) return location.hash; const p=location.pathname.replace(/^\/+|\/+$/g,'');
+  const m=p.match(/^obra\/([^/]+)$/); if(m) return '#/obra/'+m[1]; return RUTAS_LIMPIAS[p] || '#/'; }
 function ruta(){
   let h = rutaActual();
   if(window._rutaPrev==='#/portfolio' && h!=='#/portfolio') window._pfScroll=scrollY;
