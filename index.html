@@ -2682,23 +2682,27 @@ function observarPiezas(){ document.querySelectorAll('.pieza:not(.vista)').forEa
 // ═════════ App: rutas, índice, obra, estela ═════════
 const L = (es,en) => lang==='en' ? en : es;
 const slug = s => String(s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+const RENOMBRE = {"Bote en la orilla": "Marea baja", "La tranquera": "Arreo", "Ciudad al atardecer": "Hora dorada", "Tormenta en el campo": "Antes del agua", "El canal": "Agua de ciudad", "Niebla": "Madrugada", "Laguna azul": "Bruma azul", "Arboleda": "Sombra fresca", "Tarde en el campo": "Domingo", "Camino de tierra": "Huella", "Cielo de tormenta": "Se viene", "Paisano": "El que espera", "Bajo el árbol": "Siesta", "Cordero en el corral": "Abrazo", "Chanchos": "Barro", "La aguada": "Agua quieta", "Atardecer violeta": "Última luz", "Los puercos": "Hocico", "Jinetes en magenta": "Galope", "El rodeo": "Remolino", "Ovejas": "Lana", "Campo azul": "Horizonte"};
+const nombre = t => RENOMBRE[t] || t;
+const DESC_NUEVAS = {"Marea baja": "Un bote rojo varado en la arena húmeda. El cielo en azules lavados y la playa casi en blanco, resuelta con pocas pinceladas.", "Arreo": "Mediodía de campo junto a la tranquera. La luz quema el fondo y las sombras de los palos ordenan la escena.", "Hora dorada": "Una avenida a contraluz: bicicletas, gente y sombras largas en violeta. El sol se disuelve entre los edificios.", "Antes del agua": "Nubes cargadas sobre el campo abierto, pintadas húmedo sobre húmedo. Abajo, vacas y un camino que se pierde.", "Agua de ciudad": "Casas de ladrillo, un puente y el agua que lo refleja todo en verticales, con pocos tonos tierra.", "Madrugada": "Casi abstracta: una masa de grises que avanza y una línea de luz arriba. El granulado del pigmento hace el resto.", "Bruma azul": "Árboles y agua bajo un cielo índigo. Los bordes se funden y el horizonte apenas se sugiere.", "Sombra fresca": "Verdes superpuestos de una arboleda junto al agua: las copas son manchas y el reflejo se estira hacia abajo.", "Domingo": "Un casco de estancia con su bandera, árboles oscuros y gente en el pasto bajo un cielo celeste de tarde.", "Huella": "Un camino de tierra hacia una casa, con animales pastando. Verdes intensos y un cielo blanco de llovizna.", "Se viene": "El cielo ocupa casi todo: azules que se abren y dejan pasar la luz sobre una franja de campo verde.", "El que espera": "Un hombre de boina sentado a la sombra, frente a un caballo. Una siesta de campo.", "Siesta": "Animales echados a la sombra de un árbol grande, sobre tierra y pasto de mediodía.", "Abrazo": "Un chico abraza a un ternero negro entre la paja del corral. La paja está hecha reservando el blanco del papel.", "Barro": "Dos chanchos colorados hozando junto a un muro de ladrillo. Pincelada rápida y mucha textura.", "Agua quieta": "Vacas que bajan a tomar agua a la sombra de los árboles; los reflejos se arman con manchas de color puro.", "Última luz": "Un atardecer de pueblo: postes de luz, una casa y figuras a contraluz bajo un cielo violeta y naranja.", "Galope": "Jinetes cruzando un campo encendido de magenta.", "Remolino": "Hacienda que gira en ronda sobre un fondo rojo, dibujada a pluma.", "Lana": "Ovejas apretadas en violetas, rosas y negros.", "Horizonte": "Un molino, unos pocos árboles y el campo abierto en verdes y azules."};
+const descDe = (t,t0) => DESC_NUEVAS[t] || DESCRIPCIONES[t0] || DESCRIPCIONES[t] || '';
 let TODAS = [];
 const SIN_MARCO = ['urbe-dorada'];
 const rc = src => String(src||'').replace(/(^|\/)img\/(originales|serie|rincones|movimiento)\/(m\/)?([^/]+\.jpg)$/,'$1img/recorte/$2/$3$4');
 const th = src => String(src||'').replace(/(^|\/)img\/(originales|rincones|movimiento|portfolio|fotos)\/([^/]+)$/,'$1img/$2/m/$3');
 const SERIE_N = { p:['Paisajes y ciudad','Landscapes & city'], c:['Campo en color','Countryside in colour'], v:['Colección privada','Private collection'] };
 const serieDe = o => o.serieTxt || L(SERIE_N[o.g][0], SERIE_N[o.g][1]);
-const DEST_DEF = ['che-vuole','atardecer-violeta','sombra-alizarin','urbe-dorada','la-aguada','el-paseo-de-flodeo','cordero-en-el-corral','paisano','necesidad-interrumpida','el-canal','ponte','niebla'];
+const DEST_DEF = ['che-vuole','ultima-luz','sombra-alizarin','urbe-dorada','agua-quieta','el-paseo-de-flodeo','abrazo','el-que-espera','necesidad-interrumpida','agua-de-ciudad','ponte','madrugada'];
 const OCULTAS = ['molino-al-atardecer','curioseando'];
 function armarTodas(){
   const c = {};
-  LAMINAS.forEach(([id,t])=>{ c[slug(t)] = { s:slug(t), t, g:'p', lam:id, img:['img/originales/'+id+'.jpg'], y:2025, m:'', tec:'Acuarela sobre papel', desc:DESCRIPCIONES[t]||'' }; });
-  LAMINAS_SERIE.forEach(([id,t])=>{ c[slug(t)] = { s:slug(t), t, g:'c', lam:id, img:[imgLamina(id)], y:2025, m:'', tec:'Acuarela sobre papel', desc:DESCRIPCIONES[t]||'' }; });
+  LAMINAS.forEach(([id,t0])=>{ const t=nombre(t0); c[slug(t)] = { s:slug(t), t, g:'p', lam:id, img:['img/originales/'+id+'.jpg'], y:2025, m:'', tec:'Acuarela sobre papel', desc:descDe(t,t0) }; });
+  LAMINAS_SERIE.forEach(([id,t0])=>{ const t=nombre(t0); c[slug(t)] = { s:slug(t), t, g:'c', lam:id, img:[imgLamina(id)], y:2025, m:'', tec:'Acuarela sobre papel', desc:descDe(t,t0) }; });
   (window._obrasGaleria||[]).forEach((o,i)=>{
     if(o.disponible==='VENDIDA') return;
-    const k=slug(o.titulo); const e = c[k] || (c[k] = { s:k, t:o.titulo, g:'p', img:[o.imagenUrl], y:o.anio||2025, tec:'', desc:'' });
+    const tn=nombre(o.titulo); const k=slug(tn); const e = c[k] || (c[k] = { s:k, t:tn, g:'p', img:[o.imagenUrl], y:o.anio||2025, tec:'', desc:'' });
     e.img=[o.imagenUrl]; e.m=(o.ancho&&o.alto)?`${o.ancho} × ${o.alto} cm`:e.m; e.y=o.anio||e.y;
-    e.tec=(TECNICA[o.tecnica]||'Acuarela')+' sobre papel'; e.desc=o.concepto||e.desc||DESCRIPCIONES[o.titulo]||''; e.gi=i; e.dest=!!o.destacada;
+    e.tec=(TECNICA[o.tecnica]||'Acuarela')+' sobre papel'; e.desc=DESC_NUEVAS[tn]||o.concepto||e.desc||DESCRIPCIONES[o.titulo]||''; e.gi=i; e.dest=!!o.destacada;
     if(o.serie) e.serieTxt=o.serie;
     e.venta = (o.id && o.disponible==='DISPONIBLE' && o.precio>0) ? {precio:o.precio, moneda:o.moneda||'USD'} : null;
   });
@@ -2951,8 +2955,8 @@ function comprarObraMarco(i){
     guardar(); actualizarContador();
   }
 }
-const RUTAS_VIEJAS = { '#/lista':'#/', '#/portfolio':'#/', '#/shop':'#/tienda', '#/store':'#/tienda', '#tienda':'#/tienda', '#laminas':'#/tienda', '#encargos':'#/acerca', '#contacto':'#/contacto', '#obras':'#/', '#series':'#/', '#about':'#/acerca' };
-const PAGINAS = new Set(["bote-en-la-orilla", "la-tranquera", "ciudad-al-atardecer", "tormenta-en-el-campo", "el-canal", "niebla", "laguna-azul", "arboleda", "tarde-en-el-campo", "camino-de-tierra", "cielo-de-tormenta", "paisano", "bajo-el-arbol", "cordero-en-el-corral", "chanchos", "la-aguada", "atardecer-violeta", "el-enemigo", "retorno", "jinetes-en-magenta", "siempre-cerca", "haciendo-sombra", "el-rodeo", "ovejas", "careta", "campo-azul", "los-puercos", "che-vuole", "pasitos-siesteros", "necesidad-interrumpida", "ponte", "sombra-alizarin", "el-paseo-de-flodeo", "urbe-dorada", "lo-sensual-i", "lo-sensual-ii", "cadmios", "el-paso"]);
+const RUTAS_VIEJAS = { '#/obra/bote-en-la-orilla':'#/obra/marea-baja', '#/obra/la-tranquera':'#/obra/arreo', '#/obra/ciudad-al-atardecer':'#/obra/hora-dorada', '#/obra/tormenta-en-el-campo':'#/obra/antes-del-agua', '#/obra/el-canal':'#/obra/agua-de-ciudad', '#/obra/niebla':'#/obra/madrugada', '#/obra/laguna-azul':'#/obra/bruma-azul', '#/obra/arboleda':'#/obra/sombra-fresca', '#/obra/tarde-en-el-campo':'#/obra/domingo', '#/obra/camino-de-tierra':'#/obra/huella', '#/obra/cielo-de-tormenta':'#/obra/se-viene', '#/obra/paisano':'#/obra/el-que-espera', '#/obra/bajo-el-arbol':'#/obra/siesta', '#/obra/cordero-en-el-corral':'#/obra/abrazo', '#/obra/chanchos':'#/obra/barro', '#/obra/la-aguada':'#/obra/agua-quieta', '#/obra/atardecer-violeta':'#/obra/ultima-luz', '#/obra/los-puercos':'#/obra/hocico', '#/obra/jinetes-en-magenta':'#/obra/galope', '#/obra/el-rodeo':'#/obra/remolino', '#/obra/ovejas':'#/obra/lana', '#/obra/campo-azul':'#/obra/horizonte', '#/lista':'#/', '#/portfolio':'#/', '#/shop':'#/tienda', '#/store':'#/tienda', '#tienda':'#/tienda', '#laminas':'#/tienda', '#encargos':'#/acerca', '#contacto':'#/contacto', '#obras':'#/', '#series':'#/', '#about':'#/acerca' };
+const PAGINAS = new Set(["marea-baja", "arreo", "hora-dorada", "antes-del-agua", "agua-de-ciudad", "madrugada", "bruma-azul", "sombra-fresca", "domingo", "huella", "se-viene", "el-que-espera", "siesta", "abrazo", "barro", "agua-quieta", "ultima-luz", "el-enemigo", "retorno", "galope", "siempre-cerca", "haciendo-sombra", "remolino", "lana", "careta", "horizonte", "hocico", "che-vuole", "pasitos-siesteros", "necesidad-interrumpida", "ponte", "sombra-alizarin", "el-paseo-de-flodeo", "urbe-dorada", "lo-sensual-i", "lo-sensual-ii", "cadmios", "el-paso"]);
 function compartirObra(){ const o=OB.o; if(!o) return;
   const url = PAGINAS.has(o.s) ? 'https://nayaart.com/obra/'+o.s+'/' : 'https://nayaart.com/#/obra/'+o.s;
   const d={ title:o.t+' — Naya Lab®', text:o.t+' · '+L('Acuarela de Santiago Ornaghi','Watercolor by Santiago Ornaghi'), url };
@@ -3016,7 +3020,7 @@ function menu(){ document.body.classList.toggle('menu-abierto'); }
   const quieto=matchMedia('(prefers-reduced-motion: reduce)').matches;
   const mouse=matchMedia('(hover: hover) and (pointer: fine)').matches;
   let k=0;
-  const FUERA=['lo-sensual-i','lo-sensual-ii','chanchos','los-puercos'];
+  const FUERA=['lo-sensual-i','lo-sensual-ii','barro','hocico'];
   const FOTOS=[1,9,4,11,13,10,6].map(n=>'img/fotos/m/f'+String(n).padStart(2,'0')+'.jpg');
   const lista=()=>{ const obras=TODAS.filter(o=>!FUERA.includes(o.s)).map(o=>th(o.img[0])); const out=[];
     obras.forEach((x,i)=>{ out.push(x); if(i%2===1 && FOTOS[(i-1)/2]) out.push(FOTOS[(i-1)/2]); }); return out; };
