@@ -41,7 +41,7 @@ router.post('/mp/preferencia', async (req, res, next) => {
       currency_id: 'ARS',
     }))
     if (pedido.costoEnvio > 0) {
-      items.push({ id: 'envio', title: 'Envío por Andreani', quantity: 1, unit_price: Number(pedido.costoEnvio), currency_id: 'ARS' })
+      items.push({ id: 'envio', title: (pedido.notas || '').includes('Envío a domicilio en Río Cuarto') ? 'Envío en Río Cuarto' : 'Envío por Andreani', quantity: 1, unit_price: Number(pedido.costoEnvio), currency_id: 'ARS' })
     }
 
     const volver  = urlRetorno(volverA)

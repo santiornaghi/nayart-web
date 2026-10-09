@@ -81,7 +81,11 @@ router.post('/', async (req, res, next) => {
     // Costo de envío
     let costoEnvio = 0
     let zonaNombre = null
-    if (tipoEntrega === 'ENVIO') {
+    const ENVIO_RIO_CUARTO = 5000 // envío a domicilio dentro de Río Cuarto
+    if (tipoEntrega === 'ENVIO' && req.body.envioLocal === 'RIO_CUARTO') {
+      costoEnvio = ENVIO_RIO_CUARTO
+      zonaNombre = 'Envío a domicilio en Río Cuarto'
+    } else if (tipoEntrega === 'ENVIO') {
       // Mismo cálculo que ve el cliente en el carrito (Envíopack/Andreani o tabla por región)
       const marcos = items.filter(i => (i.tipo === 'lamina' && i.marco) || i.tipo === 'marco').reduce((s, i) => s + (parseInt(i.cantidad) || 1), 0)
       const otros  = items.filter(i => !((i.tipo === 'lamina' && i.marco) || i.tipo === 'marco')).reduce((s, i) => s + (parseInt(i.cantidad) || 1), 0)
