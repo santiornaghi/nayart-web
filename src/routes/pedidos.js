@@ -53,6 +53,19 @@ router.post('/', async (req, res, next) => {
         subtotal += 2200 * cant
         continue
       }
+      if (item.tipo === 'insumo') {
+        // Art supplies: precio fijado en el servidor (ARS)
+        const INSUMOS = {
+          'kit-plano': { nombre: 'Kit de pinceles planos Carnevale Cerámica Plano', precio: 40000 },
+          'acqua-10':  { nombre: 'Pincel redondo n.º 10 Carnevale Acqua', precio: 25000 },
+        }
+        const ins = INSUMOS[item.id]
+        if (!ins) throw new AppError('Producto inválido')
+        const cant = Math.max(1, Math.min(20, parseInt(item.cantidad) || 1))
+        itemsData.push({ descripcion: ins.nombre, cantidad: cant, precioUnit: ins.precio, moneda: 'ARS' })
+        subtotal += ins.precio * cant
+        continue
+      }
       if (item.tipo === 'marco') {
         // Marco de madera kiri con paspartú para una obra original (ARS, precio fijado en el servidor)
         const PRECIO_MARCO_OBRA = 16500
