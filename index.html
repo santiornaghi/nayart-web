@@ -1526,6 +1526,11 @@ body.tema-pf .ob-cap { text-align: center; }
 .lista li { font-size: .95rem; line-height: 1.55; padding: .2rem 0; }
 .lista li i { font-style: italic; }
 .lista .y { display: inline-block; width: 7.5rem; color: var(--ink-faint); font-family: 'JetBrains Mono', monospace; font-size: .78rem; }
+.ab-ix { list-style: none; padding: 0; margin: .9rem 0 0; border-top: 1px solid var(--line, rgba(26,24,20,.14)); }
+.ab-ix li { display: flex; align-items: baseline; gap: 1rem; padding: .85rem 0; border-bottom: 1px solid var(--line, rgba(26,24,20,.14)); }
+.ab-ix .ab-t { font-size: 1.02rem; line-height: 1.35; flex: 1; }
+.ab-ix .ab-d { font-family: 'JetBrains Mono', monospace; font-size: .7rem; text-transform: uppercase; color: var(--ink-faint); text-align: right; }
+.ab-ix .ab-n { font-family: 'JetBrains Mono', monospace; font-size: .7rem; color: var(--ink-faint); width: 1.8rem; flex: none; }
 @media (max-width: 720px) { .ab-grid { grid-template-columns: 1fr; gap: 1.6rem; } .ab-foto { max-width: 260px; } .lista .y { width: 100%; display: block; } }
 /* tienda */
 .t-intro { font-size: 1rem; line-height: 1.6; max-width: 60ch; color: var(--ink-light); margin-bottom: 1.6rem; }
@@ -2047,20 +2052,20 @@ body.pie-visible .wa-fab { opacity: 0; pointer-events: none; transform: scale(.8
         </div>
         <div class="bloque">
           <span class="v-lab" data-es="Exposiciones y selecciones" data-en="Exhibitions and selections">Exposiciones y selecciones</span>
-          <ul class="lista">
-            <li><i>Selección de artistas</i> | ArteCba</li>
-            <li><i data-es="Muestra" data-en="Exhibition">Muestra</i> | Centro Cultural España</li>
-            <li data-es="Ferias de arte (más de 10)" data-en="Art fairs (10+)">Ferias de arte (más de 10)</li>
+          <ul class="ab-ix">
+            <li><span class="ab-t" data-es="Selección de artistas" data-en="Artist selection">Selección de artistas</span><span class="ab-d">ArteCba</span></li>
+            <li><span class="ab-t" data-es="Muestra" data-en="Exhibition">Muestra</span><span class="ab-d">Centro Cultural España</span></li>
+            <li><span class="ab-t" data-es="Ferias de arte" data-en="Art fairs">Ferias de arte</span></li>
           </ul>
         </div>
         <div class="bloque">
           <span class="v-lab" data-es="Encargos" data-en="Commissions">Encargos</span>
-          <ul class="lista">
-            <li data-es="Obra original a pedido" data-en="Original work on commission">Obra original a pedido</li>
-            <li data-es="Ilustraciones para calendarios (+26 acuarelas)" data-en="Calendar illustrations (26+ watercolors)">Ilustraciones para calendarios (+26 acuarelas)</li>
-            <li data-es="Murales (5)" data-en="Murals (5)">Murales (5)</li>
-            <li data-es="Etiquetas para marcas" data-en="Labels for brands">Etiquetas para marcas</li>
-            <li data-es="Pintura en vivo en eventos" data-en="Live painting at events">Pintura en vivo en eventos</li>
+          <ul class="ab-ix ab-num">
+            <li><span class="ab-n">01</span><span class="ab-t" data-es="Obra original a pedido" data-en="Original work on commission">Obra original a pedido</span></li>
+            <li><span class="ab-n">02</span><span class="ab-t" data-es="Ilustraciones para calendarios" data-en="Calendar illustrations">Ilustraciones para calendarios</span></li>
+            <li><span class="ab-n">03</span><span class="ab-t" data-es="Murales" data-en="Murals">Murales</span></li>
+            <li><span class="ab-n">04</span><span class="ab-t" data-es="Etiquetas para marcas" data-en="Brand labels">Etiquetas para marcas</span></li>
+            <li><span class="ab-n">05</span><span class="ab-t" data-es="Pintura en vivo en eventos" data-en="Live painting at events">Pintura en vivo en eventos</span></li>
           </ul>
           <p style="margin-top:1.4rem"><a class="btn-m linea" href="#/contacto" data-es="Consultar un encargo" data-en="Ask about a commission">Consultar un encargo</a></p>
         </div>
@@ -2918,6 +2923,16 @@ function previewIndice(){
 const PRECIO_MARCO_OBRA = 16500;
 let obMarco = false, OB = { o:null, fmt:'lam', tam:'A4', marco:false };
 const TAM_TXT = { A4:'21 × 29,7 cm', A5:'14,8 × 21 cm' };
+const TAM_MARCO = { A4:'29,7 × 42 cm', A5:'21 × 29,7 cm' };
+// Original enmarcado: paspartú ≈ 20% del lado corto (4 a 10 cm) + 3 cm de marco por lado
+const cmTxt = n => (Math.round(n*10)/10).toString().replace('.',',');
+function medidaEnmarcada(m){
+  const v=String(m||'').match(/([\d.,]+)\s*[×x]\s*([\d.,]+)/); if(!v) return '';
+  const a=parseFloat(v[1].replace(',','.')), b=parseFloat(v[2].replace(',','.'));
+  const pas=Math.min(10,Math.max(4,Math.round(Math.min(a,b)*0.2))), extra=2*(pas+3);
+  return cmTxt(a+extra)+' × '+cmTxt(b+extra)+' cm';
+}
+function medidaFinal(o){ if(!OB.marco || SIN_MARCO.includes(o.s)) return ''; return OB.fmt==='lam' ? TAM_MARCO[OB.tam] : medidaEnmarcada(o.m); }
 function renderObra(s){
   const i=TODAS.findIndex(o=>o.s===s); const o=TODAS[i]; const v=document.getElementById('v-obra');
   if(!o){ v.innerHTML = window._apiLista ? `<div class="envoltura obra-v"><p>${L('Esta obra ya no está disponible.','This work is no longer available.')}</p><p><a class="mono" href="#/tienda">${L('Ir al Store →','Go to Store →')}</a></p></div>` : `<div class="envoltura obra-v"><p class="mono">${L('Cargando…','Loading…')}</p></div>`; return; }
@@ -2939,7 +2954,7 @@ function renderObra(s){
         </dl>
         <div class="pr-op"><span class="mono pr-lab">${L('Formato','Format')}</span><div class="seg pr-seg" data-k="fmt">${fmtSeg}</div>${o.vendida?`<span class="mono pr-nota">${L('Original vendido — hoy en una colección privada','Original sold — now in a private collection')}</span>`:''}</div>
         <div class="pr-op" id="pr-tam"><span class="mono pr-lab">${L('Tamaño','Size')}</span><div class="seg pr-seg" data-k="tam"><button type="button" data-v="A4">A4</button><button type="button" data-v="A5">A5</button></div><span class="mono pr-nota" id="pr-tam-n"></span></div>
-        <div class="pr-op"><span class="mono pr-lab">${L('Marco','Frame')}</span><div class="seg pr-seg" data-k="marco"><button type="button" data-v="0">${L('Sin marco','No frame')}</button><button type="button" data-v="1">${L('Madera kiri con paspartú','Kiri wood with mat')}</button></div></div>
+        <div class="pr-op"><span class="mono pr-lab">${L('Marco','Frame')}</span><div class="seg pr-seg" data-k="marco"><button type="button" data-v="0">${L('Sin marco','No frame')}</button><button type="button" data-v="1">${L('Madera kiri con paspartú','Kiri wood with mat')}</button></div><span class="mono pr-nota" id="pr-marco-n"></span></div>
         <div class="pr-compra"><span class="pr-precio" id="pr-precio"></span><button class="btn-m" type="button" onclick="agregarProducto()">${L('Agregar al carrito','Add to cart')}</button></div>
         <p class="mono pr-nota" id="pr-nota"></p>
         ${o.desc?`<div class="pr-about"><span class="mono pr-lab">${L('Sobre la obra','About the work')}</span><p>${escH(o.desc)}</p></div>`:''}
@@ -3005,6 +3020,7 @@ function pintarProducto(){
     sg.querySelectorAll('button').forEach(b=>b.classList.toggle('on', b.dataset.v===val)); });
   document.getElementById('pr-tam').hidden = !lam;
   document.getElementById('pr-tam-n').textContent = TAM_TXT[OB.tam];
+  { const mf=medidaFinal(o), el=document.getElementById('pr-marco-n'); if(el) el.textContent = mf ? L('Medida enmarcada: ','Framed size: ')+mf+(piezasDe(o)>1?L(' (cada pieza)',' (each piece)'):'') : ''; }
   const img=document.querySelector('#ob-img img'); const src = SIN_MARCO.includes(o.s) ? (lam ? lamImg(o) : o.img[0]) : rc(o.img[0]);
   if(img && img.getAttribute('src')!==src) img.src=src;
   document.getElementById('ob-img').classList.toggle('kiri', !SIN_MARCO.includes(OB.o.s)); document.getElementById('ob-img').classList.toggle('libre', SIN_MARCO.includes(OB.o.s));
@@ -3015,14 +3031,14 @@ function agregarProducto(){
   const o=OB.o; if(!o) return;
   if(OB.fmt==='lam'){
     agregar({ key:`lam-${o.lam}-${OB.tam}-${OB.marco?'k':'s'}`, tipo:'lamina', titulo:o.t, tamano:OB.tam, marco:OB.marco,
-      nombre: piezasDe(o)>1 ? `Díptico · 2 láminas ${OB.tam}${OB.marco?' + 2 marcos kiri':''}` : `Lámina ${OB.tam}${OB.marco?' + marco kiri':''}`, precio:(OB.marco?PRECIO_KIRI:PRECIO_LAMINA)[OB.tam]*piezasDe(o), piezas:piezasDe(o), moneda:'ARS', img:lamImg(o) });
+      nombre: piezasDe(o)>1 ? `Díptico · 2 láminas ${OB.tam}${OB.marco?' + 2 marcos kiri ('+TAM_MARCO[OB.tam]+' c/u)':''}` : `Lámina ${OB.tam}${OB.marco?' + marco kiri ('+TAM_MARCO[OB.tam]+')':''}`, precio:(OB.marco?PRECIO_KIRI:PRECIO_LAMINA)[OB.tam]*piezasDe(o), piezas:piezasDe(o), moneda:'ARS', img:lamImg(o) });
   } else { obMarco = OB.marco; comprarObraMarco(o.gi); }
 }
 function activarMarco(){}
 function comprarObraMarco(i){
   const o=window._obrasGaleria[i]; comprarObra(i);
   if(obMarco && !carrito.find(x=>x.key==='marco-'+o.id)){
-    carrito.push({ key:'marco-'+o.id, tipo:'marco', id:o.id, titulo:o.titulo, nombre:'Marco kiri con paspartú', precio:PRECIO_MARCO_OBRA, moneda:'ARS', img:o.imagenUrl, unico:true, cantidad:1 });
+    carrito.push({ key:'marco-'+o.id, tipo:'marco', id:o.id, titulo:o.titulo, nombre:'Marco kiri con paspartú'+(o.ancho&&o.alto?' ('+medidaEnmarcada(o.ancho+' × '+o.alto)+')':''), precio:PRECIO_MARCO_OBRA, moneda:'ARS', img:o.imagenUrl, unico:true, cantidad:1 });
     guardar(); actualizarContador();
   }
 }
