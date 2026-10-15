@@ -1872,6 +1872,8 @@ img { pointer-events: auto; }
 .pr-seg button { font-family: 'JetBrains Mono', monospace !important; text-transform: uppercase !important; letter-spacing: 0 !important; font-size: .7rem; padding: .7rem 1rem; border: 1px solid var(--rule); background: #fff; color: var(--ink); cursor: pointer; margin: 0 -1px -1px 0; border-radius: 0 !important; }
 .pr-seg button.on { background: var(--ink); color: #fff; border-color: var(--ink); }
 .pr-nota { font-size: .64rem; color: var(--ink-faint); margin-top: .5rem; display: block; }
+.pr-cert { font-size: .95rem; margin: .9rem 0 0; display: flex; align-items: center; gap: .5rem; }
+.pr-cert::before { content: '✓'; font-size: .85rem; }
 .pr-compra { display: flex; align-items: center; gap: 1.4rem; flex-wrap: wrap; margin-top: 2rem; padding-top: 1.4rem; border-top: 1px solid var(--rule); }
 .pr-precio { font-size: 1.6rem; letter-spacing: -0.03em; }
 .pr-about { margin-top: 2.4rem; } .pr-about p { font-size: 1rem; line-height: 1.6; color: var(--ink-light); max-width: 46ch; }
@@ -1955,7 +1957,7 @@ body.pie-visible .wa-fab { opacity: 0; pointer-events: none; transform: scale(.8
   <a href="#/tienda">Store</a>
   <a href="#/supplies">Art Supplies</a>
   <a href="#/fotos">Photos</a>
-  <div class="sub-fila"><a href="#/fotos" class="sub">I</a><a href="#/fotos/2" class="sub">II</a><a href="#/fotos/3" class="sub">III</a><a href="#/fotos/4" class="sub">IV</a><a href="#/fotos/5" class="sub">V</a></div>
+  <div class="sub-fila"><a href="#/fotos" class="sub">I</a><a href="#/fotos/2" class="sub">II</a><a href="#/fotos/3" class="sub">III</a></div>
   <a href="#/acerca">About</a>
   <a href="#/contacto">Contact</a>
   <a href="https://instagram.com/naya__artt" target="_blank" rel="noopener">Instagram</a>
@@ -2078,7 +2080,7 @@ body.pie-visible .wa-fab { opacity: 0; pointer-events: none; transform: scale(.8
 <section class="vista" id="v-fotos">
   <div class="envoltura pagina">
     <h2 class="v-title ft-oculto"><span data-es="Fotos" data-en="Photos">Fotos</span> <span id="ft-num">I</span></h2>
-    <div class="ft-nav mono" role="navigation" aria-label="Series de fotos"><a href="#/fotos" data-n="1">I</a><a href="#/fotos/2" data-n="2">II</a><a href="#/fotos/3" data-n="3">III</a><a href="#/fotos/4" data-n="4">IV</a><a href="#/fotos/5" data-n="5">V</a></div>
+    <div class="ft-nav mono" role="navigation" aria-label="Series de fotos"><a href="#/fotos" data-n="1">I</a><a href="#/fotos/2" data-n="2">II</a><a href="#/fotos/3" data-n="3">III</a></div>
     <div class="ft-info" id="ft-info"></div>
     <div class="fotos" data-serie="1">
       <img src="img/fotos/f01.jpg" alt="Fotografía de Santiago Ornaghi" loading="lazy">
@@ -2108,15 +2110,13 @@ body.pie-visible .wa-fab { opacity: 0; pointer-events: none; transform: scale(.8
       <img src="img/fotos/c13.jpg" alt="Fotografía de Santiago Ornaghi" loading="lazy">
       <img src="img/fotos/c14.jpg" alt="Fotografía de Santiago Ornaghi" loading="lazy">
       <img src="img/fotos/c15.jpg" alt="Fotografía de Santiago Ornaghi" loading="lazy">
-    </div>
-    <div class="fotos" data-serie="3" hidden>
       <img src="img/fotos/s01.jpg" alt="Fotografía de Santiago Ornaghi" loading="lazy">
       <img src="img/fotos/s02.jpg" alt="Fotografía de Santiago Ornaghi" loading="lazy">
       <img src="img/fotos/s03.jpg" alt="Fotografía de Santiago Ornaghi" loading="lazy">
       <img src="img/fotos/s04.jpg" alt="Fotografía de Santiago Ornaghi" loading="lazy">
       <img src="img/fotos/s05.jpg" alt="Fotografía de Santiago Ornaghi" loading="lazy">
     </div>
-    <div class="fotos" data-serie="4" hidden>
+    <div class="fotos" data-serie="3" hidden>
       <img src="img/fotos/k01.jpg" alt="Fotografía de Santiago Ornaghi" loading="lazy">
       <img src="img/fotos/k02.jpg" alt="Fotografía de Santiago Ornaghi" loading="lazy">
       <img src="img/fotos/k03.jpg" alt="Fotografía de Santiago Ornaghi" loading="lazy">
@@ -2127,8 +2127,6 @@ body.pie-visible .wa-fab { opacity: 0; pointer-events: none; transform: scale(.8
       <img src="img/fotos/k08.jpg" alt="Fotografía de Santiago Ornaghi" loading="lazy">
       <img src="img/fotos/k09.jpg" alt="Fotografía de Santiago Ornaghi" loading="lazy">
       <img src="img/fotos/k10.jpg" alt="Fotografía de Santiago Ornaghi" loading="lazy">
-    </div>
-    <div class="fotos" data-serie="5" hidden>
       <img src="img/fotos/r01.jpg" alt="Fotografía de Santiago Ornaghi" loading="lazy">
       <img src="img/fotos/r02.jpg" alt="Fotografía de Santiago Ornaghi" loading="lazy">
       <img src="img/fotos/r03.jpg" alt="Fotografía de Santiago Ornaghi" loading="lazy">
@@ -2956,6 +2954,7 @@ function renderObra(s){
         <div class="pr-op" id="pr-tam"><span class="mono pr-lab">${L('Tamaño','Size')}</span><div class="seg pr-seg" data-k="tam"><button type="button" data-v="A4">A4</button><button type="button" data-v="A5">A5</button></div><span class="mono pr-nota" id="pr-tam-n"></span></div>
         <div class="pr-op"><span class="mono pr-lab">${L('Marco','Frame')}</span><div class="seg pr-seg" data-k="marco"><button type="button" data-v="0">${L('Sin marco','No frame')}</button><button type="button" data-v="1">${L('Madera kiri con paspartú','Kiri wood with mat')}</button></div><span class="mono pr-nota" id="pr-marco-n"></span></div>
         <div class="pr-compra"><span class="pr-precio" id="pr-precio"></span><button class="btn-m" type="button" onclick="agregarProducto()">${L('Agregar al carrito','Add to cart')}</button></div>
+        <p class="pr-cert" id="pr-cert" hidden>${L('Incluye certificado de autenticidad.','Includes a certificate of authenticity.')}</p>
         <p class="mono pr-nota" id="pr-nota"></p>
         ${o.desc?`<div class="pr-about"><span class="mono pr-lab">${L('Sobre la obra','About the work')}</span><p>${escH(o.desc)}</p></div>`:''}
         <p class="exterior">${L('¿Estás fuera de Argentina? Escribime y coordinamos el pago y el envío internacional.','Outside Argentina? Write to me and we will arrange international payment and shipping.')} <a href="mailto:santiornaghi@gmail.com?subject=International%20order%20%E2%80%94%20Naya%20Lab">Email</a> · <a href="https://wa.me/5493584390961?text=${encodeURIComponent('Hi! I would like to buy «'+o.t+'» from outside Argentina.')}" target="_blank" rel="noopener">WhatsApp</a></p>
@@ -3025,6 +3024,7 @@ function pintarProducto(){
   if(img && img.getAttribute('src')!==src) img.src=src;
   document.getElementById('ob-img').classList.toggle('kiri', !SIN_MARCO.includes(OB.o.s)); document.getElementById('ob-img').classList.toggle('libre', SIN_MARCO.includes(OB.o.s));
   document.getElementById('pr-precio').textContent = lam ? fmt((OB.marco?PRECIO_KIRI:PRECIO_LAMINA)[OB.tam]*piezasDe(o)) : fmt(o.venta.precio,o.venta.moneda) + (OB.marco ? ' + '+fmt(PRECIO_MARCO_OBRA) : '');
+  { const c=document.getElementById('pr-cert'); if(c) c.hidden = lam; }
   document.getElementById('pr-nota').textContent = (lam ? (piezasDe(o)>1 ? L('Díptico: 2 láminas'+(OB.marco?' y 2 marcos':'')+' · ','Diptych: 2 prints'+(OB.marco?' and 2 frames':'')+' · ') : L('Lámina impresa · ','Printed reproduction · ')) : L('Pieza única · ','One of a kind · ')) + L('10% off por transferencia','10% off by bank transfer');
 }
 function agregarProducto(){
@@ -3042,14 +3042,14 @@ function comprarObraMarco(i){
     guardar(); actualizarContador();
   }
 }
-const RUTAS_VIEJAS = { '#/obra/bote-en-la-orilla':'#/obra/marea-baja', '#/obra/la-tranquera':'#/obra/arreo', '#/obra/ciudad-al-atardecer':'#/obra/hora-dorada', '#/obra/tormenta-en-el-campo':'#/obra/antes-del-agua', '#/obra/el-canal':'#/obra/agua-de-ciudad', '#/obra/niebla':'#/obra/madrugada', '#/obra/laguna-azul':'#/obra/bruma-azul', '#/obra/arboleda':'#/obra/sombra-fresca', '#/obra/tarde-en-el-campo':'#/obra/domingo', '#/obra/camino-de-tierra':'#/obra/huella', '#/obra/cielo-de-tormenta':'#/obra/se-viene', '#/obra/paisano':'#/obra/el-que-espera', '#/obra/bajo-el-arbol':'#/obra/siesta', '#/obra/cordero-en-el-corral':'#/obra/abrazo', '#/obra/chanchos':'#/obra/barro', '#/obra/la-aguada':'#/obra/agua-quieta', '#/obra/atardecer-violeta':'#/obra/ultima-luz', '#/obra/los-puercos':'#/obra/hocico', '#/obra/jinetes-en-magenta':'#/obra/galope', '#/obra/el-rodeo':'#/obra/remolino', '#/obra/ovejas':'#/obra/lana', '#/obra/campo-azul':'#/obra/horizonte', '#/lista':'#/', '#/portfolio':'#/', '#/shop':'#/tienda', '#/insumos':'#/supplies', '#/art-supplies':'#/supplies', '#/store':'#/tienda', '#tienda':'#/tienda', '#laminas':'#/tienda', '#encargos':'#/acerca', '#contacto':'#/contacto', '#obras':'#/', '#series':'#/', '#about':'#/acerca' };
+const RUTAS_VIEJAS = { '#/obra/bote-en-la-orilla':'#/obra/marea-baja', '#/obra/la-tranquera':'#/obra/arreo', '#/obra/ciudad-al-atardecer':'#/obra/hora-dorada', '#/obra/tormenta-en-el-campo':'#/obra/antes-del-agua', '#/obra/el-canal':'#/obra/agua-de-ciudad', '#/obra/niebla':'#/obra/madrugada', '#/obra/laguna-azul':'#/obra/bruma-azul', '#/obra/arboleda':'#/obra/sombra-fresca', '#/obra/tarde-en-el-campo':'#/obra/domingo', '#/obra/camino-de-tierra':'#/obra/huella', '#/obra/cielo-de-tormenta':'#/obra/se-viene', '#/obra/paisano':'#/obra/el-que-espera', '#/obra/bajo-el-arbol':'#/obra/siesta', '#/obra/cordero-en-el-corral':'#/obra/abrazo', '#/obra/chanchos':'#/obra/barro', '#/obra/la-aguada':'#/obra/agua-quieta', '#/obra/atardecer-violeta':'#/obra/ultima-luz', '#/obra/los-puercos':'#/obra/hocico', '#/obra/jinetes-en-magenta':'#/obra/galope', '#/obra/el-rodeo':'#/obra/remolino', '#/obra/ovejas':'#/obra/lana', '#/obra/campo-azul':'#/obra/horizonte', '#/lista':'#/', '#/portfolio':'#/', '#/shop':'#/tienda', '#/fotos/4':'#/fotos/3', '#/fotos/5':'#/fotos/3', '#/insumos':'#/supplies', '#/art-supplies':'#/supplies', '#/store':'#/tienda', '#tienda':'#/tienda', '#laminas':'#/tienda', '#encargos':'#/acerca', '#contacto':'#/contacto', '#obras':'#/', '#series':'#/', '#about':'#/acerca' };
 const PAGINAS = new Set(["marea-baja", "arreo", "hora-dorada", "antes-del-agua", "agua-de-ciudad", "madrugada", "bruma-azul", "sombra-fresca", "domingo", "huella", "se-viene", "el-que-espera", "siesta", "abrazo", "barro", "agua-quieta", "ultima-luz", "el-enemigo", "retorno", "galope", "siempre-cerca", "haciendo-sombra", "remolino", "lana", "careta", "horizonte", "hocico", "che-vuole", "pasitos-siesteros", "necesidad-interrumpida", "ponte", "sombra-alizarin", "el-paseo-de-flodeo", "urbe-dorada", "lo-sensual-i", "lo-sensual-ii", "cadmios", "el-paso"]);
 function compartirObra(){ const o=OB.o; if(!o) return;
   const url = PAGINAS.has(o.s) ? 'https://nayaart.com/obra/'+o.s+'/' : 'https://nayaart.com/#/obra/'+o.s;
   const d={ title:o.t+' — Naya Lab®', text:o.t+' · '+L('Acuarela de Santiago Ornaghi','Watercolor by Santiago Ornaghi'), url };
   if(navigator.share){ navigator.share(d).catch(()=>{}); return; }
   (navigator.clipboard ? navigator.clipboard.writeText(url) : Promise.reject()).then(()=>toast(L('Link copiado','Link copied'))).catch(()=>prompt(L('Copiá el link','Copy the link'), url)); }
-const RUTAS_LIMPIAS = { 'store':'#/tienda', 'about':'#/acerca', 'contact':'#/contacto', 'fotos':'#/fotos', 'fotos/2':'#/fotos/2', 'fotos/3':'#/fotos/3', 'fotos/4':'#/fotos/4', 'fotos/5':'#/fotos/5', 'supplies':'#/supplies' };
+const RUTAS_LIMPIAS = { 'store':'#/tienda', 'about':'#/acerca', 'contact':'#/contacto', 'fotos':'#/fotos', 'fotos/2':'#/fotos/2', 'fotos/3':'#/fotos/3', 'fotos/4':'#/fotos/3', 'fotos/5':'#/fotos/3', 'supplies':'#/supplies' };
 function rutaActual(){ if(location.hash) return location.hash; const p=location.pathname.replace(/^\/+|\/+$/g,'');
   const m=p.match(/^obra\/([^/]+)$/); if(m) return '#/obra/'+m[1]; return RUTAS_LIMPIAS[p] || '#/'; }
 function ruta(){
@@ -3061,18 +3061,16 @@ function ruta(){
   else if(h==='#/tienda') vista='tienda';
   else if(h==='#/acerca') vista='acerca';
   else if(h==='#/supplies') vista='supplies';
-  else if(h==='#/fotos' || h.startsWith('#/fotos/')){ vista='fotos'; const n=Math.min(5,Math.max(1,parseInt(h.split('/')[2])||1)); const R=['I','II','III','IV','V'];
+  else if(h==='#/fotos' || h.startsWith('#/fotos/')){ vista='fotos'; const n=Math.min(3,Math.max(1,parseInt(h.split('/')[2])||1)); const R=['I','II','III'];
     document.querySelectorAll('#v-fotos .fotos').forEach(f=>f.hidden = f.dataset.serie!=String(n));
     document.querySelectorAll('.ft-nav a').forEach(a=>a.classList.toggle('on', a.dataset.n==String(n)));
     document.getElementById('ft-num').textContent=R[n-1];
     const INFO=[
       {pel:'Kodak 400 ASA', cam:'Minolta Hi-Matic 11', n:document.querySelectorAll('#v-fotos .fotos[data-serie="1"] img').length},
       {pel:'Kodak 500 ASA', cam:'', n:document.querySelectorAll('#v-fotos .fotos[data-serie="2"] img').length},
-      {pel:'Kodak 500 ASA', cam:'', n:document.querySelectorAll('#v-fotos .fotos[data-serie="3"] img').length},
-      {pel:'Kodak 100 ASA', cam:'', n:document.querySelectorAll('#v-fotos .fotos[data-serie="4"] img').length},
-      {pel:'Color', cam:'Samsung', n:document.querySelectorAll('#v-fotos .fotos[data-serie="5"] img').length}][n-1];
+      {pel:'Kodak 100 ASA · Color', cam:'', n:document.querySelectorAll('#v-fotos .fotos[data-serie="3"] img').length}][n-1];
     document.getElementById('ft-info').innerHTML = `<dl><dt>${L('Formato','Format')}</dt><dd>${L('Analógico','Analog')}</dd><dt>${L('Película','Film')}</dt><dd>${INFO.pel} · 35 mm</dd>${INFO.cam?`<dt>${L('Cámara','Camera')}</dt><dd>${INFO.cam}</dd>`:''}<dt>${L('Fotos','Frames')}</dt><dd>${INFO.n}</dd></dl>`;
-    const sg=document.getElementById('ft-sig'), m=n%5+1; sg.href=m===1?'#/fotos':'#/fotos/'+m; sg.textContent=L('Siguiente','Next')+': '+L('Fotos','Photos')+' '+R[m-1]+' →'; }
+    const sg=document.getElementById('ft-sig'), m=n%3+1; sg.href=m===1?'#/fotos':'#/fotos/'+m; sg.textContent=L('Siguiente','Next')+': '+L('Fotos','Photos')+' '+R[m-1]+' →'; }
   else if(h==='#/portfolio') vista='portfolio';
   else if(h==='#/contacto') vista='contacto';
   document.querySelectorAll('.vista').forEach(x=>x.classList.toggle('on', x.id==='v-'+vista));
