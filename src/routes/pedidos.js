@@ -56,8 +56,8 @@ router.post('/', async (req, res, next) => {
       if (item.tipo === 'insumo') {
         // Art supplies: precio fijado en el servidor (ARS)
         const INSUMOS = {
-          'kit-plano': { nombre: 'Kit de pinceles planos Carnevale Cerámica Plano', precio: 40000 },
-          'acqua-10':  { nombre: 'Pincel redondo n.º 10 Carnevale Acqua', precio: 25000 },
+          'kit-plano': { nombre: 'Kit de pinceles planos Carnevale Cerámica Plano', precio: 44000 },
+          'acqua-10':  { nombre: 'Pincel redondo n.º 10 Carnevale Acqua', precio: 28000 },
         }
         const ins = INSUMOS[item.id]
         if (!ins) throw new AppError('Producto inválido')
