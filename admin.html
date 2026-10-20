@@ -465,6 +465,12 @@ body{background:var(--paper);color:var(--ink);font-family:'Jost',sans-serif;font
   .pd-grid{grid-template-columns:1fr;}
 }
 
+
+.en-nuevo{border-left:3px solid var(--rust);}
+.en-estado{border:1px solid var(--border);background:var(--white);font:inherit;font-size:.72rem;padding:.4rem .5rem;color:var(--ink-light);margin-left:auto;}
+.ds-fila{grid-template-columns:1fr 120px 110px!important;}
+@media(max-width:900px){ .ds-fila{grid-template-columns:1fr auto!important;} .ds-fila .pd-c2{grid-column:1;grid-row:1;} .ds-fila .pd-c4{grid-column:1;align-items:flex-start;flex-direction:row!important;gap:.6rem!important;align-items:baseline;} .encargo-meta{flex-wrap:wrap;} }
+
 /* RESPONSIVE */
 @media(max-width:900px){
   .sidebar{transform:translateX(-220px);}
@@ -553,24 +559,24 @@ body{background:var(--paper);color:var(--ink);font-family:'Jost',sans-serif;font
     <div class="tab-panel active" id="tab-dashboard">
       <div class="stats-grid">
         <div class="stat-card orange">
-          <div class="stat-label">Ventas este mes</div>
-          <div class="stat-value">$0</div>
-          <div class="stat-sub">0 pedidos completados</div>
+          <div class="stat-label">Vendido este mes</div>
+          <div class="stat-value" id="ds-ventas">—</div>
+          <div class="stat-sub" id="ds-ventas-sub">&nbsp;</div>
         </div>
         <div class="stat-card green">
-          <div class="stat-label">Pedidos pendientes</div>
-          <div class="stat-value">3</div>
-          <div class="stat-sub">Requieren atención</div>
+          <div class="stat-label">Pedidos para atender</div>
+          <div class="stat-value" id="ds-pend">—</div>
+          <div class="stat-sub" id="ds-pend-sub">&nbsp;</div>
         </div>
         <div class="stat-card blue">
-          <div class="stat-label">Obras disponibles</div>
-          <div class="stat-value">0</div>
-          <div class="stat-sub">Subí tu primera obra</div>
+          <div class="stat-label">Originales a la venta</div>
+          <div class="stat-value" id="ds-obras">—</div>
+          <div class="stat-sub" id="ds-obras-sub">&nbsp;</div>
         </div>
         <div class="stat-card gold">
           <div class="stat-label">Encargos nuevos</div>
-          <div class="stat-value">2</div>
-          <div class="stat-sub">Sin responder</div>
+          <div class="stat-value" id="ds-enc">—</div>
+          <div class="stat-sub" id="ds-enc-sub">&nbsp;</div>
         </div>
       </div>
 
@@ -579,40 +585,9 @@ body{background:var(--paper);color:var(--ink);font-family:'Jost',sans-serif;font
           <div class="card">
             <div class="card-header">
               <span class="card-title">Pedidos recientes</span>
-              <button class="btn btn-ghost" onclick="showTab('pedidos',null)" style="font-size:.62rem;padding:.4rem .8rem;">Ver todos</button>
+              <button class="btn btn-ghost" onclick="showTab('pedidos',document.querySelector('.nav-item[onclick*=pedidos]'))" style="font-size:.62rem;padding:.4rem .8rem;">Ver todos</button>
             </div>
-            <div class="card-body" style="padding:0;">
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th>Cliente</th>
-                    <th>Producto</th>
-                    <th>Total</th>
-                    <th>Estado</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td class="name">María G.</td>
-                    <td>Print A3 — El Paseo</td>
-                    <td style="color:var(--rust)">USD 35</td>
-                    <td><span class="badge badge-pending">Pendiente</span></td>
-                  </tr>
-                  <tr>
-                    <td class="name">Lucas M.</td>
-                    <td>Ebook — La mirada</td>
-                    <td style="color:var(--rust)">USD 18</td>
-                    <td><span class="badge badge-confirmed">Confirmado</span></td>
-                  </tr>
-                  <tr>
-                    <td class="name">Ana P.</td>
-                    <td>Stickers Manchas v.1</td>
-                    <td style="color:var(--rust)">USD 8</td>
-                    <td><span class="badge badge-shipped">Enviado</span></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+            <div class="card-body" style="padding:0;" id="ds-pedidos"><div class="pd-vacio">Cargando…</div></div>
           </div>
         </div>
 
@@ -620,23 +595,9 @@ body{background:var(--paper);color:var(--ink);font-family:'Jost',sans-serif;font
           <div class="card">
             <div class="card-header">
               <span class="card-title">Encargos recientes</span>
+              <button class="btn btn-ghost" onclick="showTab('encargos',document.querySelector('.nav-item[onclick*=encargos]'))" style="font-size:.62rem;padding:.4rem .8rem;">Ver todos</button>
             </div>
-            <div class="card-body">
-              <div style="margin-bottom:1.2rem;padding-bottom:1.2rem;border-bottom:1px solid var(--border);">
-                <div style="display:flex;justify-content:space-between;margin-bottom:.4rem;">
-                  <span style="font-size:.82rem;font-weight:400;">Bodega del Sur</span>
-                  <span class="badge badge-pending">Nuevo</span>
-                </div>
-                <p style="font-size:.75rem;color:var(--ink-faint);line-height:1.6;">Consulta sobre etiqueta de vino para línea premium.</p>
-              </div>
-              <div>
-                <div style="display:flex;justify-content:space-between;margin-bottom:.4rem;">
-                  <span style="font-size:.82rem;font-weight:400;">Rodrigo F.</span>
-                  <span class="badge badge-pending">Nuevo</span>
-                </div>
-                <p style="font-size:.75rem;color:var(--ink-faint);line-height:1.6;">Obra personalizada para regalar, paisaje urbano.</p>
-              </div>
-            </div>
+            <div class="card-body" id="ds-encargos"><div class="pd-vacio" style="padding:1rem 0">Cargando…</div></div>
           </div>
 
           <div class="card">
@@ -646,7 +607,7 @@ body{background:var(--paper);color:var(--ink);font-family:'Jost',sans-serif;font
             <div class="card-body" style="display:flex;flex-direction:column;gap:.6rem;">
               <button class="btn btn-primary" onclick="openModal('nueva-obra')" style="justify-content:center;">+ Subir obra</button>
               <button class="btn btn-secondary" onclick="openModal('nuevo-producto')" style="justify-content:center;">+ Nuevo producto</button>
-              <button class="btn btn-secondary" onclick="showTab('envios',null)" style="justify-content:center;">⚙ Configurar envíos</button>
+              <button class="btn btn-secondary" onclick="showTab('envios',document.querySelector('.nav-item[onclick*=envios]'))" style="justify-content:center;">⚙ Configurar envíos</button>
             </div>
           </div>
         </div>
@@ -736,49 +697,11 @@ body{background:var(--paper);color:var(--ink);font-family:'Jost',sans-serif;font
 
     <!-- ENCARGOS -->
     <div class="tab-panel" id="tab-encargos">
-      <div class="encargo-card">
-        <div class="encargo-header">
-          <div>
-            <div class="encargo-nombre">Bodega del Sur</div>
-            <div class="encargo-email">contacto@bodegadelsur.com</div>
-          </div>
-          <div style="display:flex;gap:.5rem;align-items:center;">
-            <span class="badge badge-pending">Nuevo</span>
-            <span class="badge badge-original">Etiqueta / branding</span>
-          </div>
-        </div>
-        <div class="encargo-body">
-          Hola, estamos buscando un artista para diseñar la etiqueta de nuestra nueva línea de vinos premium. Nos interesa un estilo expresivo, con acuarela. ¿Podemos coordinar una llamada para hablar sobre el proyecto?
-        </div>
-        <div class="encargo-meta">
-          <span class="encargo-fecha">Hace 2 horas</span>
-          <button class="btn btn-primary" style="font-size:.62rem;padding:.45rem 1rem;">Responder por email</button>
-          <button class="btn btn-secondary" style="font-size:.62rem;padding:.45rem 1rem;">WhatsApp</button>
-          <button class="btn btn-ghost" style="font-size:.62rem;padding:.45rem 1rem;">Marcar leído</button>
-        </div>
+      <div class="pd-barra">
+        <div class="filter-bar pd-filtros" id="en-filtros"></div>
+        <div class="pd-acc"><button class="btn btn-ghost" style="font-size:.62rem;" onclick="loadEncargos()">Actualizar</button></div>
       </div>
-
-      <div class="encargo-card">
-        <div class="encargo-header">
-          <div>
-            <div class="encargo-nombre">Rodrigo Fernández</div>
-            <div class="encargo-email">rodrigo.f@gmail.com</div>
-          </div>
-          <div style="display:flex;gap:.5rem;align-items:center;">
-            <span class="badge badge-pending">Nuevo</span>
-            <span class="badge badge-print">Obra personalizada</span>
-          </div>
-        </div>
-        <div class="encargo-body">
-          Quiero regalarle una obra a mi pareja. Ella ama los paisajes urbanos, especialmente las escenas con gente en movimiento. ¿Hacés encargos de ese estilo? ¿Cuáles serían los tiempos y el precio?
-        </div>
-        <div class="encargo-meta">
-          <span class="encargo-fecha">Hace 5 horas</span>
-          <button class="btn btn-primary" style="font-size:.62rem;padding:.45rem 1rem;">Responder por email</button>
-          <button class="btn btn-secondary" style="font-size:.62rem;padding:.45rem 1rem;">WhatsApp</button>
-          <button class="btn btn-ghost" style="font-size:.62rem;padding:.45rem 1rem;">Marcar leído</button>
-        </div>
-      </div>
+      <div id="en-lista"><div class="pd-vacio">Cargando encargos…</div></div>
     </div>
 
     <!-- ENVIOS -->
@@ -789,7 +712,7 @@ body{background:var(--paper);color:var(--ink);font-family:'Jost',sans-serif;font
         </div>
         <div class="card-body">
           <p style="font-size:.8rem;color:var(--ink-faint);margin-bottom:1.2rem;line-height:1.7;">
-            <b style="color:var(--ink)">Río Cuarto y Córdoba capital: entrega gratis.</b><br>
+            <b style="color:var(--ink)">Río Cuarto: envío a domicilio $5.000 o retiro a coordinar.</b><br>
             Al resto del país se envía por Andreani. Cargá la tarifa de cada región (podés sacarla del cotizador de andreani.com desde Río Cuarto). El cliente ve el costo en el carrito según su provincia. Si dejás una región en 0, en el carrito figura “a cotizar”.
           </p>
           <div class="envio-zona" style="background:none;border:none;padding:0 1.5rem .3rem;font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;color:var(--ink-faint);">
@@ -1131,20 +1054,47 @@ function previewImg(input){
 }
 
 // ── DASHBOARD ──────────────────────────────────────────────────
+let OBRAS_DASH = [];
 async function loadDashboard(){
-  try {
-    const [pedidos, obras, encargos] = await Promise.all([
-      api('/pedidos?limit=5'),
-      api('/obras?limit=100'),
-      api('/encargos?limit=100')
-    ]);
-    // Stats cards (update si existen)
-    const cards = document.querySelectorAll('.stat-value');
-    if(cards[0]) cards[0].textContent = pedidos?.total ?? '—';
-    if(cards[2]) cards[2].textContent = obras?.total ?? '—';
-    if(cards[3]) cards[3].textContent = (encargos?.data||[]).filter(e=>e.estado==='PENDIENTE').length || 0;
-  } catch(e){ console.error('Dashboard error:', e); }
-  loadPedidos(); // contador
+  const [ob] = await Promise.all([
+    api('/obras?limit=200').catch(()=>null),
+    loadPedidos().catch(()=>null),
+    loadEncargos().catch(()=>null),
+  ]);
+  OBRAS_DASH = ob?.obras || [];
+  pintarDashboard();
+}
+function pintarDashboard(){
+  const set = (id, v) => { const el = document.getElementById(id); if(el) el.textContent = v; };
+  const mes = new Date(); mes.setDate(1); mes.setHours(0,0,0,0);
+  const delMes = PEDIDOS.filter(p => !['PENDIENTE','CANCELADO'].includes(p.estado) && new Date(p.creadoEn) >= mes);
+  set('ds-ventas', pdPlata(delMes.filter(p=>(p.moneda||'ARS')==='ARS').reduce((a,p)=>a+(p.total||0),0)));
+  set('ds-ventas-sub', delMes.length ? delMes.length + (delMes.length===1?' pedido':' pedidos') : 'Sin ventas todavía');
+  const pend = PEDIDOS.filter(p => ['PENDIENTE','CONFIRMADO','PREPARANDO'].includes(p.estado));
+  set('ds-pend', pend.length);
+  const porConf = pend.filter(p=>p.estado==='PENDIENTE').length;
+  set('ds-pend-sub', pend.length ? (porConf ? porConf+' por confirmar pago' : 'Para preparar o enviar') : 'Todo al día');
+  const disp = OBRAS_DASH.filter(o => o.disponible==='DISPONIBLE' && o.precio>0);
+  set('ds-obras', disp.length);
+  { const v = OBRAS_DASH.filter(o=>o.disponible==='VENDIDA').length; set('ds-obras-sub', v + (v===1?' vendida':' vendidas')); }
+  const nuevos = ENCARGOS.filter(e => e.estado==='NUEVO');
+  set('ds-enc', nuevos.length);
+  set('ds-enc-sub', nuevos.length ? 'Sin responder' : 'Todo respondido');
+  const dp = document.getElementById('ds-pedidos');
+  if(dp) dp.innerHTML = PEDIDOS.length ? PEDIDOS.slice(0,5).map(p => {
+    const [ec, et] = PD_ESTADOS[p.estado] || ['pending', p.estado];
+    return `<button class="pd-fila ds-fila" onclick="showTab('pedidos',document.querySelector('.nav-item[onclick*=pedidos]'));openPedido('${p.id}')">
+      <div class="pd-c2"><b>${esc(p.clienteNombre||'Sin nombre')}</b><span>${esc(pdItems(p))}</span></div>
+      <div class="pd-c4"><b>${pdPlata(p.total,p.moneda)}</b><span class="pd-fecha">${hace(p.creadoEn)}</span></div>
+      <div class="pd-c5"><span class="badge badge-${ec}">${et}</span></div></button>`; }).join('')
+    : '<div class="pd-vacio">Todavía no hay pedidos.</div>';
+  const de = document.getElementById('ds-encargos');
+  if(de) de.innerHTML = ENCARGOS.length ? ENCARGOS.slice(0,3).map((e,i,a) => {
+    const [c,t] = EN_ESTADOS[e.estado] || ['pending', e.estado];
+    return `<div style="${i<a.length-1?'margin-bottom:1.2rem;padding-bottom:1.2rem;border-bottom:1px solid var(--border);':''}">
+      <div style="display:flex;justify-content:space-between;gap:.6rem;margin-bottom:.4rem;"><span style="font-size:.82rem;font-weight:400;">${esc(e.nombre)}</span><span class="badge badge-${c}">${t}</span></div>
+      <p style="font-size:.75rem;color:var(--ink-faint);line-height:1.6;">${esc((e.mensaje||'').slice(0,110))}${(e.mensaje||'').length>110?'…':''}</p></div>`; }).join('')
+    : '<div class="pd-vacio" style="padding:1rem 0">Todavía no hay encargos.</div>';
 }
 
 // ── OBRAS ──────────────────────────────────────────────────────
@@ -1332,7 +1282,7 @@ async function loadPedidos(){
     const data = await api('/pedidos?limit=200');
     if(!data) return;
     PEDIDOS = data.pedidos || data.data || [];
-    pintarPedidos();
+    pintarPedidos(); if(typeof pintarDashboard==='function') pintarDashboard();
   } catch(e){
     if(lista) lista.innerHTML = '<div class="pd-vacio">No se pudieron cargar los pedidos. El servidor puede estar despertando: probá “Actualizar” en unos segundos.</div>';
   }
@@ -1448,33 +1398,75 @@ const p_mail = id => !!(PEDIDOS.find(x=>x.id===id)||{}).clienteEmail;
 function updateEstado(e){ return pdCambiar(String(e).toUpperCase()); }
 
 // ── ENCARGOS ───────────────────────────────────────────────────
+let ENCARGOS = [], EN_FILTRO = '';
+const EN_ESTADOS = {
+  NUEVO:        ['pending',   'Nuevo'],
+  EN_CONTACTO:  ['confirmed', 'En contacto'],
+  PRESUPUESTADO:['print',     'Presupuestado'],
+  CONFIRMADO:   ['delivered', 'Confirmado'],
+  CANCELADO:    ['cancelled', 'Cancelado'],
+};
+const EN_TIPO = { OBRA_ORIGINAL:'Obra original', ENCARGO_PERSONALIZADO:'Obra a pedido', ETIQUETA_BRANDING:'Etiqueta / marca', MURAL:'Mural', PINTADA_EN_VIVO:'Pintura en vivo', EBOOK_MATERIALES:'Materiales', OTRO:'Otro' };
+const hace = d => { const m = Math.round((Date.now()-new Date(d))/60000);
+  if(m<60) return 'hace '+Math.max(1,m)+' min'; const h=Math.round(m/60); if(h<24) return 'hace '+h+' h';
+  const dd=Math.round(h/24); return dd<30 ? 'hace '+dd+(dd===1?' día':' días') : new Date(d).toLocaleDateString('es-AR'); };
+
 async function loadEncargos(){
+  const lista = document.getElementById('en-lista');
   try {
     const data = await api('/encargos');
-    const tbody = document.querySelector('#tab-encargos table tbody');
-    if(!tbody || !data?.data) return;
-    tbody.innerHTML = data.data.map(e=>`
-      <tr>
-        <td>${e.nombre}</td>
-        <td>${e.email}</td>
-        <td>${e.descripcion?.slice(0,50)||'—'}…</td>
-        <td>${e.presupuesto ? 'USD '+e.presupuesto : '—'}</td>
-        <td><span class="badge badge-${estadoBadge(e.estado)}">${e.estado}</span></td>
-        <td>${new Date(e.creadoEn).toLocaleDateString('es-AR')}</td>
-        <td>
-          <button class="btn btn-ghost" style="font-size:.65rem;padding:.3rem .6rem;" onclick="updateEncargo('${e.id}','ACEPTADO')">Aceptar</button>
-          <button class="btn btn-ghost" style="font-size:.65rem;padding:.3rem .6rem;" onclick="updateEncargo('${e.id}','RECHAZADO')">Rechazar</button>
-        </td>
-      </tr>`).join('');
-  } catch(e){ showNotif('Error cargando encargos','error'); }
+    if(!data) return;
+    ENCARGOS = Array.isArray(data) ? data : (data.encargos || data.data || []);
+    pintarEncargos();
+  } catch(e){ if(lista) lista.innerHTML = '<div class="pd-vacio">No se pudieron cargar los encargos. Probá “Actualizar” en unos segundos.</div>'; }
 }
-
-async function updateEncargo(id, estado){
+function enFiltrar(e){ EN_FILTRO = e; pintarEncargos(); }
+function pintarEncargos(){
+  const cuenta = {}; ENCARGOS.forEach(e => cuenta[e.estado] = (cuenta[e.estado]||0) + 1);
+  const nb = document.querySelector('.nav-item[onclick*="encargos"] .nav-badge');
+  if(nb){ nb.textContent = cuenta.NUEVO||0; nb.style.display = cuenta.NUEVO ? '' : 'none'; }
+  const f = document.getElementById('en-filtros'); if(!f) return;
+  f.innerHTML = [['','Todos',ENCARGOS.length], ...Object.entries(EN_ESTADOS).map(([k,[,t]])=>[k,t,cuenta[k]||0])]
+    .filter(([k,,n]) => !k || n || k===EN_FILTRO)
+    .map(([k,t,n]) => `<button class="filter-pill${EN_FILTRO===k?' active':''}" onclick="enFiltrar('${k}')">${t} <span class="pd-n">${n}</span></button>`).join('');
+  const lista = document.getElementById('en-lista');
+  const ver = ENCARGOS.filter(e => !EN_FILTRO || e.estado===EN_FILTRO);
+  if(!ENCARGOS.length){ lista.innerHTML = '<div class="pd-vacio">Todavía no llegó ningún encargo. Cuando alguien complete el formulario de Contact, aparece acá.</div>'; return; }
+  if(!ver.length){ lista.innerHTML = '<div class="pd-vacio">No hay encargos con ese filtro.</div>'; return; }
+  lista.innerHTML = ver.map(e => {
+    const [c,t] = EN_ESTADOS[e.estado] || ['pending', e.estado];
+    const tel = pdTel(e.telefono);
+    const nombre = (e.nombre||'').split(' ')[0];
+    const wa = tel ? `https://wa.me/${tel}?text=${encodeURIComponent('Hola '+nombre+'! Te escribo de Naya Lab por tu consulta.')}` : '';
+    const mail = e.email ? `mailto:${esc(e.email)}?subject=${encodeURIComponent('Tu consulta a Naya Lab')}&body=${encodeURIComponent('Hola '+nombre+',\n\n')}` : '';
+    return `<div class="encargo-card${e.leido?'':' en-nuevo'}">
+      <div class="encargo-header">
+        <div><div class="encargo-nombre">${esc(e.nombre)}</div>
+          <div class="encargo-email">${[e.email, e.telefono].filter(Boolean).map(esc).join(' · ')}</div></div>
+        <div style="display:flex;gap:.5rem;align-items:center;flex-wrap:wrap;justify-content:flex-end;">
+          <span class="badge badge-${c}">${t}</span><span class="badge badge-original">${EN_TIPO[e.tipo]||e.tipo}</span></div>
+      </div>
+      <div class="encargo-body">${esc(e.mensaje)}${e.presupuesto?`<div class="pd-sub" style="margin-top:.6rem">Presupuesto que mencionó: <b>${esc(e.presupuesto)}</b></div>`:''}</div>
+      <div class="encargo-meta">
+        <span class="encargo-fecha">${hace(e.creadoEn)}</span>
+        ${mail?`<a class="btn btn-primary" style="font-size:.62rem;padding:.45rem 1rem;text-decoration:none" href="${mail}" onclick="enAuto('${e.id}')">Responder por email</a>`:''}
+        ${wa?`<a class="btn btn-secondary" style="font-size:.62rem;padding:.45rem 1rem;text-decoration:none" target="_blank" rel="noopener" href="${wa}" onclick="enAuto('${e.id}')">WhatsApp</a>`:''}
+        <select class="en-estado" onchange="updateEncargo('${e.id}', this.value)">
+          ${Object.entries(EN_ESTADOS).map(([k,[,tt]])=>`<option value="${k}"${k===e.estado?' selected':''}>${tt}</option>`).join('')}
+        </select>
+      </div>
+    </div>`;
+  }).join('');
+}
+// al responder un encargo nuevo, pasa solo a "En contacto"
+function enAuto(id){ const e = ENCARGOS.find(x=>x.id===id); if(e && e.estado==='NUEVO') updateEncargo(id, 'EN_CONTACTO', true); }
+async function updateEncargo(id, estado, silencioso){
   try {
-    await api('/encargos/'+id, { method:'PATCH', headers:{'Content-Type':'application/json'}, body: JSON.stringify({estado}) });
-    showNotif('Encargo '+estado.toLowerCase(),'success');
-    loadEncargos();
-  } catch(e){ showNotif('Error actualizando encargo','error'); }
+    await api('/encargos/'+id, { method:'PATCH', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ estado, leido:true }) });
+    const e = ENCARGOS.find(x=>x.id===id); if(e){ e.estado = estado; e.leido = true; }
+    if(!silencioso) showNotif('Encargo: '+(EN_ESTADOS[estado]||[,estado])[1].toLowerCase(),'success');
+    pintarEncargos(); pintarDashboard();
+  } catch(e){ showNotif('No se pudo actualizar el encargo','error'); }
 }
 
 // ── ENVÍOS ─────────────────────────────────────────────────────
