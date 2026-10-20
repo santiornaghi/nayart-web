@@ -409,6 +409,62 @@ body{background:var(--paper);color:var(--ink);font-family:'Jost',sans-serif;font
 .timeline-text{font-size:.8rem;padding-top:.15rem;}
 .timeline-date{font-size:.65rem;color:var(--ink-faint);margin-top:.1rem;}
 
+
+/* ── PEDIDOS ── */
+.pd-resumen{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);margin-bottom:1.4rem;}
+.pd-stat{background:var(--white);padding:1rem 1.1rem;display:flex;flex-direction:column;gap:.35rem;}
+.pd-stat span{font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);}
+.pd-stat b{font-weight:300;font-size:1.5rem;color:var(--ink);}
+.pd-barra{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;margin-bottom:1rem;}
+.pd-filtros{margin:0;flex-wrap:wrap;}
+.pd-n{opacity:.55;margin-left:.25rem;}
+.pd-acc{display:flex;gap:.5rem;align-items:center;}
+.pd-buscar{border:1px solid var(--border);background:var(--white);padding:.55rem .8rem;font:inherit;font-size:.8rem;min-width:220px;color:var(--ink);}
+.pd-lista{background:var(--white);border:1px solid var(--border);}
+.pd-fila{all:unset;box-sizing:border-box;cursor:pointer;width:100%;display:grid;grid-template-columns:110px 1fr 150px 150px 120px;gap:1rem;align-items:center;padding:1rem 1.2rem;border-bottom:1px solid var(--border);}
+.pd-fila:last-child{border-bottom:0;}
+.pd-fila:hover{background:var(--paper);}
+.pd-fila>div{display:flex;flex-direction:column;gap:.3rem;min-width:0;}
+.pd-num{font-size:.8rem;color:var(--ink);font-weight:400;}
+.pd-fecha,.pd-pago{font-size:.68rem;color:var(--ink-faint);}
+.pd-c2 b{font-weight:400;font-size:.88rem;color:var(--ink);}
+.pd-c2 span{font-size:.75rem;color:var(--ink-light);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.pd-c3 .badge,.pd-c4 .badge,.pd-c5 .badge{align-self:flex-start;}
+.pd-c4 b{font-weight:400;color:var(--rust);font-size:.9rem;}
+.pd-c5{align-items:flex-end;}
+.pd-vacio{padding:3rem 1.5rem;text-align:center;color:var(--ink-faint);font-size:.85rem;}
+.pd-modal{max-width:680px;}
+.pd-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem 1.5rem;margin-bottom:1.6rem;}
+.pd-lab{font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:.4rem;}
+.pd-val{font-size:.9rem;color:var(--ink);}
+.pd-sub{font-size:.75rem;color:var(--ink-light);margin-top:.15rem;}
+.pd-sub a{color:inherit;}
+.pd-wa{display:inline-block;margin-top:.6rem;font-size:.6rem;text-decoration:none;}
+.pd-items{width:100%;border-collapse:collapse;margin-bottom:1.4rem;font-size:.8rem;}
+.pd-items th{font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);font-weight:400;text-align:left;padding:.5rem 0;border-bottom:1px solid var(--border);}
+.pd-items td{padding:.55rem 0;border-bottom:1px solid var(--border);color:var(--ink-light);}
+.pd-items tfoot td{border-bottom:0;padding:.3rem 0;}
+.pd-items .pd-total td{color:var(--ink);font-size:.95rem;padding-top:.6rem;border-top:1px solid var(--ink);}
+.pd-r{text-align:right;}
+.pd-nota{font-size:.82rem;color:var(--ink-light);white-space:pre-line;margin:0 0 1.4rem;}
+.pd-pasos{display:flex;gap:.6rem;flex-wrap:wrap;align-items:center;}
+.pd-track{display:flex;gap:.5rem;flex:1;min-width:260px;}
+.pd-track input{flex:1;border:1px solid var(--border);padding:.55rem .7rem;font:inherit;font-size:.8rem;}
+.pd-cancelar{margin-left:auto;font-size:.62rem;}
+.pd-hist{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.45rem;}
+@media(max-width:900px){
+  .pd-resumen{grid-template-columns:1fr 1fr;}
+  .pd-fila{grid-template-columns:1fr auto;gap:.5rem .8rem;}
+  .pd-c1{flex-direction:row!important;gap:.6rem!important;align-items:baseline;grid-column:1;}
+  .pd-c5{grid-column:2;grid-row:1;}
+  .pd-c2{grid-column:1/-1;}
+  .pd-c3{flex-direction:row!important;align-items:center;gap:.6rem!important;}
+  .pd-c4{align-items:flex-end;}
+  .pd-buscar{min-width:0;flex:1;}
+  .pd-acc{width:100%;}
+  .pd-grid{grid-template-columns:1fr;}
+}
+
 /* RESPONSIVE */
 @media(max-width:900px){
   .sidebar{transform:translateX(-220px);}
@@ -667,59 +723,15 @@ body{background:var(--paper);color:var(--ink);font-family:'Jost',sans-serif;font
 
     <!-- PEDIDOS -->
     <div class="tab-panel" id="tab-pedidos">
-      <div class="filter-bar">
-        <button class="filter-pill active">Todos</button>
-        <button class="filter-pill">Pendientes</button>
-        <button class="filter-pill">Confirmados</button>
-        <button class="filter-pill">Enviados</button>
-        <button class="filter-pill">Entregados</button>
-      </div>
-      <div class="card">
-        <div class="card-body" style="padding:0;">
-          <table class="table">
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Cliente</th>
-                <th>Producto</th>
-                <th>Entrega</th>
-                <th>Total</th>
-                <th>Estado</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td style="color:var(--ink-faint);font-size:.72rem;">#001</td>
-                <td class="name">María González<br><span style="font-size:.7rem;color:var(--ink-faint);">maria@gmail.com</span></td>
-                <td>Print A3 — El Paseo de Flodeo</td>
-                <td><span class="badge badge-confirmed">Envío</span></td>
-                <td style="color:var(--rust);font-weight:400;">USD 35</td>
-                <td><span class="badge badge-pending">Pendiente</span></td>
-                <td><button class="btn btn-secondary" onclick="openModal('pedido-detalle')" style="font-size:.62rem;padding:.4rem .8rem;">Ver</button></td>
-              </tr>
-              <tr>
-                <td style="color:var(--ink-faint);font-size:.72rem;">#002</td>
-                <td class="name">Lucas Méndez<br><span style="font-size:.7rem;color:var(--ink-faint);">lucas@gmail.com</span></td>
-                <td>Ebook — La mirada del acuarelista</td>
-                <td><span class="badge badge-digital">Digital</span></td>
-                <td style="color:var(--rust);font-weight:400;">USD 18</td>
-                <td><span class="badge badge-confirmed">Confirmado</span></td>
-                <td><button class="btn btn-secondary" onclick="openModal('pedido-detalle')" style="font-size:.62rem;padding:.4rem .8rem;">Ver</button></td>
-              </tr>
-              <tr>
-                <td style="color:var(--ink-faint);font-size:.72rem;">#003</td>
-                <td class="name">Ana Pereyra<br><span style="font-size:.7rem;color:var(--ink-faint);">ana@gmail.com</span></td>
-                <td>Stickers Manchas vol. 1</td>
-                <td><span class="badge badge-confirmed">Envío</span></td>
-                <td style="color:var(--rust);font-weight:400;">USD 8</td>
-                <td><span class="badge badge-shipped">Enviado</span></td>
-                <td><button class="btn btn-secondary" onclick="openModal('pedido-detalle')" style="font-size:.62rem;padding:.4rem .8rem;">Ver</button></td>
-              </tr>
-            </tbody>
-          </table>
+      <div class="pd-resumen" id="pd-resumen"></div>
+      <div class="pd-barra">
+        <div class="filter-bar pd-filtros" id="pd-filtros"></div>
+        <div class="pd-acc">
+          <input type="search" id="pd-buscar" class="pd-buscar" placeholder="Buscar cliente u obra" oninput="pintarPedidos()">
+          <button class="btn btn-ghost" style="font-size:.62rem;" onclick="loadPedidos()">Actualizar</button>
         </div>
       </div>
+      <div class="pd-lista" id="pd-lista"><div class="pd-vacio">Cargando pedidos…</div></div>
     </div>
 
     <!-- ENCARGOS -->
@@ -959,73 +971,12 @@ body{background:var(--paper);color:var(--ink);font-family:'Jost',sans-serif;font
 
 <!-- MODAL: PEDIDO DETALLE -->
 <div class="modal-overlay" id="modal-pedido-detalle">
-  <div class="modal">
+  <div class="modal pd-modal">
     <div class="modal-header">
-      <span class="modal-title">Pedido #001</span>
+      <span class="modal-title" id="pd-titulo">Pedido</span>
       <button class="modal-close" onclick="closeModal('pedido-detalle')">✕</button>
     </div>
-    <div class="modal-body">
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem;">
-        <div>
-          <div style="font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:.3rem;">Cliente</div>
-          <div style="font-size:.85rem;">María González</div>
-          <div style="font-size:.75rem;color:var(--ink-faint);">maria@gmail.com</div>
-        </div>
-        <div>
-          <div style="font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:.3rem;">Producto</div>
-          <div style="font-size:.85rem;">Print A3 — El Paseo de Flodeo</div>
-          <div style="font-size:.75rem;color:var(--rust);">USD 35</div>
-        </div>
-        <div>
-          <div style="font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:.3rem;">Entrega</div>
-          <div style="font-size:.85rem;">Envío — Córdoba capital</div>
-          <div style="font-size:.75rem;color:var(--ink-faint);">ARS 2.500</div>
-        </div>
-        <div>
-          <div style="font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:.3rem;">Dirección</div>
-          <div style="font-size:.85rem;">Av. Colón 1234</div>
-          <div style="font-size:.75rem;color:var(--ink-faint);">Córdoba, Argentina</div>
-        </div>
-      </div>
-
-      <div style="margin-bottom:1.5rem;">
-        <div style="font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:.8rem;">Actualizar estado</div>
-        <div style="display:flex;gap:.5rem;flex-wrap:wrap;">
-          <button class="btn btn-secondary" style="font-size:.62rem;" onclick="updateEstado('Confirmado')">Confirmar</button>
-          <button class="btn btn-secondary" style="font-size:.62rem;" onclick="updateEstado('Preparando')">Preparando</button>
-          <button class="btn btn-primary" style="font-size:.62rem;" onclick="openTracking()">Marcar enviado</button>
-          <button class="btn btn-success" style="font-size:.62rem;" onclick="updateEstado('Entregado')">Entregado</button>
-        </div>
-      </div>
-
-      <div id="tracking-field" style="display:none;margin-bottom:1.5rem;">
-        <div class="fg">
-          <label>Número de seguimiento</label>
-          <input type="text" placeholder="ej. OCA-123456789" id="tracking-input">
-        </div>
-        <button class="btn btn-primary" style="font-size:.62rem;" onclick="saveTracking()">Guardar y notificar cliente</button>
-      </div>
-
-      <div class="pedido-timeline">
-        <div style="font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:1rem;">Historial</div>
-        <div class="timeline-item">
-          <div class="timeline-dot done">✓</div>
-          <div><div class="timeline-text">Pago confirmado</div><div class="timeline-date">Hoy, 10:23</div></div>
-        </div>
-        <div class="timeline-item">
-          <div class="timeline-dot current">●</div>
-          <div><div class="timeline-text">Pendiente de preparación</div><div class="timeline-date">Hoy, 10:23</div></div>
-        </div>
-        <div class="timeline-item">
-          <div class="timeline-dot pending"></div>
-          <div><div class="timeline-text" style="color:var(--ink-faint);">Enviado</div></div>
-        </div>
-        <div class="timeline-item">
-          <div class="timeline-dot pending"></div>
-          <div><div class="timeline-text" style="color:var(--ink-faint);">Entregado</div></div>
-        </div>
-      </div>
-    </div>
+    <div class="modal-body" id="pd-cuerpo"></div>
     <div class="modal-footer">
       <button class="btn btn-ghost" onclick="closeModal('pedido-detalle')">Cerrar</button>
     </div>
@@ -1193,6 +1144,7 @@ async function loadDashboard(){
     if(cards[2]) cards[2].textContent = obras?.total ?? '—';
     if(cards[3]) cards[3].textContent = (encargos?.data||[]).filter(e=>e.estado==='PENDIENTE').length || 0;
   } catch(e){ console.error('Dashboard error:', e); }
+  loadPedidos(); // contador
 }
 
 // ── OBRAS ──────────────────────────────────────────────────────
@@ -1351,69 +1303,149 @@ function toggleProductoTipo(){
 }
 
 // ── PEDIDOS ────────────────────────────────────────────────────
+let PEDIDOS = [], PD_FILTRO = '';
+const PD_ESTADOS = {
+  PENDIENTE:  ['pending',   'Pendiente'],
+  CONFIRMADO: ['confirmed', 'Confirmado'],
+  PREPARANDO: ['print',     'Preparando'],
+  ENVIADO:    ['shipped',   'Enviado'],
+  ENTREGADO:  ['delivered', 'Entregado'],
+  CANCELADO:  ['cancelled', 'Cancelado'],
+};
+const PD_ENTREGA = { ENVIO:'Envío', RETIRO_PRESENCIAL:'Retiro', DIGITAL:'Digital' };
+const PD_PAGO = { MERCADOPAGO:'Mercado Pago', TRANSFERENCIA:'Transferencia', STRIPE:'Tarjeta' };
+const pdPagoEst = p => (p.pagoEstado==='PENDIENTE'||!p.pagoEstado) && !['PENDIENTE','CANCELADO'].includes(p.estado) ? ['delivered','Pagado'] : (PD_PAGO_EST[p.pagoEstado]||['pending','Pago pendiente']);
+const PD_PAGO_EST = { PENDIENTE:['pending','Pago pendiente'], APROBADO:['delivered','Pagado'], RECHAZADO:['cancelled','Pago rechazado'], REEMBOLSADO:['cancelled','Reembolsado'] };
+const esc = t => String(t ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const pdPlata = (n, m='ARS') => (m==='USD' ? 'USD ' : '$') + Number(n||0).toLocaleString('es-AR', {maximumFractionDigits:2});
+const pdNum = p => '#' + (p.numero ? String(p.numero).padStart(4,'0') : p.id.slice(-6).toUpperCase());
+const pdFecha = d => { const f = new Date(d); return f.toLocaleDateString('es-AR',{day:'2-digit',month:'short'}) + ' · ' + f.toLocaleTimeString('es-AR',{hour:'2-digit',minute:'2-digit'}); };
+const pdItemTxt = i => i.descripcion || (i.obra ? 'Original — ' + i.obra.titulo : '') || i.producto?.nombre || 'Ítem';
+const pdItems = p => (p.items||[]).map(i => (i.cantidad>1 ? i.cantidad+' × ' : '') + pdItemTxt(i)).join(' · ') || '—';
+const pdTel = t => { let n = String(t||'').replace(/\D/g,''); if(!n) return ''; if(n.startsWith('0')) n = n.slice(1); if(!n.startsWith('54')) n = '549' + n; return n; };
+const pdZona = p => { const n = (p.notas||'').split('\n')[0]; return /río cuarto|andreani|retiro|envío/i.test(n) ? n : ''; };
+const pdNota = p => { const l = (p.notas||'').split('\n'); return pdZona(p) ? l.slice(1).join('\n').trim() : (p.notas||'').trim(); };
+
 async function loadPedidos(){
+  const lista = document.getElementById('pd-lista');
   try {
-    const data = await api('/pedidos');
-    const tbody = document.querySelector('#tab-pedidos table tbody');
-    if(!tbody || !data?.data) return;
-    tbody.innerHTML = data.data.map(p=>`
-      <tr style="cursor:pointer;" onclick="openPedido('${p.id}')">
-        <td>#${p.id.slice(-6).toUpperCase()}</td>
-        <td>${p.clienteNombre||p.clienteEmail}</td>
-        <td>${(p.items||[]).map(i=>i.producto?.nombre||i.obra?.titulo||i.descripcion||'—').join(', ')||'—'}</td>
-        <td>USD ${p.total}</td>
-        <td><span class="badge badge-${estadoBadge(p.estado)}">${p.estado}</span></td>
-        <td>${new Date(p.creadoEn).toLocaleDateString('es-AR')}</td>
-      </tr>`).join('');
-  } catch(e){ showNotif('Error cargando pedidos','error'); }
+    const data = await api('/pedidos?limit=200');
+    if(!data) return;
+    PEDIDOS = data.pedidos || data.data || [];
+    pintarPedidos();
+  } catch(e){
+    if(lista) lista.innerHTML = '<div class="pd-vacio">No se pudieron cargar los pedidos. El servidor puede estar despertando: probá “Actualizar” en unos segundos.</div>';
+  }
 }
 
-function estadoBadge(e){
-  const m={PENDIENTE:'neutral',CONFIRMADO:'success',PREPARANDO:'blue',ENVIADO:'blue',ENTREGADO:'success',CANCELADO:'error'};
-  return m[e]||'neutral';
+function pdFiltrar(e){ PD_FILTRO = e; pintarPedidos(); }
+
+function pintarPedidos(){
+  const lista = document.getElementById('pd-lista'); if(!lista) return;
+  const cuenta = {}; PEDIDOS.forEach(p => cuenta[p.estado] = (cuenta[p.estado]||0) + 1);
+  // contador del menú: pedidos que esperan algo de vos
+  const esperan = (cuenta.PENDIENTE||0) + (cuenta.CONFIRMADO||0) + (cuenta.PREPARANDO||0);
+  const nb = document.querySelector('.nav-item[onclick*="pedidos"] .nav-badge');
+  if(nb){ nb.textContent = esperan; nb.style.display = esperan ? '' : 'none'; }
+  // resumen
+  const mes = new Date(); mes.setDate(1); mes.setHours(0,0,0,0);
+  const vendido = PEDIDOS.filter(p => p.estado!=='CANCELADO' && p.estado!=='PENDIENTE' && new Date(p.creadoEn) >= mes && (p.moneda||'ARS')==='ARS').reduce((a,p)=>a+(p.total||0),0);
+  document.getElementById('pd-resumen').innerHTML = `
+    <div class="pd-stat"><span>Por confirmar</span><b>${cuenta.PENDIENTE||0}</b></div>
+    <div class="pd-stat"><span>Para preparar o enviar</span><b>${(cuenta.CONFIRMADO||0)+(cuenta.PREPARANDO||0)}</b></div>
+    <div class="pd-stat"><span>En camino</span><b>${cuenta.ENVIADO||0}</b></div>
+    <div class="pd-stat"><span>Vendido este mes</span><b>${pdPlata(vendido)}</b></div>`;
+  // filtros
+  const F = [['','Todos',PEDIDOS.length], ...Object.entries(PD_ESTADOS).map(([k,[,t]])=>[k,t,cuenta[k]||0])];
+  document.getElementById('pd-filtros').innerHTML = F.filter(([k,,n]) => !k || n || k===PD_FILTRO)
+    .map(([k,t,n]) => `<button class="filter-pill${PD_FILTRO===k?' active':''}" onclick="pdFiltrar('${k}')">${t} <span class="pd-n">${n}</span></button>`).join('');
+  // lista
+  const q = (document.getElementById('pd-buscar')?.value||'').trim().toLowerCase();
+  const ver = PEDIDOS.filter(p => (!PD_FILTRO || p.estado===PD_FILTRO) &&
+    (!q || [p.clienteNombre,p.clienteEmail,p.clienteTelefono,pdItems(p),pdNum(p)].join(' ').toLowerCase().includes(q)));
+  if(!PEDIDOS.length){ lista.innerHTML = '<div class="pd-vacio">Todavía no entró ningún pedido. Cuando alguien compre en la página, aparece acá.</div>'; return; }
+  if(!ver.length){ lista.innerHTML = '<div class="pd-vacio">No hay pedidos con ese filtro.</div>'; return; }
+  lista.innerHTML = ver.map(p => {
+    const [ec, et] = PD_ESTADOS[p.estado] || ['pending', p.estado];
+    const [pc, pt] = pdPagoEst(p);
+    return `<button class="pd-fila" onclick="openPedido('${p.id}')">
+      <div class="pd-c1"><span class="pd-num">${pdNum(p)}</span><span class="pd-fecha">${pdFecha(p.creadoEn)}</span></div>
+      <div class="pd-c2"><b>${esc(p.clienteNombre||'Sin nombre')}</b><span>${esc(pdItems(p))}</span></div>
+      <div class="pd-c3"><span class="badge badge-ebook">${PD_ENTREGA[p.tipoEntrega]||p.tipoEntrega||'—'}</span>${p.metodoPago?`<span class="pd-pago">${PD_PAGO[p.metodoPago]||p.metodoPago}</span>`:''}</div>
+      <div class="pd-c4"><b>${pdPlata(p.total, p.moneda)}</b><span class="badge badge-${pc}">${pt}</span></div>
+      <div class="pd-c5"><span class="badge badge-${ec}">${et}</span></div>
+    </button>`;
+  }).join('');
 }
 
 async function openPedido(id){
   currentPedidoId = id;
-  try {
-    const p = await api('/pedidos/'+id);
-    const m = document.getElementById('modal-pedido-detalle');
-    m.querySelector('.modal-title').textContent = '#'+id.slice(-6).toUpperCase();
-    // poblar campos
-    const cells = m.querySelectorAll('.modal-body > div > div');
-    if(cells[0]){ cells[0].querySelector('div:nth-child(2)').textContent = p.clienteNombre||'—'; cells[0].querySelector('div:nth-child(3)').textContent = p.clienteEmail||''; }
-    openModal('pedido-detalle');
-  } catch(e){ showNotif('Error cargando pedido','error'); }
+  let p = PEDIDOS.find(x => x.id === id);
+  try { const full = await api('/pedidos/'+id); if(full) p = full; } catch(e){}
+  if(!p){ showNotif('No se encontró el pedido','error'); return; }
+  const [ec, et] = PD_ESTADOS[p.estado] || ['pending', p.estado];
+  const [pc, pt] = pdPagoEst(p);
+  const tel = pdTel(p.clienteTelefono);
+  const nombre = (p.clienteNombre||'').split(' ')[0];
+  const msg = encodeURIComponent(`Hola ${nombre}! Te escribo de Naya Lab por tu pedido ${pdNum(p)}.`);
+  const dir = [p.direccion, [p.codigoPostal, p.ciudad].filter(Boolean).join(' '), p.provincia].filter(Boolean).join(', ');
+  const items = (p.items||[]).map(i => `<tr><td>${esc(pdItemTxt(i))}</td><td class="pd-r">${i.cantidad||1}</td><td class="pd-r">${pdPlata((i.precioUnit||0)*(i.cantidad||1), i.moneda||p.moneda)}</td></tr>`).join('');
+  const sig = { PENDIENTE:['CONFIRMADO','Confirmar pago'], CONFIRMADO:['PREPARANDO','Empezar a preparar'], PREPARANDO:[p.tipoEntrega==='ENVIO'?'ENVIADO':'ENTREGADO', p.tipoEntrega==='ENVIO'?'Marcar enviado':'Marcar entregado'], ENVIADO:['ENTREGADO','Marcar entregado'] }[p.estado];
+  const hist = (p.historial||[]).slice().sort((a,b)=>new Date(a.creadoEn)-new Date(b.creadoEn));
+  document.getElementById('pd-titulo').innerHTML = `Pedido ${pdNum(p)} <span class="badge badge-${ec}" style="margin-left:.6rem;vertical-align:middle;">${et}</span>`;
+  document.getElementById('pd-cuerpo').innerHTML = `
+    <div class="pd-grid">
+      <div><div class="pd-lab">Cliente</div><div class="pd-val">${esc(p.clienteNombre||'—')}</div>
+        ${p.clienteTelefono?`<div class="pd-sub">${esc(p.clienteTelefono)}</div>`:''}
+        ${p.clienteEmail?`<div class="pd-sub"><a href="mailto:${esc(p.clienteEmail)}">${esc(p.clienteEmail)}</a></div>`:''}
+        ${p.clienteDni?`<div class="pd-sub">DNI ${esc(p.clienteDni)}</div>`:''}
+        ${tel?`<a class="btn btn-secondary pd-wa" target="_blank" rel="noopener" href="https://wa.me/${tel}?text=${msg}">Escribir por WhatsApp</a>`:''}
+      </div>
+      <div><div class="pd-lab">Entrega</div><div class="pd-val">${PD_ENTREGA[p.tipoEntrega]||p.tipoEntrega||'—'}</div>
+        ${pdZona(p)?`<div class="pd-sub">${esc(pdZona(p))}</div>`:''}
+        ${dir?`<div class="pd-sub">${esc(dir)}</div>`:''}
+        ${p.trackingNumero?`<div class="pd-sub">Seguimiento: <b>${esc(p.trackingNumero)}</b></div>`:''}
+      </div>
+      <div><div class="pd-lab">Pago</div><div class="pd-val">${PD_PAGO[p.metodoPago]||'—'}</div>
+        <div class="pd-sub"><span class="badge badge-${pc}">${pt}</span></div></div>
+      <div><div class="pd-lab">Fecha</div><div class="pd-val">${pdFecha(p.creadoEn)}</div></div>
+    </div>
+    <table class="pd-items"><thead><tr><th>Ítem</th><th class="pd-r">Cant.</th><th class="pd-r">Importe</th></tr></thead><tbody>${items}</tbody>
+      <tfoot>
+        ${p.subtotal!=null?`<tr><td colspan="2">Subtotal</td><td class="pd-r">${pdPlata(p.subtotal,p.moneda)}</td></tr>`:''}
+        ${p.costoEnvio?`<tr><td colspan="2">Envío</td><td class="pd-r">${pdPlata(p.costoEnvio,'ARS')}</td></tr>`:''}
+        ${p.descuento?`<tr><td colspan="2">Descuento transferencia</td><td class="pd-r">− ${pdPlata(p.descuento,p.moneda)}</td></tr>`:''}
+        <tr class="pd-total"><td colspan="2">Total</td><td class="pd-r">${pdPlata(p.total,p.moneda)}</td></tr>
+      </tfoot></table>
+    ${pdNota(p)?`<div class="pd-lab">Nota del cliente</div><p class="pd-nota">${esc(pdNota(p))}</p>`:''}
+    ${p.estado!=='CANCELADO' && p.estado!=='ENTREGADO' ? `
+    <div class="pd-lab">Siguiente paso</div>
+    <div class="pd-pasos">
+      ${sig ? (sig[0]==='ENVIADO'
+        ? `<div class="pd-track"><input type="text" id="tracking-input" placeholder="Número de seguimiento (opcional)" value="${esc(p.trackingNumero||'')}"><button class="btn btn-primary" onclick="pdCambiar('ENVIADO')">Marcar enviado</button></div>`
+        : `<button class="btn btn-primary" onclick="pdCambiar('${sig[0]}')">${sig[1]}</button>`) : ''}
+      <button class="btn btn-ghost pd-cancelar" onclick="pdCambiar('CANCELADO')">Cancelar pedido</button>
+    </div>` : ''}
+    ${hist.length?`<div class="pd-lab" style="margin-top:1.6rem;">Historial</div><ol class="pd-hist">${hist.map(h=>`<li><span class="badge badge-${(PD_ESTADOS[h.estado]||['pending'])[0]}">${(PD_ESTADOS[h.estado]||[,h.estado])[1]}</span> <span class="pd-sub">${pdFecha(h.creadoEn)}${h.nota?' — '+esc(h.nota):''}</span></li>`).join('')}</ol>`:''}`;
+  openModal('pedido-detalle');
 }
 
-async function updateEstado(estado){
-  if(!currentPedidoId){ showNotif('Sin pedido seleccionado','error'); return; }
+async function pdCambiar(estado){
+  if(!currentPedidoId) return;
+  if(estado==='CANCELADO' && !confirm('¿Cancelar este pedido?')) return;
+  const body = { estado };
+  const t = document.getElementById('tracking-input');
+  if(estado==='ENVIADO' && t && t.value.trim()) body.trackingNumero = t.value.trim();
   try {
-    await api('/pedidos/'+currentPedidoId+'/estado', {
-      method:'PATCH', headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({estado})
-    });
-    showNotif('Estado actualizado: '+estado,'success');
-    loadPedidos();
-  } catch(e){ showNotif('Error actualizando estado','error'); }
+    await api('/pedidos/'+currentPedidoId+'/estado', { method:'PATCH', headers:{'Content-Type':'application/json'}, body: JSON.stringify(body) });
+    showNotif('Pedido: ' + PD_ESTADOS[estado][1].toLowerCase() + (estado==='ENVIADO' && p_mail(currentPedidoId) ? ' — se avisó al cliente por email' : ''), 'success');
+    await loadPedidos();
+    openPedido(currentPedidoId);
+  } catch(e){ showNotif('No se pudo actualizar: ' + e.message, 'error'); }
 }
-
-function openTracking(){ document.getElementById('tracking-field').style.display='block'; }
-
-async function saveTracking(){
-  const v = document.getElementById('tracking-input').value;
-  if(!v){ showNotif('Ingresá el número de seguimiento','error'); return; }
-  try {
-    await api('/pedidos/'+currentPedidoId+'/estado', {
-      method:'PATCH', headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({estado:'ENVIADO', tracking:v})
-    });
-    showNotif('Enviado — cliente notificado por email','success');
-    document.getElementById('tracking-field').style.display='none';
-    closeModal('pedido-detalle');
-    loadPedidos();
-  } catch(e){ showNotif('Error guardando tracking','error'); }
-}
+const p_mail = id => !!(PEDIDOS.find(x=>x.id===id)||{}).clienteEmail;
+// compatibilidad con botones viejos
+function updateEstado(e){ return pdCambiar(String(e).toUpperCase()); }
 
 // ── ENCARGOS ───────────────────────────────────────────────────
 async function loadEncargos(){
